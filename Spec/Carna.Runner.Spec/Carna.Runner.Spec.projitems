@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>7308bc2e-66f3-4754-9ec0-2347aebd6bdb</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Carna</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureContainerSpec.CanRun.cs">
+      <DependentUpon>FixtureContainerSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureContainerSpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureContainerSpec.EnsureParent.cs">
+      <DependentUpon>FixtureContainerSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureContainerSpec.Ready.cs">
+      <DependentUpon>FixtureContainerSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureContainerSpec.RunFixtures.cs">
+      <DependentUpon>FixtureContainerSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureFilterSpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureResultSpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureResultSpec.FixtureStatus.cs">
+      <DependentUpon>FixtureResultSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureResultSpec.FixtureStatus.FinishedWithFixtureResult.cs">
+      <DependentUpon>FixtureResultSpec.FixtureStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureResultSpec.FixtureStatus.FinishedWithFixtureStepResult.cs">
+      <DependentUpon>FixtureResultSpec.FixtureStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureResultSpec.Statistics.cs">
+      <DependentUpon>FixtureResultSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureResultSpec.Statistics.EndTime.cs">
+      <DependentUpon>FixtureResultSpec.Statistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureResultSpec.Statistics.FailedCount.cs">
+      <DependentUpon>FixtureResultSpec.Statistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureResultSpec.Statistics.PassedCount.cs">
+      <DependentUpon>FixtureResultSpec.Statistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureResultSpec.Statistics.PendingCount.cs">
+      <DependentUpon>FixtureResultSpec.Statistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureResultSpec.Statistics.StartTime.cs">
+      <DependentUpon>FixtureResultSpec.Statistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureResultSpec.Statistics.TotalCount.cs">
+      <DependentUpon>FixtureResultSpec.Statistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.CanRun.cs">
+      <DependentUpon>FixtureSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.FixtureImplementedIDisposableContext.cs">
+      <DependentUpon>FixtureSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.FixtureImplementedIFixtureSteppableContext.cs">
+      <DependentUpon>FixtureSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.NormalFixtureContext.cs">
+      <DependentUpon>FixtureSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.Ready.cs">
+      <DependentUpon>FixtureSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.RunFixture.cs">
+      <DependentUpon>FixtureSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.RunFixture.FixtureImplementedIDisposable.cs">
+      <DependentUpon>FixtureSpec.RunFixture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.RunFixture.FixtureImplementedIFixtureSteppable.cs">
+      <DependentUpon>FixtureSpec.RunFixture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.RunFixture.NormalFixture.cs">
+      <DependentUpon>FixtureSpec.RunFixture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.RunFixture.Parameter.cs">
+      <DependentUpon>FixtureSpec.RunFixture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.RunFixtureAsync.cs">
+      <DependentUpon>FixtureSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.RunFixtureAsync.FixtureImplementedIDisposable.cs">
+      <DependentUpon>FixtureSpec.RunFixtureAsync.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.RunFixtureAsync.FixtureImplementedIFixtureSteppable.cs">
+      <DependentUpon>FixtureSpec.RunFixtureAsync.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.RunFixtureAsync.NormalFixture.cs">
+      <DependentUpon>FixtureSpec.RunFixtureAsync.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FormattedDescriptionSpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FormattedDescription.StringRepresentation.cs">
+      <DependentUpon>FormattedDescriptionSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FormattedDescription.LinesConcatenation.cs">
+      <DependentUpon>FormattedDescriptionSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Formatters\FixtureFormatterSpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Formatters\FixtureFormatterSpec.FormatFixture.cs">
+      <DependentUpon>FixtureFormatterSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Formatters\FixtureFormatterSpec.FormatFixtureStep.cs">
+      <DependentUpon>FixtureFormatterSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Formatters\JapaneseFixtureFormatterSpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Formatters\JapaneseFixtureFormatterSpec.FormatFixture.cs">
+      <DependentUpon>JapaneseFixtureFormatterSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Formatters\JapaneseFixtureFormatterSpec.FormatFixtureStep.cs">
+      <DependentUpon>JapaneseFixtureFormatterSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\AssertionDescriptionSpec.AssertionWithException.cs">
+      <DependentUpon>AssertionDescriptionSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\AssertionDescriptionSpec.AssertionWithoutException.cs">
+      <DependentUpon>AssertionDescriptionSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\AssertionDescriptionSpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\ExpectStepRunnerSpec.Constrains.cs">
+      <DependentUpon>ExpectStepRunnerSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\ExpectStepRunnerSpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\ExpectStepRunnerSpec.StepRunning.cs">
+      <DependentUpon>ExpectStepRunnerSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\ExpectStepRunnerSpec.StepRunningAsync.cs">
+      <DependentUpon>ExpectStepRunnerSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\FixtureStepperSpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\FixtureStepResultCollectionSpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\FixtureStepRunnerFactorySpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\FixtureSteps.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\GivenStepRunnerSpec.Constrains.cs">
+      <DependentUpon>GivenStepRunnerSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\GivenStepRunnerSpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\GivenStepRunnerSpec.StepRunning.cs">
+      <DependentUpon>GivenStepRunnerSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\GivenStepRunnerSpec.StepRunningAsync.cs">
+      <DependentUpon>GivenStepRunnerSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\NoteStepRunnerSpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\ThenStepRunnerSpec.Constrains.cs">
+      <DependentUpon>ThenStepRunnerSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\ThenStepRunnerSpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\ThenStepRunnerSpec.StepRunningWithException.cs">
+      <DependentUpon>ThenStepRunnerSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\ThenStepRunnerSpec.StepRunningWithoutException.cs">
+      <DependentUpon>ThenStepRunnerSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\ThenStepRunnerSpec.StepRunningWithExceptionAsync.cs">
+      <DependentUpon>ThenStepRunnerSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\ThenStepRunnerSpec.StepRunningWithoutExceptionAsync.cs">
+      <DependentUpon>ThenStepRunnerSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\WhenStepRunnerSpec.Constrains.cs">
+      <DependentUpon>WhenStepRunnerSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\WhenStepRunnerSpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\WhenStepRunnerSpec.StepRunning.cs">
+      <DependentUpon>WhenStepRunnerSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\WhenStepRunnerSpec.StepRunningAsync.cs">
+      <DependentUpon>WhenStepRunnerSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)TestFixtures.cs" />
+  </ItemGroup>
+</Project>

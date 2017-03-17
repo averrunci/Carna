@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <AssemblyName>Carna.Runner.Spec</AssemblyName>
+    <RootNamespace>Carna</RootNamespace>
+    <Authors>averrunci</Authors>
+    <Company />
+    <Product>Carner Runner Specification</Product>
+    <Description>The specification class library for the runner of Carna testing framework for .NET</Description>
+    <Copyright>Copyright (C) 2017 Fievus</Copyright>
+    <PackageProjectUrl>https://github.com/averrunci/Carna</PackageProjectUrl>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <FileVersion>1.0.0</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NSubstitute" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Source\Carna.Runner\Carna.Runner.csproj" />
+    <ProjectReference Include="..\..\Source\Carna\Carna.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\Carna.Runner.Spec\Carna.Runner.Spec.projitems" Label="Shared" />
+
+</Project>

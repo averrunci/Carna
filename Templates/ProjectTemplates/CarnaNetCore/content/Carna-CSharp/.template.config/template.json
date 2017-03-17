@@ -1,0 +1,37 @@
+{
+  "author": "averrunci",
+  "classifications": ["Test", "Carna"],
+  "name": "Carna Test Project",
+  "groupIdentity": "Carna",
+  "identity": "Carna.CSharp",
+  "shortName": "carna",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "Company.CarnaProject1",
+  "preferNameDirectory": true,
+  "symbols": {
+    "sdkVersion": {
+      "type": "bind",
+      "binding": "dotnet-cli-version",
+      "replaces": "1.0.0"
+    },
+    "Framework": {
+      "type": "parameter",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "netcoreapp1.0",
+          "description": "Target netcoreapp1.0"
+        },
+        {
+          "choice": "netcoreapp1.1",
+          "description": "Target netcoreapp1.1"
+        }
+      ],
+      "defaultValue": "netcoreapp1.1"
+    }
+  },
+  "primaryOutputs": [ { "path": "Company.CarnaProject1.csproj" } ]
+}

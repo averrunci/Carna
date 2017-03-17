@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>f0b03602-d83e-4569-9040-51ada0977637</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Carna</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)FixtureSteppable.ExpectStep.cs">
+      <DependentUpon>FixtureSteppableSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)FixtureSteppable.GivenStep.cs">
+      <DependentUpon>FixtureSteppableSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)FixtureSteppable.NoteStep.cs">
+      <DependentUpon>FixtureSteppableSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)FixtureSteppable.ThenStep.cs">
+      <DependentUpon>FixtureSteppableSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)FixtureSteppable.WhenStep.cs">
+      <DependentUpon>FixtureSteppableSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)FixtureSteppableSpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FixtureSteppableTss.cs" />
+  </ItemGroup>
+</Project>

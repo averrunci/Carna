@@ -1,0 +1,96 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.9
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carna", "Source\Carna\Carna.csproj", "{FCA0DC22-0EA7-4053-B03D-30345E00B5E3}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Carna.Spec", "Spec\Carna.Spec\Carna.Spec.shproj", "{F0B03602-D83E-4569-9040-51ADA0977637}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carna.Spec.Net46", "Spec\Carna.Spec.Net46\Carna.Spec.Net46.csproj", "{31178D96-211B-4300-A6C9-D9AAC6B4F8E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carna.Runner", "Source\Carna.Runner\Carna.Runner.csproj", "{F3625049-52FE-4199-8691-13C4D7AEE26C}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Carna.Runner.Spec", "Spec\Carna.Runner.Spec\Carna.Runner.Spec.shproj", "{7308BC2E-66F3-4754-9EC0-2347AEBD6BDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carna.Runner.Spec.Net46", "Spec\Carna.Runner.Spec.Net46\Carna.Runner.Spec.Net46.csproj", "{AE09F60D-0212-4B76-A94A-046FB0D6F4FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carna.ConsoleRunner.Net46", "Source\Carna.ConsoleRunner.Net46\Carna.ConsoleRunner.Net46.csproj", "{B5BC2CA7-5F29-4B9E-BC8B-D4256F798CC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carna.ConsoleRunner.NetCore", "Source\Carna.ConsoleRunner.NetCore\Carna.ConsoleRunner.NetCore.csproj", "{A2EB9BDB-39A5-44CE-96F1-C496AE63FD7B}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Carna.ConsoleRunner", "Source\Carna.ConsoleRunner\Carna.ConsoleRunner.shproj", "{8555688D-9F64-423B-9DBF-265978F8386D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carna.Spec.NetCore", "Spec\Carna.Spec.NetCore\Carna.Spec.NetCore.csproj", "{7EA553D9-25F6-46E3-8805-68E7364A1E84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carna.Runner.Spec.NetCore", "Spec\Carna.Runner.Spec.NetCore\Carna.Runner.Spec.NetCore.csproj", "{56680617-E4BB-4D4E-9D3C-87694D980A4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carna.Spec.NetStandard", "Spec\Carna.Spec.NetStandard\Carna.Spec.NetStandard.csproj", "{5E8363FA-FB6F-437F-8642-4FC17219D5A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarnaSpecRunner", "Spec\CarnaSpecRunner\CarnaSpecRunner.csproj", "{3762C6EE-4C92-4783-A5A2-336AADE99B6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carna.Runner.Spec.NetStandard", "Spec\Carna.Runner.Spec.NetStandard\Carna.Runner.Spec.NetStandard.csproj", "{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Spec\Carna.Spec\Carna.Spec.projitems*{31178d96-211b-4300-a6c9-d9aac6b4f8e2}*SharedItemsImports = 4
+		Spec\Carna.Runner.Spec\Carna.Runner.Spec.projitems*{7308bc2e-66f3-4754-9ec0-2347aebd6bdb}*SharedItemsImports = 13
+		Source\Carna.ConsoleRunner\Carna.ConsoleRunner.projitems*{8555688d-9f64-423b-9dbf-265978f8386d}*SharedItemsImports = 13
+		Spec\Carna.Runner.Spec\Carna.Runner.Spec.projitems*{ae09f60d-0212-4b76-a94a-046fb0d6f4fe}*SharedItemsImports = 4
+		Source\Carna.ConsoleRunner\Carna.ConsoleRunner.projitems*{b5bc2ca7-5f29-4b9e-bc8b-d4256f798cc3}*SharedItemsImports = 4
+		Spec\Carna.Spec\Carna.Spec.projitems*{f0b03602-d83e-4569-9040-51ada0977637}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FCA0DC22-0EA7-4053-B03D-30345E00B5E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCA0DC22-0EA7-4053-B03D-30345E00B5E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCA0DC22-0EA7-4053-B03D-30345E00B5E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCA0DC22-0EA7-4053-B03D-30345E00B5E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31178D96-211B-4300-A6C9-D9AAC6B4F8E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31178D96-211B-4300-A6C9-D9AAC6B4F8E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31178D96-211B-4300-A6C9-D9AAC6B4F8E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31178D96-211B-4300-A6C9-D9AAC6B4F8E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3625049-52FE-4199-8691-13C4D7AEE26C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3625049-52FE-4199-8691-13C4D7AEE26C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3625049-52FE-4199-8691-13C4D7AEE26C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3625049-52FE-4199-8691-13C4D7AEE26C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE09F60D-0212-4B76-A94A-046FB0D6F4FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE09F60D-0212-4B76-A94A-046FB0D6F4FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE09F60D-0212-4B76-A94A-046FB0D6F4FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE09F60D-0212-4B76-A94A-046FB0D6F4FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5BC2CA7-5F29-4B9E-BC8B-D4256F798CC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5BC2CA7-5F29-4B9E-BC8B-D4256F798CC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5BC2CA7-5F29-4B9E-BC8B-D4256F798CC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5BC2CA7-5F29-4B9E-BC8B-D4256F798CC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2EB9BDB-39A5-44CE-96F1-C496AE63FD7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2EB9BDB-39A5-44CE-96F1-C496AE63FD7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2EB9BDB-39A5-44CE-96F1-C496AE63FD7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2EB9BDB-39A5-44CE-96F1-C496AE63FD7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EA553D9-25F6-46E3-8805-68E7364A1E84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EA553D9-25F6-46E3-8805-68E7364A1E84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EA553D9-25F6-46E3-8805-68E7364A1E84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EA553D9-25F6-46E3-8805-68E7364A1E84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56680617-E4BB-4D4E-9D3C-87694D980A4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56680617-E4BB-4D4E-9D3C-87694D980A4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56680617-E4BB-4D4E-9D3C-87694D980A4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56680617-E4BB-4D4E-9D3C-87694D980A4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E8363FA-FB6F-437F-8642-4FC17219D5A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E8363FA-FB6F-437F-8642-4FC17219D5A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E8363FA-FB6F-437F-8642-4FC17219D5A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E8363FA-FB6F-437F-8642-4FC17219D5A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3762C6EE-4C92-4783-A5A2-336AADE99B6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3762C6EE-4C92-4783-A5A2-336AADE99B6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3762C6EE-4C92-4783-A5A2-336AADE99B6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3762C6EE-4C92-4783-A5A2-336AADE99B6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

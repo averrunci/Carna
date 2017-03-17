@@ -1,0 +1,18 @@
+{
+  "assemblies": [
+    "Carna.Spec.Net46\\bin\\Debug\\Carna.Spec.dll",
+    "Carna.Runner.Spec.Net46\\bin\\Debug\\Carna.Runner.Spec.dll"
+  ],
+  "reporters": [
+    {
+      "reporter": {
+        "type": "Carna.ConsoleRunner.Reporters.ConsoleFixtureReporter,CarnaConsoleRunner",
+        "options": {
+          "full": true,
+          "stepVisible": true,
+          "statusVisble": true
+        }
+      }
+    }
+  ]
+}

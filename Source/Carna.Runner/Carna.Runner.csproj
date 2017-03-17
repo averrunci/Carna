@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <RootNamespace>Carna</RootNamespace>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Product>Carna Runner</Product>
+    <Authors>averrunci</Authors>
+    <Company />
+    <Description>The runner of Carna testing framework for .NET</Description>
+    <Copyright>Copyright (C) 2017 Fievus</Copyright>
+    <PackageProjectUrl>https://github.com/averrunci/Carna</PackageProjectUrl>
+    <PackageTags>carna test testing tdd bdd runner</PackageTags>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <FileVersion>1.0.0</FileVersion>
+    <PackageLicenseUrl>https://github.com/averrunci/Carna/blob/master/LICENSE</PackageLicenseUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\Binary\Carna.Runner\Debug\netstandard1.3\</OutputPath>
+    <DocumentationFile>..\..\Binary\Carna.Runner\Debug\netstandard1.3\netstandard1.3\Carna.Runner.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\..\Binary\Carna.Runner\Release\netstandard1.3\</OutputPath>
+    <DocumentationFile>..\..\Binary\Carna.Runner\Release\netstandard1.3\netstandard1.3\Carna.Runner.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Linq.Parallel" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
+    <PackageReference Include="System.Xml.XDocument" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Carna\Carna.csproj" />
+  </ItemGroup>
+
+</Project>

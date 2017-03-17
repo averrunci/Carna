@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Carna.ProjectTemplates</id>
+    <version>1.0.0</version>
+    <authors>averrunci</authors>
+    <description>Carna Test Project Template</description>
+    <language>en-US</language>
+    <projectUrl>https://github.com/averrunci/Carna</projectUrl>
+    <packageTypes>
+      <packageType name="Template"/>
+    </packageTypes>
+  </metadata>
+</package>

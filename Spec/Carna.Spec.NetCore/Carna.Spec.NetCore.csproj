@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <RootNamespace>Carna</RootNamespace>
+    <AssemblyName>Carna.Spec</AssemblyName>
+    <Description>The specification class library for Carna testing framework for .NET</Description>
+    <Authors>averrunci</Authors>
+    <Company />
+    <Product>Carna Specification</Product>
+    <Copyright>Copyright (C) 2017 Fievus</Copyright>
+    <PackageProjectUrl>https://github.com/averrunci/Carna</PackageProjectUrl>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <FileVersion>1.0.0</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NSubstitute" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Source\Carna.ConsoleRunner.NetCore\Carna.ConsoleRunner.NetCore.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\Carna.Spec\Carna.Spec.projitems" Label="Shared" />
+
+</Project>

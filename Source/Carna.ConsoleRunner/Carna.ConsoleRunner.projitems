@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>8555688d-9f64-423b-9dbf-265978f8386d</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Carna.ConsoleRunner</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)CarnaConsole.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CarnaConsoleRunner.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CarnaConsoleRunnerResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Configuration\CarnaRunnerCommandLineOption.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Configuration\CarnaRunnerCommandLineOptionContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Configuration\CarnaRunnerCommandLineOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Configuration\CarnaRunnerCommandLineParser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Configuration\InvalidCommandLineOptionException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Configuration\Options\AssemblyOption.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Configuration\Options\FilterOption.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Configuration\Options\HelpOption.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Configuration\Options\SettingsOption.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FixtureEngineExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reporters\ConsoleFixtureReporter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reporters\ConsoleFixtureSummaryReporter.cs" />
+  </ItemGroup>
+</Project>
