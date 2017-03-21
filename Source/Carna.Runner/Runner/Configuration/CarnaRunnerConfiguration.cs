@@ -69,7 +69,7 @@ namespace Carna.Runner.Configuration
         /// <returns>The instance of the <see cref="CarnaRunnerConfiguration"/>.</returns>
         public CarnaRunnerConfiguration Ensure(IAssemblyLoader loader)
         {
-            loader.IfPresent(_ => Assemblies = AssemblyFiles.Select(loader.Load).ToList());
+            loader.IfPresent(_ => Assemblies = AssemblyFiles?.Select(loader.Load).ToList());
             Filter?.Ensure();
             return this;
         }
