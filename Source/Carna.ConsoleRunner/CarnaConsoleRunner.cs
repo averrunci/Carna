@@ -27,14 +27,15 @@ namespace Carna.ConsoleRunner
         /// </summary>
         /// <param name="args">The arguments of the command line.</param>
         /// <param name="runnerName">The assembly name of the runner.</param>
-        /// <returns></returns>
-        public static int Run(string[] args, string runnerName = null)
+        /// <param name="commandLineParser">The command line parser.</param>
+        /// <returns>The value that indicates the running result.</returns>
+        public static int Run(string[] args, string runnerName = null, ICarnaRunnerCommandLineParser commandLineParser = null)
         {
             try
             {
                 WriteHeader();
 
-                var options = new CarnaRunnerCommandLineParser().Parse(args);
+                var options = (commandLineParser ?? new CarnaRunnerCommandLineParser()).Parse(args);
                 if (options.HasHelp)
                 {
                     WriteUsage(runnerName);

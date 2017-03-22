@@ -10,7 +10,7 @@ namespace Carna.ConsoleRunner.Configuration
     /// <summary>
     /// Provides the function to parse a command line.
     /// </summary>
-    public class CarnaRunnerCommandLineParser
+    public class CarnaRunnerCommandLineParser : ICarnaRunnerCommandLineParser
     {
         /// <summary>
         /// Parses the specified arguments of the command line.
@@ -21,7 +21,7 @@ namespace Carna.ConsoleRunner.Configuration
         /// The argument of the command line is not specified and
         /// a settings file does not exist.
         /// </exception>
-        public CarnaRunnerCommandLineOptions Parse(string[] args)
+        protected virtual CarnaRunnerCommandLineOptions Parse(string[] args)
         {
             if (args.Any()) { return ParseArguments(args); }
 
@@ -63,5 +63,7 @@ Option: {context.Argument}");
         /// <returns>The new instance of the <see cref="CarnaRunnerCommandLineOptionContext"/>.</returns>
         protected virtual CarnaRunnerCommandLineOptionContext CreateCarnaRunnerCommandLineOptionContext(string arg)
             => CarnaRunnerCommandLineOptionContext.Of(arg);
+
+        CarnaRunnerCommandLineOptions ICarnaRunnerCommandLineParser.Parse(string[] args) => Parse(args);
     }
 }

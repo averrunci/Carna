@@ -23,6 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Configuration\Options\SettingsOption.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FixtureEngineExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Configuration\ICarnaRunnerCommandLineParser.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reporters\ConsoleFixtureReporter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reporters\ConsoleFixtureSummaryReporter.cs" />
   </ItemGroup>
