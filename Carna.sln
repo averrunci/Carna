@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarnaSpecRunner", "Spec\Car
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carna.Runner.Spec.NetStandard", "Spec\Carna.Runner.Spec.NetStandard\Carna.Runner.Spec.NetStandard.csproj", "{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carna.ConsoleRunner.Spec", "Spec\Carna.ConsoleRunner.Spec\Carna.ConsoleRunner.Spec.csproj", "{2DDB507D-87CE-442A-BEF7-064390AC2D61}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Spec\Carna.Spec\Carna.Spec.projitems*{31178d96-211b-4300-a6c9-d9aac6b4f8e2}*SharedItemsImports = 4
@@ -89,6 +91,10 @@ Global
 		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DDB507D-87CE-442A-BEF7-064390AC2D61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DDB507D-87CE-442A-BEF7-064390AC2D61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DDB507D-87CE-442A-BEF7-064390AC2D61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DDB507D-87CE-442A-BEF7-064390AC2D61}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

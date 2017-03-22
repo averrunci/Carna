@@ -64,6 +64,6 @@ Option: {context.Argument}");
         protected virtual CarnaRunnerCommandLineOptionContext CreateCarnaRunnerCommandLineOptionContext(string arg)
             => CarnaRunnerCommandLineOptionContext.Of(arg);
 
-        CarnaRunnerCommandLineOptions ICarnaRunnerCommandLineParser.Parse(string[] args) => Parse(args);
+        CarnaRunnerCommandLineOptions ICarnaRunnerCommandLineParser.Parse(string[] args) => Parse(args ?? new string[0]);
     }
 }
