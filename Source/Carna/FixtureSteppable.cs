@@ -32,7 +32,7 @@ namespace Carna
         /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
         protected virtual void Expect(string description, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
-            (this as IFixtureSteppable).Stepper.Take(new ExpectStep(description, GetType(), callerMemberName, callerFilePath, callerLineNumber));
+            (this as IFixtureSteppable).Stepper?.Take(new ExpectStep(description, GetType(), callerMemberName, callerFilePath, callerLineNumber));
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Carna
         /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
         protected virtual void Expect(string description, Expression<Func<bool>> assertion, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
-            (this as IFixtureSteppable).Stepper.Take(new ExpectStep(description, assertion, GetType(), callerMemberName, callerFilePath, callerLineNumber));
+            (this as IFixtureSteppable).Stepper?.Take(new ExpectStep(description, assertion, GetType(), callerMemberName, callerFilePath, callerLineNumber));
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Carna
         /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
         protected virtual void Expect(string description, Action assertion, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
-            (this as IFixtureSteppable).Stepper.Take(new ExpectStep(description, assertion, GetType(), callerMemberName, callerFilePath, callerLineNumber));
+            (this as IFixtureSteppable).Stepper?.Take(new ExpectStep(description, assertion, GetType(), callerMemberName, callerFilePath, callerLineNumber));
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Carna
         /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
         protected virtual void Expect(string description, Func<Task> asyncAssertion, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
-            (this as IFixtureSteppable).Stepper.Take(new ExpectStep(description, asyncAssertion, GetType(), callerMemberName, callerFilePath, callerLineNumber));
+            (this as IFixtureSteppable).Stepper?.Take(new ExpectStep(description, asyncAssertion, GetType(), callerMemberName, callerFilePath, callerLineNumber));
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Carna
         /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
         protected virtual void Given(string description, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
-            (this as IFixtureSteppable).Stepper.Take(new GivenStep(description, GetType(), callerMemberName, callerFilePath, callerLineNumber));
+            (this as IFixtureSteppable).Stepper?.Take(new GivenStep(description, GetType(), callerMemberName, callerFilePath, callerLineNumber));
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Carna
         /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
         protected virtual void Given(string description, Action arrangement, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
-            (this as IFixtureSteppable).Stepper.Take(new GivenStep(description, arrangement, GetType(), callerMemberName, callerFilePath, callerLineNumber));
+            (this as IFixtureSteppable).Stepper?.Take(new GivenStep(description, arrangement, GetType(), callerMemberName, callerFilePath, callerLineNumber));
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Carna
         /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
         protected virtual void Given(string description, Func<Task> asyncArrangement, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
-            (this as IFixtureSteppable).Stepper.Take(new GivenStep(description, asyncArrangement, GetType(), callerMemberName, callerFilePath, callerLineNumber));
+            (this as IFixtureSteppable).Stepper?.Take(new GivenStep(description, asyncArrangement, GetType(), callerMemberName, callerFilePath, callerLineNumber));
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Carna
         /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
         protected virtual void When(string description, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
-            (this as IFixtureSteppable).Stepper.Take(new WhenStep(description, GetType(), callerMemberName, callerFilePath, callerLineNumber));
+            (this as IFixtureSteppable).Stepper?.Take(new WhenStep(description, GetType(), callerMemberName, callerFilePath, callerLineNumber));
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Carna
         /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
         protected virtual void When(string description, Action action, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
-            (this as IFixtureSteppable).Stepper.Take(new WhenStep(description, action, GetType(), callerMemberName, callerFilePath, callerLineNumber));
+            (this as IFixtureSteppable).Stepper?.Take(new WhenStep(description, action, GetType(), callerMemberName, callerFilePath, callerLineNumber));
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Carna
         /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
         protected virtual void When(string description, Func<Task> asyncAction, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
-            (this as IFixtureSteppable).Stepper.Take(new WhenStep(description, asyncAction, GetType(), callerMemberName, callerFilePath, callerLineNumber));
+            (this as IFixtureSteppable).Stepper?.Take(new WhenStep(description, asyncAction, GetType(), callerMemberName, callerFilePath, callerLineNumber));
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Carna
         /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
         protected virtual void Then(string description, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
-            (this as IFixtureSteppable).Stepper.Take(new ThenStep(description, GetType(), callerMemberName, callerFilePath, callerLineNumber));
+            (this as IFixtureSteppable).Stepper?.Take(new ThenStep(description, GetType(), callerMemberName, callerFilePath, callerLineNumber));
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Carna
         /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
         protected virtual void Then(string description, Expression<Func<bool>> assertion, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
-            (this as IFixtureSteppable).Stepper.Take(new ThenStep(description, assertion, GetType(), callerMemberName, callerFilePath, callerLineNumber));
+            (this as IFixtureSteppable).Stepper?.Take(new ThenStep(description, assertion, GetType(), callerMemberName, callerFilePath, callerLineNumber));
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace Carna
         /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
         protected virtual void Then(string description, Expression<Func<Exception, bool>> exceptionAssertion, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
-            (this as IFixtureSteppable).Stepper.Take(new ThenStep(description, exceptionAssertion, GetType(), callerMemberName, callerFilePath, callerLineNumber));
+            (this as IFixtureSteppable).Stepper?.Take(new ThenStep(description, exceptionAssertion, GetType(), callerMemberName, callerFilePath, callerLineNumber));
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Carna
         /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
         protected virtual void Then(string description, Action assertion, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
-            (this as IFixtureSteppable).Stepper.Take(new ThenStep(description, assertion, GetType(), callerMemberName, callerFilePath, callerLineNumber));
+            (this as IFixtureSteppable).Stepper?.Take(new ThenStep(description, assertion, GetType(), callerMemberName, callerFilePath, callerLineNumber));
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace Carna
         /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
         protected virtual void Then(string description, Action<Exception> exceptionAssertion, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
-            (this as IFixtureSteppable).Stepper.Take(new ThenStep(description, exceptionAssertion, GetType(), callerMemberName, callerFilePath, callerLineNumber));
+            (this as IFixtureSteppable).Stepper?.Take(new ThenStep(description, exceptionAssertion, GetType(), callerMemberName, callerFilePath, callerLineNumber));
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace Carna
         /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
         protected virtual void Then(string description, Func<Task> asyncAssertion, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
-            (this as IFixtureSteppable).Stepper.Take(new ThenStep(description, asyncAssertion, GetType(), callerMemberName, callerFilePath, callerLineNumber));
+            (this as IFixtureSteppable).Stepper?.Take(new ThenStep(description, asyncAssertion, GetType(), callerMemberName, callerFilePath, callerLineNumber));
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace Carna
         /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
         protected virtual void Then(string description, Func<Exception, Task> asyncExceptionAssertion, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
-            (this as IFixtureSteppable).Stepper.Take(new ThenStep(description, asyncExceptionAssertion, GetType(), callerMemberName, callerFilePath, callerLineNumber));
+            (this as IFixtureSteppable).Stepper?.Take(new ThenStep(description, asyncExceptionAssertion, GetType(), callerMemberName, callerFilePath, callerLineNumber));
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Carna
         /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
         protected virtual void Note(string description, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
-            (this as IFixtureSteppable).Stepper.Take(new NoteStep(description, GetType(), callerMemberName, callerFilePath, callerLineNumber));
+            (this as IFixtureSteppable).Stepper?.Take(new NoteStep(description, GetType(), callerMemberName, callerFilePath, callerLineNumber));
         }
 
         IFixtureStepper IFixtureSteppable.Stepper { get; set; }
