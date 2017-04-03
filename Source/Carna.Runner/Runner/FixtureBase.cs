@@ -89,6 +89,43 @@ namespace Carna.Runner
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FixtureBase"/> class
+        /// with the specified type of an instance of a fixture and fixture method.
+        /// </summary>
+        /// <param name="fixtureInstanceType">The type of an instance of a fixture.</param>
+        /// <param name="fixtureMethod">The fixture method.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="fixtureInstanceType"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="fixtureMethod"/> is <c>null</c>.
+        /// </exception>
+        protected FixtureBase(Type fixtureInstanceType, MethodInfo fixtureMethod) : this(fixtureInstanceType.RequireNonNull(nameof(fixtureInstanceType)), fixtureMethod.RequireNonNull(nameof(fixtureMethod)), fixtureMethod.GetCustomAttribute<FixtureAttribute>())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FixtureBase"/> class
+        /// with the specified type of an instance of a fixture, fixture method
+        /// and attribute that specifies a fixture.
+        /// </summary>
+        /// <param name="fixtureInstanceType">The type of an instance of a fixture.</param>
+        /// <param name="fixtureMethod">The fixture method.</param>
+        /// <param name="attribute">The attribute that specifies a fixture.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="fixtureInstanceType"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="fixtureMethod"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="attribute"/> is <c>null</c>.
+        /// </exception>
+        protected FixtureBase(Type fixtureInstanceType, MethodInfo fixtureMethod, FixtureAttribute attribute) : this(fixtureInstanceType.RequireNonNull(nameof(fixtureInstanceType)), fixtureMethod.RequireNonNull(nameof(fixtureMethod)).Name, $"{fixtureInstanceType.FullName}.{fixtureMethod.Name}", attribute.RequireNonNull(nameof(attribute)))
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FixtureBase"/> class
         /// with the specified type of an instance of a fixture, name, full name,
         /// and attribute that specifies a fixture.
         /// </summary>
@@ -102,10 +139,26 @@ namespace Carna.Runner
         /// <exception cref="ArgumentNullException">
         /// <paramref name="attribute"/> is <c>null</c>.
         /// </exception>
-        protected FixtureBase(Type fixtureInstanceType, string name, string fullName, FixtureAttribute attribute)
+        protected FixtureBase(Type fixtureInstanceType, string name, string fullName, FixtureAttribute attribute) : this(fixtureInstanceType.RequireNonNull(nameof(fixtureInstanceType)), new FixtureDescriptor(name, fullName, attribute.RequireNonNull(nameof(attribute))))
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FixtureBase"/> class
+        /// with the specified type of an instance of a fixture and a descriptor of a fixture.
+        /// </summary>
+        /// <param name="fixtureInstanceType">The type of an instance of a fixture.</param>
+        /// <param name="fixtureDescriptor">The descriptor of a fixture.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="fixtureInstanceType"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="fixtureDescriptor"/> is <c>null</c>.
+        /// </exception>
+        protected FixtureBase(Type fixtureInstanceType, FixtureDescriptor fixtureDescriptor)
         {
             FixtureInstanceType = fixtureInstanceType.RequireNonNull(nameof(fixtureInstanceType));
-            FixtureDescriptor = new FixtureDescriptor(name, fullName, attribute.RequireNonNull(nameof(attribute)));
+            FixtureDescriptor = fixtureDescriptor.RequireNonNull(nameof(fixtureDescriptor));
         }
 
         /// <summary>

@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 using Carna.Runner.Step;
 
@@ -60,6 +61,27 @@ namespace Carna.Runner
         /// <paramref name="fixtures"/> is <c>null</c>.
         /// </exception>
         public FixtureContainer(string name, FixtureAttribute attribute, IEnumerable<IFixture> fixtures) : base(name, attribute.RequireNonNull(nameof(attribute)))
+        {
+            AddRange(fixtures.RequireNonNull(nameof(fixtures)));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FixtureContainer"/> class
+        /// with the specified type of an instance of a fixture and containing fixtures.
+        /// </summary>
+        /// <param name="fixtureInstanceType">The type of an instance of a fixture.</param>
+        /// <param name="fixtureMethod">The fixture method.</param>
+        /// <param name="fixtures">The containing fixtures.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="fixtureInstanceType"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="fixtureMethod"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="fixtures"/> is <c>null</c>.
+        /// </exception>
+        public FixtureContainer(Type fixtureInstanceType, MethodInfo fixtureMethod, IEnumerable<IFixture> fixtures) : base(fixtureInstanceType.RequireNonNull(nameof(fixtureInstanceType)), fixtureMethod.RequireNonNull(nameof(fixtureMethod)))
         {
             AddRange(fixtures.RequireNonNull(nameof(fixtures)));
         }

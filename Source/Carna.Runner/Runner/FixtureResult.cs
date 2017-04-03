@@ -349,7 +349,7 @@ namespace Carna.Runner
                 .Max();
 
         private static int FixtureResultCount(this IEnumerable<FixtureResult> @this, Func<FixtureResult, bool> filter)
-            => @this.Where(result => !result.FixtureDescriptor.IsContainerFixture)
+            => @this.Where(result => result.Results.IsEmpty())
                 .Count(filter) + @this.Sum(result => result.Results.FixtureResultCount(filter));
     }
 }

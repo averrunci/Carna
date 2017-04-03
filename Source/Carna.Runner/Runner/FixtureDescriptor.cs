@@ -72,7 +72,10 @@ namespace Carna.Runner
         /// </summary>
         /// <param name="name">The name of a fixture.</param>
         /// <param name="attribute">The attribute that specifies a fixture.</param>
-        public FixtureDescriptor(string name, FixtureAttribute attribute) : this(name, name, attribute)
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="attribute"/> is <c>null</c>.
+        /// </exception>
+        public FixtureDescriptor(string name, FixtureAttribute attribute) : this(name, name, attribute.RequireNonNull(nameof(attribute)))
         {
         }
 
@@ -88,11 +91,9 @@ namespace Carna.Runner
         /// </exception>
         public FixtureDescriptor(string name, string fullName, FixtureAttribute attribute)
         {
-            attribute.RequireNonNull(nameof(attribute));
-
+            Attribute = attribute.RequireNonNull(nameof(attribute));
             Name = name;
             FullName = fullName;
-            Attribute = attribute;
         }
 
         /// <summary>

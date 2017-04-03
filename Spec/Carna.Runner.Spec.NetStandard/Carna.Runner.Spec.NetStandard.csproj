@@ -25,6 +25,10 @@
     <ProjectReference Include="..\..\Source\Carna\Carna.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Runner\Carna.Runner.Spec\" />
+  </ItemGroup>
+
   <Import Project="..\Carna.Runner.Spec\Carna.Runner.Spec.projitems" Label="Shared" />
 
 </Project>

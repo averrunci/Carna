@@ -9,6 +9,7 @@
     <Import_RootNamespace>Carna</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureBuilderSpec.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureContainerSpec.CanRun.cs">
       <DependentUpon>FixtureContainerSpec.cs</DependentUpon>
     </Compile>

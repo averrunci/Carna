@@ -51,7 +51,7 @@ namespace Carna.Runner
                     })
                 }
             );
-            Expect("the total count should be 7", () => FixtureResults.TotalCount() == 7);
+            Expect("the total count should be 5", () => FixtureResults.TotalCount() == 5);
         }
 
         [Example("When Enemrable of FixtureResult has any container fixtures, the count excludes the count of container fixtures")]

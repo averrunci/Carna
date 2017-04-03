@@ -68,10 +68,82 @@ namespace Carna.Runner
             fixtureContainer.AddRange(
                 fixtureType.GetRuntimeMethods()
                     .Where(MethodFilter)
-                    .Select(m => new Fixture(fixtureType, m))
+                    .Select(m => Build(fixtureType, m))
             );
             return fixtureContainer;
         }
+
+        /// <summary>
+        /// Builds a fixture with the specified fixture type and fixture method type.
+        /// </summary>
+        /// <param name="fixtureType">The fixture type to build.</param>
+        /// <param name="fixtureMethod">The fixture method type to build.</param>
+        /// <returns>
+        /// The fixture that is built with the specified fixture type and fixture method type.
+        /// </returns>
+        protected virtual IFixture Build(Type fixtureType, MethodInfo fixtureMethod)
+        {
+            var samples = RetrieveSamples(fixtureMethod);
+            if (samples.IsEmpty()) { return new Fixture(fixtureType, fixtureMethod); }
+
+            return new FixtureContainer(fixtureType, fixtureMethod, samples.Select(sample => new Fixture(fixtureType, fixtureMethod, sample)));
+        }
+
+        /// <summary>
+        /// Retrieves samples that is specified to the specified fixture method.
+        /// </summary>
+        /// <param name="fixtureMethod">The fixture method.</param>
+        /// <returns>The samples to be retrieved.</returns>
+        protected virtual IEnumerable<SampleContext> RetrieveSamples(MethodInfo fixtureMethod)
+            => fixtureMethod.GetCustomAttributes<SampleAttribute>().SelectMany(sample => RetrieveSamples(fixtureMethod, sample));
+
+        private IEnumerable<SampleContext> RetrieveSamples(MethodInfo fixtureMethod, SampleAttribute sample)
+            => sample.Source == null ? RetrieveSampleFromData(fixtureMethod, sample) : RetrieveSampleFromSource(fixtureMethod, sample.Source);
+
+        private IEnumerable<SampleContext> RetrieveSampleFromData(MethodInfo fixtureMethod, SampleAttribute sample)
+            => new[] { CreateSampleContext(fixtureMethod, sample) };
+
+        private SampleContext CreateSampleContext(MethodInfo fixtureMethod, SampleAttribute sample)
+        {
+            var items = fixtureMethod.GetParameters().Select(parameter => new SampleContext.Item(parameter.Name)).ToArray();
+            for (var index = 0; index < Math.Min(sample.Data.Length, items.Length); ++index)
+            {
+                items[index].Value = sample.Data[index];
+            }
+            return new SampleContext(sample.Description, items);
+        }
+
+        private IEnumerable<SampleContext> RetrieveSampleFromSource(MethodInfo fixtureMethod, Type sourceType)
+        {
+            if (!typeof(ISampleDataSource).GetTypeInfo().IsAssignableFrom(sourceType.GetTypeInfo()))
+            {
+                throw new InvalidSampleDataSourceTypeException(sourceType, $"{sourceType} must implement {typeof(ISampleDataSource)}");
+            }
+
+            var sourceConstructor = sourceType.GetTypeInfo().DeclaredConstructors.FirstOrDefault(c => !c.GetParameters().Any());
+            if (sourceConstructor == null)
+            {
+                throw new InvalidSampleDataSourceTypeException(sourceType, $"{sourceType} must have a parameterless constructor");
+            }
+
+            var source = sourceConstructor.Invoke(null) as ISampleDataSource;
+            if (source == null) { throw new InvalidOperationException($"{sourceType} must implement {typeof(ISampleDataSource)}"); }
+
+            return source.GetData().OfType<object>().Select(sample => CreateSampleContext(fixtureMethod, sample));
+        }
+
+        private SampleContext CreateSampleContext(MethodInfo fixtureMethod, object sample)
+            => new SampleContext(
+                sample?.GetType().GetRuntimeProperties().FirstOrDefault(p => p.Name == "Description")?.GetValue(sample) as string,
+                fixtureMethod.GetParameters().Select(parameter =>
+                    new SampleContext.Item(parameter.Name)
+                    {
+                        Value = sample?.GetType().GetRuntimeProperties()
+                            .FirstOrDefault(p => string.Equals(p.Name, parameter.Name, StringComparison.CurrentCultureIgnoreCase))?
+                            .GetValue(sample)
+                    }
+                )
+            );
 
         /// <summary>
         /// Gets a filter that is applied to a field that is a target of a fixture.

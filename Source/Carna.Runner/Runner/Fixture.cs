@@ -4,10 +4,10 @@
 // of the MIT license.  See the LICENSE file for details.
 using System;
 using System.Reflection;
+using System.Threading.Tasks;
 
 using Carna.Runner.Step;
 using Carna.Step;
-using System.Threading.Tasks;
 
 namespace Carna.Runner
 {
@@ -22,6 +22,11 @@ namespace Carna.Runner
         protected MethodInfo FixtureMethod { get; }
 
         /// <summary>
+        /// Gets sample data.
+        /// </summary>
+        protected object[] SampleData { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Fixture"/> class
         /// with the specified type of an instance of a fixture and fixture
         /// method.
@@ -34,9 +39,32 @@ namespace Carna.Runner
         /// <exception cref="ArgumentNullException">
         /// <paramref name="fixtureMethod"/> is <c>null</c>.
         /// </exception>
-        public Fixture(Type fixtureInstanceType, MethodInfo fixtureMethod) : base(fixtureInstanceType.RequireNonNull(nameof(fixtureInstanceType)), fixtureMethod.RequireNonNull(nameof(fixtureMethod)).Name, $"{fixtureInstanceType.FullName}.{fixtureMethod.Name}", fixtureMethod.GetCustomAttribute<FixtureAttribute>())
+        public Fixture(Type fixtureInstanceType, MethodInfo fixtureMethod) : base(fixtureInstanceType.RequireNonNull(nameof(fixtureInstanceType)), fixtureMethod.RequireNonNull(nameof(fixtureMethod)))
         {
-            FixtureMethod = fixtureMethod.RequireNonNull(nameof(fixtureMethod));
+            FixtureMethod = fixtureMethod;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Fixture"/> class
+        /// with the specified type of an instance of a fixture and fixture
+        /// method and context of a sample.
+        /// </summary>
+        /// <param name="fixtureInstanceType">The type of an instance of a fixture.</param>
+        /// <param name="fixtureMethod">The fixture method.</param>
+        /// <param name="sample">The context of a sample.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="fixtureInstanceType"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="fixtureMethod"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="sample"/> is <c>null</c>.
+        /// </exception>
+        public Fixture(Type fixtureInstanceType, MethodInfo fixtureMethod, SampleContext sample) : base(fixtureInstanceType.RequireNonNull(nameof(fixtureInstanceType)), fixtureMethod.RequireNonNull(nameof(fixtureMethod)), new SampleFixtureAttribute(sample.RequireNonNull(nameof(sample)).Description))
+        {
+            FixtureMethod = fixtureMethod;
+            SampleData = sample.Data;
         }
 
         /// <summary>
@@ -96,7 +124,7 @@ namespace Carna.Runner
 
         private void Run(object fixtureInstance)
         {
-            Action action = () => (FixtureMethod.Invoke(fixtureInstance, null) as Task)?.Wait();
+            Action action = () => (FixtureMethod.Invoke(fixtureInstance, SampleData) as Task)?.Wait();
 
             var disposable = fixtureInstance as IDisposable;
             disposable.IfPresent(_ => { using (disposable) { action(); } });

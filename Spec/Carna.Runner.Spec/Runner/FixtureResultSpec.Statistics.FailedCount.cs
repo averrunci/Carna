@@ -51,7 +51,7 @@ namespace Carna.Runner
                     })
                 }
             );
-            Expect("the failed count should be 4", () => FixtureResults.FailedCount() == 4);
+            Expect("the failed count should be 2", () => FixtureResults.FailedCount() == 2);
         }
 
         [Example("When Enemrable of FixtureResult has any container fixtures, the count excludes the count of container fixtures")]

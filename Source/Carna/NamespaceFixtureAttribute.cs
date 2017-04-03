@@ -27,11 +27,9 @@ namespace Carna
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NamespaceFixtureAttribute"/> class
-        /// with the specified description of a fixture specified by this attribute.
+        /// with the specified description of a fixture.
         /// </summary>
-        /// <param name="description">
-        /// The description of a fixture specified by this attribute.
-        /// </param>
+        /// <param name="description">The description of a fixture.</param>
         public NamespaceFixtureAttribute(string description) : base(description)
         {
             CanRunParallel = true;
