@@ -4,6 +4,7 @@
 // of the MIT license.  See the LICENSE file for details.
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Carna.Runner
 {
@@ -33,7 +34,7 @@ namespace Carna.Runner
         }
 
         [Example("When Enemrable of FixtureResult has any sub fixtures, the end time of sub fixtures is ignored")]
-        void Ex03()
+        void Ex02()
         {
             Given(
                 "3 FixtureResults (one is a container fixture that has 3 FixtureResults, the others are not container fixtures)",
@@ -50,6 +51,13 @@ namespace Carna.Runner
                 }
             );
             Expect("the start time should be the maximum end time in 3 FixtureResults", () => FixtureResults.EndTime() == new DateTime(2017, 1, 3));
+        }
+
+        [Example("When Enumerable of FixtureResult is empty")]
+        void Ex03()
+        {
+            Given("0 FixtureResult", () => FixtureResults = Enumerable.Empty<FixtureResult>());
+            Expect("the end time should be DateTime.MinValue", () => FixtureResults.EndTime() == DateTime.MinValue);
         }
     }
 }

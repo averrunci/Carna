@@ -343,10 +343,11 @@ namespace Carna.Runner
         /// <param name="this">The fixture results.</param>
         /// <returns>The end time of the fixture results.</returns>
         public static DateTime EndTime(this IEnumerable<FixtureResult> @this)
-            => @this.Where(result => result.EndTime.HasValue)
-                .Select(result => result.EndTime.Value)
-                .DefaultIfEmpty(DateTime.MaxValue)
-                .Max();
+            => @this.IsEmpty() ? DateTime.MinValue :
+                @this.Where(result => result.EndTime.HasValue)
+                    .Select(result => result.EndTime.Value)
+                    .DefaultIfEmpty(DateTime.MaxValue)
+                    .Max();
 
         private static int FixtureResultCount(this IEnumerable<FixtureResult> @this, Func<FixtureResult, bool> filter)
             => @this.Where(result => result.Results.IsEmpty())
