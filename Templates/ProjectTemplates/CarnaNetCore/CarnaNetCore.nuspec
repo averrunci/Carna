@@ -2,11 +2,17 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Carna.ProjectTemplates</id>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
+    <title>Carna Console Runner</title>
     <authors>averrunci</authors>
+    <owners>averrunci</owners>
+    <licenseUrl>https://github.com/averrunci/Carna/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/averrunci/Carna</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Carna Test Project Template</description>
     <language>en-US</language>
-    <projectUrl>https://github.com/averrunci/Carna</projectUrl>
+    <copyright>Copyright (C) 2017 Fievus</copyright>
+    <tags>carna test testing tdd bdd runner</tags>
     <packageTypes>
       <packageType name="Template"/>
     </packageTypes>

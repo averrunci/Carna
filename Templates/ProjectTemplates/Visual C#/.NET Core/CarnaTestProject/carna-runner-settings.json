@@ -1,6 +1,6 @@
 ﻿{
   "assemblies": [
-    "$safeprojectname$.dll"
+    "$projectname$.dll"
   ],
   "reporters": [
     {

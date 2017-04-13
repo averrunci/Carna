@@ -7,13 +7,13 @@
     <Authors>averrunci</Authors>
     <Company />
     <Product>Carner Runner Specification</Product>
-    <Description>The specification class library for the runner of Carna testing framework for .NET</Description>
+    <Description>The specification class library for the runner of Carna testing and specification framework for .NET Platform</Description>
     <Copyright>Copyright (C) 2017 Fievus</Copyright>
     <PackageProjectUrl>https://github.com/averrunci/Carna</PackageProjectUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <AssemblyVersion>1.0.1</AssemblyVersion>
+    <AssemblyVersion>1.1.0</AssemblyVersion>
     <FileVersion>1.0.1</FileVersion>
-    <Version>1.0.1</Version>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
