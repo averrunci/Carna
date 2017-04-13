@@ -24,7 +24,7 @@ namespace Carna
         /// <summary>
         /// Initializes a new instance of the <see cref="AssemblyFixtureAttribute"/> class.
         /// </summary>
-        public AssemblyFixtureAttribute()
+        public AssemblyFixtureAttribute() : this(null)
         {
         }
 

@@ -223,12 +223,14 @@ namespace Carna.Runner
         /// </returns>
         public bool Start(IEnumerable<Assembly> assemblies)
         {
+            var targetAssemblies = new List<Assembly>(Assemblies);
+            
             OnStarting(EventArgs.Empty);
-            assemblies.IfPresent(_ => Assemblies.AddRange(assemblies));
-            StepRunnerFactory.RegisterFrom(Assemblies);
+            assemblies.IfPresent(_ => targetAssemblies.AddRange(assemblies));
+            StepRunnerFactory.RegisterFrom(targetAssemblies);
 
             OnFixtureRunning(EventArgs.Empty);
-            var results = RunFixtures();
+            var results = RunFixtures(targetAssemblies);
             OnFixtureRun(EventArgs.Empty);
 
             OnReporting(EventArgs.Empty);
@@ -238,11 +240,38 @@ namespace Carna.Runner
             return results.All(result => result.Status == FixtureStatus.Passed);
         }
 
-        private IList<FixtureResult> RunFixtures()
+        /// <summary>
+        /// Builds fixtures with assemblies configured by the configuration.
+        /// </summary>
+        /// <returns>The fixtures that are built.</returns>
+        public IEnumerable<IFixture> BuildFixtures() => BuildFixtures(Assemblies);
+
+        /// <summary>
+        /// Builds fixtures with the specified assemblies.
+        /// </summary>
+        /// <param name="assemblies">The assemblies in which fixtures exist.</param>
+        /// <returns>The fixtures that are built.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="assemblies"/> is <c>null</c>.
+        /// </exception>
+        protected IEnumerable<IFixture> BuildFixtures(IEnumerable<Assembly> assemblies)
+            => Builder.Build(TypeFinder.Find(assemblies.RequireNonNull(nameof(assemblies))));
+
+        /// <summary>
+        /// Runs the specified fixtures.
+        /// </summary>
+        /// <param name="fixtures">The fixtures to be run.</param>
+        /// <returns>The fixture running results.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="fixtures"/> is <c>null</c>.
+        /// </exception>
+        public IList<FixtureResult> RunFixtures(IEnumerable<IFixture> fixtures)
         {
+            fixtures.RequireNonNull(nameof(fixtures));
+
             if (Parallel)
             {
-                return Builder.Build(TypeFinder.Find(Assemblies))
+                return fixtures
                     .AsParallel()
                     .Select(fixture => fixture.Run(Filter, StepRunnerFactory, Parallel))
                     .Where(result => result != null)
@@ -250,12 +279,23 @@ namespace Carna.Runner
             }
             else
             {
-                return Builder.Build(TypeFinder.Find(Assemblies))
+                return fixtures
                     .Select(fixture => fixture.Run(Filter, StepRunnerFactory, Parallel))
                     .Where(result => result != null)
                     .ToList();
             }
         }
+
+        /// <summary>
+        /// Runs fixtures that exits in the specified assemblies.
+        /// </summary>
+        /// <param name="assemblies">The assemblies in which fixtures exist.</param>
+        /// <returns>The fixture running results.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="assemblies"/> is <c>null</c>.
+        /// </exception>
+        protected IList<FixtureResult> RunFixtures(IEnumerable<Assembly> assemblies)
+            => RunFixtures(BuildFixtures(assemblies.RequireNonNull(nameof(assemblies))));
 
         /// <summary>
         /// Raises the <see cref="Starting"/> event with the specified event data.
