@@ -61,10 +61,11 @@ namespace Carna.Runner.Step
                 if (HasAssertionWithException)
                 {
                     var exception = results.GetLatestExceptionAt<WhenStep>();
+                    results.ClearException(exception);
+
                     Step.ExecuteAssertion(Step.ExceptionAssertion, exception);
                     Step.ExceptionAction?.Invoke(exception);
                     Step.AsyncExceptionAction?.Invoke(exception)?.Wait();
-                    results.ClearException(exception);
                 }
 
                 return FixtureStepResult.Of(Step).Passed();
