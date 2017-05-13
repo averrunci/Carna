@@ -111,5 +111,15 @@ namespace Carna.Runner.Step
                 () => AssertionDescription.Of(Assertion).ToString() == "expected: 3 but was: 5"
             );
         }
+
+        [Example("When the specified expression is BinaryExpression the expression type of which is Equal and the actual value is null")]
+        void Ex11()
+        {
+            Given("an assertion that has 'x == \"3\"' where x = null", () => { var x = (string)null; Assertion = () => x == "3"; });
+            Expect(
+                "the description should be 'expected: 3 but was: null'",
+                () => AssertionDescription.Of(Assertion).ToString() == "expected: 3 but was: null"
+            );
+        }
     }
 }

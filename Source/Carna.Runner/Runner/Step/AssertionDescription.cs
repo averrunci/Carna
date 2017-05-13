@@ -182,8 +182,8 @@ namespace Carna.Runner.Step
         /// <param name="exception">The exception that is the parameter of the expression.</param>
         /// <returns>The value returned by the specified expression.</returns>
         protected object RetrieveValue(Expression expression, Exception exception = null)
-            => exception == null ? Expression.Lambda(expression).Compile().DynamicInvoke() :
-                Expression.Lambda(expression, Assertion.Parameters[0]).Compile().DynamicInvoke(exception);
+            => (exception == null ? Expression.Lambda(expression).Compile().DynamicInvoke() :
+                Expression.Lambda(expression, Assertion.Parameters[0]).Compile().DynamicInvoke(exception)) ?? "null";
 
         /// <summary>
         /// Formats the specified expected value and actual value.

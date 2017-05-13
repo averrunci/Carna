@@ -122,5 +122,23 @@ namespace Carna.Runner.Step
                 () => AssertionDescription.Of(Assertion, Exception).ToString() == "expected: 3 but was: 7"
             );
         }
+
+        [Example("When the specified expression is BinaryExpression the expression type of which is Equal and the actual value is null")]
+        void Ex12()
+        {
+            Given(
+                "an assertion that has 'exc.Message == 'message'' where exc is an instance of the NullMessageException class whose message is null",
+                () => Assertion = exc => exc.Message == "message"
+            );
+            Expect(
+                "the description should be 'expected: message but was: null'",
+                () => AssertionDescription.Of(Assertion, new NullMessageException()).ToString() == "expected: message but was: null"
+            );
+        }
+
+        class NullMessageException : Exception
+        {
+            public override string Message => null;
+        }
     }
 }
