@@ -6,10 +6,10 @@ using Windows.UI.Xaml;
 
 namespace Carna.UwpRunner.Converters
 {
-    [Specification("ExceptionVisibilityConverter Spec")]
-    class ExceptionVisibilityConverterSpec : FixtureSteppable
+    [Specification("ExceptionToVisibilityConverter Spec")]
+    class ExceptionToVisibilityConverterSpec : FixtureSteppable
     {
-        ExceptionVisibilityConverter Converter { get; } = new ExceptionVisibilityConverter();
+        ExceptionToVisibilityConverter Converter { get; } = new ExceptionToVisibilityConverter();
 
         [Example("Convert")]
         [Sample(null, Visibility.Collapsed, Description = "When null is converted")]

@@ -3,33 +3,32 @@
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
 using System;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
 namespace Carna.UwpRunner.Converters
 {
     /// <summary>
-    /// Provides the appropriate visibility for the boolean value.
+    /// Provides the appropriate child open string representation for the boolean value.
     /// </summary>
-    public class BooleanVisibilityConverter : IValueConverter
+    public sealed class BooleanToChildOpenStringRepresentationConverter : IValueConverter
     {
         /// <summary>
-        /// Returns <see cref="Visibility.Visible"/> if the value is <c>true</c>,
-        /// otherwise returns <see cref="Visibility.Collapsed"/>.
+        /// Returns the child open string representation if the value is <c>true</c>,
+        /// otherwise returns the child close string representation.
         /// </summary>
         /// <param name="value">The source data being passed to the target.</param>
         /// <param name="targetType">The type of data expected by the target dependency property.</param>
         /// <param name="parameter">An optional parameter to be used in the converter logic.</param>
         /// <param name="language">The culture of the conversion.</param>
         /// <returns>
-        /// <see cref="Visibility.Visible"/> if the value is <c>true</c>,
-        /// otherwise <see cref="Visibility.Collapsed"/>.
+        /// The child open string representation if the value is true,
+        /// otherwise the child close string representation.
         /// </returns>
         public object Convert(object value, Type targetType, object parameter, string language)
-            => (bool)value ? Visibility.Visible : Visibility.Collapsed;
+            => (bool)value ? "-" : "+";
 
         /// <summary>
-        /// Returns <c>true</c> if the value is <see cref="Visibility.Visible"/>,
+        /// Returns <c>true</c> if the value is the child open string representation,
         /// otherwise returns <c>false</c>.
         /// </summary>
         /// <param name="value">The target data being passed to the source.</param>
@@ -37,9 +36,9 @@ namespace Carna.UwpRunner.Converters
         /// <param name="parameter">An optional parameter to be used in the converter logic.</param>
         /// <param name="language">The culutre of the conversion.</param>
         /// <returns>
-        /// <c>true</c> if the value is <see cref="Visibility.Visible"/>, otherwise <c>false</c>.
+        /// <c>true</c> if the value is the child open string representation, otherwise <c>false</c>.
         /// </returns>
         public object ConvertBack(object value, Type targetType, object parameter, string language)
-            => (Visibility)value == Visibility.Visible;
+            => value?.ToString() == "-";
     }
 }

@@ -109,20 +109,29 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\BooleanChildOpenStringRepresentationConverter.cs" />
-    <Compile Include="Converters\BooleanVisibilityConverter.cs" />
+    <Compile Include="CarnaUwpRunnerHostView.xaml.cs">
+      <DependentUpon>CarnaUwpRunnerHostView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\BooleanToChildOpenStringRepresentationConverter.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="CarnaUwpRunnerHost.cs" />
     <Compile Include="CarnaUwpRunner.cs" />
-    <Compile Include="CarnaUwpRunnerHostController.cs" />
-    <Compile Include="Converters\ExceptionVisibilityConverter.cs" />
+    <Compile Include="Converters\ExceptionToVisibilityConverter.cs" />
     <Compile Include="FixtureContent.cs" />
-    <Compile Include="FixtureContentController.cs" />
+    <Compile Include="FixtureContentView.xaml.cs">
+      <DependentUpon>FixtureContentView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FixtureEngineExtensions.cs" />
-    <Compile Include="Converters\FixtureStatusBrushConverter.cs" />
+    <Compile Include="Converters\FixtureStatusToBrushConverter.cs" />
     <Compile Include="FixtureStepContent.cs" />
-    <Compile Include="Converters\FixtureStepStatusBrushConverter.cs" />
+    <Compile Include="Converters\FixtureStepStatusToBrushConverter.cs" />
+    <Compile Include="FixtureStepContentView.xaml.cs">
+      <DependentUpon>FixtureStepContentView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FixtureSummary.cs" />
-    <Compile Include="FixtureSummaryController.cs" />
+    <Compile Include="FixtureSummaryView.xaml.cs">
+      <DependentUpon>FixtureSummaryView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Carna.UwpRunner.rd.xml" />
   </ItemGroup>
@@ -137,65 +146,21 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Resources\Styles\CarnaUwpRunnerHostStyle.xaml">
+    <Page Include="CarnaUwpRunnerHostView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="Resources\Styles\CommonStyles.xaml">
+    <Page Include="FixtureContentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="Resources\Styles\FixtureContentStyle.xaml">
+    <Page Include="FixtureStepContentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="Resources\Styles\FixtureStepContentStyle.xaml">
+    <Page Include="FixtureSummaryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Resources\Styles\FixtureSummaryStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Resources\Templates.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Resources\Styles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Resources\Resources.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Resources\Templates\CarnaUwpRunnerHostTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Resources\Templates\FixtureContentTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Resources\Templates\FixtureStepContentTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Resources\Templates\FixtureSummaryTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
   </ItemGroup>
   <ItemGroup />

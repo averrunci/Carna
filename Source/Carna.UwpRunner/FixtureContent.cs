@@ -3,8 +3,8 @@
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
 using System.Collections.ObjectModel;
-
-using Fievus.Windows.Mvc.Bindings;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 using Carna.Runner;
 
@@ -13,37 +13,91 @@ namespace Carna.UwpRunner
     /// <summary>
     /// Represents a content of a fixture.
     /// </summary>
-    public class FixtureContent
+    public class FixtureContent : INotifyPropertyChanged
     {
         /// <summary>
-        /// Gets a description of a fixture.
+        /// Occurs when a property value changes.
         /// </summary>
-        public ObservableProperty<string> Description { get; } = string.Empty.ToObservableProperty();
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// Gets a status of a fixture running.
+        /// Gets or sets a description of a fixture.
         /// </summary>
-        public ObservableProperty<FixtureStatus> Status { get; } = FixtureStatus.Ready.ToObservableProperty();
+        public string Description
+        {
+            get { return description; }
+            set
+            {
+                if (description == value) { return; }
+
+                description = value;
+                RaisePropertyChanged();
+            }
+        }
+        private string description;
 
         /// <summary>
-        /// Gets a duration of a fixture running.
+        /// Gets or sets a status of a fixture running.
         /// </summary>
-        public ObservableProperty<string> Duration { get; } = string.Empty.ToObservableProperty();
+        public FixtureStatus Status
+        {
+            get { return status; }
+            set
+            {
+                if (status == value) { return; }
+
+                status = value;
+                IsFixtureRunning = status == FixtureStatus.Running;
+                IsFixtureStatusVisible = status != FixtureStatus.Running;
+
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(IsFixtureRunning));
+                RaisePropertyChanged(nameof(IsFixtureStatusVisible));
+            }
+        }
+        private FixtureStatus status;
 
         /// <summary>
-        /// Gets an exception that occurred while a fixture was running.
+        /// Gets or sets a duration of a fixture running.
         /// </summary>
-        public ObservableProperty<string> Exception { get; } = new ObservableProperty<string>();
+        public string Duration
+        {
+            get { return duration; }
+            set
+            {
+                if (duration == value) { return; }
+
+                duration = value;
+                RaisePropertyChanged();
+            }
+        }
+        private string duration;
 
         /// <summary>
-        /// Gets a value that indicates whether a fixture is running.
+        /// Gets or sets an exception that occurred while a fixture was running.
         /// </summary>
-        public ObservableProperty<bool> IsFixtureRunning { get; } = false.ToObservableProperty();
+        public string Exception
+        {
+            get { return exception; }
+            set
+            {
+                if (exception == value) { return; }
+
+                exception = value;
+                RaisePropertyChanged();
+            }
+        }
+        private string exception;
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether a fixture is running.
+        /// </summary>
+        public bool IsFixtureRunning { get; private set; }
 
         /// <summary>
         /// Gets a value that indicates whether a fixture status is visible.
         /// </summary>
-        public ObservableProperty<bool> IsFixtureStatusVisible { get; } = true.ToObservableProperty();
+        public bool IsFixtureStatusVisible { get; private set; } = true;
 
         /// <summary>
         /// Gets fixture contents.
@@ -56,22 +110,67 @@ namespace Carna.UwpRunner
         public ObservableCollection<FixtureStepContent> Steps { get; } = new ObservableCollection<FixtureStepContent>();
 
         /// <summary>
-        /// Gets a value that indicates whether the child content is open.
+        /// Gets or sets a value that indicates whether the child content is open.
         /// </summary>
-        public ObservableProperty<bool> IsChildOpen { get; } = false.ToObservableProperty();
+        public bool IsChildOpen
+        {
+            get { return isChildOpen; }
+            set
+            {
+                if (isChildOpen == value) { return; }
+
+                isChildOpen = value;
+                RaisePropertyChanged();
+            }
+        }
+        private bool isChildOpen;
 
         /// <summary>
-        /// Gets a value that indicates whether a text that represents whether the child content is open is visible.
+        /// Gets or sets a value that indicates whether a text that represents whether the child content is open is visible.
         /// </summary>
-        public ObservableProperty<bool> IsChildOpenTextVisible { get; } = false.ToObservableProperty();
+        public bool IsChildOpenTextVisible
+        {
+            get { return isChildOpenTextVisible; }
+            set
+            {
+                if (isChildOpenTextVisible == value) { return; }
+
+                isChildOpenTextVisible = value;
+                RaisePropertyChanged();
+            }
+        }
+        private bool isChildOpenTextVisible;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FixtureContent"/> class.
         /// </summary>
         public FixtureContent()
         {
-            IsFixtureRunning.Bind(Status, status => status == FixtureStatus.Running);
-            IsFixtureStatusVisible.Bind(Status, status => status != FixtureStatus.Running);
         }
+
+        /// <summary>
+        /// Sets the state when the fixture running is completed.
+        /// </summary>
+        /// <param name="result">The result of the fixture running.</param>
+        /// <param name="formatter">The formatter to format the description of the fixture.</param>
+        public void OnFixtureRunningCompleted(FixtureResult result, IFixtureFormatter formatter)
+        {
+            Description = formatter.FormatFixture(result.FixtureDescriptor).ToString();
+            Status = result.Status;
+            Duration = result.Duration.HasValue ? $"{result.Duration.Value.TotalSeconds:0.000} s" : string.Empty;
+            Exception = result.Exception?.ToString();
+        }
+
+        /// <summary>
+        /// Raises the <see cref="PropertyChanged"/> event that occurs when the value of the specified property name changes.
+        /// </summary>
+        /// <param name="propertyName">The name of the property whose value changes.</param>
+        protected void RaisePropertyChanged([CallerMemberName] string propertyName = null) => OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
+
+        /// <summary>
+        /// Raises the <see cref="PropertyChanged"/> event.
+        /// </summary>
+        /// <param name="e">The event data.</param>
+        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e) => PropertyChanged?.Invoke(this, e);
     }
 }

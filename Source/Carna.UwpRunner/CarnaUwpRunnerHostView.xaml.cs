@@ -1,8 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
-//
-// This software may be modified and distributed under the terms
-// of the MIT license.  See the LICENSE file for details.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -11,32 +7,30 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-using Fievus.Windows.Mvc;
-
 using Carna.Runner;
 
 namespace Carna.UwpRunner
 {
     /// <summary>
-    /// Provides the function to handle evnets on the view of <see cref="CarnaUwpRunnerHost"/>.
+    /// Represents a view for CarnaUwpRunnerHost.
     /// </summary>
-    public class CarnaUwpRunnerHostController
+    public sealed partial class CarnaUwpRunnerHostView : UserControl
     {
-        /// <summary>
-        /// Gets or sets <see cref="CarnaUwpRunnerHost"/>.
-        /// </summary>
-        [DataContext]
-        public CarnaUwpRunnerHost Content { get; set; }
+        private CarnaUwpRunnerHost Host => DataContext as CarnaUwpRunnerHost;
 
         /// <summary>
-        /// Gets or sets <see cref="ItemsControl"/> that contains fixtures.
+        /// Initializes a new instance of the <see cref="CarnaUwpRunnerHostView"/> class
+        /// with the specified host.
         /// </summary>
-        [Element]
-        public ItemsControl FixtureItemsControl { get; set; }
+        /// <param name="host">The host of CarnaUwpRunner.</param>
+        public CarnaUwpRunnerHostView(CarnaUwpRunnerHost host)
+        {
+            DataContext = host;
 
-        [EventHandler(Event = "SizeChanged")]
+            InitializeComponent();
+        }
+
         private void OnSizeChanged(object sender, SizeChangedEventArgs e) => AdjustFixtureContentMaxWidth(e.NewSize.Width);
-
         private void AdjustFixtureContentMaxWidth(double width)
         {
             foreach (FrameworkElement child in FixtureItemsControl.ItemsPanelRoot.Children)
@@ -45,27 +39,29 @@ namespace Carna.UwpRunner
             }
         }
 
-        [EventHandler(Event = "Loaded")]
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
+            var element = sender as FrameworkElement;
             var engine = new FixtureEngine().LoadConfiguration();
 
-            Content.Summary.IsFixtureBuilding.Value = true;
-            var fixtures = await Task.Run(() => engine.BuildFixtures().ToList());
-            await Task.Run(() => Configure(fixtures, Content.Fixtures, engine.Filter, (sender as DependencyObject)?.Dispatcher));
-            SetChildOpenCondition(Content.Fixtures);
-            Content.Summary.IsFixtureBuilding.Value = false;
-            Content.Summary.IsFixtureBuilt.Value = true;
-            Content.Summary.StartDateTime.Value = DateTime.UtcNow.ToString("u");
+            Host.Summary.OnFixtureBuildingStarting();
+            var fixtures = await BuildFixtures(engine, element.Dispatcher);
+            Host.Summary.OnFixtureBuildingCompleted(DateTime.UtcNow);
 
-            AdjustFixtureContentMaxWidth((sender as FrameworkElement).ActualWidth);
+            AdjustFixtureContentMaxWidth(element.ActualWidth);
 
-            Content.Summary.IsFixtureRunning.Value = true;
+            Host.Summary.OnFixtureRunningStarting();
             var results = await Task.Run(() => engine.RunFixtures(fixtures));
-            Content.Summary.IsFixtureRunning.Value = false;
-            Content.Summary.StartDateTime.Value = results.StartTime().ToString("u");
-            Content.Summary.EndDateTime.Value = results.EndTime().ToString("u");
-            Content.Summary.Duration.Value = $"{(results.EndTime() - results.StartTime()).TotalSeconds:0.000} seconds";
+            Host.Summary.OnFixtureRunningCompleted(results);
+        }
+
+        private async Task<List<IFixture>> BuildFixtures(FixtureEngine engine, CoreDispatcher dispatcher)
+        {
+            var fixtures = await Task.Run(() => engine.BuildFixtures().ToList());
+            var fixtureContents = Host.Fixtures;
+            await Task.Run(() => Configure(fixtures, fixtureContents, engine.Filter, dispatcher));
+            SetChildOpenCondition(Host.Fixtures);
+            return fixtures;
         }
 
         private async Task Configure(IEnumerable<IFixture> fixtures, IList<FixtureContent> fixtureContents, IFixtureFilter filter, CoreDispatcher dispatcher)
@@ -87,7 +83,7 @@ namespace Carna.UwpRunner
                 }
                 else
                 {
-                    await Configure(childFixtures, fixtureContents.Last().Fixtures, filter, dispatcher);
+                    await Configure(childFixtures, fixtureContents.Last().Fixtures, EnsureFilter(filter, fixture), dispatcher);
                 }
             }
         }
@@ -95,11 +91,14 @@ namespace Carna.UwpRunner
         private IEnumerable<IFixture> RetrieveChildFixtures(IFixture fixture)
             => (fixture as FixtureContainer)?.GetType().GetProperty("Fixtures", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(fixture) as IEnumerable<IFixture>;
 
+        private IFixtureFilter EnsureFilter(IFixtureFilter filter, IFixture fixture)
+            => filter == null ? filter : filter.Accept(fixture.FixtureDescriptor) ? null : filter;
+
         private async Task ConfigureSummary(IFixture fixture, CoreDispatcher dispatcher)
         {
             await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                ++Content.Summary.TotalCount.Value;
+                ++Host.Summary.TotalCount;
             });
 
             fixture.FixtureRun += async (s, e) =>
@@ -108,9 +107,9 @@ namespace Carna.UwpRunner
                 {
                     switch (e.Result.Status)
                     {
-                        case FixtureStatus.Passed: ++Content.Summary.PassedCount.Value; break;
-                        case FixtureStatus.Failed: ++Content.Summary.FailedCount.Value; break;
-                        case FixtureStatus.Pending: ++Content.Summary.PendingCount.Value; break;
+                        case FixtureStatus.Passed: ++Host.Summary.PassedCount; break;
+                        case FixtureStatus.Failed: ++Host.Summary.FailedCount; break;
+                        case FixtureStatus.Pending: ++Host.Summary.PendingCount; break;
                     }
                 });
             };
@@ -119,30 +118,22 @@ namespace Carna.UwpRunner
         private FixtureContent CreateFixtureContent(IFixture fixture, CoreDispatcher dispatcher)
         {
             var fixtureContent = new FixtureContent();
-            fixtureContent.Description.Value = Content.Formatter.FormatFixture(fixture.FixtureDescriptor).ToString();
+            fixtureContent.Description = Host.Formatter.FormatFixture(fixture.FixtureDescriptor).ToString();
 
             fixture.FixtureRunning += async (s, e) =>
             {
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                    fixtureContent.Status.Value = FixtureStatus.Running
+                    fixtureContent.Status = FixtureStatus.Running
                 );
             };
             fixture.FixtureRun += async (s, e) =>
             {
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    fixtureContent.Description.Value = Content.Formatter.FormatFixture(fixture.FixtureDescriptor).ToString();
-                    fixtureContent.Status.Value = e.Result.Status;
-                    fixtureContent.Duration.Value = e.Result.Duration.HasValue ? $"{e.Result.Duration.Value.TotalSeconds:0.000} s" : string.Empty;
-                    fixtureContent.Exception.Value = e.Result.Exception?.ToString();
+                    fixtureContent.OnFixtureRunningCompleted(e.Result, Host.Formatter);
                     e.Result.StepResults.Aggregate(fixtureContent.Steps, (steps, stepResult) =>
                     {
-                        var fixtureStepContent = new FixtureStepContent();
-                        fixtureStepContent.Description.Value = Content.Formatter.FormatFixtureStep(stepResult.Step).ToString();
-                        fixtureStepContent.Status.Value = stepResult.Status;
-                        fixtureStepContent.Duration.Value = stepResult.Duration.HasValue ? $"{stepResult.Duration.Value.TotalSeconds:0.000} s" : string.Empty;
-                        fixtureStepContent.Exception.Value = stepResult.Exception?.ToString();
-                        steps.Add(fixtureStepContent);
+                        steps.Add(new FixtureStepContent(stepResult, Host.Formatter));
                         return steps;
                     });
                 });
@@ -153,9 +144,9 @@ namespace Carna.UwpRunner
 
         private void SetChildOpenCondition(IEnumerable<FixtureContent> fixtureContents)
         {
-            var limit = 100;
+            var limit = 50;
 
-            if (Content.Summary.TotalCount.Value <= limit)
+            if (Host.Summary.TotalCount <= limit)
             {
                 SetChildOpen(fixtureContents, true);
                 return;
@@ -171,19 +162,13 @@ namespace Carna.UwpRunner
             if (namespaceFixtureContents.Count() > limit) { return; }
 
             SetChildOpen(namespaceFixtureContents);
-            limit -= namespaceFixtureContents.Count();
-
-            var rootFixtureContents = namespaceFixtureContents.SelectMany(fixtureContent => fixtureContent.Fixtures).ToList();
-            if (rootFixtureContents.Count() > limit) { return; }
-
-            SetChildOpen(rootFixtureContents);
         }
 
         private void SetChildOpen(IEnumerable<FixtureContent> fixtureContents, bool recursive = false)
         {
             foreach (var fixtureContent in fixtureContents)
             {
-                fixtureContent.IsChildOpen.Value = true;
+                fixtureContent.IsChildOpen = true;
                 if (recursive) { SetChildOpen(fixtureContent.Fixtures, recursive); }
             }
         }

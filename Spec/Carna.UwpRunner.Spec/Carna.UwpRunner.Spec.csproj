@@ -102,14 +102,12 @@
     <Compile Include="BlankPage.xaml.cs">
       <DependentUpon>BlankPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\BooleanChildOpenStringRepresentationConverterSpec.cs" />
-    <Compile Include="Converters\BooleanVisibilityConverterSpec.cs" />
-    <Compile Include="Converters\ExceptionVisibilityConverterSpec.cs" />
-    <Compile Include="Converters\FixtureStatusBrushConverterSpec.cs" />
-    <Compile Include="Converters\FixtureStepStatusBrushConverterSpec.cs" />
-    <Compile Include="FixtureContentControllerSpec.cs" />
+    <Compile Include="Converters\BooleanToChildOpenStringRepresentationConverterSpec.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverterSpec.cs" />
+    <Compile Include="Converters\ExceptionToVisibilityConverterSpec.cs" />
+    <Compile Include="Converters\FixtureStatusToBrushConverterSpec.cs" />
+    <Compile Include="Converters\FixtureStepStatusToBrushConverterSpec.cs" />
     <Compile Include="FixtureContentSpec.cs" />
-    <Compile Include="FixtureSummaryControllerSpec.cs" />
     <Compile Include="FixtureSummarySpec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -150,11 +148,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <EmbeddedResource Include="StatusEllipseVisualStateGroup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Carna.Runner, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">

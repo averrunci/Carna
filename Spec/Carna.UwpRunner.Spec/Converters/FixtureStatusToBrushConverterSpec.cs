@@ -15,10 +15,10 @@ using Carna.Runner;
 
 namespace Carna.UwpRunner.Converters
 {
-    [Specification("FixtureStatusBrushConverter Spec")]
-    class FixtureStatusBrushConverterSpec : FixtureSteppable
+    [Specification("FixtureStatusToBrushConverter Spec")]
+    class FixtureStatusToBrushConverterSpec : FixtureSteppable
     {
-        FixtureStatusBrushConverter Converter { get; } = new FixtureStatusBrushConverter();
+        FixtureStatusToBrushConverter Converter { get; } = new FixtureStatusToBrushConverter();
 
         [Example("Convert")]
         [Sample(Source = typeof(FixtureStatusBrushSampleDataSource))]

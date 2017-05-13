@@ -1,40 +1,37 @@
-﻿// Copyright (C) 2017 Fievus
-//
-// This software may be modified and distributed under the terms
-// of the MIT license.  See the LICENSE file for details.
-using System;
+﻿using System;
 using Windows.Foundation;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Shapes;
-
-using Fievus.Windows.Mvc;
 
 namespace Carna.UwpRunner
 {
     /// <summary>
-    /// Provides the function to handle events on the view of <see cref="FixtureSummary"/>.
+    /// Represents a view for FixtureSummary.
     /// </summary>
-    public class FixtureSummaryController
+    public sealed partial class FixtureSummaryView : UserControl
     {
         private const double passedRateRadius = 40;
 
-        /// <summary>
-        /// Gets or sets <see cref="FixtureSummary"/>.
-        /// </summary>
-        [DataContext]
-        public FixtureSummary FixtureSummary { get; set; }
+        private FixtureSummary Summary => DataContext as FixtureSummary;
 
         /// <summary>
-        /// Gets or sets <see cref="Path"/> that indicates a passed rate.
+        /// Initializes a new instance of the <see cref="FixtureSummaryView"/>.
         /// </summary>
-        [Element]
-        public Path PassedRatePath { get; set; }
-
-        [EventHandler(Event = "Loaded")]
-        private void OnLoaded()
+        public FixtureSummaryView()
         {
-            FixtureSummary.PassedRate.PropertyValueChanged += (s, e) =>
-                PassedRatePath.Data = e.NewValue < 100 ? CreatePathGeometry(e.NewValue) : CreateEllipseGeometry();
+            InitializeComponent();
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            Summary.PropertyChanged += (s, args) =>
+            {
+                if (args.PropertyName == nameof(FixtureSummary.PassedRate))
+                {
+                    PassedRatePath.Data = Summary.PassedRate < 100 ? CreatePathGeometry(Summary.PassedRate) : CreateEllipseGeometry();
+                }
+            };
         }
 
         private Geometry CreateEllipseGeometry()

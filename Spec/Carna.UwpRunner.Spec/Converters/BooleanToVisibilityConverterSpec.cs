@@ -6,10 +6,10 @@ using Windows.UI.Xaml;
 
 namespace Carna.UwpRunner.Converters
 {
-    [Specification("BooleanVisibilityConverter Spec")]
-    class BooleanVisibilityConverterSpec : FixtureSteppable
+    [Specification("BooleanToVisibilityConverter Spec")]
+    class BooleanToVisibilityConverterSpec : FixtureSteppable
     {
-        BooleanVisibilityConverter Converter { get; } = new BooleanVisibilityConverter();
+        BooleanToVisibilityConverter Converter { get; } = new BooleanToVisibilityConverter();
 
         [Example("Convert")]
         [Sample(true, Visibility.Visible, Description = "When true is converted")]

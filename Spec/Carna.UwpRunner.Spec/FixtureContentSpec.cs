@@ -19,8 +19,8 @@ namespace Carna.UwpRunner
         [Sample(FixtureStatus.Pending, false, Description = "When FixtureStaus is Pending")]
         void Ex01(FixtureStatus status, bool isFixtureRunning)
         {
-            When("status is set", () => Content.Status.Value = status);
-            Then($"the value should be {isFixtureRunning}", () => Content.IsFixtureRunning.Value == isFixtureRunning);
+            When("status is set", () => Content.Status = status);
+            Then($"the value should be {isFixtureRunning}", () => Content.IsFixtureRunning == isFixtureRunning);
         }
 
         [Example("Detemines whether a fixture status is visible for the specified fixture status")]
@@ -31,8 +31,8 @@ namespace Carna.UwpRunner
         [Sample(FixtureStatus.Pending, true, Description = "When FixtureStaus is Pending")]
         void Ex02(FixtureStatus status, bool isFixtureStatusVisible)
         {
-            When("status is set", () => Content.Status.Value = status);
-            Then($"the value should be {isFixtureStatusVisible}", () => Content.IsFixtureStatusVisible.Value == isFixtureStatusVisible);
+            When("status is set", () => Content.Status = status);
+            Then($"the value should be {isFixtureStatusVisible}", () => Content.IsFixtureStatusVisible == isFixtureStatusVisible);
         }
     }
 }

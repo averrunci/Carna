@@ -5,8 +5,6 @@
 using System.Collections.ObjectModel;
 using System.Reflection;
 
-using Fievus.Windows.Mvc.Bindings;
-
 using Carna.Runner;
 using Carna.Runner.Formatters;
 
@@ -21,11 +19,6 @@ namespace Carna.UwpRunner
         /// Gets a title of CarnaUwpRunner.
         /// </summary>
         public string Title => $"{typeof(CarnaUwpRunner).GetTypeInfo().Assembly.GetCustomAttribute<AssemblyProductAttribute>().Product} {typeof(CarnaUwpRunner).GetTypeInfo().Assembly.GetCustomAttribute<AssemblyFileVersionAttribute>().Version}";
-
-        /// <summary>
-        /// Gets a maximum width of a fixture content.
-        /// </summary>
-        public ObservableProperty<double> FixtureContentMaxWidth { get; } = new ObservableProperty<double>();
 
         /// <summary>
         /// Gets a fixture summary.

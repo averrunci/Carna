@@ -11,7 +11,7 @@ namespace Carna.UwpRunner.Converters
     /// <summary>
     /// Provides the appropriate visibility for the exception.
     /// </summary>
-    public class ExceptionVisibilityConverter : IValueConverter
+    public class ExceptionToVisibilityConverter : IValueConverter
     {
         /// <summary>
         /// Returns <see cref="Visibility.Collapsed"/> if the value is null or empty,

@@ -4,10 +4,10 @@
 // of the MIT license.  See the LICENSE file for details.
 namespace Carna.UwpRunner.Converters
 {
-    [Specification("BooleanChildOpenStringRepresentationConverter Spec")]
-    class BooleanChildOpenStringRepresentationConverterSpec : FixtureSteppable
+    [Specification("BooleanToChildOpenStringRepresentationConverter Spec")]
+    class BooleanToChildOpenStringRepresentationConverterSpec : FixtureSteppable
     {
-        BooleanChildOpenStringRepresentationConverter Converter { get; } = new BooleanChildOpenStringRepresentationConverter();
+        BooleanToChildOpenStringRepresentationConverter Converter { get; } = new BooleanToChildOpenStringRepresentationConverter();
 
         [Example("Convert")]
         [Sample(true, "-", Description = "When true is converterd")]
