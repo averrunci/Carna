@@ -7,11 +7,12 @@ using System.Linq;
 using NSubstitute;
 
 using Carna.Runner.Step;
+using System;
 
 namespace Carna.Runner
 {
     [Context("Runs fixtures")]
-    class FixtureContainerSpec_RunFixtures : FixtureSteppable
+    class FixtureContainerSpec_RunFixtures : FixtureSteppable, IDisposable
     {
         private IFixture Container { get; }
         private IFixtureFilter Filter { get; }
