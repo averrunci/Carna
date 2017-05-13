@@ -123,7 +123,7 @@ namespace Carna.Runner.Step
             );
         }
 
-        [Example("When the specified expression is BinaryExpression the expression type of which is Equal and the actual value is null")]
+        [Example("When the actual value is null")]
         void Ex12()
         {
             Given(
@@ -139,6 +139,45 @@ namespace Carna.Runner.Step
         class NullMessageException : Exception
         {
             public override string Message => null;
+        }
+
+        [Example("When the specified expression is BinaryExpression the expression type of which is AndAlso that has two expressions.")]
+        void Ex13()
+        {
+            Given(
+                "an assertion that has 'exc.GetType() == typeof(Exception) && exc.Message.Length == 3' where the type of exc is Exception;exc.Message='Message'",
+                () => Assertion = exc => exc.GetType() == typeof(Exception) && exc.Message.Length == 3
+            );
+            Expect(
+                @"the description should be as follows:
+  [passed]
+  [failed] expected: 3 but was: 7
+",
+                () => AssertionDescription.Of(Assertion, Exception).ToString() == @"
+  [passed]
+  [failed] expected: 3 but was: 7"
+            );
+        }
+
+        [Example("When the specified expression is BinaryExpression the expression type of which is AndAlso that has more than two expressions.")]
+        void Ex14()
+        {
+
+            Given(
+                "an assertion that has 'exc.GetType() == typeof(Exception) && exc.Message.Length == 3 && exc.Message == \"exc\"' where the type of exc is Exception;exc.Message='Message'",
+                () => Assertion = exc => exc.GetType() == typeof(Exception) && exc.Message.Length == 3 && exc.Message == "exc"
+            );
+            Expect(
+                @"the description should be as follows:
+  [passed]
+  [failed] expected: 3 but was 7
+  [failed] expected: exc but was: Message
+",
+                () => AssertionDescription.Of(Assertion, Exception).ToString() == @"
+  [passed]
+  [failed] expected: 3 but was: 7
+  [failed] expected: exc but was: Message"
+            );
         }
     }
 }

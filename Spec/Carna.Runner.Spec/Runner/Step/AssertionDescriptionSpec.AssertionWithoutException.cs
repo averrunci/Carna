@@ -112,13 +112,51 @@ namespace Carna.Runner.Step
             );
         }
 
-        [Example("When the specified expression is BinaryExpression the expression type of which is Equal and the actual value is null")]
+        [Example("When the actual value is null")]
         void Ex11()
         {
             Given("an assertion that has 'x == \"3\"' where x = null", () => { var x = (string)null; Assertion = () => x == "3"; });
             Expect(
                 "the description should be 'expected: 3 but was: null'",
                 () => AssertionDescription.Of(Assertion).ToString() == "expected: 3 but was: null"
+            );
+        }
+
+        [Example("When the specified expression is BinaryExpression the expression type of which is AndAlso that has two expressions.")]
+        void Ex12()
+        {
+            Given("an assertion that has 'x == 3 && y == 5' where x = 5; y = 5", () => { var x = 5; var y = 5 ; Assertion = () => x == 3 && y == 5; });
+            var e = AssertionDescription.Of(Assertion).ToString();
+            Expect(
+                @"the description should be as follows:
+  [failed] expected: 3 but was: 5
+  [passed]
+",
+                () => AssertionDescription.Of(Assertion).ToString() == @"
+  [failed] expected: 3 but was: 5
+  [passed]"
+            );
+        }
+
+        [Example("When the specified expression is BinaryExpression the expression type of which is AndAlso that has more than two expressions.")]
+        void Ex13()
+        {
+            Given("an assertion that has 'x == 3 && y == 5 && z == 7 && u == 9' where x = 5; y = 5; z == 7; u == 7", () =>
+                { var x = 5; var y = 5; var z = 7; var u = 7; Assertion = () => x == 3 && y == 5 && z == 7 && u == 9; }
+            );
+            var e = AssertionDescription.Of(Assertion).ToString();
+            Expect(
+                @"the description should be as follows:
+  [failed] expected: 3 but was: 5
+  [passed]
+  [passed]
+  [failed] expected: 9 but was: 7
+",
+                () => AssertionDescription.Of(Assertion).ToString() == @"
+  [failed] expected: 3 but was: 5
+  [passed]
+  [passed]
+  [failed] expected: 9 but was: 7"
             );
         }
     }

@@ -3,6 +3,7 @@
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Carna.Runner.Step
@@ -116,24 +117,37 @@ namespace Carna.Runner.Step
         /// <returns>The description of the assertion.</returns>
         protected virtual string CreateDescription()
         {
-            switch (Assertion.Body.NodeType)
+            var description = CreateDescription(Assertion.Body);
+            return Assertion.Body.NodeType == ExpressionType.AndAlso ? $"{Environment.NewLine}  {description}" : description;
+        }
+
+        /// <summary>
+        /// Creates a description of an assertion with the specified expression.
+        /// </summary>
+        /// <param name="expression">The expression of the assertion.</param>
+        /// <returns>The description of the assertion.</returns>
+        protected virtual string CreateDescription(Expression expression)
+        {
+            switch (expression.NodeType)
             {
                 case ExpressionType.Not:
                     return Format(false, true);
                 case ExpressionType.Equal:
-                    return CreateDescription(Assertion.Body as BinaryExpression);
+                    return CreateDescription(expression as BinaryExpression);
                 case ExpressionType.NotEqual:
-                    return CreateDescription(Assertion.Body as BinaryExpression, "not ");
+                    return CreateDescription(expression as BinaryExpression, "not ");
                 case ExpressionType.LessThan:
-                    return CreateDescription(Assertion.Body as BinaryExpression, "less than ");
+                    return CreateDescription(expression as BinaryExpression, "less than ");
                 case ExpressionType.LessThanOrEqual:
-                    return CreateDescription(Assertion.Body as BinaryExpression, "less than or equal ");
+                    return CreateDescription(expression as BinaryExpression, "less than or equal ");
                 case ExpressionType.GreaterThan:
-                    return CreateDescription(Assertion.Body as BinaryExpression, "greater than ");
+                    return CreateDescription(expression as BinaryExpression, "greater than ");
                 case ExpressionType.GreaterThanOrEqual:
-                    return CreateDescription(Assertion.Body as BinaryExpression, "greater than or equal ");
+                    return CreateDescription(expression as BinaryExpression, "greater than or equal ");
+                case ExpressionType.AndAlso:
+                    return CreateAndAlsoDescription(expression as BinaryExpression);
                 case ExpressionType.Call:
-                    return CreateDescription(Assertion.Body as MethodCallExpression);
+                    return CreateDescription(expression as MethodCallExpression);
                 default:
                     return CreateDefaultDescription();
             }
@@ -154,6 +168,46 @@ namespace Carna.Runner.Step
         protected virtual string CreateDescription(BinaryExpression expression, string prefix = "")
             => expression == null ? CreateDefaultDescription() :
                 Format($"{prefix}{RetrieveValue(expression.Right)}", RetrieveValue(expression.Left, Exception));
+
+        /// <summary>
+        /// Creates a description of an assertion the the specified expression the expression type of which is AndAlso.
+        /// </summary>
+        /// <param name="expression">
+        /// The expression that is the binary expression of the assertion. Its expression type of AndAlso.
+        /// </param>
+        /// <returns>The description of the assertion.</returns>
+        protected virtual string CreateAndAlsoDescription(BinaryExpression expression)
+        {
+            if (expression == null) { return CreateDefaultDescription(); }
+
+            var lines = new List<string>();
+            CreateAndAlsoDescription(expression.Left, lines);
+            CreateAndAlsoDescription(expression.Right, lines);
+            return $"{string.Join(Environment.NewLine + "  ", lines)}";
+        }
+
+        private void CreateAndAlsoDescription(Expression expression, List<string> lines)
+        {
+            if (expression == null) { return; }
+
+            if (expression.NodeType == ExpressionType.AndAlso)
+            {
+                lines.Add(CreateDescription(expression));
+            }
+            else
+            {
+                var assertionResult = Exception == null ? (bool)Expression.Lambda(expression).Compile().DynamicInvoke() :
+                    (bool)Expression.Lambda(expression, Assertion.Parameters).Compile().DynamicInvoke(Exception);
+                if (assertionResult)
+                {
+                    lines.Add("[passed]");
+                }
+                else
+                {
+                    lines.Add($"[failed] {CreateDescription(expression)}");
+                }
+            }
+        }
 
         /// <summary>
         /// Creates a description of an assertion with the specified expression.
