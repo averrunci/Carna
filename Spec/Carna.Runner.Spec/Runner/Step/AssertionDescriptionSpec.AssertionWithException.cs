@@ -106,7 +106,7 @@ namespace Carna.Runner.Step
         [Example("When the specified expression is MethodCallExpression that has a method object.Equals(object)")]
         void Ex10()
         {
-            Given("an assertion that has 'exc.Message.Length.Equals(3)'", () => Assertion = exc => exc.Message.Length.Equals(3));
+            Given("an assertion that has 'exc.Message.Length.Equals(3)' where exc.Message='Message'", () => Assertion = exc => exc.Message.Length.Equals(3));
             Expect(
                 "the description should be 'expected: 3 but was: 7'",
                 () => AssertionDescription.Of(Assertion, Exception).ToString() == "expected: 3 but was: 7"
@@ -116,7 +116,7 @@ namespace Carna.Runner.Step
         [Example("When the specified expression is MethodCallExpression that has a method object.Equals(object, object)")]
         void Ex11()
         {
-            Given("an assertion that has 'Equals(exc.Message.Length, 3)'", () => Assertion = exc => Equals(exc.Message.Length, 3));
+            Given("an assertion that has 'Equals(exc.Message.Length, 3)' where exc.Message='Message'", () => Assertion = exc => Equals(exc.Message.Length, 3));
             Expect(
                 "the description should be 'expected: 3 but was: 7'",
                 () => AssertionDescription.Of(Assertion, Exception).ToString() == "expected: 3 but was: 7"
@@ -145,7 +145,7 @@ namespace Carna.Runner.Step
         void Ex13()
         {
             Given(
-                "an assertion that has 'exc.GetType() == typeof(Exception) && exc.Message.Length == 3' where the type of exc is Exception;exc.Message='Message'",
+                "an assertion that has 'exc.GetType() == typeof(Exception) && exc.Message.Length == 3' where the type of exc is Exception; exc.Message='Message'",
                 () => Assertion = exc => exc.GetType() == typeof(Exception) && exc.Message.Length == 3
             );
             Expect(
@@ -164,7 +164,7 @@ namespace Carna.Runner.Step
         {
 
             Given(
-                "an assertion that has 'exc.GetType() == typeof(Exception) && exc.Message.Length == 3 && exc.Message == \"exc\"' where the type of exc is Exception;exc.Message='Message'",
+                "an assertion that has 'exc.GetType() == typeof(Exception) && exc.Message.Length == 3 && exc.Message == \"exc\"' where the type of exc is Exception; exc.Message='Message'",
                 () => Assertion = exc => exc.GetType() == typeof(Exception) && exc.Message.Length == 3 && exc.Message == "exc"
             );
             Expect(

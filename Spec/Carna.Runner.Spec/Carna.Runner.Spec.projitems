@@ -126,6 +126,9 @@
       <DependentUpon>AssertionDescriptionSpec.cs</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\AssertionDescriptionSpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\AssertionDescriptionSpec.AsswertionWithTypedException.cs">
+      <DependentUpon>AssertionDescriptionSpec.cs</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\ExpectStepRunnerSpec.Constrains.cs">
       <DependentUpon>ExpectStepRunnerSpec.cs</DependentUpon>
     </Compile>
@@ -165,6 +168,12 @@
       <DependentUpon>ThenStepRunnerSpec.cs</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\ThenStepRunnerSpec.StepRunningWithoutExceptionAsync.cs">
+      <DependentUpon>ThenStepRunnerSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\ThenStepRunnerSpec.StepRunningWithTypedException.cs">
+      <DependentUpon>ThenStepRunnerSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\ThenStepRunnerSpec.StepRunningWithTypedExceptionAsync.cs">
       <DependentUpon>ThenStepRunnerSpec.cs</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\WhenStepRunnerSpec.Constrains.cs">

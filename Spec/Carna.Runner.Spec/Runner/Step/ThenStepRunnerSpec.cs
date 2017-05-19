@@ -21,5 +21,11 @@ namespace Carna.Runner.Step
 
         [Context]
         ThenStepRunnerSpec_StepRunningWithExceptionAsync StepRunningWithExceptionAsync { get; }
+
+        [Context]
+        ThenStepRunnerSpec_StepRunningWithTypedException StepRunningWithTypedException { get; }
+
+        [Context]
+        ThenStepRunnerSpec_StepRunningWithTypedExceptionAsync StepRunningWithTypedExceptionAsync { get; }
     }
 }

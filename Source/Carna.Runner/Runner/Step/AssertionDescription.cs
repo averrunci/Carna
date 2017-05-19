@@ -4,6 +4,7 @@
 // of the MIT license.  See the LICENSE file for details.
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Carna.Runner.Step
@@ -50,6 +51,11 @@ namespace Carna.Runner.Step
         /// </list>
         /// </remarks>
         protected virtual string DescriptionFormat { get; } = "expected: {0} but was: {1}";
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether a new line is required at first line.
+        /// </summary>
+        protected bool RequireFirstNewLine { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AssertionDescription"/> class
@@ -117,37 +123,41 @@ namespace Carna.Runner.Step
         /// <returns>The description of the assertion.</returns>
         protected virtual string CreateDescription()
         {
-            var description = CreateDescription(Assertion.Body);
-            return Assertion.Body.NodeType == ExpressionType.AndAlso ? $"{Environment.NewLine}  {description}" : description;
+            RequireFirstNewLine = false;
+            var description = CreateDescription(Assertion.Body, Assertion.Parameters.FirstOrDefault());
+            return RequireFirstNewLine ? $"{Environment.NewLine}  {description}" : description;
         }
 
         /// <summary>
-        /// Creates a description of an assertion with the specified expression.
+        /// Creates a description of an assertion with the specified expression and parameter expression.
         /// </summary>
         /// <param name="expression">The expression of the assertion.</param>
+        /// <param name="parameter">The parameter expression of the assertion.</param>
         /// <returns>The description of the assertion.</returns>
-        protected virtual string CreateDescription(Expression expression)
+        protected virtual string CreateDescription(Expression expression, ParameterExpression parameter)
         {
             switch (expression.NodeType)
             {
                 case ExpressionType.Not:
                     return Format(false, true);
                 case ExpressionType.Equal:
-                    return CreateDescription(expression as BinaryExpression);
+                    return CreateDescription(expression as BinaryExpression, parameter);
                 case ExpressionType.NotEqual:
-                    return CreateDescription(expression as BinaryExpression, "not ");
+                    return CreateDescription(expression as BinaryExpression, parameter, "not ");
                 case ExpressionType.LessThan:
-                    return CreateDescription(expression as BinaryExpression, "less than ");
+                    return CreateDescription(expression as BinaryExpression, parameter, "less than ");
                 case ExpressionType.LessThanOrEqual:
-                    return CreateDescription(expression as BinaryExpression, "less than or equal ");
+                    return CreateDescription(expression as BinaryExpression, parameter, "less than or equal ");
                 case ExpressionType.GreaterThan:
-                    return CreateDescription(expression as BinaryExpression, "greater than ");
+                    return CreateDescription(expression as BinaryExpression, parameter, "greater than ");
                 case ExpressionType.GreaterThanOrEqual:
-                    return CreateDescription(expression as BinaryExpression, "greater than or equal ");
+                    return CreateDescription(expression as BinaryExpression, parameter, "greater than or equal ");
                 case ExpressionType.AndAlso:
-                    return CreateAndAlsoDescription(expression as BinaryExpression);
+                    return CreateAndAlsoDescription(expression as BinaryExpression, parameter);
                 case ExpressionType.Call:
-                    return CreateDescription(expression as MethodCallExpression);
+                    return CreateDescription(expression as MethodCallExpression, parameter);
+                case ExpressionType.Invoke:
+                    return CreateDescription(expression as InvocationExpression);
                 default:
                     return CreateDefaultDescription();
             }
@@ -160,61 +170,66 @@ namespace Carna.Runner.Step
         protected virtual string CreateDefaultDescription() => Format(true, false);
 
         /// <summary>
-        /// Creates a description of an assertion with the specified expression and prefix.
+        /// Creates a description of an assertion with the specified expression, parameter expression, and prefix.
         /// </summary>
         /// <param name="expression">The expression that is the binary expression of the assertion.</param>
+        /// <param name="parameter">The parameter expression of the assertion.</param>
         /// <param name="prefix">The prefix of a description of an assertion.</param>
         /// <returns>The description of the assertion.</returns>
-        protected virtual string CreateDescription(BinaryExpression expression, string prefix = "")
+        protected virtual string CreateDescription(BinaryExpression expression, ParameterExpression parameter, string prefix = "")
             => expression == null ? CreateDefaultDescription() :
-                Format($"{prefix}{RetrieveValue(expression.Right)}", RetrieveValue(expression.Left, Exception));
+                Format($"{prefix}{RetrieveValue(expression.Right)}", RetrieveValue(expression.Left, parameter, Exception));
 
         /// <summary>
-        /// Creates a description of an assertion the the specified expression the expression type of which is AndAlso.
+        /// Creates a description of an assertion the the specified expression the expression type of which is AndAlso
+        /// and parameter expression.
         /// </summary>
         /// <param name="expression">
         /// The expression that is the binary expression of the assertion. Its expression type of AndAlso.
         /// </param>
+        /// <param name="parameter">The parameter expression of the assertion.</param>
         /// <returns>The description of the assertion.</returns>
-        protected virtual string CreateAndAlsoDescription(BinaryExpression expression)
+        protected virtual string CreateAndAlsoDescription(BinaryExpression expression, ParameterExpression parameter)
         {
             if (expression == null) { return CreateDefaultDescription(); }
 
+            RequireFirstNewLine = true;
             var lines = new List<string>();
-            CreateAndAlsoDescription(expression.Left, lines);
-            CreateAndAlsoDescription(expression.Right, lines);
+            CreateAndAlsoDescription(expression.Left, parameter, lines);
+            CreateAndAlsoDescription(expression.Right, parameter, lines);
             return $"{string.Join(Environment.NewLine + "  ", lines)}";
         }
 
-        private void CreateAndAlsoDescription(Expression expression, List<string> lines)
+        private void CreateAndAlsoDescription(Expression expression, ParameterExpression parameter, List<string> lines)
         {
             if (expression == null) { return; }
 
             if (expression.NodeType == ExpressionType.AndAlso)
             {
-                lines.Add(CreateDescription(expression));
+                lines.Add(CreateDescription(expression, parameter));
             }
             else
             {
                 var assertionResult = Exception == null ? (bool)Expression.Lambda(expression).Compile().DynamicInvoke() :
-                    (bool)Expression.Lambda(expression, Assertion.Parameters).Compile().DynamicInvoke(Exception);
+                    (bool)Expression.Lambda(expression, parameter).Compile().DynamicInvoke(Exception);
                 if (assertionResult)
                 {
                     lines.Add("[passed]");
                 }
                 else
                 {
-                    lines.Add($"[failed] {CreateDescription(expression)}");
+                    lines.Add($"[failed] {CreateDescription(expression, parameter)}");
                 }
             }
         }
 
         /// <summary>
-        /// Creates a description of an assertion with the specified expression.
+        /// Creates a description of an assertion with the specified expression and parameter expression.
         /// </summary>
         /// <param name="expression">The expression that is the method call expression of the assertion.</param>
+        /// <param name="parameter">The parameter expression of the assertion.</param>
         /// <returns>The description of the assertion.</returns>
-        protected virtual string CreateDescription(MethodCallExpression expression)
+        protected virtual string CreateDescription(MethodCallExpression expression, ParameterExpression parameter)
         {
             if (expression == null || expression.Method.Name != "Equals" || expression.Arguments.Count == 0 || expression.Arguments.Count > 2)
             {
@@ -223,21 +238,34 @@ namespace Carna.Runner.Step
 
             if (expression.Arguments.Count == 1)
             {
-                return Format(RetrieveValue(expression.Arguments[0]), RetrieveValue(expression.Object, Exception));
+                return Format(RetrieveValue(expression.Arguments[0]), RetrieveValue(expression.Object, parameter, Exception));
             }
 
-            return Format(RetrieveValue(expression.Arguments[1]), RetrieveValue(expression.Arguments[0], Exception));
+            return Format(RetrieveValue(expression.Arguments[1]), RetrieveValue(expression.Arguments[0], parameter, Exception));
+        }
+
+        /// <summary>
+        /// Creates a description of an assertion with the specified expression and parameter expression.
+        /// </summary>
+        /// <param name="expression">The expression that is the invocation expression of the assertion.</param>
+        /// <returns>The description of the assertion.</returns>
+        protected virtual string CreateDescription(InvocationExpression expression)
+        {
+            var lambda = expression.Expression as LambdaExpression;
+            var parameter = lambda.Parameters[0];
+            return CreateDescription(lambda.Body, parameter);
         }
 
         /// <summary>
         /// Retrieves a value returned by the specified expression.
         /// </summary>
         /// <param name="expression">The expression that returns the value.</param>
+        /// <param name="parameter">The parameter expression of the assertion.</param>
         /// <param name="exception">The exception that is the parameter of the expression.</param>
         /// <returns>The value returned by the specified expression.</returns>
-        protected object RetrieveValue(Expression expression, Exception exception = null)
+        protected object RetrieveValue(Expression expression, ParameterExpression parameter = null, Exception exception = null)
             => (exception == null ? Expression.Lambda(expression).Compile().DynamicInvoke() :
-                Expression.Lambda(expression, Assertion.Parameters[0]).Compile().DynamicInvoke(exception)) ?? "null";
+                Expression.Lambda(expression, parameter).Compile().DynamicInvoke(exception)) ?? "null";
 
         /// <summary>
         /// Formats the specified expected value and actual value.

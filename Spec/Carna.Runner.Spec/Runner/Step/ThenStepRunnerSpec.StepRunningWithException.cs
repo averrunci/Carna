@@ -19,7 +19,7 @@ namespace Carna.Runner.Step
         public ThenStepRunnerSpec_StepRunningWithException()
         {
             StepResults = new FixtureStepResultCollection();
-            StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Passed().Build());
+            StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Failed(new InvalidOperationException()).Build());
         }
 
         private IFixtureStepRunner RunnerOf(ThenStep step) => new ThenStepRunner(step);

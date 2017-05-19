@@ -9,18 +9,18 @@ using Carna.Step;
 
 namespace Carna.Runner.Step
 {
-    [Context("Runs ThenStep with Exception asynchronously")]
-    class ThenStepRunnerSpec_StepRunningWithExceptionAsync : FixtureSteppable
+    [Context("Runs ThenStep with Typed Exception asynchronously")]
+    class ThenStepRunnerSpec_StepRunningWithTypedExceptionAsync : FixtureSteppable
     {
         private FixtureStepResultCollection StepResults { get; }
 
         private ThenStep Step { get; set; }
         private FixtureStepResult Result { get; set; }
 
-        public ThenStepRunnerSpec_StepRunningWithExceptionAsync()
+        public ThenStepRunnerSpec_StepRunningWithTypedExceptionAsync()
         {
             StepResults = new FixtureStepResultCollection();
-            StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Failed(new InvalidOperationException()).Build());
+            StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Failed(new ArgumentNullException()).Build());
         }
 
         private IFixtureStepRunner RunnerOf(ThenStep step) => new ThenStepRunner(step);
@@ -29,7 +29,7 @@ namespace Carna.Runner.Step
         void Ex01()
         {
             var thenStepCompleted = false;
-            Given("async ThenStep that has an assertion with Exception that does not throw any exceptions", () => Step = FixtureSteps.CreateThenStep(async exc =>
+            Given("async ThenStep that has an assertion with Exception that does not throw any exceptions", () => Step = FixtureSteps.CreateThenStep<ArgumentNullException>(async exc =>
             {
                 await Task.Delay(100);
                 thenStepCompleted = true;
@@ -44,7 +44,7 @@ namespace Carna.Runner.Step
         [Example("When ThenStep that has an assertion with Exception that throws an exception is run asynchronously")]
         void Ex02()
         {
-            Given("async ThenStep that has an assertion with Exception that throws an exception", () => Step = FixtureSteps.CreateThenStep(async exc =>
+            Given("async ThenStep that has an assertion with Exception that throws an exception", () => Step = FixtureSteps.CreateThenStep<ArgumentNullException>(async exc =>
             {
                 await Task.Delay(100);
                 throw new Exception();

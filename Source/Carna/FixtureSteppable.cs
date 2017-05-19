@@ -241,6 +241,63 @@ namespace Carna
         }
 
         /// <summary>
+        /// Specifies a Then step with the specified type of an exception and description.
+        /// </summary>
+        /// <typeparam name="T">The type of an exception.</typeparam>
+        /// <param name="description">The description of a Then step.</param>
+        /// <param name="callerMemberName">The method name of the caller to the method.</param>
+        /// <param name="callerFilePath">The full path of the source file that contains the caller.</param>
+        /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
+        protected virtual void Then<T>(string description, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) where T : Exception
+        {
+            (this as IFixtureSteppable).Stepper?.Take(new ThenStep(description, typeof(T), GetType(), callerMemberName, callerFilePath, callerLineNumber));
+        }
+
+        /// <summary>
+        /// Specifies a Then step with the specified type of an exception, description, and assertion for an exception.
+        /// </summary>
+        /// <typeparam name="T">The type of an exception.</typeparam>
+        /// <param name="description">The description of a Then step.</param>
+        /// <param name="exceptionAssertion">The assertion for an exception that is used in a Then step.</param>
+        /// <param name="callerMemberName">The method name of the caller to the method.</param>
+        /// <param name="callerFilePath">The full path of the source file that contains the caller.</param>
+        /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
+        protected virtual void Then<T>(string description, Expression<Func<T, bool>> exceptionAssertion, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) where T : Exception
+        {
+            var parameter = Expression.Parameter(typeof(Exception));
+            Expression<Func<Exception, T>> convert = exc => (T)exc;
+            (this as IFixtureSteppable).Stepper?.Take(new ThenStep(description, typeof(T), Expression.Lambda<Func<Exception, bool>>(Expression.Invoke(exceptionAssertion, Expression.Invoke(convert, parameter)), parameter), GetType(), callerMemberName, callerFilePath, callerLineNumber));
+        }
+
+        /// <summary>
+        /// Specifies a Then step with the specified type of an exception, description, and assertion for an exception.
+        /// </summary>
+        /// <typeparam name="T">The type of an exception.</typeparam>
+        /// <param name="description">The description of a Then step.</param>
+        /// <param name="exceptionAssertion">The assertion for an exception that is used in a Then step.</param>
+        /// <param name="callerMemberName">The method name of the caller to the method.</param>
+        /// <param name="callerFilePath">The full path of the source file that contains the caller.</param>
+        /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
+        protected virtual void Then<T>(string description, Action<T> exceptionAssertion, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) where T : Exception
+        {
+            (this as IFixtureSteppable).Stepper?.Take(new ThenStep(description, typeof(T), exc => exceptionAssertion((T)exc), GetType(), callerMemberName, callerFilePath, callerLineNumber));
+        }
+
+        /// <summary>
+        /// Specifies a Then step with the specified type of an exception, description, and asynchronous assertion for an exception.
+        /// </summary>
+        /// <typeparam name="T">The type of an exception.</typeparam>
+        /// <param name="description">The description of a Then step.</param>
+        /// <param name="asyncExceptionAssertion">The asynchronous assertion for an exception that is used in a Then step.</param>
+        /// <param name="callerMemberName">The method name of the caller to the method.</param>
+        /// <param name="callerFilePath">The full path of the source file that contains the caller.</param>
+        /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
+        protected virtual void Then<T>(string description, Func<T, Task> asyncExceptionAssertion, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) where T : Exception
+        {
+            (this as IFixtureSteppable).Stepper?.Take(new ThenStep(description, typeof(T), exc => asyncExceptionAssertion((T)exc), GetType(), callerMemberName, callerFilePath, callerLineNumber));
+        }
+
+        /// <summary>
         /// Specifies a Note step with the specified description.
         /// </summary>
         /// <param name="description">The description of a Note step.</param>

@@ -102,6 +102,26 @@ namespace Carna
             Then(description, asyncExceptionAssertion);
         }
 
+        public void RunThen<T>(string description) where T : Exception
+        {
+            Then<T>(description);
+        }
+
+        public void RunThen<T>(string description, Expression<Func<T, bool>> exceptionAssertion) where T : Exception
+        {
+            Then(description, exceptionAssertion);
+        }
+
+        public void RunThen<T>(string description, Action<T> exceptionAssertion) where T : Exception
+        {
+            Then(description, exceptionAssertion);
+        }
+
+        public void RunThen<T>(string description, Func<T, Task> asyncExceptionAssertion) where T : Exception
+        {
+            Then(description, asyncExceptionAssertion);
+        }
+
         public void RunNote(string description)
         {
             Note(description);

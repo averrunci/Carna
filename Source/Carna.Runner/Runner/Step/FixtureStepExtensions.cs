@@ -24,7 +24,7 @@ namespace Carna.Runner.Step
         /// </exception>
         public static void ExecuteAssertion(this FixtureStep @this, Expression<Func<bool>> assertion)
         {
-            @this?.ExecuteAssertion(assertion, () => assertion.RequireNonNull(nameof(assertion)).Compile()());
+            @this?.ExecuteAssertion(assertion, () => assertion.Compile()());
         }
 
         /// <summary>
@@ -38,10 +38,10 @@ namespace Carna.Runner.Step
         /// </exception>
         public static void ExecuteAssertion(this FixtureStep @this, Expression<Func<Exception, bool>> assertion, Exception exception)
         {
-            @this?.ExecuteAssertion(assertion, () => assertion.RequireNonNull(nameof(assertion)).Compile()(exception));
+            @this?.ExecuteAssertion(assertion, () => assertion.Compile()(exception), exception);
         }
 
-        private static void ExecuteAssertion(this FixtureStep @this, LambdaExpression expression, Func<bool> assertion)
+        private static void ExecuteAssertion(this FixtureStep @this, LambdaExpression expression, Func<bool> assertion, Exception exception = null)
         {
             if (expression == null) { return; }
 
@@ -57,7 +57,7 @@ namespace Carna.Runner.Step
 
             if (!result)
             {
-                throw new AssertionException(@this, AssertionDescription.Of(expression));
+                throw new AssertionException(@this, AssertionDescription.Of(expression, exception));
             }
         }
     }

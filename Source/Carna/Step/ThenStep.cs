@@ -44,6 +44,11 @@ namespace Carna.Step
         public Func<Exception, Task> AsyncExceptionAction { get; }
 
         /// <summary>
+        /// Gets a type of an exception that is thrown at When step.
+        /// </summary>
+        public Type ExceptionType { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ThenStep"/> class
         /// with the specified description, caller type, method name, full path
         /// of the source file, and line number in the source file.
@@ -211,6 +216,112 @@ namespace Carna.Step
         /// </param>
         public ThenStep(string description, Func<Exception, Task> asyncExceptionAction, Type callerType, string callerMemberName, string callerFilePath, int callerLineNumber) : base(description, callerType, callerMemberName, callerFilePath, callerLineNumber)
         {
+            AsyncExceptionAction = asyncExceptionAction;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ThenStep"/> class
+        /// with the specified description, exception type, caller type, 
+        /// method name, full path of the source file, and line number in
+        /// the source file.
+        /// </summary>
+        /// <param name="description">The description of a Then step.</param>
+        /// <param name="exceptionType">The type of the exception that is thrown at When step.</param>
+        /// <param name="callerType">The caller type.</param>
+        /// <param name="callerMemberName">
+        /// The method name of the caller to the method.
+        /// </param>
+        /// <param name="callerFilePath">
+        /// The full path of the source file that contains the caller.
+        /// </param>
+        /// <param name="callerLineNumber">
+        /// The line number in the source file at whiche the method is called.
+        /// </param>
+        public ThenStep(string description, Type exceptionType, Type callerType, string callerMemberName, string callerFilePath, int callerLineNumber) : base(description, callerType, callerMemberName, callerFilePath, callerLineNumber)
+        {
+            ExceptionType = exceptionType;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ThenStep"/> class
+        /// with the specified description exception type, exception assertion
+        /// that returns a boolean value, caller type, method name, full path
+        /// of the source file, and line number in the source file.
+        /// </summary>
+        /// <param name="description">The description of a Then step.</param>
+        /// <param name="exceptionType">The type of the exception that is thrown at When step.</param>
+        /// <param name="exceptionAssertion">
+        /// The exception assertion that returns a boolean value.
+        /// </param>
+        /// <param name="callerType">The caller type.</param>
+        /// <param name="callerMemberName">
+        /// The method name of the caller to the method.
+        /// </param>
+        /// <param name="callerFilePath">
+        /// The full path of the source file that contains the caller.
+        /// </param>
+        /// <param name="callerLineNumber">
+        /// The line number in the source file at whiche the method is called.
+        /// </param>
+        public ThenStep(string description, Type exceptionType, Expression<Func<Exception, bool>> exceptionAssertion, Type callerType, string callerMemberName, string callerFilePath, int callerLineNumber) : base(description, callerType, callerMemberName, callerFilePath, callerLineNumber)
+        {
+            ExceptionType = exceptionType;
+            ExceptionAssertion = exceptionAssertion;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ThenStep"/> class
+        /// with the specified description, exception type, exception action
+        /// that throws an exception if an assertion is failed, caller type,
+        /// method name, full path of the source file, and line number in the
+        /// source file.
+        /// </summary>
+        /// <param name="description">The description of a Then step.</param>
+        /// <param name="exceptionType">The type of the exception that is thrown at When step.</param>
+        /// <param name="exceptionAction">
+        /// The exception action that throws an exception if an assertion is failed.
+        /// </param>
+        /// <param name="callerType">The caller type.</param>
+        /// <param name="callerMemberName">
+        /// The method name of the caller to the method.
+        /// </param>
+        /// <param name="callerFilePath">
+        /// The full path of the source file that contains the caller.
+        /// </param>
+        /// <param name="callerLineNumber">
+        /// The line number in the source file at whiche the method is called.
+        /// </param>
+        public ThenStep(string description, Type exceptionType, Action<Exception> exceptionAction, Type callerType, string callerMemberName, string callerFilePath, int callerLineNumber) : base(description, callerType, callerMemberName, callerFilePath, callerLineNumber)
+        {
+            ExceptionType = exceptionType;
+            ExceptionAction = exceptionAction;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ThenStep"/> class
+        /// with the specified description, exception type, asynchronous
+        /// exception action that throws an exception if an assertion is
+        /// failed, caller type, method name, full path of the source file,
+        /// and line number in the source file.
+        /// </summary>
+        /// <param name="description">The description of a Then step.</param>
+        /// <param name="exceptionType">The type of the exception that is thrown at When step.</param>
+        /// <param name="asyncExceptionAction">
+        /// The asynchronous exception action that throws an exception if an assertion is failed.
+        /// </param>
+        /// <param name="callerType">The caller type.</param>
+        /// <param name="callerMemberName">
+        /// The method name of the caller to the method.
+        /// </param>
+        /// <param name="callerFilePath">
+        /// The full path of the source file that contains the caller.
+        /// </param>
+        /// <param name="callerLineNumber">
+        /// The line number in the source file at whiche the method is called.
+        /// </param>
+        public ThenStep(string description, Type exceptionType, Func<Exception, Task> asyncExceptionAction, Type callerType, string callerMemberName, string callerFilePath, int callerLineNumber) : base(description, callerType, callerMemberName, callerFilePath, callerLineNumber)
+        {
+            ExceptionType = exceptionType;
             AsyncExceptionAction = asyncExceptionAction;
         }
     }

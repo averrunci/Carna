@@ -37,7 +37,8 @@ namespace Carna
                     step.Description == Description &&
                     step.Action == null && step.Assertion == null &&
                     step.ExceptionAction == null && step.ExceptionAssertion == null &&
-                    step.AsyncAction == null && step.AsyncExceptionAction == null
+                    step.AsyncAction == null && step.AsyncExceptionAction == null &&
+                    step.ExceptionType == null
                 ))
             );
         }
@@ -55,7 +56,8 @@ namespace Carna
                     step.Description == Description &&
                     step.Action == assertion && step.Assertion == null &&
                     step.ExceptionAction == null && step.ExceptionAssertion == null &&
-                    step.AsyncAction == null && step.AsyncExceptionAction == null
+                    step.AsyncAction == null && step.AsyncExceptionAction == null &&
+                    step.ExceptionType == null
                 ))
             );
         }
@@ -73,7 +75,8 @@ namespace Carna
                     step.Description == Description &&
                     step.Action == null && step.Assertion == null &&
                     step.ExceptionAction == assertion && step.ExceptionAssertion == null &&
-                    step.AsyncAction == null && step.AsyncExceptionAction == null
+                    step.AsyncAction == null && step.AsyncExceptionAction == null &&
+                    step.ExceptionType == null
                 ))
             );
         }
@@ -91,7 +94,8 @@ namespace Carna
                     step.Description == Description &&
                     step.Action == null && step.Assertion == assertion &&
                     step.ExceptionAction == null && step.ExceptionAssertion == null &&
-                    step.AsyncAction == null && step.AsyncExceptionAction == null
+                    step.AsyncAction == null && step.AsyncExceptionAction == null &&
+                    step.ExceptionType == null
                 ))
             );
         }
@@ -109,7 +113,8 @@ namespace Carna
                     step.Description == Description &&
                     step.Action == null && step.Assertion == null &&
                     step.ExceptionAction == null && step.ExceptionAssertion == assertion &&
-                    step.AsyncAction == null && step.AsyncExceptionAction == null
+                    step.AsyncAction == null && step.AsyncExceptionAction == null &&
+                    step.ExceptionType == null
                 ))
             );
         }
@@ -127,7 +132,8 @@ namespace Carna
                     step.Description == Description &&
                     step.Action == null && step.Assertion == null &&
                     step.ExceptionAction == null && step.ExceptionAssertion == null &&
-                    step.AsyncAction == assertion && step.AsyncExceptionAction == null
+                    step.AsyncAction == assertion && step.AsyncExceptionAction == null &&
+                    step.ExceptionType == null
                 ))
             );
         }
@@ -145,7 +151,82 @@ namespace Carna
                     step.Description == Description &&
                     step.Action == null && step.Assertion == null &&
                     step.ExceptionAction == null && step.ExceptionAssertion == null &&
-                    step.AsyncAction == null && step.AsyncExceptionAction == assertion
+                    step.AsyncAction == null && step.AsyncExceptionAction == assertion &&
+                    step.ExceptionType == null
+                ))
+            );
+        }
+
+        [Example("When a description and the type of the exception is specified")]
+        void Ex08()
+        {
+            Fixture.RunThen<ArgumentNullException>(Description);
+
+            Expect(
+                "the underlying stepper should take a Then step that has the sepcified description and type of the exception.",
+                () => FixtureStepper.Received().Take(Arg.Is<ThenStep>(step =>
+                    step.Description == Description &&
+                    step.Action == null && step.Assertion == null &&
+                    step.ExceptionAction == null && step.ExceptionAssertion == null &&
+                    step.AsyncAction == null && step.AsyncExceptionAction == null &&
+                    step.ExceptionType == typeof(ArgumentNullException)
+                ))
+            );
+        }
+
+        [Example("When a description, the type of the exception, and an exception assertion the type of which is Action are specified")]
+        void Ex09()
+        {
+            Action<ArgumentNullException> assertion = exc => { };
+
+            Fixture.RunThen<ArgumentNullException>(Description, exc => { });
+
+            Expect(
+                "the underlying stepper should take a Then step that has the specified description and assertion.",
+                () => FixtureStepper.Received().Take(Arg.Is<ThenStep>(step =>
+                    step.Description == Description &&
+                    step.Action == null && step.Assertion == null &&
+                    step.ExceptionAction != null && step.ExceptionAssertion == null &&
+                    step.AsyncAction == null && step.AsyncExceptionAction == null &&
+                    step.ExceptionType == typeof(ArgumentNullException)
+                ))
+            );
+        }
+
+        [Example("When a description, the type of the exception and an exception assertion that returns a boolean value are specified")]
+        void Ex10()
+        {
+            Expression<Func<ArgumentNullException, bool>> assertion = exc => true;
+
+            Fixture.RunThen<ArgumentNullException>(Description, exc => true);
+
+            Expect(
+                "the underlying stepper should take a Then step that has the specified description and assertion.",
+                () => FixtureStepper.Received().Take(Arg.Is<ThenStep>(step =>
+                    step.Description == Description &&
+                    step.Action == null && step.Assertion == null &&
+                    step.ExceptionAction == null && step.ExceptionAssertion != null &&
+                    step.AsyncAction == null && step.AsyncExceptionAction == null &&
+                    step.ExceptionType == typeof(ArgumentNullException)
+                ))
+            );
+        }
+
+        [Example("When a description, the type of the exception and an exception assertion the type of which is Func<Exception, Task> are specified")]
+        void Ex11()
+        {
+            Func<ArgumentNullException, Task> assertion = async exc => { await Task.Delay(100); };
+
+            Fixture.RunThen<ArgumentNullException>(Description, async exc => { await Task.Delay(100); });
+
+            Expect(
+                "the underlying stepper should take a Then step that has the specified description and assertion.",
+                () => FixtureStepper.Received().Take(Arg.Is<ThenStep>(step =>
+                    step.Description == Description &&
+                    step.Action == null && step.Assertion == null &&
+                    step.ExceptionAction == null && step.ExceptionAssertion == null &&
+                    step.AsyncAction == null && step.AsyncExceptionAction != null &&
+                    step.ExceptionType == typeof(ArgumentNullException)
                 ))
             );
         }

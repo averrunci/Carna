@@ -63,6 +63,12 @@ namespace Carna.Runner.Step
                     var exception = results.GetLatestExceptionAt<WhenStep>();
                     results.ClearException(exception);
 
+                    Step.ExceptionType.IfPresent(exceptionType =>
+                    {
+                        exception.IfPresent(_ => Step.ExecuteAssertion(() => exception.GetType() == Step.ExceptionType));
+                        exception.IfAbsent(() => Step.ExecuteAssertion(() => null == Step.ExceptionType));
+                    });
+
                     Step.ExecuteAssertion(Step.ExceptionAssertion, exception);
                     Step.ExceptionAction?.Invoke(exception);
                     Step.AsyncExceptionAction?.Invoke(exception)?.Wait();
@@ -78,6 +84,6 @@ namespace Carna.Runner.Step
 
         private bool IsPending =>!HasAssertionWithoutException && !HasAssertionWithException;
         private bool HasAssertionWithoutException => Step.Assertion != null || Step.Action != null || Step.AsyncAction != null;
-        private bool HasAssertionWithException => Step.ExceptionAssertion != null || Step.ExceptionAction != null || Step.AsyncExceptionAction != null;
+        private bool HasAssertionWithException => Step.ExceptionAssertion != null || Step.ExceptionAction != null || Step.AsyncExceptionAction != null || Step.ExceptionType != null;
     }
 }
