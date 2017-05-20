@@ -109,6 +109,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CarnaUwpRunnerConfiguration.cs" />
     <Compile Include="CarnaUwpRunnerHostView.xaml.cs">
       <DependentUpon>CarnaUwpRunnerHostView.xaml</DependentUpon>
     </Compile>

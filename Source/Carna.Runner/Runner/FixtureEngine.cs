@@ -45,7 +45,7 @@ namespace Carna.Runner
         public event EventHandler Reported;
 
         /// <summary>
-        /// Gets assemblies in which fixtures exists.
+        /// Gets assemblies in which fixtures exist.
         /// </summary>
         public List<Assembly> Assemblies { get; } = new List<Assembly>();
 
@@ -168,43 +168,7 @@ namespace Carna.Runner
         /// <exception cref="TypeNotFoundException">
         /// The type that is defined in the <paramref name="configuration"/> is not found.
         /// </exception>
-        protected virtual T Create<T>(CarnaConfiguration configuration) where T : class
-        {
-            var type = GetType(configuration.Type);
-            if (type == null) { throw new TypeNotFoundException($"{configuration.Type} is not found"); }
-
-            foreach (var constructor in type.GetTypeInfo().DeclaredConstructors.Where(c => c.IsPublic))
-            {
-                var parameters = constructor.GetParameters();
-                if (parameters.Length == 1 && parameters[0].ParameterType == typeof(IDictionary<string, string>))
-                {
-                    return constructor.Invoke(new[] { configuration.Options }) as T;
-                }
-            }
-
-            return Activator.CreateInstance(type) as T;
-        }
-
-        private Type GetType(string typeName)
-        {
-            var type = Type.GetType(typeName);
-            if (type != null) { return type; }
-
-            var typeNameParts = typeName.Split(',');
-            if (typeNameParts.Length < 2) { return null; }
-
-            return Assemblies.SelectMany(assembly => assembly.DefinedTypes)
-                .FirstOrDefault(t =>
-                {
-                    var assemblyQualifiedNameParts = t.AssemblyQualifiedName.Split(',');
-                    if (typeNameParts.Length > assemblyQualifiedNameParts.Length) { return false; }
-                    for (var index = 0; index < typeNameParts.Length; ++index)
-                    {
-                        if (typeNameParts[index].Trim() != assemblyQualifiedNameParts[index].Trim()) { return false; }
-                    }
-                    return true;
-                })?.AsType();
-        }
+        protected virtual T Create<T>(CarnaConfiguration configuration) where T : class => configuration.Create<T>(Assemblies);
 
         /// <summary>
         /// Starts a fixture engine.

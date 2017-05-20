@@ -55,9 +55,15 @@ namespace Carna.UwpRunner
         private string errorMessage;
 
         /// <summary>
-        /// Gets a formatter of a fixture.
+        /// Gets a value that indicates whether to exit the application automatically
+        /// after the running of CarnaUwpRunner is completed.
         /// </summary>
-        public IFixtureFormatter Formatter { get; }
+        public bool AutoExit { get; set; }
+
+        /// <summary>
+        /// Gets or sets a formatter of a fixture.
+        /// </summary>
+        public IFixtureFormatter Formatter { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CarnaUwpRunner"/> class

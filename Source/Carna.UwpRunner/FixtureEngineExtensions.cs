@@ -13,17 +13,28 @@ namespace Carna.UwpRunner
 {
     static class FixtureEngineExtensions
     {
-        public static FixtureEngine LoadConfiguration(this FixtureEngine @this)
+        public static FixtureEngine LoadConfiguration(this FixtureEngine @this, CarnaUwpRunnerHost host)
         {
             using (var stream = new FileStream("carna-runner-settings.json", FileMode.Open, FileAccess.Read))
             {
                 stream.Position = (stream.ReadByte() == 0xef) ? 3 : 0;
 
                 var serializer = new DataContractJsonSerializer(
-                    typeof(CarnaRunnerConfiguration),
+                    typeof(CarnaUwpRunnerConfiguration),
                     new DataContractJsonSerializerSettings { UseSimpleDictionaryFormat = true }
                 );
-                @this.Configure((serializer.ReadObject(stream) as CarnaRunnerConfiguration)?.Ensure(new AssemblyLoader()));
+                var configuration = serializer.ReadObject(stream) as CarnaUwpRunnerConfiguration;
+                if (configuration != null)
+                { 
+                    configuration.Ensure(new AssemblyLoader());
+                    @this.Configure(configuration);
+
+                    host.AutoExit = configuration.AutoExit;
+                    if (configuration.Formatter != null)
+                    {
+                        host.Formatter = configuration.Formatter.Create<IFixtureFormatter>(@this.Assemblies);
+                    }
+                }
             }
 
             return @this;

@@ -44,7 +44,7 @@ namespace Carna.UwpRunner
             try
             {
                 var element = sender as FrameworkElement;
-                var engine = new FixtureEngine().LoadConfiguration();
+                var engine = new FixtureEngine().LoadConfiguration(Host);
 
                 Host.Summary.OnFixtureBuildingStarting();
                 var fixtures = await BuildFixtures(engine, element.Dispatcher);
@@ -59,6 +59,13 @@ namespace Carna.UwpRunner
             catch (Exception exc)
             {
                 Host.ErrorMessage = exc.ToString();
+            }
+            finally
+            {
+                if (Host.AutoExit)
+                {
+                    Application.Current.Exit();
+                }
             }
         }
 
