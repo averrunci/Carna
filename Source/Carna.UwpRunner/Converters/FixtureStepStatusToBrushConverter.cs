@@ -34,6 +34,7 @@ namespace Carna.UwpRunner.Converters
                 case FixtureStepStatus.Passed: return new SolidColorBrush(Colors.Lime);
                 case FixtureStepStatus.Failed: return new SolidColorBrush(Colors.Red);
                 case FixtureStepStatus.Pending: return new SolidColorBrush(Colors.Yellow);
+                case FixtureStepStatus.None: return new SolidColorBrush(Colors.Yellow);
                 default: return new SolidColorBrush(Colors.Black);
             }
         }

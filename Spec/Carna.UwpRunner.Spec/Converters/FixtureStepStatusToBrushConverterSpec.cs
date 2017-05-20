@@ -47,6 +47,7 @@ namespace Carna.UwpRunner.Converters
                 yield return new { Description = "When FixtureStepStatus.Passed is converted", Value = FixtureStepStatus.Passed, Expected = Colors.Lime };
                 yield return new { Description = "When FixtureStepStatus.Failed is converted", Value = FixtureStepStatus.Failed, Expected = Colors.Red };
                 yield return new { Description = "When FixtureStepStatus.Pending is converted", Value = FixtureStepStatus.Pending, Expected = Colors.Yellow };
+                yield return new { Description = "When FixtureStepStatus.None is converted", Value = FixtureStepStatus.None, Expected = Colors.Yellow };
             }
         }
     }
