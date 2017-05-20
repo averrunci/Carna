@@ -41,18 +41,25 @@ namespace Carna.UwpRunner
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            var element = sender as FrameworkElement;
-            var engine = new FixtureEngine().LoadConfiguration();
+            try
+            {
+                var element = sender as FrameworkElement;
+                var engine = new FixtureEngine().LoadConfiguration();
 
-            Host.Summary.OnFixtureBuildingStarting();
-            var fixtures = await BuildFixtures(engine, element.Dispatcher);
-            Host.Summary.OnFixtureBuildingCompleted(DateTime.UtcNow);
+                Host.Summary.OnFixtureBuildingStarting();
+                var fixtures = await BuildFixtures(engine, element.Dispatcher);
+                Host.Summary.OnFixtureBuildingCompleted(DateTime.UtcNow);
 
-            AdjustFixtureContentMaxWidth(element.ActualWidth);
+                AdjustFixtureContentMaxWidth(element.ActualWidth);
 
-            Host.Summary.OnFixtureRunningStarting();
-            var results = await Task.Run(() => engine.RunFixtures(fixtures));
-            Host.Summary.OnFixtureRunningCompleted(results);
+                Host.Summary.OnFixtureRunningStarting();
+                var results = await Task.Run(() => engine.RunFixtures(fixtures));
+                Host.Summary.OnFixtureRunningCompleted(results);
+            }
+            catch (Exception exc)
+            {
+                Host.ErrorMessage = exc.ToString();
+            }
         }
 
         private async Task<List<IFixture>> BuildFixtures(FixtureEngine engine, CoreDispatcher dispatcher)

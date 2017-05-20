@@ -15,6 +15,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -27,7 +28,24 @@
 
             <local:FixtureSummaryView Grid.Row="1" DataContext="{Binding Summary}"/>
 
-            <Grid Grid.Row="2"
+            <Border Grid.Row="2"
+                    Margin="10 0" Padding="10"
+                    BorderBrush="Red" BorderThickness="3 1 1 1"
+                    Visibility="{Binding ErrorMessage, Converter={StaticResource ExceptionToVisibilityConverter}}">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Offset="0" Color="#fff"/>
+                        <GradientStop Offset="1" Color="#eee"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                
+                <TextBlock Foreground="Red"
+                           FontWeight="Bold"
+                           TextWrapping="Wrap"
+                           Text="{Binding ErrorMessage}"/>
+            </Border>
+
+            <Grid Grid.Row="3"
                   Margin="10" Padding="10"
                   BorderBrush="Black" BorderThickness="1" CornerRadius="5">
                 <Grid.Background>

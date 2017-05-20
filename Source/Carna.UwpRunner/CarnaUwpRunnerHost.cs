@@ -5,6 +5,9 @@
 using System.Collections.ObjectModel;
 using System.Reflection;
 
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
 using Carna.Runner;
 using Carna.Runner.Formatters;
 
@@ -13,8 +16,13 @@ namespace Carna.UwpRunner
     /// <summary>
     /// Represents a host of CarnaUwpRunner.
     /// </summary>
-    public class CarnaUwpRunnerHost
+    public class CarnaUwpRunnerHost : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Occurs when a property value changes.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
         /// <summary>
         /// Gets a title of CarnaUwpRunner.
         /// </summary>
@@ -31,6 +39,22 @@ namespace Carna.UwpRunner
         public ObservableCollection<FixtureContent> Fixtures { get; } = new ObservableCollection<FixtureContent>();
 
         /// <summary>
+        /// Gets or sets an error message that occurs while CarnaUwpRunner is running.
+        /// </summary>
+        public string ErrorMessage
+        {
+            get { return errorMessage; }
+            set
+            {
+                if (errorMessage == value) { return; }
+
+                errorMessage = value;
+                RaisePropertyChanged();
+            }
+        }
+        private string errorMessage;
+
+        /// <summary>
         /// Gets a formatter of a fixture.
         /// </summary>
         public IFixtureFormatter Formatter { get; }
@@ -43,5 +67,17 @@ namespace Carna.UwpRunner
         /// The formatter of a fixture. If <c>null</c> is specified, <see cref="FixtureFormatter"/> is used.
         /// </param>
         public CarnaUwpRunnerHost(IFixtureFormatter formatter) => Formatter = formatter ?? new FixtureFormatter();
+
+        /// <summary>
+        /// Raises the <see cref="PropertyChanged"/> event that occurs when the value of the specified property name changes.
+        /// </summary>
+        /// <param name="propertyName">The name of the property whose value changes.</param>
+        protected void RaisePropertyChanged([CallerMemberName] string propertyName = null) => OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
+
+        /// <summary>
+        /// Raises the <see cref="PropertyChanged"/> event.
+        /// </summary>
+        /// <param name="e">The event data.</param>
+        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e) => PropertyChanged?.Invoke(this, e);
     }
 }
