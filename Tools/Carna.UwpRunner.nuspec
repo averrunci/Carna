@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Carna.UwpRunner</id>
+    <version>1.2.0</version>
+    <title>Carna UWP Runner</title>
+    <authors>averrunci</authors>
+    <owners>averrunci</owners>
+    <licenseUrl>https://github.com/averrunci/Carna/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/averrunci/Carna</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>The runner of Carna testing and specification framework for Universal Windows Platform application</description>
+    <language>en-US</language>
+    <copyright>Copyright (C) 2017 Fievus</copyright>
+    <tags>carna test testing tdd bdd runner uwp</tags>
+    <dependencies>
+      <dependency id="Carna" version="1.2.0"/>
+      <dependency id="Carna.Runner" version="1.2.0"/>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\LICENSE"/>
+    <file src="..\Binary\Carna.UwpRunner\Release\Carna.UwpRunner.dll" target="lib\uap10.0"/>
+    <file src="..\Binary\Carna.UwpRunner\Release\Carna.UwpRunner.pri" target="lib\uap10.0"/>
+    <file src="..\Binary\Carna.UwpRunner\Release\Carna.UwpRunner.XML" target="lib\uap10.0"/>
+    <file src="..\Binary\Carna.UwpRunner\Release\Carna.UwpRunner.xr.xml" target="lib\uap10.0\Carna.UwpRunner"/>
+    <file src="..\Binary\Carna.UwpRunner\Release\*.xbf" target="lib\uap10.0\Carna.UwpRunner"/>
+  </files>
+</package>
