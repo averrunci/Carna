@@ -6,7 +6,7 @@
 
   <PropertyGroup>
     <OutputTypeEx>exe</OutputTypeEx>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>Carna.ConsoleRunner</RootNamespace>
     <Authors>averrunci</Authors>
     <Company />

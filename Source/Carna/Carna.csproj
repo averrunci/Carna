@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.3</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <Copyright>Copyright (C) 2017 Fievus</Copyright>
     <Description>The testing and specification framework for .NET Platform</Description>
     <Company />
