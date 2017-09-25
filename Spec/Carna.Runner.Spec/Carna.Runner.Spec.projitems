@@ -126,7 +126,10 @@
       <DependentUpon>AssertionDescriptionSpec.cs</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\AssertionDescriptionSpec.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\AssertionDescriptionSpec.AsswertionWithTypedException.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\AssertionDescriptionSpec.AssertionWithTypedException.cs">
+      <DependentUpon>AssertionDescriptionSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\AssertionDescriptionSpec.AssertionFallback.cs">
       <DependentUpon>AssertionDescriptionSpec.cs</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\ExpectStepRunnerSpec.Constrains.cs">

@@ -126,7 +126,6 @@ namespace Carna.Runner.Step
         void Ex12()
         {
             Given("an assertion that has 'x == 3 && y == 5' where x = 5; y = 5", () => { var x = 5; var y = 5 ; Assertion = () => x == 3 && y == 5; });
-            var e = AssertionDescription.Of(Assertion).ToString();
             Expect(
                 @"the description should be as follows:
   [failed] expected: 3 but was: 5
@@ -144,7 +143,6 @@ namespace Carna.Runner.Step
             Given("an assertion that has 'x == 3 && y == 5 && z == 7 && u == 9' where x = 5; y = 5; z == 7; u == 7", () =>
                 { var x = 5; var y = 5; var z = 7; var u = 7; Assertion = () => x == 3 && y == 5 && z == 7 && u == 9; }
             );
-            var e = AssertionDescription.Of(Assertion).ToString();
             Expect(
                 @"the description should be as follows:
   [failed] expected: 3 but was: 5

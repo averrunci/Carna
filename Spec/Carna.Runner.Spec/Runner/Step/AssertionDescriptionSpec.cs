@@ -15,5 +15,8 @@ namespace Carna.Runner.Step
 
         [Context]
         AssertionDescriptionSpec_AssertionWithTypedException AssertionWithTypedException { get; }
+
+        [Context]
+        AssertionDescriptionSpec_AssertionFallback AssertionFallback { get; }
     }
 }

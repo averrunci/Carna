@@ -53,6 +53,22 @@ namespace Carna.Runner.Step
         protected virtual string DescriptionFormat { get; } = "expected: {0} but was: {1}";
 
         /// <summary>
+        /// Gets a format of an expected value when an exception occurred at retrieving it.
+        /// </summary>
+        /// <remarks>
+        /// The parameter({0}) of a format is a message of an exception.
+        /// </remarks>
+        protected virtual string FallbackExpectedValueFormat { get; } = "an exception occurred ({0})";
+
+        /// <summary>
+        /// Gets a format of an actual value when an exception occurred at retrieving it.
+        /// </summary>
+        /// <remarks>
+        /// The parameter({0}) of a format is a message of an exception.
+        /// </remarks>
+        protected virtual string FallbackActualValueFormat { get; } = "throwing an exception ({0})";
+
+        /// <summary>
         /// Gets or sets a value that indicates whether a new line is required at first line.
         /// </summary>
         protected bool RequireFirstNewLine { get; set; }
@@ -178,7 +194,10 @@ namespace Carna.Runner.Step
         /// <returns>The description of the assertion.</returns>
         protected virtual string CreateDescription(BinaryExpression expression, ParameterExpression parameter, string prefix = "")
             => expression == null ? CreateDefaultDescription() :
-                Format($"{prefix}{RetrieveValue(expression.Right)}", RetrieveValue(expression.Left, parameter, Exception));
+                Format(
+                    $"{prefix}{RetrieveValue(expression.Right, fallbackValueFormat: FallbackExpectedValueFormat)}",
+                    RetrieveValue(expression.Left, parameter, Exception, FallbackActualValueFormat)
+                );
 
         /// <summary>
         /// Creates a description of an assertion the the specified expression the expression type of which is AndAlso
@@ -210,16 +229,18 @@ namespace Carna.Runner.Step
             }
             else
             {
-                var assertionResult = Exception == null ? (bool)Expression.Lambda(expression).Compile().DynamicInvoke() :
-                    (bool)Expression.Lambda(expression, parameter).Compile().DynamicInvoke(Exception);
-                if (assertionResult)
+                try
                 {
-                    lines.Add("[passed]");
-                }
-                else
-                {
-                    lines.Add($"[failed] {CreateDescription(expression, parameter)}");
-                }
+                    var assertionResult = Exception == null ? (bool)Expression.Lambda(expression).Compile().DynamicInvoke() :
+                        (bool)Expression.Lambda(expression, parameter).Compile().DynamicInvoke(Exception);
+                    if (assertionResult)
+                    {
+                        lines.Add("[passed]");
+                        return;
+                    }
+                } catch { }
+
+                lines.Add($"[failed] {CreateDescription(expression, parameter)}");
             }
         }
 
@@ -238,10 +259,16 @@ namespace Carna.Runner.Step
 
             if (expression.Arguments.Count == 1)
             {
-                return Format(RetrieveValue(expression.Arguments[0]), RetrieveValue(expression.Object, parameter, Exception));
+                return Format(
+                    RetrieveValue(expression.Arguments[0], fallbackValueFormat: FallbackExpectedValueFormat),
+                    RetrieveValue(expression.Object, parameter, Exception, FallbackActualValueFormat)
+                );
             }
 
-            return Format(RetrieveValue(expression.Arguments[1]), RetrieveValue(expression.Arguments[0], parameter, Exception));
+            return Format(
+                RetrieveValue(expression.Arguments[1], fallbackValueFormat: FallbackExpectedValueFormat),
+                RetrieveValue(expression.Arguments[0], parameter, Exception, FallbackActualValueFormat)
+            );
         }
 
         /// <summary>
@@ -262,10 +289,22 @@ namespace Carna.Runner.Step
         /// <param name="expression">The expression that returns the value.</param>
         /// <param name="parameter">The parameter expression of the assertion.</param>
         /// <param name="exception">The exception that is the parameter of the expression.</param>
+        /// <param name="fallbackValueFormat">The format of a value when an exception occurred.</param>
         /// <returns>The value returned by the specified expression.</returns>
-        protected object RetrieveValue(Expression expression, ParameterExpression parameter = null, Exception exception = null)
-            => (exception == null ? Expression.Lambda(expression).Compile().DynamicInvoke() :
-                Expression.Lambda(expression, parameter).Compile().DynamicInvoke(exception)) ?? "null";
+        protected object RetrieveValue(Expression expression, ParameterExpression parameter = null, Exception exception = null, string fallbackValueFormat = null)
+        {
+            try
+            {
+                return (exception == null ? Expression.Lambda(expression).Compile().DynamicInvoke() :
+                      Expression.Lambda(expression, parameter).Compile().DynamicInvoke(exception)) ?? "null";
+            }
+            catch (Exception exc)
+            {
+                if (string.IsNullOrWhiteSpace(fallbackValueFormat) || exc.InnerException == null) { throw; }
+
+                return string.Format(fallbackValueFormat, $"{exc.InnerException.GetType().FullName}: {exc.InnerException.Message}");
+            }
+        }
 
         /// <summary>
         /// Formats the specified expected value and actual value.
