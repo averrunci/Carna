@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>CarnaConsoleRunner</id>
-    <version>1.2.0</version>
+    <version>1.3.0</version>
     <title>Carna Console Runner</title>
     <authors>averrunci</authors>
     <owners>averrunci</owners>
@@ -20,9 +20,101 @@
     <file src="..\Binary\Carna.ConsoleRunner\Release\Carna.Runner.dll" target="tools"/>
     <file src="..\Binary\Carna.ConsoleRunner\Release\CarnaConsoleRunner.exe" target="tools"/>
     <file src="..\Binary\Carna.ConsoleRunner\Release\CarnaConsoleRunner.exe.config" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Xml.XPath.XDocument.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\Microsoft.Win32.Primitives.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\netstandard.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.AppContext.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Collections.Concurrent.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Collections.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Collections.NonGeneric.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Collections.Specialized.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.ComponentModel.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.ComponentModel.EventBasedAsync.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.ComponentModel.Primitives.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.ComponentModel.TypeConverter.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Console.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Data.Common.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Diagnostics.Contracts.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Diagnostics.Debug.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Diagnostics.FileVersionInfo.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Diagnostics.Process.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Diagnostics.StackTrace.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Diagnostics.TextWriterTraceListener.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Diagnostics.Tools.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Diagnostics.TraceSource.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Diagnostics.Tracing.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Drawing.Primitives.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Dynamic.Runtime.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Globalization.Calendars.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Globalization.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Globalization.Extensions.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.IO.Compression.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.IO.Compression.ZipFile.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.IO.dll" target="tools"/>
     <file src="..\Binary\Carna.ConsoleRunner\Release\System.IO.FileSystem.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.IO.FileSystem.DriveInfo.dll" target="tools"/>
     <file src="..\Binary\Carna.ConsoleRunner\Release\System.IO.FileSystem.Primitives.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.IO.FileSystem.Watcher.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.IO.IsolatedStorage.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.IO.MemoryMappedFiles.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.IO.Pipes.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.IO.UnmanagedMemoryStream.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Linq.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Linq.Expressions.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Linq.Parallel.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Linq.Queryable.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Net.Http.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Net.NameResolution.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Net.NetworkInformation.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Net.Ping.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Net.Primitives.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Net.Requests.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Net.Security.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Net.Sockets.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Net.WebHeaderCollection.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Net.WebSockets.Client.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Net.WebSockets.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.ObjectModel.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Reflection.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Reflection.Extensions.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Reflection.Primitives.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Resources.Reader.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Resources.ResourceManager.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Resources.Writer.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Runtime.CompilerServices.VisualC.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Runtime.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Runtime.Extensions.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Runtime.Handles.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Runtime.InteropServices.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Runtime.InteropServices.RuntimeInformation.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Runtime.Numerics.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Runtime.Serialization.Formatters.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Runtime.Serialization.Json.dll" target="tools"/>
     <file src="..\Binary\Carna.ConsoleRunner\Release\System.Runtime.Serialization.Primitives.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Runtime.Serialization.Xml.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Security.Claims.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Security.Cryptography.Algorithms.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Security.Cryptography.Csp.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Security.Cryptography.Encoding.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Security.Cryptography.Primitives.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Security.Cryptography.X509Certificates.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Security.Principal.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Security.SecureString.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Text.Encoding.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Text.Encoding.Extensions.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Text.RegularExpressions.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Threading.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Threading.Overlapped.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Threading.Tasks.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Threading.Tasks.Parallel.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Threading.Thread.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Threading.ThreadPool.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Threading.Timer.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.ValueTuple.dll" target="tools"/>
     <file src="..\Binary\Carna.ConsoleRunner\Release\System.Xml.ReaderWriter.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Xml.XDocument.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Xml.XmlDocument.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Xml.XmlSerializer.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Xml.XPath.dll" target="tools"/>
   </files>
 </package>

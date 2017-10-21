@@ -1,5 +1,28 @@
 # Release note
 
+## v1.3.0
+
+### Add
+
+#### Carna
+
+- Add Background attribute.
+
+#### Carna.Runner
+
+- Add the function to retrieve Background attribute and format its description.
+- Add the attribute of background in xml file report.
+
+### Changes
+
+- Update .NET Standard version to 2.0.
+
+### Bug fix
+
+#### Carna.Runner
+
+- Fixed an assertion description when an exception occurred in its expression.
+
 ## v1.2.0
 
 ### Add
