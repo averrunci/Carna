@@ -18,16 +18,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NSubstitute" Version="2.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Source\Carna.Runner\Carna.Runner.csproj" />
     <ProjectReference Include="..\..\Source\Carna\Carna.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Runner\Carna.Runner.Spec\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NSubstitute" Version="3.0.1" />
   </ItemGroup>
 
   <Import Project="..\Carna.Runner.Spec\Carna.Runner.Spec.projitems" Label="Shared" />
