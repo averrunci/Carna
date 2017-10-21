@@ -39,6 +39,11 @@ namespace Carna.Runner.Formatters
         }
 
         /// <summary>
+        /// Gets a name for the background.
+        /// </summary>
+        protected override string BackgroundName => "前提条件として、";
+
+        /// <summary>
         /// Gets a formatted string expression of the specified fixture name and description.
         /// </summary>
         /// <param name="fixtureName">The name of a fixture.</param>
@@ -86,6 +91,21 @@ namespace Carna.Runner.Formatters
         /// <param name="narrativeItemName">The name of a narrative item.</param>
         /// <returns>The line indent of the specified narrative item name.</returns>
         protected override string NarrativeLineIndent(string narrativeItemName) => new string('　', narrativeItemName.Length + 1);
+
+        /// <summary>
+        /// Gets a formatted string expression of the specified background description.
+        /// </summary>
+        /// <param name="backgroundName">The name of the background.</param>
+        /// <param name="description">The description of the background.</param>
+        /// <returns>The formatted string expression of the specified background description.</returns>
+        protected override string FormatBackground(string backgroundName, string description) => $"{backgroundName}{description}";
+
+        /// <summary>
+        /// Gets a line indent of the background.
+        /// </summary>
+        /// <param name="backgroundName">The name of the background.</param>
+        /// <returns>The line indent of the background.</returns>
+        protected override string BackgroundLineIndent(string backgroundName) => new string('　', backgroundName.Length);
 
         /// <summary>
         /// Gets a formatted string expression of the specified step name, description, and

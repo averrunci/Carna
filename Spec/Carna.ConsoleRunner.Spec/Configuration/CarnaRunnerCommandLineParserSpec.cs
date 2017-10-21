@@ -17,6 +17,7 @@ namespace Carna.ConsoleRunner.Configuration
         private CarnaRunnerCommandLineOptions DefaultOptions { get; } = new CarnaRunnerCommandLineOptions();
         private string SettingFileBackupPath { get; }
 
+        [Background("A default setting file does not exist")]
         public CarnaRunnerCommandLineParserSpec()
         {
             if (File.Exists(DefaultOptions.SettingsFilePath))

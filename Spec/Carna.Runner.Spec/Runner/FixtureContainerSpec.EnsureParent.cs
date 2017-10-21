@@ -13,6 +13,7 @@ namespace Carna.Runner
         private FixtureContainer Container { get; set; }
         private IFixture Fixture { get; set; }
 
+        [Background("Fixture container that has a parent fixture container")]
         public FixtureContainerSpec_EnsureParent()
         {
             ParentContainer = new FixtureContainer("FixtureContainer", new NamespaceFixtureAttribute());

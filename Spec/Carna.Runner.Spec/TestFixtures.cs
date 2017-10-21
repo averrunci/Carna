@@ -53,6 +53,9 @@ namespace Carna
         [Context("Simple Fixture")]
         public class SimpleFixture
         {
+            [Background("Simple Fixture Background")]
+            public SimpleFixture() { }
+
             [Example("Fixture Method Example")]
             void FixtureMethod()
             {

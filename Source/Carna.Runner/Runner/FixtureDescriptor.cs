@@ -62,6 +62,11 @@ namespace Carna.Runner
         public Type FixtureAttributeType => Attribute.GetType();
 
         /// <summary>
+        /// Gets or sets background of a fixture.
+        /// </summary>
+        public string Background { get; set; }
+
+        /// <summary>
         /// Gets an attribute that specifies a fixture.
         /// </summary>
         protected FixtureAttribute Attribute { get; }

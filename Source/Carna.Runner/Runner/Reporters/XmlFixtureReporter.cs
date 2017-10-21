@@ -2,6 +2,7 @@
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
@@ -81,6 +82,7 @@ namespace Carna.Runner.Reporters
                 new XAttribute("benefit", result.FixtureDescriptor.Benefit ?? string.Empty),
                 new XAttribute("role", result.FixtureDescriptor.Role ?? string.Empty),
                 new XAttribute("feature", result.FixtureDescriptor.Feature ?? string.Empty),
+                new XAttribute("background", result.FixtureDescriptor.Background ?? string.Empty),
                 new XAttribute("status", result.Status),
                 new XAttribute("startTime", result.StartTime.GetValueOrDefault()),
                 new XAttribute("endTime", result.EndTime.GetValueOrDefault()),

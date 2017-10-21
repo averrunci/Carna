@@ -173,5 +173,95 @@ Description line 3");
             Then("the line indent of the third item should be empty", () => item.LineIndent == string.Empty);
             Then("the items of the third item should be empty", () => !item.Items.Any());
         }
+
+        [Example("When background of the fixture is specified")]
+        void Ex12()
+        {
+            var background = "Fixture Background";
+            FixtureDescriptor descriptor = null;
+            Given("the description that has background", () =>
+            {
+                descriptor = new FixtureDescriptor(Name, new ContextAttribute(Description));
+                descriptor.Background = background;
+            });
+            When("the description is formatted", () => FormattedDescription = Formatter.FormatFixture(descriptor));
+            Then("the item count of the formatted description should be 1", () => FormattedDescription.Items.Count() == 1);
+
+            var item = FormattedDescription.Items.ElementAt(0);
+            Then("the first line indent of the item should be empty", () => item.FirstLineIndent == string.Empty);
+            Then("the line count of the item should be 1", () => item.Lines.Count() == 1);
+            Then("the first element of the item line should be 'Background {background of the fixture}'", () => item.Lines.ElementAt(0) == $"Background: {background}");
+            Then("the line indent of the item should be '            '(12 spaces)", () => item.LineIndent == "            ");
+            Then("the items of the item should be empty", () => !item.Items.Any());
+        }
+
+        [Example("When background of the fixture that is multiline is specified")]
+        void Ex13()
+        {
+            var background = @"First Fixture Background
+Second Fixture Background
+Third Fixture Background";
+            FixtureDescriptor descriptor = null;
+            Given("the description that has background", () =>
+            {
+                descriptor = new FixtureDescriptor(Name, new ContextAttribute(Description));
+                descriptor.Background = background;
+            });
+            When("the description is formatted", () => FormattedDescription = Formatter.FormatFixture(descriptor));
+            Then("the item count of the formatted description should be 1", () => FormattedDescription.Items.Count() == 1);
+
+            var item = FormattedDescription.Items.ElementAt(0);
+            Then("the first line indent of the item should be empty", () => item.FirstLineIndent == string.Empty);
+            Then("the line count of the item should be 3", () => item.Lines.Count() == 3);
+            Then("the first element of the item line should be the first line of the given background", () => item.Lines.ElementAt(0) == $"Background: First Fixture Background");
+            Then("the second element of the item line should be the second line of the given background", () => item.Lines.ElementAt(1) == $"Second Fixture Background");
+            Then("the third element of the item line should be the third line of the given background", () => item.Lines.ElementAt(2) == $"Third Fixture Background");
+            Then("the line indent of the item should be '            '(12 spaces)", () => item.LineIndent == "            ");
+            Then("the items of the item should be empty", () => !item.Items.Any());
+        }
+
+        [Example("When FixtureDescriptor of FeatureAttribute that has a narrative and background are specified")]
+        void Ex14()
+        {
+            FixtureDescriptor descriptor = null;
+            FeatureAttribute featureAttribute = null;
+            var background = "Fixture Background";
+            Given("FeatureAttribute that has benefit, role, and feature", () => featureAttribute = new FeatureAttribute(Description) { Benefit = "Benefit", Role = "Role", Feature = "Feature" });
+            Given("the description that has FeatureAttribute and background", () =>
+            {
+                descriptor = new FixtureDescriptor(Name, featureAttribute);
+                descriptor.Background = background;
+            });
+            When("the description is formatted", () => FormattedDescription = Formatter.FormatFixture(descriptor));
+            Then("the item count of the formatted description should be 4", () => FormattedDescription.Items.Count() == 4);
+
+            var item = FormattedDescription.Items.ElementAt(0);
+            Then("the first line indent of the first item should be empty", () => item.FirstLineIndent == string.Empty);
+            Then("the line count of the first item should be 1", () => item.Lines.Count() == 1);
+            Then("the first element of the first item line should be 'In order {the Benefit of the given FeatureAttribute}'", () => item.Lines.ElementAt(0) == $"In order {featureAttribute.Benefit}");
+            Then("the line indent of the first item should be empty", () => item.LineIndent == string.Empty);
+            Then("the items of the first item should be empty", () => !item.Items.Any());
+
+            item = FormattedDescription.Items.ElementAt(1);
+            Then("the first line indent of the second item should be empty", () => item.FirstLineIndent == string.Empty);
+            Then("the line count of the second item should be 1", () => item.Lines.Count() == 1);
+            Then("the first element of the second item line should be 'As {the Role of the given FeatureAttribute}'", () => item.Lines.ElementAt(0) == $"As {featureAttribute.Role}");
+            Then("the line indent of the second item should be empty", () => item.LineIndent == string.Empty);
+            Then("the items of the second item should be empty", () => !item.Items.Any());
+
+            item = FormattedDescription.Items.ElementAt(2);
+            Then("the first line indent of the third item should be empty", () => item.FirstLineIndent == string.Empty);
+            Then("the line count of the third item should be 1", () => item.Lines.Count() == 1);
+            Then("the first element of the third item line should be 'I want {the Feature of the given FeatureAttribute}'", () => item.Lines.ElementAt(0) == $"I want {featureAttribute.Feature}");
+            Then("the line indent of the third item should be empty", () => item.LineIndent == string.Empty);
+            Then("the items of the third item should be empty", () => !item.Items.Any());
+
+            item = FormattedDescription.Items.ElementAt(3);
+            Then("the first line indent of the forth item should be empty", () => item.FirstLineIndent == string.Empty);
+            Then("the line count of the forth item should be 1", () => item.Lines.Count() == 1);
+            Then("the first element of the forth item line should be 'Background {background of the fixture}'", () => item.Lines.ElementAt(0) == $"Background: {background}");
+            Then("the line indent of the forth item should be '            '(12 spaces)", () => item.LineIndent == "            ");
+            Then("the items of the forth item should be empty", () => !item.Items.Any());
+        }
     }
 }

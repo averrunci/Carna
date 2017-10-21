@@ -4,6 +4,7 @@
 // of the MIT license.  See the LICENSE file for details.
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using Carna.Step;
 
@@ -41,6 +42,11 @@ namespace Carna.Runner.Formatters
             [typeof(ExpectStep)] = "Expect",
             [typeof(NoteStep)] = "Note"
         };
+
+        /// <summary>
+        /// Gets a name for the background.
+        /// </summary>
+        protected virtual string BackgroundName { get; } = "Background";
 
         /// <summary>
         /// Gets a conjunction expression.
@@ -99,6 +105,10 @@ namespace Carna.Runner.Formatters
 
             var descriptionItems = new List<FormattedDescription>();
             descriptionItems.AddRange(FormatNarrative(descriptor.Benefit, descriptor.Role, descriptor.Feature));
+
+            var backgroundDescription = FormatBackground(descriptor.Background);
+            if (backgroundDescription != null) { descriptionItems.Add(backgroundDescription); }
+
             return new FormattedDescription
             {
                 Lines = lines,
@@ -222,6 +232,48 @@ namespace Carna.Runner.Formatters
         /// <param name="narrativeItemName">The name of a narrative item.</param>
         /// <returns>The line indent of the specified narrative item name.</returns>
         protected virtual string NarrativeLineIndent(string narrativeItemName) => string.Empty;
+
+        /// <summary>
+        /// Formats background.
+        /// </summary>
+        /// <param name="background">The background of a fixture.</param>
+        /// <returns> The formatted description formatted with the specified background.</returns>
+        protected virtual FormattedDescription FormatBackground(string background)
+        {
+            if (background == null || !background.Any()) { return null; }
+
+            var lines = background.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            lines[0] = FormatBackground(BackgroundName, lines[0]);
+
+            return new FormattedDescription
+            {
+                Lines = lines,
+                FirstLineIndent = BackgroundFirstLineIndent(BackgroundName),
+                LineIndent = BackgroundLineIndent(BackgroundName)
+            };
+        }
+
+        /// <summary>
+        /// Gets a formatted string expression of the specified background description.
+        /// </summary>
+        /// <param name="backgroundName">The name of the background.</param>
+        /// <param name="description">The description of the background.</param>
+        /// <returns>The formatted string expression of the specified background description.</returns>
+        protected virtual string FormatBackground(string backgroundName, string description) => $"{backgroundName}: {description}";
+
+        /// <summary>
+        /// Gets a first line indent of the background.
+        /// </summary>
+        /// <param name="backgroundName">The name of the background.</param>
+        /// <returns>The first line indent of the background.</returns>
+        protected virtual string BackgroundFirstLineIndent(string backgroundName) => string.Empty;
+
+        /// <summary>
+        /// Gets a line indent of the background.
+        /// </summary>
+        /// <param name="backgroundName">The name of the background.</param>
+        /// <returns>The line indent of the background.</returns>
+        protected virtual string BackgroundLineIndent(string backgroundName) => new string(' ', backgroundName.Length + 2);
 
         /// <summary>
         /// Formats a fixture step with the specified step.

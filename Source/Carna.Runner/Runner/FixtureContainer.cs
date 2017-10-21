@@ -182,6 +182,7 @@ namespace Carna.Runner
                         .Where(r => r != null)
                         .ToList();
 
+            FixtureDescriptor.Background = RetrieveBackground();
             if (fixtures.Any(fixture => fixture.FixtureDescriptor.IsContainerFixture))
             {
                 var disposable = CreateFixtureInstance() as IDisposable;

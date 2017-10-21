@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 
 using Carna.Runner.Step;
 
@@ -239,14 +240,8 @@ namespace Carna.Runner
         protected virtual object CreateFixtureInstance()
         {
             if (FixtureInstanceType == null) { return null; }
-            if (ParentFixture == null || ParentFixture.Parameters.IsEmpty())
-            {
-                return EnsureParameters(Activator.CreateInstance(FixtureInstanceType));
-            }
 
-            var constructor = FixtureInstanceType.GetTypeInfo().DeclaredConstructors
-                .Where(c => ParentFixture.Parameters.Keys.Any(k => c.GetParameters().Any(p => p.Name == k)))
-                .FirstOrDefault();
+            var constructor = GetConstructor();
             if (constructor == null) { return EnsureParameters(Activator.CreateInstance(FixtureInstanceType)); }
 
             var constructorParameters = constructor.GetParameters();
@@ -261,6 +256,71 @@ namespace Carna.Runner
             });
 
             return EnsureParameters(constructor.Invoke(parameterValues));
+        }
+
+        /// <summary>
+        /// Gets a constructor with parameters.
+        /// </summary>
+        /// <returns>
+        /// The constructor with parameters. If parameters do not exist or the constructor
+        /// whose parameters do not match, returns <c>null</c>.
+        /// </returns>
+        protected virtual ConstructorInfo GetConstructor()
+        {
+            if (FixtureInstanceType == null) { return null; }
+            if (ParentFixture == null || ParentFixture.Parameters.IsEmpty()) { return null; }
+
+            return FixtureInstanceType.GetTypeInfo().DeclaredConstructors
+                .Where(c => ParentFixture.Parameters.Keys.Any(k => c.GetParameters().Any(p => p.Name == k)))
+                .FirstOrDefault();
+        }
+
+        private ConstructorInfo GetDefaultConstructor()
+            => FixtureInstanceType.GetTypeInfo().DeclaredConstructors.FirstOrDefault(c => c.GetParameters().Length == 0);
+
+        /// <summary>
+        /// Gets background of a fixture.
+        /// </summary>
+        /// <returns>The background of a fixture.</returns>
+        protected virtual string RetrieveBackground()
+        {
+            if (FixtureInstanceType == null) { return string.Empty; }
+
+            return string.Join(
+                Environment.NewLine,
+                RetrieveBackgroundAttributes(GetConstructor() ?? GetDefaultConstructor())
+                    .SelectMany(background => background.Description.Split(new[] { Environment.NewLine }, StringSplitOptions.None))
+            );
+        }
+
+        /// <summary>
+        /// Retrieves background attributes that specify a fixture that has the specified constructor.
+        /// </summary>
+        /// <param name="constructor">The constructor of a fixture.</param>
+        /// <returns>The background attributes that specify a fixture that has the specified constructor.</returns>
+        protected virtual List<BackgroundAttribute> RetrieveBackgroundAttributes(MethodBase constructor)
+        {
+            var backgroundList = new List<BackgroundAttribute>();
+            if (constructor.DeclaringType == typeof(object)) { return backgroundList; }
+
+            try
+            {
+                backgroundList.AddRange(RetrieveBackgroundAttributes(
+                    constructor.Module.ResolveMethod(
+                        BitConverter.ToInt32(
+                            constructor.GetMethodBody()
+                                .GetILAsByteArray()
+                                .SkipWhile(b => b != OpCodes.Call.Value)
+                                .ToArray(),
+                            1
+                        )
+                    )
+                ));
+            }
+            catch { }
+
+            backgroundList.AddRange(constructor.GetCustomAttributes<BackgroundAttribute>().ToList());
+            return backgroundList;
         }
 
         /// <summary>
