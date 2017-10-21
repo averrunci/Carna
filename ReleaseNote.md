@@ -1,5 +1,13 @@
 # Release note
 
+## v1.3.1
+
+### Bug fix
+
+#### Carna.UwpRunner
+
+- Fixed dependencies.
+
 ## v1.3.0
 
 ### Add

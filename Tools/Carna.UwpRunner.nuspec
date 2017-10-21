@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>Carna.UwpRunner</id>
-    <version>1.3.0</version>
+    <version>1.3.1</version>
     <title>Carna UWP Runner</title>
     <authors>averrunci</authors>
     <owners>averrunci</owners>
@@ -14,14 +14,12 @@
     <copyright>Copyright (C) 2017 Fievus</copyright>
     <tags>carna test testing tdd bdd runner uwp</tags>
     <dependencies>
-      <dependency id="Carna" version="1.2.0"/>
-      <dependency id="Carna.Runner" version="1.2.0"/>
+      <dependency id="Carna" version="1.3.0"/>
+      <dependency id="Carna.Runner" version="1.3.0"/>
     </dependencies>
   </metadata>
   <files>
     <file src="..\LICENSE"/>
-    <file src="..\Binary\Carna.UwpRunner\Release\Carna.dll" target="lib\uap10.0"/>
-    <file src="..\Binary\Carna.UwpRunner\Release\Carna.Runner.dll" target="lib\uap10.0"/>
     <file src="..\Binary\Carna.UwpRunner\Release\Carna.UwpRunner.dll" target="lib\uap10.0"/>
     <file src="..\Binary\Carna.UwpRunner\Release\Carna.UwpRunner.pri" target="lib\uap10.0"/>
     <file src="..\Binary\Carna.UwpRunner\Release\Carna.UwpRunner.XML" target="lib\uap10.0"/>
