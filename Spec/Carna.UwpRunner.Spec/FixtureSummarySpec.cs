@@ -118,7 +118,7 @@ namespace Carna.UwpRunner
                 Summary.EndDateTime == fixtureRunningEndDateTime.ToString("u")
             );
             Then("the Duration should be the duration of the specified results", () =>
-                Summary.Duration == $"{(fixtureRunningEndDateTime - fixtureRunningStartDateTime).TotalSeconds} seconds"
+                Summary.Duration == $"{(fixtureRunningEndDateTime - fixtureRunningStartDateTime).TotalSeconds:0.000} seconds"
             );
         }
     }
