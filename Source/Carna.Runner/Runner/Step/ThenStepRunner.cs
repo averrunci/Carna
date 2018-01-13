@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2018 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -56,7 +56,7 @@ namespace Carna.Runner.Step
             {
                 Step.ExecuteAssertion(Step.Assertion);
                 Step.Action?.Invoke();
-                Step.AsyncAction?.Invoke()?.Wait();
+                Step.AsyncAction?.Invoke()?.GetAwaiter().GetResult();
 
                 if (HasAssertionWithException)
                 {
@@ -71,7 +71,7 @@ namespace Carna.Runner.Step
 
                     Step.ExecuteAssertion(Step.ExceptionAssertion, exception);
                     Step.ExceptionAction?.Invoke(exception);
-                    Step.AsyncExceptionAction?.Invoke(exception)?.Wait();
+                    Step.AsyncExceptionAction?.Invoke(exception)?.GetAwaiter().GetResult();
                 }
 
                 return FixtureStepResult.Of(Step).Passed();
