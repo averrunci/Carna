@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2018 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -22,8 +22,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 's.Length == 3' where s = null", () => { var s = (string)null; Assertion = () => s.Length == 3; });
             Expect(
-                $"the description should be 'expected: 3 but was: throwing an exception ({NullReferenceExceptionMessage})'",
-                () => AssertionDescription.Of(Assertion).ToString() == $"expected: 3 but was: throwing an exception ({NullReferenceExceptionMessage})"
+                $@"the description should be as follows:
+Expected: 3
+But was : throwing an exception ({NullReferenceExceptionMessage})'",
+                () => AssertionDescription.Of(Assertion).ToString() == $@"Expected: 3
+But was : throwing an exception ({NullReferenceExceptionMessage})"
             );
         }
 
@@ -32,8 +35,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'x == s.Length' where x = 3, s = null", () => { var x = 3; var s = (string)null; Assertion = () => x == s.Length; });
             Expect(
-                $"the description should be 'expected: an exception occurred ({NullReferenceExceptionMessage}) but was: 3'",
-                () => AssertionDescription.Of(Assertion).ToString() == $"expected: an exception occurred ({NullReferenceExceptionMessage}) but was: 3"
+                $@"the description should be as follows:
+Expected: an exception occurred ({NullReferenceExceptionMessage})
+But was : 3'",
+                () => AssertionDescription.Of(Assertion).ToString() == $@"Expected: an exception occurred ({NullReferenceExceptionMessage})
+But was : 3"
             );
         }
 
@@ -42,8 +48,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'x.Length.Equals(3)' where x = null", () => { var x = (string)null; Assertion = () => x.Length.Equals(3); });
             Expect(
-                $"the description should be 'expected: 3 but was: throwing an exception ({NullReferenceExceptionMessage})'",
-                () => AssertionDescription.Of(Assertion).ToString() == $"expected: 3 but was: throwing an exception ({NullReferenceExceptionMessage})"
+                $@"the description should be as follows:
+Expected: 3
+But was : throwing an exception ({NullReferenceExceptionMessage})'",
+                () => AssertionDescription.Of(Assertion).ToString() == $@"Expected: 3
+But was : throwing an exception ({NullReferenceExceptionMessage})"
             );
         }
 
@@ -52,8 +61,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'x.Equals(s.Length)' where x = 3, s = null", () => { var x = 3; var s = (string)null; Assertion = () => x.Equals(s.Length); });
             Expect(
-                $"the description should be 'expected: an exception occurred ({NullReferenceExceptionMessage}) but was: 3'",
-                () => AssertionDescription.Of(Assertion).ToString() == $"expected: an exception occurred ({NullReferenceExceptionMessage}) but was: 3"
+                $@"the description should be as follows:
+Expected: an exception occurred ({NullReferenceExceptionMessage})
+But was : 3'",
+                () => AssertionDescription.Of(Assertion).ToString() == $@"Expected: an exception occurred ({NullReferenceExceptionMessage})
+But was : 3"
             );
         }
 
@@ -62,8 +74,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'Equals(x.Length, 3)' where x = null", () => { var x = (string)null; Assertion = () => Equals(x.Length, 3); });
             Expect(
-                $"the description should be 'expected: 3 but was: throwing an exception ({NullReferenceExceptionMessage})'",
-                () => AssertionDescription.Of(Assertion).ToString() == $"expected: 3 but was: throwing an exception ({NullReferenceExceptionMessage})"
+                $@"the description should be as follows:
+Expected: 3
+But was : throwing an exception ({NullReferenceExceptionMessage})'",
+                () => AssertionDescription.Of(Assertion).ToString() == $@"Expected: 3
+But was : throwing an exception ({NullReferenceExceptionMessage})"
             );
         }
 
@@ -72,8 +87,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'Equals(x, s.Length)' where x = 3, s = null", () => { var x = 3; var s = (string)null; Assertion = () => Equals(x, s.Length); });
             Expect(
-                $"the description should be 'expected: an exception occurred ({NullReferenceExceptionMessage}) but was: 3'",
-                () => AssertionDescription.Of(Assertion).ToString() == $"expected: an exception occurred ({NullReferenceExceptionMessage}) but was: 3"
+                $@"the description should be as follows:
+Expected: an exception occurred ({NullReferenceExceptionMessage})
+But was : 3'",
+                () => AssertionDescription.Of(Assertion).ToString() == $@"Expected: an exception occurred ({NullReferenceExceptionMessage})
+But was : 3"
             );
         }
 
@@ -86,14 +104,22 @@ namespace Carna.Runner.Step
                 Assertion = () => items.Length == 2 && items[0] == 1 && items[1] == 2;
             });
             Expect($@"the description should be as follows:
-  [failed] expected: 2 but was: 1
+  [failed]
+    Expected: 2
+    But was : 1
   [passed]
-  [failed] expected: 2 but was: throwing an exception ({IndexOutOfRangeExceptionMessage})
+  [failed]
+    Expected: 2
+    But was : throwing an exception ({IndexOutOfRangeExceptionMessage})
 ",
                 () => AssertionDescription.Of(Assertion).ToString() == $@"
-  [failed] expected: 2 but was: 1
+  [failed]
+    Expected: 2
+    But was : 1
   [passed]
-  [failed] expected: 2 but was: throwing an exception ({IndexOutOfRangeExceptionMessage})");
+  [failed]
+    Expected: 2
+    But was : throwing an exception ({IndexOutOfRangeExceptionMessage})");
         }
 
         [Example("When the specified expression is BinaryExpression the expression type of which is AndAlso and an exception occurred for an expected value of its expression ")]
@@ -107,12 +133,16 @@ namespace Carna.Runner.Step
             });
             Expect($@"the description should be as follows:
   [passed]
-  [failed] expected: an exception occurred ({NullReferenceExceptionMessage}) but was: 1
+  [failed]
+    Expected: an exception occurred ({NullReferenceExceptionMessage})
+    But was : 1
   [passed]
 ",
                 () => AssertionDescription.Of(Assertion).ToString() == $@"
   [passed]
-  [failed] expected: an exception occurred ({NullReferenceExceptionMessage}) but was: 1
+  [failed]
+    Expected: an exception occurred ({NullReferenceExceptionMessage})
+    But was : 1
   [passed]");
         }
 

@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2018 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -29,7 +29,7 @@ namespace Carna.Runner.Step
         /// </summary>
         /// <param name="step">The fixture step when the assertion was failed.</param>
         /// <param name="description">The assertion description when the assertion was failed.</param>
-        public AssertionException(FixtureStep step, AssertionDescription description) : base($"{step?.Description} {description}")
+        public AssertionException(FixtureStep step, AssertionDescription description) : base($"{step?.Description}{Environment.NewLine}{description}")
         {
             stackTrace = CreateStackTrace(step);
         }

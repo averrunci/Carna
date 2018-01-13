@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2018 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -50,7 +50,7 @@ namespace Carna.Runner.Step
         /// </item> 
         /// </list>
         /// </remarks>
-        protected virtual string DescriptionFormat { get; } = "expected: {0} but was: {1}";
+        protected virtual string DescriptionFormat { get; } = $"Expected: {{0}}{Environment.NewLine}But was : {{1}}";
 
         /// <summary>
         /// Gets a format of an expected value when an exception occurred at retrieving it.
@@ -72,6 +72,11 @@ namespace Carna.Runner.Step
         /// Gets or sets a value that indicates whether a new line is required at first line.
         /// </summary>
         protected bool RequireFirstNewLine { get; set; }
+
+        /// <summary>
+        /// Gets or sets an indent count for each line.
+        /// </summary>
+        protected int IndentCount { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AssertionDescription"/> class
@@ -213,6 +218,7 @@ namespace Carna.Runner.Step
             if (expression == null) { return CreateDefaultDescription(); }
 
             RequireFirstNewLine = true;
+            IndentCount = 4;
             var lines = new List<string>();
             CreateAndAlsoDescription(expression.Left, parameter, lines);
             CreateAndAlsoDescription(expression.Right, parameter, lines);
@@ -240,7 +246,7 @@ namespace Carna.Runner.Step
                     }
                 } catch { }
 
-                lines.Add($"[failed] {CreateDescription(expression, parameter)}");
+                lines.Add($"[failed]{Environment.NewLine}{CreateDescription(expression, parameter)}");
             }
         }
 
@@ -314,6 +320,10 @@ namespace Carna.Runner.Step
         /// <returns>
         /// The string representation formatted with the specified expected value and actual value.
         /// </returns>
-        protected string Format(object expected, object actual) => string.Format(DescriptionFormat, expected, actual);
+        protected string Format(object expected, object actual)
+        {
+            var indent = new string(' ', IndentCount);
+            return string.Format($"{indent}{string.Join($"{Environment.NewLine}{indent}", DescriptionFormat.Split(new[] { Environment.NewLine }, StringSplitOptions.None))}", expected, actual);
+        }
     }
 }

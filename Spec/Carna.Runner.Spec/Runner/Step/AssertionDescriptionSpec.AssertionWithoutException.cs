@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2018 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -17,8 +17,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion", () => { var x = false; Assertion = () => x; });
             Expect(
-                "the description should be 'expected: True but was: False'",
-                () => AssertionDescription.Of(Assertion).ToString() == "expected: True but was: False"
+                @"the description should be as follows:
+Expected: True
+But was : False",
+                () => AssertionDescription.Of(Assertion).ToString() == @"Expected: True
+But was : False"
             );
         }
 
@@ -27,8 +30,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has '!x' where x = true", () => { var x = true; Assertion = () => !x; });
             Expect(
-                "the description should be 'expected: False but was: True'",
-                () => AssertionDescription.Of(Assertion).ToString() == "expected: False but was: True"
+                @"the description should be as follows:
+Expected: False
+But was : True",
+                () => AssertionDescription.Of(Assertion).ToString() == @"Expected: False
+But was : True"
             );
         }
 
@@ -37,8 +43,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'x == 3' where x = 5", () => { var x = 5; Assertion = () => x == 3; });
             Expect(
-                "the description should be 'expected: 3 but was: 5'",
-                () => AssertionDescription.Of(Assertion).ToString() == "expected: 3 but was: 5"
+                @"the description should be as follows:
+Expected: 3
+But was : 5",
+                () => AssertionDescription.Of(Assertion).ToString() == @"Expected: 3
+But was : 5"
             );
         }
 
@@ -47,8 +56,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'x != 5' where x = 5", () => { var x = 5; Assertion = () => x != 5; });
             Expect(
-                "the description should be 'expected: not 5 but was: 5'",
-                () => AssertionDescription.Of(Assertion).ToString() == "expected: not 5 but was: 5"
+                @"the description should be as follows:
+Expected: not 5
+But was : 5",
+                () => AssertionDescription.Of(Assertion).ToString() == @"Expected: not 5
+But was : 5"
             );
         }
 
@@ -57,8 +69,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'x < 2' where x = 5", () => { var x = 5; Assertion = () => x < 2; });
             Expect(
-                "the description should be 'expected: less than 2 but was: 5'",
-                () => AssertionDescription.Of(Assertion).ToString() == "expected: less than 2 but was: 5"
+                @"the description should be as follows:
+Expected: less than 2
+But was : 5",
+                () => AssertionDescription.Of(Assertion).ToString() == @"Expected: less than 2
+But was : 5"
             );
         }
 
@@ -67,8 +82,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'x <= 2' where x = 5", () => { var x = 5; Assertion = () => x <= 2; });
             Expect(
-                "the description should be 'expected: less than or equal 2 but was: 5'",
-                () => AssertionDescription.Of(Assertion).ToString() == "expected: less than or equal 2 but was: 5"
+                @"the description should be as follows:
+Expected: less than or equal 2
+But was : 5",
+                () => AssertionDescription.Of(Assertion).ToString() == @"Expected: less than or equal 2
+But was : 5"
             );
         }
 
@@ -77,8 +95,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'x > 7' where x = 5", () => { var x = 5; Assertion = () => x > 7; });
             Expect(
-                "the description should be 'expected: greater than 7 but was: 5'",
-                () => AssertionDescription.Of(Assertion).ToString() == "expected: greater than 7 but was: 5"
+                @"the description should be as follows:
+Expected: greater than 7
+But was : 5'",
+                () => AssertionDescription.Of(Assertion).ToString() == @"Expected: greater than 7
+But was : 5"
             );
         }
 
@@ -87,8 +108,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'x >= 7' where x = 5", () => { var x = 5; Assertion = () => x >= 7; });
             Expect(
-                "the description should be 'expected: greater than or equal 7 but was: 5'",
-                () => AssertionDescription.Of(Assertion).ToString() == "expected: greater than or equal 7 but was: 5"
+                @"the description should be as follows:
+Expected: greater than or equal 7
+But was : 5",
+                () => AssertionDescription.Of(Assertion).ToString() == @"Expected: greater than or equal 7
+But was : 5"
             );
         }
 
@@ -97,8 +121,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'x.Equals(3)' where x = 5", () => { var x = 5; Assertion = () => x.Equals(3); });
             Expect(
-                "the description should be 'expected: 3 but was: 5'",
-                () => AssertionDescription.Of(Assertion).ToString() == "expected: 3 but was: 5"
+                @"the description should be as follows:
+Expected: 3
+But was : 5'",
+                () => AssertionDescription.Of(Assertion).ToString() == @"Expected: 3
+But was : 5"
             );
         }
 
@@ -107,8 +134,10 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'Equals(x, 3)' where x = 5", () => { var x = 5; Assertion = () => Equals(x, 3); });
             Expect(
-                "the description should be 'expected: 3 but was: 5'",
-                () => AssertionDescription.Of(Assertion).ToString() == "expected: 3 but was: 5"
+                @"the description should be as follows:
+Expected: 3 But was: 5",
+                () => AssertionDescription.Of(Assertion).ToString() == @"Expected: 3
+But was : 5"
             );
         }
 
@@ -117,8 +146,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'x == \"3\"' where x = null", () => { var x = (string)null; Assertion = () => x == "3"; });
             Expect(
-                "the description should be 'expected: 3 but was: null'",
-                () => AssertionDescription.Of(Assertion).ToString() == "expected: 3 but was: null"
+                @"the description should be as follows:
+Expected: 3
+But was : null'",
+                () => AssertionDescription.Of(Assertion).ToString() == @"Expected: 3
+But was : null"
             );
         }
 
@@ -128,11 +160,15 @@ namespace Carna.Runner.Step
             Given("an assertion that has 'x == 3 && y == 5' where x = 5; y = 5", () => { var x = 5; var y = 5 ; Assertion = () => x == 3 && y == 5; });
             Expect(
                 @"the description should be as follows:
-  [failed] expected: 3 but was: 5
+  [failed]
+    Expected: 3
+    But was : 5
   [passed]
 ",
                 () => AssertionDescription.Of(Assertion).ToString() == @"
-  [failed] expected: 3 but was: 5
+  [failed]
+    Expected: 3
+    But was : 5
   [passed]"
             );
         }
@@ -145,16 +181,24 @@ namespace Carna.Runner.Step
             );
             Expect(
                 @"the description should be as follows:
-  [failed] expected: 3 but was: 5
+  [failed]
+    Expected: 3
+    But was : 5
   [passed]
   [passed]
-  [failed] expected: 9 but was: 7
+  [failed]
+    Expected: 9
+    But was : 7
 ",
                 () => AssertionDescription.Of(Assertion).ToString() == @"
-  [failed] expected: 3 but was: 5
+  [failed]
+    Expected: 3
+    But was : 5
   [passed]
   [passed]
-  [failed] expected: 9 but was: 7"
+  [failed]
+    Expected: 9
+    But was : 7"
             );
         }
     }

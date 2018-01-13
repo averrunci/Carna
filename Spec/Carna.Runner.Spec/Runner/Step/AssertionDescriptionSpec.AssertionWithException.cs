@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2018 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -18,8 +18,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'exc.Message.Contains(\"?\")' where exc.Message='Message'", () => Assertion = exc => exc.Message.Contains("?"));
             Expect(
-                "the description should be 'expected: True but was: False'",
-                () => AssertionDescription.Of(Assertion, Exception).ToString() == "expected: True but was: False"
+                @"the description should be as follows:
+Expected: True
+But was : False'",
+                () => AssertionDescription.Of(Assertion, Exception).ToString() == @"Expected: True
+But was : False"
             );
         }
 
@@ -28,8 +31,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has '!exc.Message.Contains(\"?\")' where exc.Message='Message'", () => Assertion = exc => !exc.Message.Contains("?"));
             Expect(
-                "the description should be 'expected: False but was: True'",
-                () => AssertionDescription.Of(Assertion, Exception).ToString() == "expected: False but was: True"
+                @"the description should be as follows:
+Expected: False
+But was : True",
+                () => AssertionDescription.Of(Assertion, Exception).ToString() == @"Expected: False
+But was : True"
             );
         }
 
@@ -38,8 +44,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'exc.Message.Length == 3' where exc.Message='Message'", () => Assertion = exc => exc.Message.Length == 3);
             Expect(
-                "the description should be 'expected: 3 but was: 7'",
-                () => AssertionDescription.Of(Assertion, Exception).ToString() == "expected: 3 but was: 7"
+                @"the description should be as follows:
+Expected: 3
+But was : 7",
+                () => AssertionDescription.Of(Assertion, Exception).ToString() == @"Expected: 3
+But was : 7"
             );
         }
 
@@ -48,8 +57,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'exc.Message.Length != 7' where exc.Message='Message'", () => Assertion = exc => exc.Message.Length != 7);
             Expect(
-                "the description should be 'expected: not 7 but was: 7'",
-                () => AssertionDescription.Of(Assertion, Exception).ToString() == "expected: not 7 but was: 7"
+                @"the description should be as follows:
+Expected: not 7
+But was : 7",
+                () => AssertionDescription.Of(Assertion, Exception).ToString() == @"Expected: not 7
+But was : 7"
             );
         }
 
@@ -58,8 +70,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'exc.Message.Length < 2' where exc.Message='Message'", () => Assertion = exc => exc.Message.Length < 2);
             Expect(
-                "the description should be 'expected: less than 2 but was: 7'",
-                () => AssertionDescription.Of(Assertion, Exception).ToString() == "expected: less than 2 but was: 7"
+                @"the description should be as follows:
+Expected: less than 2
+But was : 7'",
+                () => AssertionDescription.Of(Assertion, Exception).ToString() == @"Expected: less than 2
+But was : 7"
             );
         }
 
@@ -68,8 +83,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'exc.Message.Length <= 2' where exc.Message='Message'", () => Assertion = exc => exc.Message.Length <= 2);
             Expect(
-                "the description should be 'expected: less than or equal 2 but was: 7'",
-                () => AssertionDescription.Of(Assertion, Exception).ToString() == "expected: less than or equal 2 but was: 7"
+                @"the description should be as follows:
+Expected: less than or equal 2
+But was : 7'",
+                () => AssertionDescription.Of(Assertion, Exception).ToString() == @"Expected: less than or equal 2
+But was : 7"
             );
         }
 
@@ -78,8 +96,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'exc.Message.Length > 9' where exc.Message='Message'", () => Assertion = exc => exc.Message.Length > 9);
             Expect(
-                "the description should be 'expected: greater than 9 but was: 7'",
-                () => AssertionDescription.Of(Assertion, Exception).ToString() == "expected: greater than 9 but was: 7"
+                @"the description should be as follows:
+Expected: greater than 9
+But was : 7'",
+                () => AssertionDescription.Of(Assertion, Exception).ToString() == @"Expected: greater than 9
+But was : 7"
             );
         }
 
@@ -88,8 +109,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'exc.Message.Length >= 9' where exc.Message='Message'", () => Assertion = exc => exc.Message.Length >= 9);
             Expect(
-                "the description should be 'expected: greater than or equal 9 but was: 7'",
-                () => AssertionDescription.Of(Assertion, Exception).ToString() == "expected: greater than or equal 9 but was: 7"
+                @"the description should be as follows:
+Expected: greater than or equal 9
+But was : 7'",
+                () => AssertionDescription.Of(Assertion, Exception).ToString() == @"Expected: greater than or equal 9
+But was : 7"
             );
         }
 
@@ -98,8 +122,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has '3 == exc.Message.Length' where exc.Message='Message'", () => Assertion = exc => 3 == exc.Message.Length);
             Expect(
-                "the description should be 'expected: True but was: False'",
-                () => AssertionDescription.Of(Assertion, Exception).ToString() == "expected: True but was: False"
+                @"the description should be as follows:
+Expected: True
+But was : False'",
+                () => AssertionDescription.Of(Assertion, Exception).ToString() == @"Expected: True
+But was : False"
             );
         }
 
@@ -108,8 +135,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'exc.Message.Length.Equals(3)' where exc.Message='Message'", () => Assertion = exc => exc.Message.Length.Equals(3));
             Expect(
-                "the description should be 'expected: 3 but was: 7'",
-                () => AssertionDescription.Of(Assertion, Exception).ToString() == "expected: 3 but was: 7"
+                @"the description should be as follows:
+Expected: 3
+But was : 7'",
+                () => AssertionDescription.Of(Assertion, Exception).ToString() == @"Expected: 3
+But was : 7"
             );
         }
 
@@ -118,8 +148,11 @@ namespace Carna.Runner.Step
         {
             Given("an assertion that has 'Equals(exc.Message.Length, 3)' where exc.Message='Message'", () => Assertion = exc => Equals(exc.Message.Length, 3));
             Expect(
-                "the description should be 'expected: 3 but was: 7'",
-                () => AssertionDescription.Of(Assertion, Exception).ToString() == "expected: 3 but was: 7"
+                @"the description should be as follows:
+Expected: 3
+But was : 7'",
+                () => AssertionDescription.Of(Assertion, Exception).ToString() == @"Expected: 3
+But was : 7"
             );
         }
 
@@ -131,8 +164,11 @@ namespace Carna.Runner.Step
                 () => Assertion = exc => exc.Message == "message"
             );
             Expect(
-                "the description should be 'expected: message but was: null'",
-                () => AssertionDescription.Of(Assertion, new NullMessageException()).ToString() == "expected: message but was: null"
+                @"the description should be as follows:
+Expected: message
+But was : null'",
+                () => AssertionDescription.Of(Assertion, new NullMessageException()).ToString() == @"Expected: message
+But was : null"
             );
         }
 
@@ -151,11 +187,15 @@ namespace Carna.Runner.Step
             Expect(
                 @"the description should be as follows:
   [passed]
-  [failed] expected: 3 but was: 7
+  [failed]
+    Expected: 3
+    But was : 7
 ",
                 () => AssertionDescription.Of(Assertion, Exception).ToString() == @"
   [passed]
-  [failed] expected: 3 but was: 7"
+  [failed]
+    Expected: 3
+    But was : 7"
             );
         }
 
@@ -170,13 +210,21 @@ namespace Carna.Runner.Step
             Expect(
                 @"the description should be as follows:
   [passed]
-  [failed] expected: 3 but was 7
-  [failed] expected: exc but was: Message
+  [failed]
+    Expected: 3
+    But was : 7
+  [failed]
+    Expected: exc
+    But was : Message
 ",
                 () => AssertionDescription.Of(Assertion, Exception).ToString() == @"
   [passed]
-  [failed] expected: 3 but was: 7
-  [failed] expected: exc but was: Message"
+  [failed]
+    Expected: 3
+    But was : 7
+  [failed]
+    Expected: exc
+    But was : Message"
             );
         }
     }
