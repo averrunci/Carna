@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2018 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -301,7 +301,7 @@ namespace Carna.Runner
         protected virtual List<BackgroundAttribute> RetrieveBackgroundAttributes(MethodBase constructor)
         {
             var backgroundList = new List<BackgroundAttribute>();
-            if (constructor.DeclaringType == typeof(object)) { return backgroundList; }
+            if (constructor == null || constructor.DeclaringType == typeof(object)) { return backgroundList; }
 
             try
             {
