@@ -3,6 +3,7 @@
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -85,17 +86,14 @@ namespace Carna.Runner
         /// The result of a fixture running if a fixture can be run; otherwise, <c>null</c>.
         /// </returns>
         protected override FixtureResult Run(DateTime startTime, IFixtureFilter filter, IFixtureStepRunnerFactory stepRunnerFactory, bool parallel)
-        {
-            var result = FixtureResult.Of(FixtureDescriptor).StartAt(startTime);
-            try
-            {
-                return Run(stepRunnerFactory, result);
-            }
-            catch (Exception exc)
-            {
-                return RecordEndTime(result).Failed(exc.InnerException ?? exc);
-            }
-        }
+            => Run(stepRunnerFactory, FixtureResult.Of(FixtureDescriptor).StartAt(startTime));
+
+        /// <summary>
+        /// Retrieves around fixture attributes that specify a fixture.
+        /// </summary>
+        /// <returns>The around fixture attributes that specify a fixture.</returns>
+        protected override IEnumerable<AroundFixtureAttribure> RetrieveAroundFixtureAttributes()
+            => FixtureMethod.GetCustomAttributes<AroundFixtureAttribure>();
 
         private FixtureResult Run(IFixtureStepRunnerFactory stepRunnerFactory, FixtureResult.Builder result)
         {

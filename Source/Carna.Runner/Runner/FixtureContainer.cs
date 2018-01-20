@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2018 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -158,17 +158,16 @@ namespace Carna.Runner
         /// </returns>
         protected override FixtureResult Run(DateTime startTime, IFixtureFilter filter, IFixtureStepRunnerFactory stepRunnerFactory, bool parallel)
         {
-            var result = FixtureResult.Of(FixtureDescriptor).StartAt(startTime);
-            try
-            {
-                var results = Run(Fixtures, filter, stepRunnerFactory, parallel);
-                return RecordEndTime(result).FinishedWith(results);
-            }
-            catch (Exception exc)
-            {
-                return RecordEndTime(result).Failed(exc);
-            }
+            var results = Run(Fixtures, filter, stepRunnerFactory, parallel);
+            return RecordEndTime(FixtureResult.Of(FixtureDescriptor).StartAt(startTime)).FinishedWith(results);
         }
+
+        /// <summary>
+        /// Retrieves around fixture attributes that specify a fixture.
+        /// </summary>
+        /// <returns>The around fixture attributes that specify a fixture.</returns>
+        protected override IEnumerable<AroundFixtureAttribure> RetrieveAroundFixtureAttributes()
+            => FixtureInstanceType?.GetCustomAttributes<AroundFixtureAttribure>() ?? Enumerable.Empty<AroundFixtureAttribure>();
 
         private IEnumerable<FixtureResult> Run(IEnumerable<IFixture> fixtures, IFixtureFilter filter, IFixtureStepRunnerFactory stepRunnerFactory, bool parallel)
         {

@@ -1,13 +1,13 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2018 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
+using System;
 using System.Linq;
 
 using NSubstitute;
 
 using Carna.Runner.Step;
-using System;
 
 namespace Carna.Runner
 {
@@ -241,6 +241,34 @@ namespace Carna.Runner
             Expect("FixtureRun event should be raised", () => FixtureRunResult != null);
 
             Expect("the result on FixtureRun event should be the result that is returned by Run method", () => FixtureRunResult == result);
+        }
+
+        void Assert(int expectedCount)
+        {
+            Expect("to execute before running a fixture", () => TestAroundFixtureAttribute.OnFixtureRunningCount.Value == expectedCount);
+            Expect("to execute after running a fixture", () => TestAroundFixtureAttribute.OnFixtureRunCount.Value == expectedCount);
+        }
+
+        [Example("When a fixture is specified by one AroundAttribute")]
+        void Ex06()
+        {
+            TestAroundFixtureAttribute.OnFixtureRunningCount.Value = 0;
+            TestAroundFixtureAttribute.OnFixtureRunCount.Value = 0;
+
+            var fixture = TestFixtures.CreateFixtureWithContainer<TestFixtures.FixtureSpecifiedByOneAroundFixtureAttribute>("Ex01");
+            fixture.Run(null, null);
+            Assert(1);
+        }
+
+        [Example("When a fixture is specified by some AroundAttributes")]
+        void Ex07()
+        {
+            TestAroundFixtureAttribute.OnFixtureRunningCount.Value = 0;
+            TestAroundFixtureAttribute.OnFixtureRunCount.Value = 0;
+
+            var fixture = TestFixtures.CreateFixtureWithContainer<TestFixtures.FixtureSpecifiedBySomeAroundFixtureAttributes>("Ex01");
+            fixture.Run(null, null);
+            Assert(3);
         }
     }
 }

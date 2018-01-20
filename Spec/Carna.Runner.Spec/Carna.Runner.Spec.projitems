@@ -71,6 +71,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.Ready.cs">
       <DependentUpon>FixtureSpec.cs</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.RunFixture.AroundFixtureAttribute.cs">
+      <DependentUpon>FixtureSpec.RunFixture.cs</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.RunFixture.cs">
       <DependentUpon>FixtureSpec.cs</DependentUpon>
     </Compile>
@@ -189,6 +192,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\WhenStepRunnerSpec.StepRunningAsync.cs">
       <DependentUpon>WhenStepRunnerSpec.cs</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)TestAroundFixtureAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestFixtures.cs" />
   </ItemGroup>
 </Project>

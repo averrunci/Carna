@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2018 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -22,6 +22,15 @@ namespace Carna
 
         public static IFixture CreateFixture(Type fixtureInstanceType, string methodName) =>
             new Fixture(fixtureInstanceType, fixtureInstanceType.GetRuntimeMethods().Where(m => m.Name == methodName).First());
+
+        public static IFixture CreateFixtureWithContainer<T>(string methodName) => CreateFixtureWithContainer(typeof(T), methodName);
+
+        public static IFixture CreateFixtureWithContainer(Type fixtureInstanceType, string methodName)
+        {
+            var container = new FixtureContainer(fixtureInstanceType);
+            container.Add(CreateFixture(fixtureInstanceType, methodName));
+            return container;
+        }
 
         public static bool RaiseException
         {
@@ -299,6 +308,50 @@ namespace Carna
             public FixtureStepResult.Builder Run(FixtureStepResultCollection results)
             {
                 return FixtureStepResult.Of(Step).Passed();
+            }
+        }
+
+        [Context("When a fixture is specified by one AroundFixtureAttribute")]
+        [TestAroundFixture]
+        public class FixtureSpecifiedByOneAroundFixtureAttribute
+        {
+            [Example]
+            void Ex01()
+            {
+            }
+        }
+
+        [Context("When a fixture is specified by some AroundFixtureAttributes")]
+        [TestAroundFixture]
+        [TestAroundFixture]
+        [TestAroundFixture]
+        public class FixtureSpecifiedBySomeAroundFixtureAttributes
+        {
+            [Example]
+            void Ex01()
+            {
+            }
+        }
+
+        [Context("When a method fixture is specified by one AroundFixtureAttribute")]
+        public class MethodFixtureSpecifiedByOneAroundFixtureAttribute
+        {
+            [Example]
+            [TestAroundFixture]
+            void Ex01()
+            {
+            }
+        }
+
+        [Context("When a method fixture is specified by some AroundFixtureAttributes")]
+        public class MethodFixtureSpecifiedBySomeAroundFixtureAttributes
+        {
+            [Example]
+            [TestAroundFixture]
+            [TestAroundFixture]
+            [TestAroundFixture]
+            void Ex01()
+            {
             }
         }
     }

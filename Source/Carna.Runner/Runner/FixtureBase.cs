@@ -208,11 +208,51 @@ namespace Carna.Runner
 
             var startTime = DateTime.UtcNow;
             OnFixtureRunning(new FixtureRunEventArgs(FixtureResult.Of(FixtureDescriptor).StartAt(startTime).Running()));
-            var result = Run(startTime, filter, stepRunnerFactory, parallel);
+            var result = RunCore(startTime, filter, stepRunnerFactory, parallel);
             OnFixtureRun(new FixtureRunEventArgs(result));
 
             return result;
         }
+
+        private FixtureResult RunCore(DateTime startTime, IFixtureFilter filter, IFixtureStepRunnerFactory stepRunnerFactory, bool parallel)
+        {
+            var result = FixtureResult.Of(FixtureDescriptor).StartAt(startTime);
+            try
+            {
+                var aroundFixtureAttributes = RetrieveAroundFixtureAttributes().ToList();
+                aroundFixtureAttributes.ForEach(attribute => attribute.OnFixtureRunning(FixtureContext.Of(FixtureDescriptor)));
+                try
+                {
+                    return RunCore(result, filter, stepRunnerFactory, parallel);
+                }
+                finally
+                {
+                    aroundFixtureAttributes.ForEach(attribute => attribute.OnFixtureRun(FixtureContext.Of(FixtureDescriptor)));
+                }
+            }
+            catch (Exception exc)
+            {
+                return RecordEndTime(result).Failed(exc);
+            }
+        }
+
+        private FixtureResult RunCore(FixtureResult.Builder result, IFixtureFilter filter, IFixtureStepRunnerFactory stepRunnerFactory, bool parallel)
+        {
+            try
+            {
+                return Run(result.StartTime.Value, filter, stepRunnerFactory, parallel);
+            }
+            catch (Exception exc)
+            {
+                return RecordEndTime(result).Failed(exc);
+            }
+        }
+
+        /// <summary>
+        /// Retrieves around fixture attributes that specify a fixture.
+        /// </summary>
+        /// <returns>The around fixture attributes that specify a fixture.</returns>
+        protected virtual IEnumerable<AroundFixtureAttribure> RetrieveAroundFixtureAttributes() => Enumerable.Empty<AroundFixtureAttribure>();
 
         /// <summary>
         /// Runs a fixture with the specified start time, filter, step runner factory,

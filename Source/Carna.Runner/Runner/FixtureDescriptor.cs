@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2018 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -69,7 +69,7 @@ namespace Carna.Runner
         /// <summary>
         /// Gets an attribute that specifies a fixture.
         /// </summary>
-        protected FixtureAttribute Attribute { get; }
+        protected internal FixtureAttribute Attribute { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FixtureDescriptor"/> class
