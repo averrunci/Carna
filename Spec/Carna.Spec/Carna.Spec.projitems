@@ -27,5 +27,6 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)FixtureSteppableSpec.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FixtureSteppableTss.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UICultureAttributeSpec.cs" />
   </ItemGroup>
 </Project>
