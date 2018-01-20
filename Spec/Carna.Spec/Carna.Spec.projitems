@@ -9,6 +9,7 @@
     <Import_RootNamespace>Carna</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)CultureAttributeSpec.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FixtureSteppable.ExpectStep.cs">
       <DependentUpon>FixtureSteppableSpec.cs</DependentUpon>
     </Compile>
