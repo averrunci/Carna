@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Copyright>Copyright (C) 2017 Fievus</Copyright>
+    <Copyright>Copyright (C) 2017-2018 Fievus</Copyright>
     <Description>The testing and specification framework for .NET Platform</Description>
     <Company />
     <Authors>averrunci</Authors>
@@ -10,20 +10,20 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/averrunci/Carna</PackageProjectUrl>
-    <AssemblyVersion>1.3.0</AssemblyVersion>
-    <FileVersion>1.3.0</FileVersion>
+    <AssemblyVersion>1.4.0</AssemblyVersion>
+    <FileVersion>1.4.0</FileVersion>
     <PackageLicenseUrl>https://github.com/averrunci/Carna/blob/master/LICENSE</PackageLicenseUrl>
-    <Version>1.3.0</Version>
+    <Version>1.4.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\..\Binary\Carna\Debug\netstandard1.3\</OutputPath>
-    <DocumentationFile>..\..\Binary\Carna\Debug\netstandard1.3\netstandard1.3\Carna.xml</DocumentationFile>
+    <OutputPath>..\..\Binary\Carna\Debug\</OutputPath>
+    <DocumentationFile>..\..\Binary\Carna\Debug\netstandard2.0\Carna.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\..\Binary\Carna\Release\netstandard1.3\</OutputPath>
-    <DocumentationFile>..\..\Binary\Carna\Release\netstandard1.3\netstandard1.3\Carna.xml</DocumentationFile>
+    <OutputPath>..\..\Binary\Carna\Release</OutputPath>
+    <DocumentationFile>..\..\Binary\Carna\Release\netstandard2.0\Carna.xml</DocumentationFile>
   </PropertyGroup>
 
 </Project>

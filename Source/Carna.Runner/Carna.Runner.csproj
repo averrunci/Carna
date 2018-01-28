@@ -8,24 +8,24 @@
     <Authors>averrunci</Authors>
     <Company />
     <Description>The runner of Carna testing and specification framework for .NET Platform</Description>
-    <Copyright>Copyright (C) 2017 Fievus</Copyright>
+    <Copyright>Copyright (C) 2017-2018 Fievus</Copyright>
     <PackageProjectUrl>https://github.com/averrunci/Carna</PackageProjectUrl>
     <PackageTags>carna test testing tdd bdd runner</PackageTags>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <AssemblyVersion>1.3.0</AssemblyVersion>
-    <FileVersion>1.3.0</FileVersion>
+    <AssemblyVersion>1.4.0</AssemblyVersion>
+    <FileVersion>1.4.0</FileVersion>
     <PackageLicenseUrl>https://github.com/averrunci/Carna/blob/master/LICENSE</PackageLicenseUrl>
-    <Version>1.3.0</Version>
+    <Version>1.4.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\..\Binary\Carna.Runner\Debug\netstandard1.3\</OutputPath>
-    <DocumentationFile>..\..\Binary\Carna.Runner\Debug\netstandard1.3\netstandard1.3\Carna.Runner.xml</DocumentationFile>
+    <OutputPath>..\..\Binary\Carna.Runner\Debug\</OutputPath>
+    <DocumentationFile>..\..\Binary\Carna.Runner\Debug\netstandard2.0\Carna.Runner.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\..\Binary\Carna.Runner\Release\netstandard1.3\</OutputPath>
-    <DocumentationFile>..\..\Binary\Carna.Runner\Release\netstandard1.3\netstandard1.3\Carna.Runner.xml</DocumentationFile>
+    <OutputPath>..\..\Binary\Carna.Runner\Release\</OutputPath>
+    <DocumentationFile>..\..\Binary\Carna.Runner\Release\netstandard2.0\Carna.Runner.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,5 +1,32 @@
 # Release note
 
+## V1.4.0
+
+### Add
+
+#### Carna
+
+- Add AroundFixture attribute.
+- Add Culture attribute.
+- Add UICulture attribute.
+
+#### Carna.Runner
+
+- Add the function to retrieve AroundFixture attribute and execute its methods before/after running a fixture.
+
+### Changes
+
+#### Carna.Runner
+
+- Change a format of an assertion failure message.
+- Change Task.Wait() to Task.GetAwaiter().GetResult().
+
+### Bug fix
+
+#### Carna.Runner
+
+- Fix that a NullReferenceException is not thrown when a Parameter attribute is specified and a default constructor is not defined.
+
 ## v1.3.1
 
 ### Bug fix

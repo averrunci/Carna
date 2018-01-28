@@ -7,12 +7,12 @@
     <Company />
     <Product>Carna Specification Runner</Product>
     <Description>The runner of Carna specifications</Description>
-    <Copyright>Copyright (C) 2017 Fievus</Copyright>
+    <Copyright>Copyright (C) 2017-2018 Fievus</Copyright>
     <PackageProjectUrl>https://github.com/averrunci/Carna</PackageProjectUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <AssemblyVersion>1.3.0</AssemblyVersion>
-    <FileVersion>1.3.0</FileVersion>
-    <Version>1.3.0</Version>
+    <AssemblyVersion>1.4.0</AssemblyVersion>
+    <FileVersion>1.4.0</FileVersion>
+    <Version>1.4.0</Version>
     <PackageLicenseUrl>https://github.com/averrunci/Carna/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
