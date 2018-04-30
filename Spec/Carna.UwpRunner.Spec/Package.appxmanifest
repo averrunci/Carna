@@ -4,7 +4,7 @@
   <mp:PhoneIdentity PhoneProductId="65072d9e-42e6-4c13-bb7c-aca815f1ecca" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Carna.UwpRunner.Spec</DisplayName>
-    <PublisherDisplayName>koji</PublisherDisplayName>
+    <PublisherDisplayName>Fievus</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
