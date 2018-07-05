@@ -26,10 +26,10 @@ namespace Carna.UwpRunner
         /// </summary>
         public long TotalCount
         {
-            get { return totalCount; }
+            get => totalCount;
             set
             {
-                if (totalCount == value) { return; }
+                if (totalCount == value) return;
 
                 totalCount = value;
                 IsTimeVisible = totalCount > 0;
@@ -45,10 +45,10 @@ namespace Carna.UwpRunner
         /// </summary>
         public long PassedCount
         {
-            get { return passedCount; }
+            get => passedCount;
             set
             {
-                if (passedCount == value) { return; }
+                if (passedCount == value) return;
 
                 passedCount = value;
                 PassedRate = TotalCount == 0 ? 0 : (int)((double)passedCount / TotalCount * 100);
@@ -64,10 +64,10 @@ namespace Carna.UwpRunner
         /// </summary>
         public long FailedCount
         {
-            get { return failedCount; }
+            get => failedCount;
             set
             {
-                if (failedCount == value) { return; }
+                if (failedCount == value) return;
 
                 failedCount = value;
                 RaisePropertyChanged();
@@ -80,10 +80,10 @@ namespace Carna.UwpRunner
         /// </summary>
         public long PendingCount
         {
-            get { return pendingCount; }
+            get => pendingCount;
             set
             {
-                if (pendingCount == value) { return; }
+                if (pendingCount == value) return;
 
                 pendingCount = value;
                 RaisePropertyChanged();
@@ -106,10 +106,10 @@ namespace Carna.UwpRunner
         /// </summary>
         public string StartDateTime
         {
-            get { return startDateTime; }
+            get => startDateTime;
             set
             {
-                if (startDateTime == value) { return; }
+                if (startDateTime == value) return;
 
                 startDateTime = value;
                 RaisePropertyChanged();
@@ -122,10 +122,10 @@ namespace Carna.UwpRunner
         /// </summary>
         public string EndDateTime
         {
-            get { return endDateTime; }
+            get => endDateTime;
             set
             {
-                if (endDateTime == value) { return; }
+                if (endDateTime == value) return;
 
                 endDateTime = value;
                 RaisePropertyChanged();
@@ -138,10 +138,10 @@ namespace Carna.UwpRunner
         /// </summary>
         public string Duration
         {
-            get { return duration; }
+            get => duration;
             set
             {
-                if (duration == value) { return; }
+                if (duration == value) return;
 
                 duration = value;
                 RaisePropertyChanged();
@@ -154,10 +154,10 @@ namespace Carna.UwpRunner
         /// </summary>
         public bool IsFixtureBuilding
         {
-            get { return isFixtureBuilding; }
+            get => isFixtureBuilding;
             set
             {
-                if (isFixtureBuilding == value) { return; }
+                if (isFixtureBuilding == value) return;
 
                 isFixtureBuilding = value;
                 RaisePropertyChanged();
@@ -170,10 +170,10 @@ namespace Carna.UwpRunner
         /// </summary>
         public bool IsFixtureBuilt
         {
-            get { return isFixtureBuilt; }
+            get => isFixtureBuilt;
             set
             {
-                if (isFixtureBuilt == value) { return; }
+                if (isFixtureBuilt == value) return;
 
                 isFixtureBuilt = value;
                 RaisePropertyChanged();
@@ -186,10 +186,10 @@ namespace Carna.UwpRunner
         /// </summary>
         public bool IsFixtureRunning
         {
-            get { return isFixtureRunning; }
+            get => isFixtureRunning;
             set
             {
-                if (isFixtureRunning == value) { return; }
+                if (isFixtureRunning == value) return;
 
                 isFixtureRunning = value;
                 RaisePropertyChanged();

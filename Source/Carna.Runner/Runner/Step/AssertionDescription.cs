@@ -215,7 +215,7 @@ namespace Carna.Runner.Step
         /// <returns>The description of the assertion.</returns>
         protected virtual string CreateAndAlsoDescription(BinaryExpression expression, ParameterExpression parameter)
         {
-            if (expression == null) { return CreateDefaultDescription(); }
+            if (expression == null) return CreateDefaultDescription();
 
             RequireFirstNewLine = true;
             IndentCount = 4;
@@ -227,7 +227,7 @@ namespace Carna.Runner.Step
 
         private void CreateAndAlsoDescription(Expression expression, ParameterExpression parameter, List<string> lines)
         {
-            if (expression == null) { return; }
+            if (expression == null) return;
 
             if (expression.NodeType == ExpressionType.AndAlso)
             {
@@ -244,7 +244,11 @@ namespace Carna.Runner.Step
                         lines.Add("[passed]");
                         return;
                     }
-                } catch { }
+                }
+                catch
+                {
+                    // ignored
+                }
 
                 lines.Add($"[failed]{Environment.NewLine}{CreateDescription(expression, parameter)}");
             }
@@ -285,8 +289,8 @@ namespace Carna.Runner.Step
         protected virtual string CreateDescription(InvocationExpression expression)
         {
             var lambda = expression.Expression as LambdaExpression;
-            var parameter = lambda.Parameters[0];
-            return CreateDescription(lambda.Body, parameter);
+            var parameter = lambda?.Parameters[0];
+            return CreateDescription(lambda?.Body, parameter);
         }
 
         /// <summary>
@@ -306,7 +310,7 @@ namespace Carna.Runner.Step
             }
             catch (Exception exc)
             {
-                if (string.IsNullOrWhiteSpace(fallbackValueFormat) || exc.InnerException == null) { throw; }
+                if (string.IsNullOrWhiteSpace(fallbackValueFormat) || exc.InnerException == null) throw;
 
                 return string.Format(fallbackValueFormat, $"{exc.InnerException.GetType().FullName}: {exc.InnerException.Message}");
             }

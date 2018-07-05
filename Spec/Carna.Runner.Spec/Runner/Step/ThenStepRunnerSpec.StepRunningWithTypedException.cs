@@ -11,15 +11,17 @@ namespace Carna.Runner.Step
     [Context("Runs ThenStep with Typed Exception")]
     class ThenStepRunnerSpec_StepRunningWithTypedException : FixtureSteppable
     {
-        private FixtureStepResultCollection StepResults { get; }
+        FixtureStepResultCollection StepResults { get; }
 
-        private ThenStep Step { get; set; }
-        private FixtureStepResult Result { get; set; }
+        ThenStep Step { get; set; }
+        FixtureStepResult Result { get; set; }
 
         public ThenStepRunnerSpec_StepRunningWithTypedException()
         {
-            StepResults = new FixtureStepResultCollection();
-            StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Failed(new ArgumentNullException()).Build());
+            StepResults = new FixtureStepResultCollection
+            {
+                FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Failed(new ArgumentNullException()).Build()
+            };
         }
 
         private IFixtureStepRunner RunnerOf(ThenStep step) => new ThenStepRunner(step);
@@ -27,7 +29,7 @@ namespace Carna.Runner.Step
         [Example("When ThenStep that has the type of an exception that is valid")]
         void Ex01()
         {
-            Given("ThenStep that has the type of an exceptoin that is valid", () => Step = FixtureSteps.CreateThenStep<ArgumentNullException>());
+            Given("ThenStep that has the type of an exception that is valid", () => Step = FixtureSteps.CreateThenStep<ArgumentNullException>());
             When("the given ThenStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
             Then("the status of the result should be Passed", () => Result.Status == FixtureStepStatus.Passed);
             Then("the exception of the result should be null", () => Result.Exception == null);

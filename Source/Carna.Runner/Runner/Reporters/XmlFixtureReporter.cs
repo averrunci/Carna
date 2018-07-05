@@ -87,7 +87,7 @@ namespace Carna.Runner.Reporters
                 new XAttribute("startTime", result.StartTime.GetValueOrDefault()),
                 new XAttribute("endTime", result.EndTime.GetValueOrDefault()),
                 new XAttribute("duration", result.Duration.GetValueOrDefault().TotalSeconds),
-                new XAttribute("formattedDescription", FixtureFormatter?.FormatFixture(result.FixtureDescriptor))
+                new XAttribute("formattedDescription", FixtureFormatter?.FormatFixture(result.FixtureDescriptor) ?? (object)string.Empty)
             );
             if (result.Exception != null)
             {
@@ -113,7 +113,7 @@ namespace Carna.Runner.Reporters
                 new XAttribute("startTime", result.StartTime.GetValueOrDefault()),
                 new XAttribute("endTime", result.EndTime.GetValueOrDefault()),
                 new XAttribute("duration", result.Duration.GetValueOrDefault().TotalSeconds),
-                new XAttribute("formattedDescription", FixtureFormatter?.FormatFixtureStep(result.Step))
+                new XAttribute("formattedDescription", FixtureFormatter?.FormatFixtureStep(result.Step) ?? (object)string.Empty)
             );
             if (result.Exception != null)
             {

@@ -10,11 +10,11 @@ using Carna.Step;
 
 namespace Carna.Runner
 {
-    [Context("Finished with FixturStepResult")]
+    [Context("Finished with FixtureStepResult")]
     class FixtureResultSpec_FixtureStatus_FinishedWithFixtureStepResult : FixtureSteppable
     {
-        private FixtureDescriptor FixtureDescriptor { get; } = new FixtureDescriptor("Test", new ContextAttribute());
-        private FixtureStep Step { get; } = new ExpectStep(string.Empty, null, string.Empty, string.Empty, 0);
+        FixtureDescriptor FixtureDescriptor { get; } = new FixtureDescriptor("Test", new ContextAttribute());
+        FixtureStep Step { get; } = new ExpectStep(string.Empty, null, string.Empty, string.Empty, 0);
 
         [Example("When specified Enumerable of FixtureStepResult is null")]
         void Ex01()

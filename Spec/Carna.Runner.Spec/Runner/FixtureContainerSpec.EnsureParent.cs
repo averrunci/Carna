@@ -9,9 +9,9 @@ namespace Carna.Runner
     [Context("Ensures a parent")]
     class FixtureContainerSpec_EnsureParent : FixtureSteppable
     {
-        private IFixture ParentContainer { get; set; }
-        private FixtureContainer Container { get; set; }
-        private IFixture Fixture { get; set; }
+        IFixture ParentContainer { get; set; }
+        FixtureContainer Container { get; set; }
+        IFixture Fixture { get; set; }
 
         [Background("Fixture container that has a parent fixture container")]
         public FixtureContainerSpec_EnsureParent()
@@ -43,7 +43,7 @@ namespace Carna.Runner
             Expect("the parent of the added fixture container is set to the fixture container", () => Fixture.ParentFixture == Container);
         }
 
-        [Example("When some Fistures are added")]
+        [Example("When some Fixtures are added")]
         void Ex03()
         {
             var fixtures = new[] {
@@ -58,7 +58,7 @@ namespace Carna.Runner
             Expect("the parent of each added fixture is set to the parent fixture container.", () => fixtures.All(f => f.ParentFixture == ParentContainer));
         }
 
-        [Example("When some FistureContainers are added")]
+        [Example("When some FixtureContainers are added")]
         void Ex04()
         {
             var fixtureContainers = new IFixture[] {

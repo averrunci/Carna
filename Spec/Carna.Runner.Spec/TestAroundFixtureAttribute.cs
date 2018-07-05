@@ -7,8 +7,8 @@ using System.Threading;
 
 namespace Carna
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-    public class TestAroundFixtureAttribute : AroundFixtureAttribure
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
+    public class TestAroundFixtureAttribute : AroundFixtureAttribute
     {
         public static ThreadLocal<int> OnFixtureRunningCount { get; } = new ThreadLocal<int>();
         public static ThreadLocal<int> OnFixtureRunCount { get; } = new ThreadLocal<int>();

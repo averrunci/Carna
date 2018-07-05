@@ -11,26 +11,26 @@ namespace Carna.Runner.Step
     [Specification("FixtureStepRunnerFactory Spec")]
     class FixtureStepRunnerFactorySpec : FixtureSteppable
     {
-        private IFixtureStepRunnerFactory SteprunnerFactory { get; }
+        IFixtureStepRunnerFactory StepRunnerFactory { get; }
 
         public FixtureStepRunnerFactorySpec()
         {
-            SteprunnerFactory = new FixtureStepRunnerFactory();
+            StepRunnerFactory = new FixtureStepRunnerFactory();
         }
 
         [Example("Creates the default registered step runner")]
         void Ex01()
         {
-            Expect("the step runner of GivenStep should be GivenStepRunner", () => SteprunnerFactory.Create(FixtureSteps.CreateGivenStep()).GetType() == typeof(GivenStepRunner));
-            Expect("the step runner of WhenStep should be WhenStepRunner", () => SteprunnerFactory.Create(FixtureSteps.CreateWhenStep()).GetType() == typeof(WhenStepRunner));
-            Expect("the step runner of ThenStep should be ThenStepRunner", () => SteprunnerFactory.Create(FixtureSteps.CreateThenStep()).GetType() == typeof(ThenStepRunner));
-            Expect("the step runner of ExpectStep should be ExpectStepRunner", () => SteprunnerFactory.Create(FixtureSteps.CreateExpectStep()).GetType() == typeof(ExpectStepRunner));
+            Expect("the step runner of GivenStep should be GivenStepRunner", () => StepRunnerFactory.Create(FixtureSteps.CreateGivenStep()).GetType() == typeof(GivenStepRunner));
+            Expect("the step runner of WhenStep should be WhenStepRunner", () => StepRunnerFactory.Create(FixtureSteps.CreateWhenStep()).GetType() == typeof(WhenStepRunner));
+            Expect("the step runner of ThenStep should be ThenStepRunner", () => StepRunnerFactory.Create(FixtureSteps.CreateThenStep()).GetType() == typeof(ThenStepRunner));
+            Expect("the step runner of ExpectStep should be ExpectStepRunner", () => StepRunnerFactory.Create(FixtureSteps.CreateExpectStep()).GetType() == typeof(ExpectStepRunner));
         }
 
-        [Example("Throws an exceptin when the unregistered step runner is created")]
+        [Example("Throws an exception when the unregistered step runner is created")]
         void Ex02()
         {
-            When("the unregistered step runner is created", () => SteprunnerFactory.Create(FixtureSteps.CreateStep<StepRunnerNotRegisteredStep>()));
+            When("the unregistered step runner is created", () => StepRunnerFactory.Create(FixtureSteps.CreateStep<StepRunnerNotRegisteredStep>()));
             Then("FixtureStepRunnerNotFoundException should be thrown", exc => exc.GetType() == typeof(FixtureStepRunnerNotFoundException));
         }
 

@@ -9,7 +9,7 @@ namespace Carna
     /// <summary>
     /// Specifies the fixture that indicates an example.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Method)]
     public class ExampleAttribute : FixtureAttribute
     {
         /// <summary>
@@ -27,7 +27,7 @@ namespace Carna
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExampleAttribute"/> class
-        /// with the specified descrition of a fixture specified by this attribute.
+        /// with the specified description of a fixture specified by this attribute.
         /// </summary>
         /// <param name="description">
         /// The description of a fixture specified by this attribute.

@@ -10,7 +10,7 @@ namespace Carna.Runner
     public interface IFixtureFilter
     {
         /// <summary>
-        /// Determines wheter to run a fixture of the specified descriptor.
+        /// Determines whether to run a fixture of the specified descriptor.
         /// </summary>
         /// <param name="descriptor">The descriptor of the fixture.</param>
         /// <returns>

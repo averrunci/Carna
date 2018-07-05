@@ -101,13 +101,13 @@ namespace Carna.Runner.Formatters
             var fixtureName = FixtureNames.GetOrDefault(descriptor.FixtureAttributeType, () => ToDefaultFixtureName(descriptor));
 
             var lines = descriptor.Description.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-            if (!string.IsNullOrEmpty(fixtureName)) { lines[0] = FormatFixture(fixtureName, lines[0]); }
+            if (!string.IsNullOrEmpty(fixtureName)) lines[0] = FormatFixture(fixtureName, lines[0]);
 
             var descriptionItems = new List<FormattedDescription>();
             descriptionItems.AddRange(FormatNarrative(descriptor.Benefit, descriptor.Role, descriptor.Feature));
 
             var backgroundDescription = FormatBackground(descriptor.Background);
-            if (backgroundDescription != null) { descriptionItems.Add(backgroundDescription); }
+            if (backgroundDescription != null) descriptionItems.Add(backgroundDescription);
 
             return new FormattedDescription
             {
@@ -157,24 +157,15 @@ namespace Carna.Runner.Formatters
         /// <param name="role">The role of a fixture.</param>
         /// <param name="feature">The feature of a fixture.</param>
         /// <returns>
-        /// The formatted description formatted with the specified benafit, role, and feature.
+        /// The formatted description formatted with the specified benefit, role, and feature.
         /// </returns>
         protected virtual IEnumerable<FormattedDescription> FormatNarrative(string benefit, string role, string feature)
         {
             var narrativeItems = new List<FormattedDescription>();
 
-            if (!string.IsNullOrWhiteSpace(benefit))
-            {
-                narrativeItems.Add(CreateNarrativeDescription(NarrativeItem.Benefit, benefit));
-            }
-            if (!string.IsNullOrWhiteSpace(role))
-            {
-                narrativeItems.Add(CreateNarrativeDescription(NarrativeItem.Role, role));
-            }
-            if (!string.IsNullOrWhiteSpace(feature))
-            {
-                narrativeItems.Add(CreateNarrativeDescription(NarrativeItem.Feature, feature));
-            }
+            if (!string.IsNullOrWhiteSpace(benefit)) narrativeItems.Add(CreateNarrativeDescription(NarrativeItem.Benefit, benefit));
+            if (!string.IsNullOrWhiteSpace(role)) narrativeItems.Add(CreateNarrativeDescription(NarrativeItem.Role, role));
+            if (!string.IsNullOrWhiteSpace(feature)) narrativeItems.Add(CreateNarrativeDescription(NarrativeItem.Feature, feature));
 
             return narrativeItems.AsReadOnly();
         }
@@ -192,7 +183,7 @@ namespace Carna.Runner.Formatters
             var narrativeItemName = NarrativeItemNames.GetOrDefault(narrativeItem, () => ToDefaultNarrativeItemName(narrativeItem));
 
             var lines = value.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-            if (!string.IsNullOrEmpty(narrativeItemName)) { lines[0] = FormatNarrative(narrativeItemName, lines[0]); }
+            if (!string.IsNullOrEmpty(narrativeItemName)) lines[0] = FormatNarrative(narrativeItemName, lines[0]);
 
             return new FormattedDescription
             {
@@ -206,7 +197,7 @@ namespace Carna.Runner.Formatters
         /// Gets a default narrative item name of the specified narrative item.
         /// </summary>
         /// <param name="narrativeItem">The narrative item.</param>
-        /// <returns>The default narrative item name of the specified narraitive item.</returns>
+        /// <returns>The default narrative item name of the specified narrative item.</returns>
         protected virtual string ToDefaultNarrativeItemName(NarrativeItem narrativeItem) => string.Empty;
 
         /// <summary>
@@ -240,7 +231,7 @@ namespace Carna.Runner.Formatters
         /// <returns> The formatted description formatted with the specified background.</returns>
         protected virtual FormattedDescription FormatBackground(string background)
         {
-            if (background == null || !background.Any()) { return null; }
+            if (background == null || !background.Any()) return null;
 
             var lines = background.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
             lines[0] = FormatBackground(BackgroundName, lines[0]);
@@ -287,7 +278,7 @@ namespace Carna.Runner.Formatters
             var conjunctionRequired = PreviousStepType == stepType;
 
             var lines = step.Description.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-            if (!string.IsNullOrEmpty(stepName)) { lines[0] = FormatFixtureStep(stepName, lines[0], conjunctionRequired); }
+            if (!string.IsNullOrEmpty(stepName)) lines[0] = FormatFixtureStep(stepName, lines[0], conjunctionRequired);
 
             return new FormattedDescription
             {
@@ -305,7 +296,7 @@ namespace Carna.Runner.Formatters
         protected virtual string ToDefaultStepName(FixtureStep step)
         {
             var stepName = step.GetType().Name;
-            var suffixIndex = stepName.LastIndexOf("Step");
+            var suffixIndex = stepName.LastIndexOf("Step", StringComparison.Ordinal);
             if (suffixIndex > 0)
             {
                 stepName = stepName.Substring(0, suffixIndex);

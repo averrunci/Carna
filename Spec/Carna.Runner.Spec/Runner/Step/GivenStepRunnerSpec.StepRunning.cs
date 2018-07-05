@@ -11,10 +11,10 @@ namespace Carna.Runner.Step
     [Context("Runs GivenStep")]
     class GivenStepRunnerSpec_StepRunning : FixtureSteppable
     {
-        private FixtureStepResultCollection StepResults { get; }
+        FixtureStepResultCollection StepResults { get; }
 
-        private GivenStep Step { get; set; }
-        private FixtureStepResult Result { get; set; }
+        GivenStep Step { get; set; }
+        FixtureStepResult Result { get; set; }
 
         public GivenStepRunnerSpec_StepRunning()
         {

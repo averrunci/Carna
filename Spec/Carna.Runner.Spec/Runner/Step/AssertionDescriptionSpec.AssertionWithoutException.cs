@@ -10,7 +10,7 @@ namespace Carna.Runner.Step
     [Context("Assertion without Exception")]
     class AssertionDescriptionSpec_AssertionWithoutException :FixtureSteppable
     {
-        private Expression<Func<bool>> Assertion { get; set; }
+        Expression<Func<bool>> Assertion { get; set; }
 
         [Example("When the specified expression is otherwise")]
         void Ex01()

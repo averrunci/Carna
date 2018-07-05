@@ -15,10 +15,10 @@ namespace Carna
     [Context("Expect step")]
     class FixtureSteppable_ExpectStep : FixtureSteppable
     {
-        private IFixtureStepper FixtureStepper { get; set; }
-        private FixtureSteppableTss Fixture { get; }
+        IFixtureStepper FixtureStepper { get; set; }
+        FixtureSteppableTss Fixture { get; }
 
-        private static string Description { get; } = "description";
+        static string Description { get; } = "description";
 
         public FixtureSteppable_ExpectStep()
         {
@@ -48,7 +48,7 @@ namespace Carna
             Fixture.RunExpect(Description, assertion);
 
             Expect(
-                "the underlying stepper should take an Exepct step that has the specified description and assertion.",
+                "the underlying stepper should take an Expect step that has the specified description and assertion.",
                 () => FixtureStepper.Received().Take(Arg.Is<ExpectStep>(step =>
                     step.Description == Description &&
                     step.Action == assertion && step.Assertion == null && step.AsyncAction == null

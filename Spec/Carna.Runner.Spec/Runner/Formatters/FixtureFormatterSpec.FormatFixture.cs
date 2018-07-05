@@ -9,11 +9,11 @@ namespace Carna.Runner.Formatters
     [Context("Format a fixture")]
     class FixtureFormatterSpec_FormatFixture : FixtureSteppable
     {
-        private IFixtureFormatter Formatter { get; }
-        private string Name { get; }
-        private string Description { get; }
+        IFixtureFormatter Formatter { get; }
+        string Name { get; }
+        string Description { get; }
 
-        private FormattedDescription FormattedDescription { get; set; }
+        FormattedDescription FormattedDescription { get; set; }
 
         public FixtureFormatterSpec_FormatFixture()
         {
@@ -130,7 +130,7 @@ namespace Carna.Runner.Formatters
             Expect("the items of the formatted description should be empty", () => !FormattedDescription.Items.Any());
         }
 
-        [Example("When the description of the specified FixtureDescriptor is multiline")]
+        [Example("When the description of the specified FixtureDescriptor is multi-line")]
         void Ex10()
         {
             var description = string.Empty;
@@ -179,11 +179,7 @@ Description line 3");
         {
             var background = "Fixture Background";
             FixtureDescriptor descriptor = null;
-            Given("the description that has background", () =>
-            {
-                descriptor = new FixtureDescriptor(Name, new ContextAttribute(Description));
-                descriptor.Background = background;
-            });
+            Given("the description that has background", () => descriptor = new FixtureDescriptor(Name, new ContextAttribute(Description)) { Background = background });
             When("the description is formatted", () => FormattedDescription = Formatter.FormatFixture(descriptor));
             Then("the item count of the formatted description should be 1", () => FormattedDescription.Items.Count() == 1);
 
@@ -195,18 +191,14 @@ Description line 3");
             Then("the items of the item should be empty", () => !item.Items.Any());
         }
 
-        [Example("When background of the fixture that is multiline is specified")]
+        [Example("When background of the fixture that is multi-line is specified")]
         void Ex13()
         {
             var background = @"First Fixture Background
 Second Fixture Background
 Third Fixture Background";
             FixtureDescriptor descriptor = null;
-            Given("the description that has background", () =>
-            {
-                descriptor = new FixtureDescriptor(Name, new ContextAttribute(Description));
-                descriptor.Background = background;
-            });
+            Given("the description that has background", () => descriptor = new FixtureDescriptor(Name, new ContextAttribute(Description)) { Background = background });
             When("the description is formatted", () => FormattedDescription = Formatter.FormatFixture(descriptor));
             Then("the item count of the formatted description should be 1", () => FormattedDescription.Items.Count() == 1);
 
@@ -227,11 +219,7 @@ Third Fixture Background";
             FeatureAttribute featureAttribute = null;
             var background = "Fixture Background";
             Given("FeatureAttribute that has benefit, role, and feature", () => featureAttribute = new FeatureAttribute(Description) { Benefit = "Benefit", Role = "Role", Feature = "Feature" });
-            Given("the description that has FeatureAttribute and background", () =>
-            {
-                descriptor = new FixtureDescriptor(Name, featureAttribute);
-                descriptor.Background = background;
-            });
+            Given("the description that has FeatureAttribute and background", () => descriptor = new FixtureDescriptor(Name, featureAttribute) { Background = background });
             When("the description is formatted", () => FormattedDescription = Formatter.FormatFixture(descriptor));
             Then("the item count of the formatted description should be 4", () => FormattedDescription.Items.Count() == 4);
 

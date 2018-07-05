@@ -12,7 +12,7 @@ namespace Carna
     /// <remarks>
     /// A fixture specified by this attribute is a container fixture and a root fixture.
     /// </remarks>
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Class)]
     public class SpecificationAttribute : FixtureAttribute
     {
         /// <summary>

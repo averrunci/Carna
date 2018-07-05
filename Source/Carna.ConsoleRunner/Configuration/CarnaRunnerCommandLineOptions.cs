@@ -47,7 +47,7 @@ namespace Carna.ConsoleRunner.Configuration
         /// Gets registered options.
         /// </summary>
         public static IEnumerable<CarnaRunnerCommandLineOption> RegisteredOptions => registeredOptions.AsReadOnly();
-        private static List<CarnaRunnerCommandLineOption> registeredOptions;
+        private static readonly List<CarnaRunnerCommandLineOption> registeredOptions;
 
         /// <summary>
         /// Registers the specified option.

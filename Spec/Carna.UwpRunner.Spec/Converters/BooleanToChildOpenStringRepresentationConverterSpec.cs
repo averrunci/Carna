@@ -10,7 +10,7 @@ namespace Carna.UwpRunner.Converters
         BooleanToChildOpenStringRepresentationConverter Converter { get; } = new BooleanToChildOpenStringRepresentationConverter();
 
         [Example("Convert")]
-        [Sample(true, "-", Description = "When true is converterd")]
+        [Sample(true, "-", Description = "When true is converted")]
         [Sample(false, "+", Description = "When false is converted")]
         void Ex01(object value, object expected)
         {

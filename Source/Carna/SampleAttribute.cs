@@ -9,7 +9,7 @@ namespace Carna
     /// <summary>
     /// Specifies sample data of the fixture method.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public class SampleAttribute : Attribute
     {
         /// <summary>

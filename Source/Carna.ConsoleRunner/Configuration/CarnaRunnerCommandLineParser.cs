@@ -26,7 +26,7 @@ namespace Carna.ConsoleRunner.Configuration
             if (args.Any()) { return ParseArguments(args); }
 
             var options = new CarnaRunnerCommandLineOptions();
-            if (File.Exists(options.SettingsFilePath)) { return options; }
+            if (File.Exists(options.SettingsFilePath)) return options;
 
             throw new InvalidCommandLineOptionException(@"Specify an assembly or setting file.
 The current working directory does not contain a settings file.");
@@ -45,11 +45,8 @@ The current working directory does not contain a settings file.");
                 .Aggregate(new CarnaRunnerCommandLineOptions(), (options, context) =>
                 {
                     var option = CarnaRunnerCommandLineOptions.RegisteredOptions.FirstOrDefault(o => o.CanApply(context));
-                    if (option == null)
-                    {
-                        throw new InvalidCommandLineOptionException($@"Unknown option
+                    if (option == null) throw new InvalidCommandLineOptionException($@"Unknown option
 Option: {context.Argument}");
-                    }
 
                     option.Apply(options, context);
                     return options;

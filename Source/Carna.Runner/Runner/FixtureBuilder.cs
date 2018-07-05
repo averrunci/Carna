@@ -83,8 +83,8 @@ namespace Carna.Runner
         /// </returns>
         protected virtual IFixture Build(Type fixtureType, MethodInfo fixtureMethod)
         {
-            var samples = RetrieveSamples(fixtureMethod);
-            if (samples.IsEmpty()) { return new Fixture(fixtureType, fixtureMethod); }
+            var samples = RetrieveSamples(fixtureMethod).ToList();
+            if (samples.IsEmpty()) return new Fixture(fixtureType, fixtureMethod);
 
             return new FixtureContainer(fixtureType, fixtureMethod, samples.Select(sample => new Fixture(fixtureType, fixtureMethod, sample)));
         }
@@ -127,7 +127,10 @@ namespace Carna.Runner
             }
 
             var source = sourceConstructor.Invoke(null) as ISampleDataSource;
-            if (source == null) { throw new InvalidOperationException($"{sourceType} must implement {typeof(ISampleDataSource)}"); }
+            if (source == null)
+            {
+                throw new InvalidOperationException($"{sourceType} must implement {typeof(ISampleDataSource)}");
+            }
 
             return source.GetData().OfType<object>().Select(sample => CreateSampleContext(fixtureMethod, sample));
         }
@@ -161,7 +164,7 @@ namespace Carna.Runner
         protected virtual Func<TypeInfo, bool> NestedTypeFilter => Filter;
 
         /// <summary>
-        /// Gets a filter that is applied to a method that is a target of a fixtrue method.
+        /// Gets a filter that is applied to a method that is a target of a fixture method.
         /// </summary>
         protected virtual Func<MethodInfo, bool> MethodFilter => Filter;
 

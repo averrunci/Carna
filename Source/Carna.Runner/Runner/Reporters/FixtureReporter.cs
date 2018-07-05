@@ -104,8 +104,8 @@ namespace Carna.Runner.Reporters
 
         IFixtureFormatter IFixtureReporter.FixtureFormatter
         {
-            get { return FixtureFormatter; }
-            set { FixtureFormatter = value; }
+            get => FixtureFormatter;
+            set => FixtureFormatter = value;
         }
 
         void IFixtureReporter.Report(IEnumerable<FixtureResult> results) => Report(results.RequireNonNull(nameof(results)));

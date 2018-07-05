@@ -9,8 +9,8 @@ namespace Carna.Runner
     [Context("Determines whether Fixture can run a fixture")]
     class FixtureSpec_CanRun : FixtureSteppable
     {
-        private IFixture Fixture { get; }
-        private IFixtureFilter Filter { get; }
+        IFixture Fixture { get; }
+        IFixtureFilter Filter { get; }
 
         public FixtureSpec_CanRun()
         {

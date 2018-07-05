@@ -9,7 +9,7 @@ namespace Carna
     /// <summary>
     /// Specifies the fixture that indicates a scenario.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Method)]
     public class ScenarioAttribute : FixtureAttribute
     {
         /// <summary>

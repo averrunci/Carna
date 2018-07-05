@@ -26,17 +26,13 @@ namespace Carna.ConsoleRunner
         }
 
         private static FixtureEngine LoadConfiguration(this FixtureEngine @this, string filePath)
-        {
-            if (!File.Exists(filePath)) { return @this; }
-
-            return @this.Configure(LoadConfiguration(filePath)?.Ensure(AssemblyLoader));
-        }
+            => File.Exists(filePath) ? @this.Configure(LoadConfiguration(filePath)?.Ensure(AssemblyLoader)) : @this;
 
         private static CarnaRunnerConfiguration LoadConfiguration(string filePath)
         {
             using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
             {
-                stream.Position = (stream.ReadByte() == 0xef) ? 3 : 0;
+                stream.Position = stream.ReadByte() == 0xef ? 3 : 0;
 
                 var serializer = new DataContractJsonSerializer(
                     typeof(CarnaRunnerConfiguration),
@@ -55,7 +51,7 @@ namespace Carna.ConsoleRunner
 
         private static FixtureEngine AddDefaultFilter(this FixtureEngine @this, string filter)
         {
-            if (string.IsNullOrEmpty(filter)) { return @this; }
+            if (string.IsNullOrEmpty(filter)) return @this;
 
             @this.Filter = new FixtureFilter(new Dictionary<string, string> { ["pattern"] = filter });
 

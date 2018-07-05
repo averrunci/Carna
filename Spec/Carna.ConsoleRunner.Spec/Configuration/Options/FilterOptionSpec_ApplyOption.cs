@@ -7,11 +7,11 @@ namespace Carna.ConsoleRunner.Configuration.Options
     [Context("Applies the filter option")]
     class FilterOptionSpec_ApplyOption : FixtureSteppable
     {
-        private FilterOption Option { get; } = new FilterOption();
-        private CarnaRunnerCommandLineOptions Options { get; } = new CarnaRunnerCommandLineOptions();
-        private CarnaRunnerCommandLineOptionContext Context { get; set; }
+        FilterOption Option { get; } = new FilterOption();
+        CarnaRunnerCommandLineOptions Options { get; } = new CarnaRunnerCommandLineOptions();
+        CarnaRunnerCommandLineOptionContext Context { get; set; }
 
-        private string Pattern { get; set; }
+        string Pattern { get; set; }
 
         [Example("When a filter pattern is specified")]
         void Ex01()

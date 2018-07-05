@@ -9,7 +9,7 @@ namespace Carna
     /// <summary>
     /// Specifies the background of the fixture.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Constructor, AllowMultiple = true, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Constructor, AllowMultiple = true)]
     public class BackgroundAttribute : Attribute
     {
         /// <summary>

@@ -9,7 +9,7 @@ namespace Carna.Runner
     [Context("Ready")]
     class FixtureContainerSpec_Ready : FixtureSteppable
     {
-        private IFixture Container { get; }
+        IFixture Container { get; }
 
         public FixtureContainerSpec_Ready()
         {
@@ -34,10 +34,10 @@ namespace Carna.Runner
             Expect("the description of the descriptor of the result should be the value specified to the fixture method", () => containerReadyResult.FixtureDescriptor.Description == "Simple Fixture");
             Expect("the name of the descriptor of the result should be the name of the fixture method", () => containerReadyResult.FixtureDescriptor.Name == "SimpleFixture");
             Expect("the full name of the descriptor of the result should be the full name of the fixture method", () => containerReadyResult.FixtureDescriptor.FullName == "Carna.TestFixtures+SimpleFixture");
-            Expect("the fixture attribute type of the descriptor of the reuslt should be ContextAttribute", () => containerReadyResult.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
+            Expect("the fixture attribute type of the descriptor of the result should be ContextAttribute", () => containerReadyResult.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
             Expect("the start time of the result should not have value", () => !containerReadyResult.StartTime.HasValue);
             Expect("the end time of the result should not have value", () => !containerReadyResult.EndTime.HasValue);
-            Expect("the duration of the reuslt should not have value", () => !containerReadyResult.Duration.HasValue);
+            Expect("the duration of the result should not have value", () => !containerReadyResult.Duration.HasValue);
             Expect("the exception of the result should be null", () => containerReadyResult.Exception == null);
             Expect("the steps of the result should be empty", () => !containerReadyResult.StepResults.Any());
             Expect("the results of the result should be empty", () => !containerReadyResult.Results.Any());
@@ -48,10 +48,10 @@ namespace Carna.Runner
             Expect("the description of the descriptor of the result of the inner fixture should be the value specified to the fixture method", () => fixtureReadyResult.FixtureDescriptor.Description == "Fixture Method Example");
             Expect("the name of the descriptor of the result of the inner fixture should be the name of the fixture method", () => fixtureReadyResult.FixtureDescriptor.Name == "FixtureMethod");
             Expect("the full name of the descriptor of the result of the inner fixture should be the full name of the fixture method", () => fixtureReadyResult.FixtureDescriptor.FullName == "Carna.TestFixtures+SimpleFixture.FixtureMethod");
-            Expect("the fixture attribute type of the descriptor of the reuslt of the inner fixture should be ExampleAttribute", () => fixtureReadyResult.FixtureDescriptor.FixtureAttributeType == typeof(ExampleAttribute));
+            Expect("the fixture attribute type of the descriptor of the result of the inner fixture should be ExampleAttribute", () => fixtureReadyResult.FixtureDescriptor.FixtureAttributeType == typeof(ExampleAttribute));
             Expect("the start time of the result of the inner fixture should not have value", () => !fixtureReadyResult.StartTime.HasValue);
             Expect("the end time of the result of the inner fixture should not have value", () => !fixtureReadyResult.EndTime.HasValue);
-            Expect("the duration of the reuslt of the inner fixture should not have value", () => !fixtureReadyResult.Duration.HasValue);
+            Expect("the duration of the result of the inner fixture should not have value", () => !fixtureReadyResult.Duration.HasValue);
             Expect("the exception of the result of the inner fixture should be null", () => fixtureReadyResult.Exception == null);
             Expect("the steps of the result of the inner fixture should be empty", () => !fixtureReadyResult.StepResults.Any());
             Expect("the results of the result of the inner fixture should be empty", () => !fixtureReadyResult.Results.Any());

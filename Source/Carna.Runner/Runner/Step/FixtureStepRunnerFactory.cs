@@ -16,13 +16,13 @@ namespace Carna.Runner.Step
     /// </summary>
     /// <remarks>
     /// This factory retrieves types that implement the <see cref="IFixtureStepRunner"/>
-    /// that have a constructor that has a paremeter of the <see cref="FixtureStep"/>
+    /// that have a constructor that has a parameter of the <see cref="FixtureStep"/>
     /// specifying the assemblies in which types that implement the <see cref="IFixtureStepRunner"/> are defined
     /// and registers them to create a new instance that implements the <see cref="IFixtureStepRunner"/>.
     /// </remarks>
     public class FixtureStepRunnerFactory : IFixtureStepRunnerFactory
     {
-        private IDictionary<Type, Type> StepRunnerTypes = new Dictionary<Type, Type>();
+        private readonly IDictionary<Type, Type> stepRunnerTypes = new Dictionary<Type, Type>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FixtureStepRunnerFactory"/> class.
@@ -39,7 +39,7 @@ namespace Carna.Runner.Step
         /// <returns>The new instance that runs the specified fixture step.</returns>
         protected virtual IFixtureStepRunner Create(FixtureStep step)
         {
-            if (!StepRunnerTypes.TryGetValue(step.GetType(), out var stepRunnerType))
+            if (!stepRunnerTypes.TryGetValue(step.GetType(), out var stepRunnerType))
             {
                 throw new FixtureStepRunnerNotFoundException(step.GetType());
             }
@@ -70,15 +70,14 @@ namespace Carna.Runner.Step
                 .Where(type => !type.IsInterface && typeof(IFixtureStepRunner).GetTypeInfo().IsAssignableFrom(type))
                 .Select(type => new { StepType = RetrieveStepType(type), StepRunnerType = type.AsType() })
                 .Where(stepRunnerTypeContext => stepRunnerTypeContext.StepType != null)
-                .ForEach(stepRunnerContext => StepRunnerTypes[stepRunnerContext.StepType] = stepRunnerContext.StepRunnerType);
+                .ForEach(stepRunnerContext => stepRunnerTypes[stepRunnerContext.StepType] = stepRunnerContext.StepRunnerType);
         }
 
         private Type RetrieveStepType(TypeInfo runnerType)
             => runnerType.DeclaredConstructors
                 .Where(constructor => constructor.GetParameters().Length == 1)
                 .Select(constructor => constructor.GetParameters()[0].ParameterType)
-                .Where(parameterType => typeof(FixtureStep).GetTypeInfo().IsAssignableFrom(parameterType.GetTypeInfo()))
-                .FirstOrDefault();
+                .FirstOrDefault(parameterType => typeof(FixtureStep).GetTypeInfo().IsAssignableFrom(parameterType.GetTypeInfo()));
 
         IFixtureStepRunner IFixtureStepRunnerFactory.Create(FixtureStep step) => Create(step.RequireNonNull(nameof(step)));
         void IFixtureStepRunnerFactory.RegisterFrom(IEnumerable<Assembly> assemblies) => RegisterFrom(assemblies.RequireNonNull(nameof(assemblies)));

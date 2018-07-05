@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (C) 2017 Fievus
+//
+// This software may be modified and distributed under the terms
+// of the MIT license.  See the LICENSE file for details.
+using System;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -11,7 +15,7 @@ namespace Carna.UwpRunner
     /// </summary>
     public sealed partial class FixtureSummaryView : UserControl
     {
-        private const double passedRateRadius = 40;
+        private const double PassedRateRadius = 40;
 
         private FixtureSummary Summary => DataContext as FixtureSummary;
 
@@ -37,9 +41,9 @@ namespace Carna.UwpRunner
         private Geometry CreateEllipseGeometry()
             => new EllipseGeometry
             {
-                Center = new Point(passedRateRadius, passedRateRadius),
-                RadiusX = passedRateRadius,
-                RadiusY = passedRateRadius
+                Center = new Point(PassedRateRadius, PassedRateRadius),
+                RadiusX = PassedRateRadius,
+                RadiusY = PassedRateRadius
             };
 
         private Geometry CreatePathGeometry(int passedRate)
@@ -47,16 +51,16 @@ namespace Carna.UwpRunner
             var figure = new PathFigure
             {
                 IsClosed = true,
-                StartPoint = new Point(passedRateRadius, 0)
+                StartPoint = new Point(PassedRateRadius, 0)
             };
 
             var angle = 2 * Math.PI * passedRate / 100;
             figure.Segments.Add(new ArcSegment
             {
-                Size = new Size(passedRateRadius, passedRateRadius),
+                Size = new Size(PassedRateRadius, PassedRateRadius),
                 Point = new Point(
-                    passedRateRadius + passedRateRadius * Math.Cos(angle - Math.PI / 2),
-                    passedRateRadius + passedRateRadius * Math.Sin(angle - Math.PI / 2)
+                    PassedRateRadius + PassedRateRadius * Math.Cos(angle - Math.PI / 2),
+                    PassedRateRadius + PassedRateRadius * Math.Sin(angle - Math.PI / 2)
                 ),
                 IsLargeArc = passedRate >= 50,
                 SweepDirection = SweepDirection.Clockwise
@@ -64,7 +68,7 @@ namespace Carna.UwpRunner
 
             figure.Segments.Add(new LineSegment
             {
-                Point = new Point(passedRateRadius, passedRateRadius)
+                Point = new Point(PassedRateRadius, PassedRateRadius)
             });
 
             var geometry = new PathGeometry();

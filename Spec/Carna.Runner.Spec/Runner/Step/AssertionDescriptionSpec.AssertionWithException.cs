@@ -10,8 +10,8 @@ namespace Carna.Runner.Step
     [Context("Assertion with Exception")]
     class AssertionDescriptionSpec_AssertionWithException : FixtureSteppable
     {
-        private Expression<Func<Exception, bool>> Assertion { get; set; }
-        private Exception Exception { get; } = new Exception("Message");
+        Expression<Func<Exception, bool>> Assertion { get; set; }
+        Exception Exception { get; } = new Exception("Message");
 
         [Example("When the specified expression is otherwise")]
         void Ex01()

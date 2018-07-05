@@ -71,7 +71,7 @@ namespace Carna.ConsoleRunner.Reporters
         /// </summary>
         protected virtual void EnsureFailureTitle()
         {
-            if (FailureCount > 0) { return; }
+            if (FailureCount > 0) return;
 
             CarnaConsole.WriteLineFailure("Failures");
         }
@@ -167,8 +167,8 @@ namespace Carna.ConsoleRunner.Reporters
 
         IFixtureFormatter IFixtureReporter.FixtureFormatter
         {
-            get { return FixtureFormatter; }
-            set { FixtureFormatter = value; }
+            get => FixtureFormatter;
+            set => FixtureFormatter = value;
         }
         void IFixtureReporter.Report(IEnumerable<FixtureResult> results) => Report(results.RequireNonNull(nameof(results)));
     }

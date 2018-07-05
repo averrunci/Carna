@@ -7,8 +7,8 @@ namespace Carna.ConsoleRunner.Configuration.Options
     [Context("Determines whether the filter option can be applied")]
     class FilterOptionSpec_CanApply : FixtureSteppable
     {
-        private FilterOption Option { get; } = new FilterOption();
-        private CarnaRunnerCommandLineOptionContext Context { get; set; }
+        FilterOption Option { get; } = new FilterOption();
+        CarnaRunnerCommandLineOptionContext Context { get; set; }
 
         [Example("When CommandLineOptionContext is null")]
         void Ex01()

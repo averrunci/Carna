@@ -49,11 +49,8 @@ namespace Carna.ConsoleRunner.Configuration.Options
         /// </exception>
         protected override void ApplyOption(CarnaRunnerCommandLineOptions options, CarnaRunnerCommandLineOptionContext context)
         {
-            if (!File.Exists(context.Argument))
-            {
-                throw new InvalidCommandLineOptionException($@"Assembly file does not exist.
+            if (!File.Exists(context.Argument)) throw new InvalidCommandLineOptionException($@"Assembly file does not exist.
 File: {context.Argument}");
-            }
 
             options.Assemblies.Add(context.Argument);
         }

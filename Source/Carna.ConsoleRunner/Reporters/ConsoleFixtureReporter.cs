@@ -73,17 +73,15 @@ namespace Carna.ConsoleRunner.Reporters
             {
                 return IsFullReport ? ReportFixtureTitle(formattedDescription, level, null) : level;
             }
-            else
-            {
-                return ReportFixtureTitle(formattedDescription, level, result.Status);
-            }
+
+            return ReportFixtureTitle(formattedDescription, level, result.Status);
         }
 
         /// <summary>
         /// Reports the title of the fixture with the specified description, level, and status.
         /// </summary>
         /// <param name="formattedDescription">The formatted description of the fixture.</param>
-        /// <param name="level">The level of the fixture running reuslt.</param>
+        /// <param name="level">The level of the fixture running result.</param>
         /// <param name="status">The status of the fixture running.</param>
         /// <returns>The next level of the specified fixture running result.</returns>
         protected virtual int ReportFixtureTitle(FormattedDescription formattedDescription, int level, FixtureStatus? status)
@@ -91,9 +89,9 @@ namespace Carna.ConsoleRunner.Reporters
             var indent = Indent(level);
 
             ReportValue(JoinFormattedLines(formattedDescription, indent), status, !status.HasValue);
-            if (status.HasValue) { ReportStatus(status.Value, true); }
+            if (status.HasValue) ReportStatus(status.Value, true);
 
-            if (formattedDescription.Items.IsEmpty()) { return level + 1; }
+            if (formattedDescription.Items.IsEmpty()) return level + 1;
 
             indent = Indent(level + 1);
             formattedDescription.Items.ForEach(item => ReportValue(JoinFormattedLines(item, indent), status, true));
@@ -109,7 +107,7 @@ namespace Carna.ConsoleRunner.Reporters
         /// <param name="level">The level of the fixture running result.</param>
         protected virtual void ReportFixtureStep(FixtureResult result, int level)
         {
-            if (!StepVisible) { return; }
+            if (!StepVisible) return;
 
             var indent = Indent(level);
             result.StepResults.ForEach(stepResult =>
@@ -123,7 +121,7 @@ namespace Carna.ConsoleRunner.Reporters
         /// Joins formatted lines of the specified description with <see cref="Environment.NewLine"/>
         /// and the specified indent.
         /// </summary>
-        /// <param name="description">The formatted desription of the fixture.</param>
+        /// <param name="description">The formatted description of the fixture.</param>
         /// <param name="indent">The indent of a line.</param>
         /// <returns>
         ///  The string representation of the lines of a description that is joined
@@ -135,7 +133,7 @@ namespace Carna.ConsoleRunner.Reporters
         /// Reports the specified value with the specified status of the fixture running.
         /// </summary>
         /// <param name="value">The value to be reported.</param>
-        /// <param name="status">The status of the fixutre running.</param>
+        /// <param name="status">The status of the fixture running.</param>
         /// <param name="lineBreak">
         /// <c>true</c> if a line break is required; otherwise, <c>false</c>.
         /// </param>
@@ -150,7 +148,7 @@ namespace Carna.ConsoleRunner.Reporters
                 default: CarnaConsole.WriteHeader(value); break;
             }
 
-            if (lineBreak) { CarnaConsole.WriteLine(); }
+            if (lineBreak) CarnaConsole.WriteLine();
         }
 
         /// <summary>
@@ -170,12 +168,12 @@ namespace Carna.ConsoleRunner.Reporters
                 case FixtureStatus.Passed: ReportStatus(status, CarnaConsole.WriteSuccess); break;
             }
 
-            if (lineBreak) { CarnaConsole.WriteLine(); }
+            if (lineBreak) CarnaConsole.WriteLine();
         }
 
         private void ReportStatus(FixtureStatus status, Action<object> action)
         {
-            if (!StatusVisible) { return; }
+            if (!StatusVisible) return;
 
             ReportValue(" - ", status);
             action(status);
@@ -200,7 +198,7 @@ namespace Carna.ConsoleRunner.Reporters
                 default: CarnaConsole.WriteValue(value); break;
             }
 
-            if (lineBreak) { CarnaConsole.WriteLine(); }
+            if (lineBreak) CarnaConsole.WriteLine();
         }
 
         /// <summary>
@@ -220,12 +218,12 @@ namespace Carna.ConsoleRunner.Reporters
                 case FixtureStepStatus.Passed: ReportStatus(status, CarnaConsole.WriteSuccess); break;
             }
 
-            if (lineBreak) { CarnaConsole.WriteLine(); }
+            if (lineBreak) CarnaConsole.WriteLine();
         }
 
         private void ReportStatus(FixtureStepStatus status, Action<object> action)
         {
-            if (!StatusVisible) { return; }
+            if (!StatusVisible) return;
 
             ReportValue(" - ", status);
             action(status);

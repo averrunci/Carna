@@ -14,10 +14,10 @@ namespace Carna
     [Context("When step")]
     class FixtureSteppable_WhenStep : FixtureSteppable
     {
-        private IFixtureStepper FixtureStepper { get; set; }
-        private FixtureSteppableTss Fixture { get; }
+        IFixtureStepper FixtureStepper { get; }
+        FixtureSteppableTss Fixture { get; }
 
-        private static string Description { get; } = "description";
+        static string Description { get; } = "description";
 
         public FixtureSteppable_WhenStep()
         {
@@ -31,7 +31,7 @@ namespace Carna
             Fixture.RunWhen(Description);
 
             Expect(
-                "the underlying stepper should take a When step that has the sepcified description.",
+                "the underlying stepper should take a When step that has the specified description.",
                 () => FixtureStepper.Received().Take(Arg.Is<WhenStep>(step =>
                     step.Description == Description &&
                     step.Action == null && step.AsyncAction == null

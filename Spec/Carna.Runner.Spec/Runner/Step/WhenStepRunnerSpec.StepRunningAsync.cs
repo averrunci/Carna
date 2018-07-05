@@ -12,10 +12,10 @@ namespace Carna.Runner.Step
     [Context("Runs WhenStep asynchronously")]
     class WhenStepRunnerSpec_StepRunningAsync : FixtureSteppable
     {
-        private FixtureStepResultCollection StepResults { get; }
+        FixtureStepResultCollection StepResults { get; }
 
-        private WhenStep Step { get; set; }
-        private FixtureStepResult Result { get; set; }
+        WhenStep Step { get; set; }
+        FixtureStepResult Result { get; set; }
 
         public WhenStepRunnerSpec_StepRunningAsync()
         {
@@ -40,7 +40,7 @@ namespace Carna.Runner.Step
             Then("the step of the result should be the given WhenStep", () => Result.Step == Step);
         }
 
-        [Example("When WhenStep that has an action that throws an excetpion is run asynchronously")]
+        [Example("When WhenStep that has an action that throws an exception is run asynchronously")]
         void Ex02()
         {
             Given("async WhenStep that has an action that throws an exception", () => Step = FixtureSteps.CreateWhenStep(async () =>

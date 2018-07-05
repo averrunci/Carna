@@ -9,10 +9,10 @@ namespace Carna.Runner.Step
     [Specification("NoteStepRunner Spec")]
     class NoteStepRunnerSpec : FixtureSteppable
     {
-        private FixtureStepResultCollection StepResults { get; }
+        FixtureStepResultCollection StepResults { get; }
 
-        private NoteStep Step { get; set; }
-        private FixtureStepResult Result { get; set; }
+        NoteStep Step { get; set; }
+        FixtureStepResult Result { get; set; }
 
         public NoteStepRunnerSpec()
         {

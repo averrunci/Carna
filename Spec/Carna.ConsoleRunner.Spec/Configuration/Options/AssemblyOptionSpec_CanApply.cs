@@ -7,8 +7,8 @@ namespace Carna.ConsoleRunner.Configuration.Options
     [Context("Determines whether the assembly option can be applied")]
     class AssemblyOptionSpec_CanApply : FixtureSteppable
     {
-        private AssemblyOption Option { get; } = new AssemblyOption();
-        private CarnaRunnerCommandLineOptionContext Context { get; set; }
+        AssemblyOption Option { get; } = new AssemblyOption();
+        CarnaRunnerCommandLineOptionContext Context { get; set; }
 
         [Example("When CommandLineOptionContext is null")]
         void Ex01()

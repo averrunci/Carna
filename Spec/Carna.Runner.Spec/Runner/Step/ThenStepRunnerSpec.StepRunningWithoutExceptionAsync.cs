@@ -12,15 +12,17 @@ namespace Carna.Runner.Step
     [Context("Runs ThenStep without Exception asynchronously")]
     class ThenStepRunnerSpec_StepRunningWithoutExceptionAsync : FixtureSteppable
     {
-        private FixtureStepResultCollection StepResults { get; }
+        FixtureStepResultCollection StepResults { get; }
 
-        private ThenStep Step { get; set; }
-        private FixtureStepResult Result { get; set; }
+        ThenStep Step { get; set; }
+        FixtureStepResult Result { get; set; }
 
         public ThenStepRunnerSpec_StepRunningWithoutExceptionAsync()
         {
-            StepResults = new FixtureStepResultCollection();
-            StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Passed().Build());
+            StepResults = new FixtureStepResultCollection
+            {
+                FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Passed().Build()
+            };
         }
 
         private IFixtureStepRunner RunnerOf(ThenStep step) => new ThenStepRunner(step);

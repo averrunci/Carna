@@ -25,14 +25,12 @@ namespace Carna.Runner.Configuration
         /// <returns>The instance of the <see cref="CarnaFilterConfiguration"/>.</returns>
         public CarnaFilterConfiguration Ensure()
         {
-            if (string.IsNullOrEmpty(Type))
-            {
-                Options.IfAbsent(() => Options = new Dictionary<string, string>());
-                if (!Options.ContainsKey("pattern"))
-                {
-                    Options["pattern"] = Pattern;
-                }
-            }
+            if (!string.IsNullOrEmpty(Type)) return this;
+
+            Options.IfAbsent(() => Options = new Dictionary<string, string>());
+            if (Options.ContainsKey("pattern")) return this;
+
+            Options["pattern"] = Pattern;
             return this;
         }
     }

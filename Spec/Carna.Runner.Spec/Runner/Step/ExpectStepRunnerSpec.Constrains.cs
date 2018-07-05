@@ -11,10 +11,10 @@ namespace Carna.Runner.Step
     [Context("ExpectStep running constrains")]
     class ExpectStepRunnerSpec_Constrains : FixtureSteppable
     {
-        private FixtureStepResultCollection StepResults { get; }
+        FixtureStepResultCollection StepResults { get; }
 
-        private ExpectStep Step { get; set; }
-        private FixtureStepResult Result { get; set; }
+        ExpectStep Step { get; set; }
+        FixtureStepResult Result { get; set; }
 
         public ExpectStepRunnerSpec_Constrains()
         {

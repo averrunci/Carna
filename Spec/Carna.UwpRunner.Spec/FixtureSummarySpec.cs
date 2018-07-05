@@ -64,9 +64,9 @@ namespace Carna.UwpRunner
             Then("the EndDateTime should be null", () => Summary.EndDateTime == null);
             Then("the Duration should be null", () => Summary.Duration == null);
 
-            var fixutreBuidlingCompletedDateTime = DateTime.UtcNow;
+            var fixtureBuildingCompletedDateTime = DateTime.UtcNow;
             When("the fixture building is completed with the date time at which the fixture building is completed", () =>
-                Summary.OnFixtureBuildingCompleted(fixutreBuidlingCompletedDateTime)
+                Summary.OnFixtureBuildingCompleted(fixtureBuildingCompletedDateTime)
             );
             Then("the total count should be 0", () => Summary.TotalCount == 0);
             Then("the passed count should be 0", () => Summary.PassedCount == 0);
@@ -76,7 +76,7 @@ namespace Carna.UwpRunner
             Then("the IsFixtureBuilt should be true", () => Summary.IsFixtureBuilt);
             Then("the IsFixtureRunning should be false", () => !Summary.IsFixtureRunning);
             Then("the StartDateTime should be the specified date time", () =>
-                Summary.StartDateTime == fixutreBuidlingCompletedDateTime.ToString("u")
+                Summary.StartDateTime == fixtureBuildingCompletedDateTime.ToString("u")
             );
             Then("the EndDateTime should be null", () => Summary.EndDateTime == null);
             Then("the Duration should be null", () => Summary.Duration == null);
@@ -90,7 +90,7 @@ namespace Carna.UwpRunner
             Then("the IsFixtureBuilt should be true", () => Summary.IsFixtureBuilt);
             Then("the IsFixtureRunning should be true", () => Summary.IsFixtureRunning);
             Then("the StartDateTime should be the date time at which the fixture building is completed", () =>
-                Summary.StartDateTime == fixutreBuidlingCompletedDateTime.ToString("u")
+                Summary.StartDateTime == fixtureBuildingCompletedDateTime.ToString("u")
             );
             Then("the EndDateTime should be null", () => Summary.EndDateTime == null);
             Then("the Duration should be null", () => Summary.Duration == null);

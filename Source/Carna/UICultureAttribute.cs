@@ -11,8 +11,8 @@ namespace Carna
     /// <summary>
     /// Specifies a UI culture during running a fixture.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    public class UICultureAttribute : AroundFixtureAttribure
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    public class UICultureAttribute : AroundFixtureAttribute
     {
         /// <summary>
         /// Gets a UI culture during running a fixture.

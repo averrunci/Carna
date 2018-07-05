@@ -7,8 +7,8 @@ namespace Carna.Runner
     [Context("Lines concatenation")]
     class FormattedDescription_LinesConcatenation : FixtureSteppable
     {
-        private FormattedDescription Description { get; } = new FormattedDescription();
-        private string JoinedDescription { get; set; }
+        FormattedDescription Description { get; } = new FormattedDescription();
+        string JoinedDescription { get; set; }
 
         [Example("When description does not contain any lines")]
         void Ex01()
@@ -77,7 +77,7 @@ Third line"
             );
         }
 
-        [Example("When description contains somelines and a line indent")]
+        [Example("When description contains some lines and a line indent")]
         void Ex07()
         {
             Given("some lines", () => Description.Lines = new[] { "First line", "Second line", "Third line" });
@@ -105,7 +105,7 @@ Third line"
             );
         }
 
-        [Example("When description contains somelines and a line indent with specifying an indent")]
+        [Example("When description contains some lines and a line indent with specifying an indent")]
         void Ex09()
         {
             Given("some lines", () => Description.Lines = new[] { "First line", "Second line", "Third line" });

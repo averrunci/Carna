@@ -1,4 +1,8 @@
-﻿using Windows.UI.Xaml;
+﻿// Copyright (C) 2017 Fievus
+//
+// This software may be modified and distributed under the terms
+// of the MIT license.  See the LICENSE file for details.
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
@@ -7,7 +11,7 @@ namespace Carna.UwpRunner
     /// <summary>
     /// Represents a view for FixtureContent.
     /// </summary>
-    public sealed partial class FixtureContentView : UserControl
+    public sealed partial class FixtureContentView
     {
         private FixtureContent Fixture => DataContext as FixtureContent;
 

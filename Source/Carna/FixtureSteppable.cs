@@ -62,7 +62,7 @@ namespace Carna
         }
 
         /// <summary>
-        /// Specifies an Expect step with the sepcified description and asynchronous assertion.
+        /// Specifies an Expect step with the specified description and asynchronous assertion.
         /// </summary>
         /// <param name="description">The description of an Expect step.</param>
         /// <param name="asyncAssertion">The asynchronous assertion that is used in an Expect step.</param>

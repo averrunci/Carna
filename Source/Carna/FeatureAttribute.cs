@@ -12,7 +12,7 @@ namespace Carna
     /// <remarks>
     /// A fixture specified by this attribute is a container fixture and a root fixture.
     /// </remarks>
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Class)]
     public class FeatureAttribute : FixtureAttribute
     {
         /// <summary>
@@ -30,7 +30,7 @@ namespace Carna
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FeatureAttribute"/> class
-        /// with the specified descrition of a fixture specified by this attribute.
+        /// with the specified description of a fixture specified by this attribute.
         /// </summary>
         /// <param name="description">
         /// The description of a fixture specified by this attribute.

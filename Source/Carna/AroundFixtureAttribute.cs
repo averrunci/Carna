@@ -9,7 +9,7 @@ namespace Carna
     /// <summary>
     /// Specifies the fixture that is intercepted before or after running it.
     /// </summary>
-    public abstract class AroundFixtureAttribure : Attribute
+    public abstract class AroundFixtureAttribute : Attribute
     {
         /// <summary>
         /// Occurs before running the fixture.

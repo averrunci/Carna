@@ -11,10 +11,10 @@ namespace Carna.Runner.Step
     [Context("WhenStep running constrains")]
     class WhenStepRunnerSpec_Constrains : FixtureSteppable
     {
-        private FixtureStepResultCollection StepResults { get; }
+        FixtureStepResultCollection StepResults { get; }
 
-        private WhenStep Step { get; set; }
-        private FixtureStepResult Result { get; set; }
+        WhenStep Step { get; set; }
+        FixtureStepResult Result { get; set; }
 
         public WhenStepRunnerSpec_Constrains()
         {

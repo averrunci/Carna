@@ -11,11 +11,11 @@ namespace Carna.ConsoleRunner.Configuration
     [Specification("CarnaRunnerCommandLineParser Spec")]
     class CarnaRunnerCommandLineParserSpec : FixtureSteppable, IDisposable
     {
-        private ICarnaRunnerCommandLineParser Parser { get; } = new CarnaRunnerCommandLineParser();
-        private CarnaRunnerCommandLineOptions Options { get; set; }
+        ICarnaRunnerCommandLineParser Parser { get; } = new CarnaRunnerCommandLineParser();
+        CarnaRunnerCommandLineOptions Options { get; set; }
 
-        private CarnaRunnerCommandLineOptions DefaultOptions { get; } = new CarnaRunnerCommandLineOptions();
-        private string SettingFileBackupPath { get; }
+        CarnaRunnerCommandLineOptions DefaultOptions { get; } = new CarnaRunnerCommandLineOptions();
+        string SettingFileBackupPath { get; }
 
         [Background("A default setting file does not exist")]
         public CarnaRunnerCommandLineParserSpec()

@@ -14,10 +14,10 @@ namespace Carna
     [Context("Given step")]
     class FixtureSteppable_GivenStep : FixtureSteppable
     {
-        private IFixtureStepper FixtureStepper { get; set; }
-        private FixtureSteppableTss Fixture { get; }
+        IFixtureStepper FixtureStepper { get; set; }
+        FixtureSteppableTss Fixture { get; }
 
-        private static string Description { get; } = "description";
+        static string Description { get; } = "description";
 
         public FixtureSteppable_GivenStep()
         {
@@ -31,7 +31,7 @@ namespace Carna
             Fixture.RunGiven(Description);
 
             Expect(
-                "the underlying stepper should take a Given step that has the sepcified description.",
+                "the underlying stepper should take a Given step that has the specified description.",
                 () => FixtureStepper.Received().Take(Arg.Is<GivenStep>(step =>
                     step.Description == Description &&
                     step.Arrangement == null && step.AsyncArrangement == null

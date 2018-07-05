@@ -9,10 +9,10 @@ namespace Carna.Runner
     [Specification("FixtureFilter Spec")]
     class FixtureFilterSpec : FixtureSteppable
     {
-        private FixtureDescriptor FixtureDescriptor { get; set; }
-        private string Pattern { get; set; }
+        FixtureDescriptor FixtureDescriptor { get; set; }
+        string Pattern { get; set; }
 
-        private IFixtureFilter FilterOf(string pattern) => new FixtureFilter(new Dictionary<string, string> { ["pattern"] = pattern });
+        IFixtureFilter FilterOf(string pattern) => new FixtureFilter(new Dictionary<string, string> { ["pattern"] = pattern });
 
         [Example("When a regular expression that matches a tag is specified")]
         void Ex01()

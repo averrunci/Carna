@@ -11,10 +11,10 @@ namespace Carna
     [Context("Note step")]
     class FixtureSteppable_NoteStep : FixtureSteppable
     {
-        private IFixtureStepper FixtureStepper { get; set; }
-        private FixtureSteppableTss Fixture { get; }
+        IFixtureStepper FixtureStepper { get; set; }
+        FixtureSteppableTss Fixture { get; }
 
-        private static string Description { get; } = "description";
+        static string Description { get; } = "description";
 
         public FixtureSteppable_NoteStep()
         {
@@ -28,7 +28,7 @@ namespace Carna
             Fixture.RunNote(Description);
 
             Expect(
-                "the underlying stepper should take a Note step that has the sepcified description.",
+                "the underlying stepper should take a Note step that has the specified description.",
                 () => FixtureStepper.Received().Take(Arg.Is<NoteStep>(step =>
                     step.Description == Description
                 ))

@@ -12,10 +12,10 @@ namespace Carna.Runner.Step
     [Context("ThenStep running constrains")]
     class ThenStepRunnerSpec_Constrains : FixtureSteppable
     {
-        private FixtureStepResultCollection StepResults { get; }
+        FixtureStepResultCollection StepResults { get; }
 
-        private ThenStep Step { get; set; }
-        private FixtureStepResult Result { get; set; }
+        ThenStep Step { get; set; }
+        FixtureStepResult Result { get; set; }
 
         public ThenStepRunnerSpec_Constrains()
         {

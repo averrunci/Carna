@@ -11,8 +11,8 @@ namespace Carna
     /// <summary>
     /// Specifies a culture during running a fixture.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    public class CultureAttribute : AroundFixtureAttribure
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    public class CultureAttribute : AroundFixtureAttribute
     {
         /// <summary>
         /// Gets a culture during running a fixture.

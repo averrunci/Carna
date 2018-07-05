@@ -43,10 +43,10 @@ namespace Carna.UwpRunner
         /// </summary>
         public string ErrorMessage
         {
-            get { return errorMessage; }
+            get => errorMessage;
             set
             {
-                if (errorMessage == value) { return; }
+                if (errorMessage == value) return;
 
                 errorMessage = value;
                 RaisePropertyChanged();

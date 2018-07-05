@@ -13,7 +13,7 @@ using Carna.Step;
 namespace Carna.Runner.Step
 {
     /// <summary>
-    /// Respresents a collection of the <see cref="FixtureStepResult"/>.
+    /// Represents a collection of the <see cref="FixtureStepResult"/>.
     /// </summary>
     public class FixtureStepResultCollection : IEnumerable<FixtureStepResult>
     {
@@ -55,7 +55,7 @@ namespace Carna.Runner.Step
         /// <c>true</c> if the result of the specified fixture step type that has an exception is contained; otherwise, <c>false</c>.
         /// </returns>
         public bool HasExceptionAt<T>() where T : FixtureStep
-            => Results.Where(result => typeof(T).Equals(result.Step.GetType()))
+            => Results.Where(result => typeof(T) == result.Step.GetType())
                 .Any(result => result.Exception != null);
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Carna.Runner.Step
         /// <param name="exception">The exception to be cleared.</param>
         public void ClearException(Exception exception)
         {
-            if (exception == null) { return; }
+            if (exception == null) return;
 
             Results.Where(result => exception.Equals(result.Exception))
                 .ForEach(result => result.ClearException());

@@ -43,7 +43,7 @@ namespace Carna.ConsoleRunner.Configuration
             options.RequireNonNull(nameof(options));
             context.RequireNonNull(nameof(context));
 
-            if (!CanApply(context)) { return; }
+            if (!CanApply(context)) return;
 
             ApplyOption(options, context);
         }

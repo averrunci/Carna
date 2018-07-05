@@ -4,6 +4,7 @@
 // of the MIT license.  See the LICENSE file for details.
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -204,7 +205,7 @@ namespace Carna.Runner
         /// </returns>
         protected virtual FixtureResult Run(IFixtureFilter filter, IFixtureStepRunnerFactory stepRunnerFactory, bool parallel)
         {
-            if (!CanRun(filter)) { return null; }
+            if (!CanRun(filter)) return null;
 
             var startTime = DateTime.UtcNow;
             OnFixtureRunning(new FixtureRunEventArgs(FixtureResult.Of(FixtureDescriptor).StartAt(startTime).Running()));
@@ -252,7 +253,7 @@ namespace Carna.Runner
         /// Retrieves around fixture attributes that specify a fixture.
         /// </summary>
         /// <returns>The around fixture attributes that specify a fixture.</returns>
-        protected virtual IEnumerable<AroundFixtureAttribure> RetrieveAroundFixtureAttributes() => Enumerable.Empty<AroundFixtureAttribure>();
+        protected virtual IEnumerable<AroundFixtureAttribute> RetrieveAroundFixtureAttributes() => Enumerable.Empty<AroundFixtureAttribute>();
 
         /// <summary>
         /// Runs a fixture with the specified start time, filter, step runner factory,
@@ -279,10 +280,10 @@ namespace Carna.Runner
         /// <returns>The new instance of the <see cref="FixtureInstanceType"/>.</returns>
         protected virtual object CreateFixtureInstance()
         {
-            if (FixtureInstanceType == null) { return null; }
+            if (FixtureInstanceType == null) return null;
 
             var constructor = GetConstructor();
-            if (constructor == null) { return EnsureParameters(Activator.CreateInstance(FixtureInstanceType)); }
+            if (constructor == null) return EnsureParameters(Activator.CreateInstance(FixtureInstanceType));
 
             var constructorParameters = constructor.GetParameters();
             var parameterValues = new object[constructorParameters.Length];
@@ -307,12 +308,11 @@ namespace Carna.Runner
         /// </returns>
         protected virtual ConstructorInfo GetConstructor()
         {
-            if (FixtureInstanceType == null) { return null; }
-            if (ParentFixture == null || ParentFixture.Parameters.IsEmpty()) { return null; }
+            if (FixtureInstanceType == null) return null;
+            if (ParentFixture == null || ParentFixture.Parameters.IsEmpty()) return null;
 
             return FixtureInstanceType.GetTypeInfo().DeclaredConstructors
-                .Where(c => ParentFixture.Parameters.Keys.Any(k => c.GetParameters().Any(p => p.Name == k)))
-                .FirstOrDefault();
+                .FirstOrDefault(c => ParentFixture.Parameters.Keys.Any(k => c.GetParameters().Any(p => p.Name == k)));
         }
 
         private ConstructorInfo GetDefaultConstructor()
@@ -324,7 +324,7 @@ namespace Carna.Runner
         /// <returns>The background of a fixture.</returns>
         protected virtual string RetrieveBackground()
         {
-            if (FixtureInstanceType == null) { return string.Empty; }
+            if (FixtureInstanceType == null) return string.Empty;
 
             return string.Join(
                 Environment.NewLine,
@@ -341,7 +341,7 @@ namespace Carna.Runner
         protected virtual List<BackgroundAttribute> RetrieveBackgroundAttributes(MethodBase constructor)
         {
             var backgroundList = new List<BackgroundAttribute>();
-            if (constructor == null || constructor.DeclaringType == typeof(object)) { return backgroundList; }
+            if (constructor == null || constructor.DeclaringType == typeof(object)) return backgroundList;
 
             try
             {
@@ -357,14 +357,17 @@ namespace Carna.Runner
                     )
                 ));
             }
-            catch { }
+            catch
+            {
+                // ignored
+            }
 
             backgroundList.AddRange(constructor.GetCustomAttributes<BackgroundAttribute>().ToList());
             return backgroundList;
         }
 
         /// <summary>
-        /// Ensures parameters in the specified instance of a fixtrue.
+        /// Ensures parameters in the specified instance of a fixture.
         /// </summary>
         /// <param name="fixtureInstance">The instance of a fixture that has parameters.</param>
         /// <returns>The instance of a fixture that ensures parameters.</returns>
@@ -426,8 +429,8 @@ namespace Carna.Runner
         FixtureDescriptor IFixture.FixtureDescriptor => FixtureDescriptor;
         IFixture IFixture.ParentFixture
         {
-            get { return ParentFixture; }
-            set { ParentFixture = value; }
+            get => ParentFixture;
+            set => ParentFixture = value;
         }
         IDictionary<string, object> IFixture.Parameters => Parameters;
 

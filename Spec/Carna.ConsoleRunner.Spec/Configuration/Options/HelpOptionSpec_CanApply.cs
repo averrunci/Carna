@@ -7,8 +7,8 @@ namespace Carna.ConsoleRunner.Configuration.Options
     [Context("Determines whether the help option can be applied")]
     class HelpOptionSpec_CanApply : FixtureSteppable
     {
-        private HelpOption Option { get; } = new HelpOption();
-        private CarnaRunnerCommandLineOptionContext Context { get; set; }
+        HelpOption Option { get; } = new HelpOption();
+        CarnaRunnerCommandLineOptionContext Context { get; set; }
 
         [Example("When CommandLineOptionContext is null")]
         void Ex01()

@@ -9,10 +9,10 @@ namespace Carna.Runner
     [Context("Total count")]
     class FixtureResultSpec_Statistics_TotalCount : FixtureSteppable
     {
-        private IEnumerable<FixtureResult> FixtureResults { get; set; }
+        IEnumerable<FixtureResult> FixtureResults { get; set; }
 
-        private FixtureDescriptor ContainerFixtureDescriptor { get; } = new FixtureDescriptor("ContainerTest", new ContextAttribute());
-        private FixtureDescriptor FixtureDescriptor { get; } = new FixtureDescriptor("Test", new ExampleAttribute());
+        FixtureDescriptor ContainerFixtureDescriptor { get; } = new FixtureDescriptor("ContainerTest", new ContextAttribute());
+        FixtureDescriptor FixtureDescriptor { get; } = new FixtureDescriptor("Test", new ExampleAttribute());
 
         [Example("When Enumerable of FixtureResult does not have any sub results")]
         void Ex01()
@@ -54,7 +54,7 @@ namespace Carna.Runner
             Expect("the total count should be 5", () => FixtureResults.TotalCount() == 5);
         }
 
-        [Example("When Enemrable of FixtureResult has any container fixtures, the count excludes the count of container fixtures")]
+        [Example("When Enumerable of FixtureResult has any container fixtures, the count excludes the count of container fixtures")]
         void Ex03()
         {
             Given(

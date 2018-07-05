@@ -50,7 +50,7 @@ namespace Carna.Runner
         public List<Assembly> Assemblies { get; } = new List<Assembly>();
 
         /// <summary>
-        /// Gets or sets a filter that determins whether to run a fixture.
+        /// Gets or sets a filter that determines whether to run a fixture.
         /// </summary>
         public IFixtureFilter Filter { get; set; }
 
@@ -131,7 +131,7 @@ namespace Carna.Runner
         /// <returns>The fixture engine to be configured.</returns>
         public FixtureEngine Configure(CarnaRunnerConfiguration configuration)
         {
-            if (configuration == null) { return this; }
+            if (configuration == null) return this;
 
             configuration.Assemblies.IfPresent(assemblies => Assemblies.AddRange(assemblies));
             configuration.Filter.IfPresent(filter =>

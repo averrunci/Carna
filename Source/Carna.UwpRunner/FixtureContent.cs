@@ -25,10 +25,10 @@ namespace Carna.UwpRunner
         /// </summary>
         public string Description
         {
-            get { return description; }
+            get => description;
             set
             {
-                if (description == value) { return; }
+                if (description == value) return;
 
                 description = value;
                 RaisePropertyChanged();
@@ -41,10 +41,10 @@ namespace Carna.UwpRunner
         /// </summary>
         public FixtureStatus Status
         {
-            get { return status; }
+            get => status;
             set
             {
-                if (status == value) { return; }
+                if (status == value) return;
 
                 status = value;
                 IsFixtureRunning = status == FixtureStatus.Running;
@@ -62,10 +62,10 @@ namespace Carna.UwpRunner
         /// </summary>
         public string Duration
         {
-            get { return duration; }
+            get => duration;
             set
             {
-                if (duration == value) { return; }
+                if (duration == value) return;
 
                 duration = value;
                 RaisePropertyChanged();
@@ -78,10 +78,10 @@ namespace Carna.UwpRunner
         /// </summary>
         public string Exception
         {
-            get { return exception; }
+            get => exception;
             set
             {
-                if (exception == value) { return; }
+                if (exception == value) return;
 
                 exception = value;
                 RaisePropertyChanged();
@@ -114,10 +114,10 @@ namespace Carna.UwpRunner
         /// </summary>
         public bool IsChildOpen
         {
-            get { return isChildOpen; }
+            get => isChildOpen;
             set
             {
-                if (isChildOpen == value) { return; }
+                if (isChildOpen == value) return;
 
                 isChildOpen = value;
                 RaisePropertyChanged();
@@ -130,10 +130,10 @@ namespace Carna.UwpRunner
         /// </summary>
         public bool IsChildOpenTextVisible
         {
-            get { return isChildOpenTextVisible; }
+            get => isChildOpenTextVisible;
             set
             {
-                if (isChildOpenTextVisible == value) { return; }
+                if (isChildOpenTextVisible == value) return;
 
                 isChildOpenTextVisible = value;
                 RaisePropertyChanged();

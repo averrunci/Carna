@@ -15,7 +15,7 @@ namespace Carna.ConsoleRunner
         Unknown,
 
         /// <summary>
-        /// Erros are occurred during running.
+        /// Errors are occurred during running.
         /// </summary>
         Error,
 

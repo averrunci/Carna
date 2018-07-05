@@ -11,10 +11,10 @@ namespace Carna.Runner.Formatters
     [Context("Format a fixture step")]
     class JapaneseFixtureFormatterSpec_FormatFixtureStep : FixtureSteppable
     {
-        private IFixtureFormatter Formatter { get; }
-        private string Description { get; }
+        IFixtureFormatter Formatter { get; }
+        string Description { get; }
 
-        private FormattedDescription FormattedDescription { get; set; }
+        FormattedDescription FormattedDescription { get; set; }
 
         public JapaneseFixtureFormatterSpec_FormatFixtureStep()
         {
@@ -147,7 +147,7 @@ namespace Carna.Runner.Formatters
             Expect("the items of the formatted description should be empty", () => !FormattedDescription.Items.Any());
         }
 
-        [Example("When the description of the specified step is multiline")]
+        [Example("When the description of the specified step is multi-line")]
         void Ex11()
         {
             var description = string.Empty;

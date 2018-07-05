@@ -13,7 +13,7 @@ namespace Carna.Runner.Step
     [Specification("FixtureStepper Spec")]
     class FixtureStepperSpec : FixtureSteppable
     {
-        private FixtureStepper Stepper { get; }
+        FixtureStepper Stepper { get; }
 
         public FixtureStepperSpec()
         {
@@ -57,7 +57,7 @@ namespace Carna.Runner.Step
             Then("the step of the result on FixtureStepRunning event should be the given step", () => runningResult.Step == step);
             Then("the start time of the result on FixtureStepRunning event should have value", () => runningResult.StartTime.HasValue);
             Then("the end time of the result on FixtureStepRunning event should not have value", () => !runningResult.EndTime.HasValue);
-            Then("the duration of the reuslt on FixtureStepRunning event should not have value", () => !runningResult.Duration.HasValue);
+            Then("the duration of the result on FixtureStepRunning event should not have value", () => !runningResult.Duration.HasValue);
             Then("the exception of the result on FixtureStepRunning event should be null", () => runningResult.Exception == null);
             Then("the status of the result on FixtureStepRunning event should be Running", () => runningResult.Status == FixtureStepStatus.Running);
 

@@ -12,10 +12,10 @@ namespace Carna.Runner.Step
     [Context("Runs ExpectStep asynchronously")]
     class ExpectStepRunnerSpec_StepRunningAsync : FixtureSteppable
     {
-        private FixtureStepResultCollection StepResults { get; }
+        FixtureStepResultCollection StepResults { get; }
 
-        private ExpectStep Step { get; set; }
-        private FixtureStepResult Result { get; set; }
+        ExpectStep Step { get; set; }
+        FixtureStepResult Result { get; set; }
 
         public ExpectStepRunnerSpec_StepRunningAsync()
         {

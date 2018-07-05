@@ -15,10 +15,10 @@ namespace Carna
     [Context("When step")]
     class FixtureSteppable_ThenStep : FixtureSteppable
     {
-        private IFixtureStepper FixtureStepper { get; set; }
-        private FixtureSteppableTss Fixture { get; }
+        IFixtureStepper FixtureStepper { get; set; }
+        FixtureSteppableTss Fixture { get; }
 
-        private static string Description { get; } = "description";
+        static string Description { get; } = "description";
 
         public FixtureSteppable_ThenStep()
         {
@@ -32,7 +32,7 @@ namespace Carna
             Fixture.RunThen(Description);
 
             Expect(
-                "the underlying stepper should take a Then step that has the sepcified description.",
+                "the underlying stepper should take a Then step that has the specified description.",
                 () => FixtureStepper.Received().Take(Arg.Is<ThenStep>(step =>
                     step.Description == Description &&
                     step.Action == null && step.Assertion == null &&
@@ -177,8 +177,6 @@ namespace Carna
         [Example("When a description, the type of the exception, and an exception assertion the type of which is Action are specified")]
         void Ex09()
         {
-            Action<ArgumentNullException> assertion = exc => { };
-
             Fixture.RunThen<ArgumentNullException>(Description, exc => { });
 
             Expect(
@@ -196,8 +194,6 @@ namespace Carna
         [Example("When a description, the type of the exception and an exception assertion that returns a boolean value are specified")]
         void Ex10()
         {
-            Expression<Func<ArgumentNullException, bool>> assertion = exc => true;
-
             Fixture.RunThen<ArgumentNullException>(Description, exc => true);
 
             Expect(
@@ -215,8 +211,6 @@ namespace Carna
         [Example("When a description, the type of the exception and an exception assertion the type of which is Func<Exception, Task> are specified")]
         void Ex11()
         {
-            Func<ArgumentNullException, Task> assertion = async exc => { await Task.Delay(100); };
-
             Fixture.RunThen<ArgumentNullException>(Description, async exc => { await Task.Delay(100); });
 
             Expect(

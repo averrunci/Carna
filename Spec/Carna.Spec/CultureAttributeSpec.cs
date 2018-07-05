@@ -14,7 +14,7 @@ namespace Carna
     {
         CultureAttribute CultureAttribute { get; } = new CultureAttribute("fr-FR");
 
-        IFixtureContext FixtureContext = Substitute.For<IFixtureContext>();
+        IFixtureContext FixtureContext { get; } = Substitute.For<IFixtureContext>();
         CultureInfo CurrentCultureInfo { get; } = Thread.CurrentThread.CurrentCulture;
 
         [Example("Sets the Culture on running a fixture")]

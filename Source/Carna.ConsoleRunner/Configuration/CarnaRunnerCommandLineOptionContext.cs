@@ -2,6 +2,8 @@
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
+using System;
+
 namespace Carna.ConsoleRunner.Configuration
 {
     /// <summary>
@@ -12,17 +14,17 @@ namespace Carna.ConsoleRunner.Configuration
         /// <summary>
         /// Gets an argument of the command line option.
         /// </summary>
-        public virtual string Argument { get; }
+        public string Argument { get; }
 
         /// <summary>
         /// Gets a key of the command line option.
         /// </summary>
-        public virtual string Key { get; }
+        public string Key { get; }
 
         /// <summary>
         /// Gets a value of the command line option.
         /// </summary>
-        public virtual string Value { get; }
+        public string Value { get; }
 
         /// <summary>
         /// Gets a value that indicates whether the context has key.
@@ -32,9 +34,9 @@ namespace Carna.ConsoleRunner.Configuration
         private CarnaRunnerCommandLineOptionContext(string arg)
         {
             Argument = arg ?? string.Empty;
-            if (!Argument.StartsWith("/")) { return; }
+            if (!Argument.StartsWith("/")) return;
 
-            var separatorIndex = Argument.IndexOf(":");
+            var separatorIndex = Argument.IndexOf(":", StringComparison.Ordinal);
             if (separatorIndex < 0)
             {
                 Key = Argument;

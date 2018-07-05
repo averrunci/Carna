@@ -11,8 +11,8 @@ namespace Carna.Runner
     [Specification("FixtureBuilder Spec")]
     class FixtureBuilderSpec : FixtureSteppable
     {
-        private IFixtureBuilder Builder { get; } = new FixtureBuilder();
-        private IEnumerable<IFixture> Fixtures { get; set; }
+        IFixtureBuilder Builder { get; } = new FixtureBuilder();
+        IEnumerable<IFixture> Fixtures { get; set; }
 
         [Example("Fixture contains a fixture method (Context fixture > Example fixture)")]
         void Ex01()
@@ -305,9 +305,9 @@ namespace Carna.Runner
         }
 
         private IEnumerable<IFixture> GetFixtures(FixtureContainer container)
-            => container.GetType().GetProperty("Fixtures", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(container) as IEnumerable<IFixture>;
+            => container.GetType().GetProperty("Fixtures", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(container) as IEnumerable<IFixture>;
 
         private object[] GetSampleData(Fixture fixture)
-            => fixture.GetType().GetProperty("SampleData", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(fixture) as object[];
+            => fixture.GetType().GetProperty("SampleData", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(fixture) as object[];
     }
 }

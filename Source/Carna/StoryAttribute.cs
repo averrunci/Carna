@@ -12,7 +12,7 @@ namespace Carna
     /// <remarks>
     /// A fixture specified by this attribute is a container fixture.
     /// </remarks>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Field | AttributeTargets.Property)]
     public class StoryAttribute : FixtureAttribute
     {
         /// <summary>
@@ -30,7 +30,7 @@ namespace Carna
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StoryAttribute"/> class
-        /// with the specified descrition of a fixture specified by this attribute.
+        /// with the specified description of a fixture specified by this attribute.
         /// </summary>
         /// <param name="description">
         /// The description of a fixture specified by this attribute.

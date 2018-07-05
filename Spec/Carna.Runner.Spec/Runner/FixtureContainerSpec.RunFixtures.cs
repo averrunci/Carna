@@ -14,11 +14,11 @@ namespace Carna.Runner
     [Context("Runs fixtures")]
     class FixtureContainerSpec_RunFixtures : FixtureSteppable, IDisposable
     {
-        private IFixture Container { get; }
-        private IFixtureFilter Filter { get; }
+        IFixture Container { get; }
+        IFixtureFilter Filter { get; }
 
-        private FixtureResult FixtureRunningResult;
-        private FixtureResult FixtureRunResult;
+        FixtureResult FixtureRunningResult { get; set; }
+        FixtureResult FixtureRunResult { get; set; }
 
         [Background("Fixture container that has SimpleFixture, SimpleDisposableFixture, SimpleFixtureSteppable")]
         public FixtureContainerSpec_RunFixtures()
@@ -61,10 +61,10 @@ namespace Carna.Runner
             Expect("the name of the descriptor of the result should be the name of the fixture method", () => result.FixtureDescriptor.Name == "SimpleFixture");
             Expect("the full name of the descriptor of the result should be the full name of the fixture method", () => result.FixtureDescriptor.FullName == "Carna.TestFixtures+SimpleFixture");
             Expect("the background of the descriptor of the result should be the value specified to the fixture constructor", () => string.Join(Environment.NewLine, result.FixtureDescriptor.Background) == "Simple Fixture Background");
-            Expect("the fixture attribute type of the descriptor of the reuslt should be ContextAttribute", () => result.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
+            Expect("the fixture attribute type of the descriptor of the result should be ContextAttribute", () => result.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
             Expect("the start time of the result should have value", () => result.StartTime.HasValue);
             Expect("the end time of the result should have value", () => result.EndTime.HasValue);
-            Expect("the duration of the reuslt should have value", () => result.Duration.HasValue);
+            Expect("the duration of the result should have value", () => result.Duration.HasValue);
             Expect("the exception of the result should be null", () => result.Exception == null);
             Expect("the steps of the result should be empty", () => !result.StepResults.Any());
             Expect("the result count of the result should be 3", () => result.Results.Count() == 3);
@@ -75,10 +75,10 @@ namespace Carna.Runner
             Expect("the description of the descriptor of the result on FixtureRunning event should be the value specified to the fixture method", () => FixtureRunningResult.FixtureDescriptor.Description == "Simple Fixture");
             Expect("the name of the descriptor of the result on FixtureRunning event should be the name of the fixture method", () => FixtureRunningResult.FixtureDescriptor.Name == "SimpleFixture");
             Expect("the full name of the descriptor of the result on FixtureRunning event should be the full name of the fixture method", () => FixtureRunningResult.FixtureDescriptor.FullName == "Carna.TestFixtures+SimpleFixture");
-            Expect("the fixture attribute type of the descriptor of the reuslt on FixtureRunning event should be ContextAttribute", () => FixtureRunningResult.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
+            Expect("the fixture attribute type of the descriptor of the result on FixtureRunning event should be ContextAttribute", () => FixtureRunningResult.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
             Expect("the start time of the result on FixtureRunning event should have value", () => FixtureRunningResult.StartTime.HasValue);
             Expect("the end time of the result on FixtureRunning event should not have value", () => !FixtureRunningResult.EndTime.HasValue);
-            Expect("the duration of the reuslt on FixtureRunning event should not have value", () => !FixtureRunningResult.Duration.HasValue);
+            Expect("the duration of the result on FixtureRunning event should not have value", () => !FixtureRunningResult.Duration.HasValue);
             Expect("the exception of the result on FixtureRunning event should be null", () => FixtureRunningResult.Exception == null);
             Expect("the steps of the result on FixtureRunning event should be empty", () => !FixtureRunningResult.StepResults.Any());
             Expect("the results of the result on FixtureRunning event should be empty", () => !FixtureRunningResult.Results.Any());
@@ -108,10 +108,10 @@ namespace Carna.Runner
             Expect("the name of the descriptor of the result should be the name of the fixture method", () => result.FixtureDescriptor.Name == "SimpleFixture");
             Expect("the full name of the descriptor of the result should be the full name of the fixture method", () => result.FixtureDescriptor.FullName == "Carna.TestFixtures+SimpleFixture");
             Expect("the background of the descriptor of the result should be the value specified to the fixture constructor", () => string.Join(Environment.NewLine, result.FixtureDescriptor.Background) == "Simple Fixture Background");
-            Expect("the fixture attribute type of the descriptor of the reuslt should be ContextAttribute", () => result.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
+            Expect("the fixture attribute type of the descriptor of the result should be ContextAttribute", () => result.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
             Expect("the start time of the result should have value", () => result.StartTime.HasValue);
             Expect("the end time of the result should have value", () => result.EndTime.HasValue);
-            Expect("the duration of the reuslt should have value", () => result.Duration.HasValue);
+            Expect("the duration of the result should have value", () => result.Duration.HasValue);
             Expect("the exception of the result should be null", () => result.Exception == null);
             Expect("the steps of the result should be empty", () => !result.StepResults.Any());
             Expect("the result count of the result should be 3", () => result.Results.Count() == 3);
@@ -122,10 +122,10 @@ namespace Carna.Runner
             Expect("the description of the descriptor of the result on FixtureRunning event should be the value specified to the fixture method", () => FixtureRunningResult.FixtureDescriptor.Description == "Simple Fixture");
             Expect("the name of the descriptor of the result on FixtureRunning event should be the name of the fixture method", () => FixtureRunningResult.FixtureDescriptor.Name == "SimpleFixture");
             Expect("the full name of the descriptor of the result on FixtureRunning event should be the full name of the fixture method", () => FixtureRunningResult.FixtureDescriptor.FullName == "Carna.TestFixtures+SimpleFixture");
-            Expect("the fixture attribute type of the descriptor of the reuslt on FixtureRunning event should be ContextAttribute", () => FixtureRunningResult.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
+            Expect("the fixture attribute type of the descriptor of the result on FixtureRunning event should be ContextAttribute", () => FixtureRunningResult.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
             Expect("the start time of the result on FixtureRunning event should have value", () => FixtureRunningResult.StartTime.HasValue);
             Expect("the end time of the result on FixtureRunning event should not have value", () => !FixtureRunningResult.EndTime.HasValue);
-            Expect("the duration of the reuslt on FixtureRunning event should not have value", () => !FixtureRunningResult.Duration.HasValue);
+            Expect("the duration of the result on FixtureRunning event should not have value", () => !FixtureRunningResult.Duration.HasValue);
             Expect("the exception of the result on FixtureRunning event should be null", () => FixtureRunningResult.Exception == null);
             Expect("the steps of the result on FixtureRunning event should be empty", () => !FixtureRunningResult.StepResults.Any());
             Expect("the results of the result on FixtureRunning event should be empty", () => !FixtureRunningResult.Results.Any());
@@ -168,10 +168,10 @@ namespace Carna.Runner
             Expect("the name of the descriptor of the result should be the name of the fixture method", () => result.FixtureDescriptor.Name == "SimpleFixture");
             Expect("the full name of the descriptor of the result should be the full name of the fixture method", () => result.FixtureDescriptor.FullName == "Carna.TestFixtures+SimpleFixture");
             Expect("the background of the descriptor of the result should be the value specified to the fixture constructor", () => string.Join(Environment.NewLine, result.FixtureDescriptor.Background) == "Simple Fixture Background");
-            Expect("the fixture attribute type of the descriptor of the reuslt should be ContextAttribute", () => result.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
+            Expect("the fixture attribute type of the descriptor of the result should be ContextAttribute", () => result.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
             Expect("the start time of the result should have value", () => result.StartTime.HasValue);
             Expect("the end time of the result should have value", () => result.EndTime.HasValue);
-            Expect("the duration of the reuslt should have value", () => result.Duration.HasValue);
+            Expect("the duration of the result should have value", () => result.Duration.HasValue);
             Expect("the exception of the result should be null", () => result.Exception == null);
             Expect("the steps of the result should be empty", () => !result.StepResults.Any());
             Expect("the result count of the result should be 1", () => result.Results.Count() == 1);
@@ -182,10 +182,10 @@ namespace Carna.Runner
             Expect("the description of the descriptor of the result on FixtureRunning event should be the value specified to the fixture method", () => FixtureRunningResult.FixtureDescriptor.Description == "Simple Fixture");
             Expect("the name of the descriptor of the result on FixtureRunning event should be the name of the fixture method", () => FixtureRunningResult.FixtureDescriptor.Name == "SimpleFixture");
             Expect("the full name of the descriptor of the result on FixtureRunning event should be the full name of the fixture method", () => FixtureRunningResult.FixtureDescriptor.FullName == "Carna.TestFixtures+SimpleFixture");
-            Expect("the fixture attribute type of the descriptor of the reuslt on FixtureRunning event should be ContextAttribute", () => FixtureRunningResult.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
+            Expect("the fixture attribute type of the descriptor of the result on FixtureRunning event should be ContextAttribute", () => FixtureRunningResult.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
             Expect("the start time of the result on FixtureRunning event should have value", () => FixtureRunningResult.StartTime.HasValue);
             Expect("the end time of the result on FixtureRunning event should not have value", () => !FixtureRunningResult.EndTime.HasValue);
-            Expect("the duration of the reuslt on FixtureRunning event should not have value", () => !FixtureRunningResult.Duration.HasValue);
+            Expect("the duration of the result on FixtureRunning event should not have value", () => !FixtureRunningResult.Duration.HasValue);
             Expect("the exception of the result on FixtureRunning event should be null", () => FixtureRunningResult.Exception == null);
             Expect("the steps of the result on FixtureRunning event should be empty", () => !FixtureRunningResult.StepResults.Any());
             Expect("the results of the result on FixtureRunning event should be empty", () => !FixtureRunningResult.Results.Any());
@@ -215,10 +215,10 @@ namespace Carna.Runner
             Expect("the name of the descriptor of the result should be the name of the fixture method", () => result.FixtureDescriptor.Name == "SimpleFixture");
             Expect("the full name of the descriptor of the result should be the full name of the fixture method", () => result.FixtureDescriptor.FullName == "Carna.TestFixtures+SimpleFixture");
             Expect("the background of the descriptor of the result should be the value specified to the fixture constructor", () => string.Join(Environment.NewLine, result.FixtureDescriptor.Background) == "Simple Fixture Background");
-            Expect("the fixture attribute type of the descriptor of the reuslt should be ContextAttribute", () => result.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
+            Expect("the fixture attribute type of the descriptor of the result should be ContextAttribute", () => result.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
             Expect("the start time of the result should have value", () => result.StartTime.HasValue);
             Expect("the end time of the result should have value", () => result.EndTime.HasValue);
-            Expect("the duration of the reuslt should have value", () => result.Duration.HasValue);
+            Expect("the duration of the result should have value", () => result.Duration.HasValue);
             Expect("the exception of the result should be null", () => result.Exception == null);
             Expect("the steps of the result should be empty", () => !result.StepResults.Any());
             Expect("the result count of the result should be 3", () => result.Results.Count() == 3);
@@ -229,10 +229,10 @@ namespace Carna.Runner
             Expect("the description of the descriptor of the result on FixtureRunning event should be the value specified to the fixture method", () => FixtureRunningResult.FixtureDescriptor.Description == "Simple Fixture");
             Expect("the name of the descriptor of the result on FixtureRunning event should be the name of the fixture method", () => FixtureRunningResult.FixtureDescriptor.Name == "SimpleFixture");
             Expect("the full name of the descriptor of the result on FixtureRunning event should be the full name of the fixture method", () => FixtureRunningResult.FixtureDescriptor.FullName == "Carna.TestFixtures+SimpleFixture");
-            Expect("the fixture attribute type of the descriptor of the reuslt on FixtureRunning event should be ContextAttribute", () => FixtureRunningResult.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
+            Expect("the fixture attribute type of the descriptor of the result on FixtureRunning event should be ContextAttribute", () => FixtureRunningResult.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
             Expect("the start time of the result on FixtureRunning event should have value", () => FixtureRunningResult.StartTime.HasValue);
             Expect("the end time of the result on FixtureRunning event should not have value", () => !FixtureRunningResult.EndTime.HasValue);
-            Expect("the duration of the reuslt on FixtureRunning event should not have value", () => !FixtureRunningResult.Duration.HasValue);
+            Expect("the duration of the result on FixtureRunning event should not have value", () => !FixtureRunningResult.Duration.HasValue);
             Expect("the exception of the result on FixtureRunning event should be null", () => FixtureRunningResult.Exception == null);
             Expect("the steps of the result on FixtureRunning event should be empty", () => !FixtureRunningResult.StepResults.Any());
             Expect("the results of the result on FixtureRunning event should be empty", () => !FixtureRunningResult.Results.Any());

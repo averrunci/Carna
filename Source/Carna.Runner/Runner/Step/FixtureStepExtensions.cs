@@ -43,7 +43,7 @@ namespace Carna.Runner.Step
 
         private static void ExecuteAssertion(this FixtureStep @this, LambdaExpression expression, Func<bool> assertion, Exception exception = null)
         {
-            if (expression == null) { return; }
+            if (expression == null) return;
 
             bool result;
             try

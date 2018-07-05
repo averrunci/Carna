@@ -31,7 +31,7 @@ namespace Carna.Runner
         }
 
         /// <summary>
-        /// Determines wheter to run a fixture of the specified descriptor.
+        /// Determines whether to run a fixture of the specified descriptor.
         /// </summary>
         /// <param name="descriptor">The descriptor of the fixture.</param>
         /// <returns>
@@ -39,7 +39,7 @@ namespace Carna.Runner
         /// </returns>
         protected virtual bool Accept(FixtureDescriptor descriptor)
         {
-            if (string.IsNullOrEmpty(Pattern)) { return true; }
+            if (string.IsNullOrEmpty(Pattern)) return true;
 
             var regex = new Regex(Pattern, RegexOptions.Compiled);
 

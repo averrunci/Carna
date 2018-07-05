@@ -30,12 +30,12 @@ namespace Carna.Runner
         /// </summary>
         /// <param name="description">The description of a sample.</param>
         /// <param name="items">The items of a sample.</param>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// <paramref name="items"/> is <c>null</c>.
         /// </exception>
         public SampleContext(string description, IEnumerable<Item> items)
         {
-            var sampleItems = items ?? Enumerable.Empty<Item>();
+            var sampleItems = items?.ToList() ?? new List<Item>();
             Description = description ?? string.Join(", ", sampleItems.Select(item => item.ToString()));
             Data = sampleItems.Select(item => item.Value).ToArray();
         }

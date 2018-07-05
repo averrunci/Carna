@@ -12,29 +12,29 @@ namespace Carna.ConsoleRunner
     {
         public static void IfPresent<T>(this T @this, Action<T> action)
         {
-            if (@this != null) { action(@this); }
+            if (@this != null) action(@this);
         }
 
         public static void IfAbsent(this object @this, Action action)
         {
-            if (@this == null) { action(); }
+            if (@this == null) action();
         }
 
         public static T RequireNonNull<T>(this T @this)
         {
-            @this.IfAbsent(() => { throw new ArgumentNullException(); });
+            @this.IfAbsent(() => throw new ArgumentNullException());
             return @this;
         }
 
         public static T RequireNonNull<T>(this T @this, string parameterName)
         {
-            @this.IfAbsent(() => { throw new ArgumentNullException(parameterName); });
+            @this.IfAbsent(() => throw new ArgumentNullException(parameterName));
             return @this;
         }
 
         public static void ForEach<T>(this IEnumerable<T> @this, Action<T> action)
         {
-            if (@this == null) { return; }
+            if (@this == null) return;
 
             foreach (T item in @this) { action(item); }
         }

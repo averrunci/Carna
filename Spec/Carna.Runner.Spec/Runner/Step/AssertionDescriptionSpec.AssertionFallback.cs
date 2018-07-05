@@ -10,10 +10,10 @@ namespace Carna.Runner.Step
     [Context("Assertion Fallback")]
     class AssertionDescriptionSpec_AssertionFallback : FixtureSteppable
     {
-        private Expression<Func<bool>> Assertion { get; set; }
+        Expression<Func<bool>> Assertion { get; set; }
 
-        private string NullReferenceExceptionMessage => GetExpectedExceptionMessage(new NullReferenceException());
-        private string IndexOutOfRangeExceptionMessage => GetExpectedExceptionMessage(new IndexOutOfRangeException());
+        string NullReferenceExceptionMessage => GetExpectedExceptionMessage(new NullReferenceException());
+        string IndexOutOfRangeExceptionMessage => GetExpectedExceptionMessage(new IndexOutOfRangeException());
 
         string GetExpectedExceptionMessage(Exception exc) => $"{exc.GetType().FullName}: {exc.Message}";
 

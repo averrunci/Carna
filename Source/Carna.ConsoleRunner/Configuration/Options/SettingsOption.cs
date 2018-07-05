@@ -40,11 +40,8 @@ namespace Carna.ConsoleRunner.Configuration.Options
         /// </exception>
         protected override void ApplyOption(CarnaRunnerCommandLineOptions options, CarnaRunnerCommandLineOptionContext context)
         {
-            if (!File.Exists(context.Value))
-            {
-                throw new InvalidCommandLineOptionException($@"Settings file does not exist.
+            if (!File.Exists(context.Value)) throw new InvalidCommandLineOptionException($@"Settings file does not exist.
 File: {context.Value}");
-            }
 
             options.SettingsFilePath = context.Value;
         }

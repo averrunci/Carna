@@ -12,7 +12,7 @@ namespace Carna.Runner.Step
     [Specification("FixtureStepResultCollectionSpec")]
     class FixtureStepResultCollectionSpec : FixtureSteppable
     {
-        private FixtureStepResultCollection Results { get; }
+        FixtureStepResultCollection Results { get; }
 
         public FixtureStepResultCollectionSpec()
         {
@@ -64,7 +64,7 @@ namespace Carna.Runner.Step
 
             var latestGivenSteps = Results.GetLatestStepResultsOf<GivenStep>();
             Then("the count of the latest results of GivenStep should be 1", () => latestGivenSteps.Count() == 1);
-            Then("the description of the latest result of GivenStep should be the specified descritpion", () => latestGivenSteps.ElementAt(0).Step.Description == "Given");
+            Then("the description of the latest result of GivenStep should be the specified description", () => latestGivenSteps.ElementAt(0).Step.Description == "Given");
 
             var latestWhenSteps = Results.GetLatestStepResultsOf<WhenStep>();
             Then("the count of the latest results of WhenStep should be 2", () => latestWhenSteps.Count() == 2);
@@ -78,7 +78,7 @@ namespace Carna.Runner.Step
             Then("the description of the latest result of ThenStep(3rd) should be the specified description", () => latestThenSteps.ElementAt(2).Step.Description == "Then 3");
 
             var latestExpectSteps = Results.GetLatestStepResultsOf<ExpectStep>();
-            Then("the count of the latest results of ExpectStep should be 0", () => latestExpectSteps.Count() == 0);
+            Then("the count of the latest results of ExpectStep should be 0", () => !latestExpectSteps.Any());
         }
 
         [Example("Gets the value that indicates whether the latest result of the specified step has an exception")]
@@ -91,10 +91,10 @@ namespace Carna.Runner.Step
             When("the result of WhenStep that does not have an exception is added", () => Results.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Build()));
             When("the result of ThenStep that does not have an exception is added", () => Results.Add(FixtureStepResult.Of(FixtureSteps.CreateThenStep()).Build()));
             When("the result of ExpectStep that does not have an exception is added", () => Results.Add(FixtureStepResult.Of(FixtureSteps.CreateExpectStep()).Build()));
-            Then("the value that indicates whether the latest reuslt of GivenStep has an exception should be false", () => !Results.HasLatestExceptionAt<GivenStep>());
-            Then("the value that indicates whether the latest reuslt of WhenStep has an exception should be true", () => Results.HasLatestExceptionAt<WhenStep>());
-            Then("the value that indicates whether the latest reuslt of ThenStep has an exception should be false", () => !Results.HasLatestExceptionAt<ThenStep>());
-            Then("the value that indicates whether the latest reuslt of ExpectStep has an exception should be false", () => !Results.HasLatestExceptionAt<ExpectStep>());
+            Then("the value that indicates whether the latest result of GivenStep has an exception should be false", () => !Results.HasLatestExceptionAt<GivenStep>());
+            Then("the value that indicates whether the latest result of WhenStep has an exception should be true", () => Results.HasLatestExceptionAt<WhenStep>());
+            Then("the value that indicates whether the latest result of ThenStep has an exception should be false", () => !Results.HasLatestExceptionAt<ThenStep>());
+            Then("the value that indicates whether the latest result of ExpectStep has an exception should be false", () => !Results.HasLatestExceptionAt<ExpectStep>());
         }
 
         [Example("Gets the exception of the latest result of the specified step")]
@@ -131,11 +131,11 @@ namespace Carna.Runner.Step
             When("the result of ExpectStep that does not have an exception is added", () => Results.Add(FixtureStepResult.Of(FixtureSteps.CreateExpectStep()).Passed().Build()));
             When("the collection clears the exception of the result the exception of which is equal to the target exception", () => Results.ClearException(targetException));
             Then("the exception of the result of GivenStep should not be cleared", () => Results.HasExceptionAt<GivenStep>());
-            Then("all status of the result of GivenStep should not be Passed", () => !Results.Where(r => r.Step.GetType() == typeof(GivenStep)).All(r => r.Status == FixtureStepStatus.Passed));
+            Then("all status of the result of GivenStep should not be Passed", () => Results.Where(r => r.Step.GetType() == typeof(GivenStep)).Any(r => r.Status != FixtureStepStatus.Passed));
             Then("the exception of the result of WhenStep should be cleared", () => !Results.HasExceptionAt<WhenStep>());
             Then("all status of the result of WhenStep should be Passed", () => Results.Where(r => r.Step.GetType() == typeof(WhenStep)).All(r => r.Status == FixtureStepStatus.Passed));
             Then("the exception of the result of ThenStep should not be cleared", () => Results.HasExceptionAt<ThenStep>());
-            Then("all status of the result of GivenStep should not be Passed", () => !Results.Where(r => r.Step.GetType() == typeof(ThenStep)).All(r => r.Status == FixtureStepStatus.Passed));
+            Then("all status of the result of GivenStep should not be Passed", () => Results.Where(r => r.Step.GetType() == typeof(ThenStep)).Any(r => r.Status != FixtureStepStatus.Passed));
             Then("the exception of the result of ExpectStep should be cleared", () => !Results.HasExceptionAt<ExpectStep>());
             Then("all status of the result of ExpectStep should be Passed", () => Results.Where(r => r.Step.GetType() == typeof(ExpectStep)).All(r => r.Status == FixtureStepStatus.Passed));
         }

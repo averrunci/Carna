@@ -35,7 +35,7 @@ namespace Carna.UwpRunner.Converters
         /// <param name="value">The target data being passed to the source.</param>
         /// <param name="targetType">The type of data expected by the source object.</param>
         /// <param name="parameter">An optional parameter to be used in the converter logic.</param>
-        /// <param name="language">The culutre of the conversion.</param>
+        /// <param name="language">The culture of the conversion.</param>
         /// <returns>
         /// <c>true</c> if the value is <see cref="Visibility.Visible"/>, otherwise <c>false</c>.
         /// </returns>

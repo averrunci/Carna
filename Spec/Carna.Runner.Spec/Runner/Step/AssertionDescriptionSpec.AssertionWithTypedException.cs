@@ -10,9 +10,9 @@ namespace Carna.Runner.Step
     [Context("Assertion with Typed Exception")]
     class AssertionDescriptionSpec_AssertionWithTypedException : FixtureSteppable
     {
-        private Expression<Func<Exception, bool>> Assertion { get; set; }
-        private ArgumentNullException Exception { get; } = new ArgumentNullException("Parameter name", "Message");
-        private ParameterExpression Parameter { get; } = Expression.Parameter(typeof(Exception));
+        Expression<Func<Exception, bool>> Assertion { get; set; }
+        ArgumentNullException Exception { get; } = new ArgumentNullException("Parameter name", "Message");
+        ParameterExpression Parameter { get; } = Expression.Parameter(typeof(Exception));
         Expression<Func<Exception, ArgumentNullException>> ConvertExpression { get; } = exc => (ArgumentNullException)exc;
 
         Expression<Func<Exception, bool>> CreateAssertion(Expression<Func<ArgumentNullException, bool>> assertion)

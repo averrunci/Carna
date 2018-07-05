@@ -11,10 +11,10 @@ namespace Carna.Runner
     [Context("Start time")]
     class FixtureResultSpec_Statistics_StartTime : FixtureSteppable
     {
-        private IEnumerable<FixtureResult> FixtureResults { get; set; }
+        IEnumerable<FixtureResult> FixtureResults { get; set; }
 
-        private FixtureDescriptor ContainerFixtureDescriptor { get; } = new FixtureDescriptor("ContainerTest", new ContextAttribute());
-        private FixtureDescriptor FixtureDescriptor { get; } = new FixtureDescriptor("Test", new ExampleAttribute());
+        FixtureDescriptor ContainerFixtureDescriptor { get; } = new FixtureDescriptor("ContainerTest", new ContextAttribute());
+        FixtureDescriptor FixtureDescriptor { get; } = new FixtureDescriptor("Test", new ExampleAttribute());
 
         [Example("When Enumerable of FixtureResult does not have any sub results")]
         void Ex01()
@@ -33,7 +33,7 @@ namespace Carna.Runner
             Expect("the start time should be the minimum start time in 5 FixtureResults", () => FixtureResults.StartTime() == new DateTime(2017, 1, 1));
         }
 
-        [Example("When Enemrable of FixtureResult has any sub fixtures, the start time of sub fixtures is ignored")]
+        [Example("When Enumerable of FixtureResult has any sub fixtures, the start time of sub fixtures is ignored")]
         void Ex02()
         {
             Given(

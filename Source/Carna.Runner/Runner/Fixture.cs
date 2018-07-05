@@ -92,15 +92,14 @@ namespace Carna.Runner
         /// Retrieves around fixture attributes that specify a fixture.
         /// </summary>
         /// <returns>The around fixture attributes that specify a fixture.</returns>
-        protected override IEnumerable<AroundFixtureAttribure> RetrieveAroundFixtureAttributes()
-            => FixtureMethod.GetCustomAttributes<AroundFixtureAttribure>();
+        protected override IEnumerable<AroundFixtureAttribute> RetrieveAroundFixtureAttributes()
+            => FixtureMethod.GetCustomAttributes<AroundFixtureAttribute>();
 
         private FixtureResult Run(IFixtureStepRunnerFactory stepRunnerFactory, FixtureResult.Builder result)
         {
             var fixtureInstance = CreateFixtureInstance();
-            var fixtureSteppable = fixtureInstance as IFixtureSteppable;
 
-            return fixtureSteppable == null ? Run(fixtureInstance, result) : Run(fixtureInstance, fixtureSteppable, stepRunnerFactory, result);
+            return fixtureInstance is IFixtureSteppable fixtureSteppable ? Run(fixtureInstance, fixtureSteppable, stepRunnerFactory, result) : Run(fixtureInstance, result);
         }
 
         private FixtureResult Run(object fixtureInstance, FixtureResult.Builder result)
@@ -122,11 +121,11 @@ namespace Carna.Runner
 
         private void Run(object fixtureInstance)
         {
-            Action action = () => (FixtureMethod.Invoke(fixtureInstance, SampleData) as Task)?.GetAwaiter().GetResult();
+            void PerformFixtureMethod() => (FixtureMethod.Invoke(fixtureInstance, SampleData) as Task)?.GetAwaiter().GetResult();
 
             var disposable = fixtureInstance as IDisposable;
-            disposable.IfPresent(_ => { using (disposable) { action(); } });
-            disposable.IfAbsent(() => action());
+            disposable.IfPresent(_ => { using (disposable) PerformFixtureMethod(); });
+            disposable.IfAbsent(PerformFixtureMethod);
         }
     }
 }

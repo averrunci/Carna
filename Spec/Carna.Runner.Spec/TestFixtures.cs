@@ -21,7 +21,7 @@ namespace Carna
         public static IFixture CreateFixture<T>(string methodName) => CreateFixture(typeof(T), methodName);
 
         public static IFixture CreateFixture(Type fixtureInstanceType, string methodName) =>
-            new Fixture(fixtureInstanceType, fixtureInstanceType.GetRuntimeMethods().Where(m => m.Name == methodName).First());
+            new Fixture(fixtureInstanceType, fixtureInstanceType.GetRuntimeMethods().First(m => m.Name == methodName));
 
         public static IFixture CreateFixtureWithContainer<T>(string methodName) => CreateFixtureWithContainer(typeof(T), methodName);
 
@@ -34,30 +34,20 @@ namespace Carna
 
         public static bool RaiseException
         {
-            get { return raiseException.Value; }
-            set { raiseException.Value = value; }
+            get => raiseException.Value;
+            set => raiseException.Value = value;
         }
-        private static ThreadLocal<bool> raiseException = new ThreadLocal<bool>();
+        private static readonly ThreadLocal<bool> raiseException = new ThreadLocal<bool>();
 
         public static bool DisposeCalled
         {
-            get { return disposeCalled.Value; }
-            set { disposeCalled.Value = value; }
+            get => disposeCalled.Value;
+            set => disposeCalled.Value = value;
         }
-        private static ThreadLocal<bool> disposeCalled = new ThreadLocal<bool>();
+        private static readonly ThreadLocal<bool> disposeCalled = new ThreadLocal<bool>();
 
-        public static HashSet<Type> CalledFixtureMethods
-        {
-            get
-            {
-                if (calledFixtureMethods.Value == null)
-                {
-                    calledFixtureMethods.Value = new HashSet<Type>();
-                }
-                return calledFixtureMethods.Value;
-            }
-        }
-        private static ThreadLocal<HashSet<Type>> calledFixtureMethods = new ThreadLocal<HashSet<Type>>();
+        public static HashSet<Type> CalledFixtureMethods => calledFixtureMethods.Value ?? (calledFixtureMethods.Value = new HashSet<Type>());
+        private static readonly ThreadLocal<HashSet<Type>> calledFixtureMethods = new ThreadLocal<HashSet<Type>>();
 
         [Context("Simple Fixture")]
         public class SimpleFixture

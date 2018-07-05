@@ -10,7 +10,7 @@ namespace Carna.Runner
     [Context("Finished with FixtureResult")]
     class FixtureResultSpec_FixtureStatus_FinishedWithFixtureResult : FixtureSteppable
     {
-        private FixtureDescriptor FixtureDescriptor { get; } = new FixtureDescriptor("Test", new ContextAttribute());
+        FixtureDescriptor FixtureDescriptor { get; } = new FixtureDescriptor("Test", new ContextAttribute());
 
         [Example("When specified Enumerable of FixtureResult is null")]
         void Ex01()

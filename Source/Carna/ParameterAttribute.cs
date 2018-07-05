@@ -10,7 +10,7 @@ namespace Carna
     /// Specifies the parameter to fixtures that are contained by a fixture
     /// specified by this attribute.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Method)]
     public class ParameterAttribute : Attribute
     {
         /// <summary>

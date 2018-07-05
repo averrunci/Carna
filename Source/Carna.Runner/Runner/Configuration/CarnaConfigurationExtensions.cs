@@ -31,14 +31,14 @@ namespace Carna.Runner.Configuration
         public static T Create<T>(this CarnaConfiguration configuration, IEnumerable<Assembly> assemblies) where T : class
         {
             var type = GetType(configuration.Type, assemblies);
-            if (type == null) { throw new TypeNotFoundException($"{configuration.Type} is not found"); }
+            if (type == null) throw new TypeNotFoundException($"{configuration.Type} is not found");
 
             foreach (var constructor in type.GetTypeInfo().DeclaredConstructors.Where(c => c.IsPublic))
             {
                 var parameters = constructor.GetParameters();
                 if (parameters.Length == 1 && parameters[0].ParameterType == typeof(IDictionary<string, string>))
                 {
-                    return constructor.Invoke(new[] { configuration.Options }) as T;
+                    return constructor.Invoke(new object[] { configuration.Options }) as T;
                 }
             }
 
@@ -48,19 +48,19 @@ namespace Carna.Runner.Configuration
         private static Type GetType(string typeName, IEnumerable<Assembly> assemblies)
         {
             var type = Type.GetType(typeName);
-            if (type != null) { return type; }
+            if (type != null) return type;
 
             var typeNameParts = typeName.Split(',');
-            if (typeNameParts.Length < 2) { return null; }
+            if (typeNameParts.Length < 2) return null;
 
             return assemblies.SelectMany(assembly => assembly.DefinedTypes)
                 .FirstOrDefault(t =>
                 {
-                    var assemblyQualifiedNameParts = t.AssemblyQualifiedName.Split(',');
-                    if (typeNameParts.Length > assemblyQualifiedNameParts.Length) { return false; }
+                    var assemblyQualifiedNameParts = t.AssemblyQualifiedName?.Split(',') ?? new string[0];
+                    if (typeNameParts.Length > assemblyQualifiedNameParts.Length) return false;
                     for (var index = 0; index < typeNameParts.Length; ++index)
                     {
-                        if (typeNameParts[index].Trim() != assemblyQualifiedNameParts[index].Trim()) { return false; }
+                        if (typeNameParts[index].Trim() != assemblyQualifiedNameParts[index].Trim()) return false;
                     }
                     return true;
                 })?.AsType();

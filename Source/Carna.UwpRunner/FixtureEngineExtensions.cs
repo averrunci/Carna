@@ -23,17 +23,15 @@ namespace Carna.UwpRunner
                     typeof(CarnaUwpRunnerConfiguration),
                     new DataContractJsonSerializerSettings { UseSimpleDictionaryFormat = true }
                 );
-                var configuration = serializer.ReadObject(stream) as CarnaUwpRunnerConfiguration;
-                if (configuration != null)
-                { 
-                    configuration.Ensure(new AssemblyLoader());
-                    @this.Configure(configuration);
+                if (!(serializer.ReadObject(stream) is CarnaUwpRunnerConfiguration configuration)) return @this;
 
-                    host.AutoExit = configuration.AutoExit;
-                    if (configuration.Formatter != null)
-                    {
-                        host.Formatter = configuration.Formatter.Create<IFixtureFormatter>(@this.Assemblies);
-                    }
+                configuration.Ensure(new AssemblyLoader());
+                @this.Configure(configuration);
+
+                host.AutoExit = configuration.AutoExit;
+                if (configuration.Formatter != null)
+                {
+                    host.Formatter = configuration.Formatter.Create<IFixtureFormatter>(@this.Assemblies);
                 }
             }
 

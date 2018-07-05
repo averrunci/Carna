@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (C) 2017 Fievus
+//
+// This software may be modified and distributed under the terms
+// of the MIT license.  See the LICENSE file for details.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -14,7 +18,7 @@ namespace Carna.UwpRunner
     /// <summary>
     /// Represents a view for CarnaUwpRunnerHost.
     /// </summary>
-    public sealed partial class CarnaUwpRunnerHostView : UserControl
+    public sealed partial class CarnaUwpRunnerHostView
     {
         private CarnaUwpRunnerHost Host => DataContext as CarnaUwpRunnerHost;
 
@@ -33,7 +37,9 @@ namespace Carna.UwpRunner
         private void OnSizeChanged(object sender, SizeChangedEventArgs e) => AdjustFixtureContentMaxWidth(e.NewSize.Width);
         private void AdjustFixtureContentMaxWidth(double width)
         {
-            foreach (FrameworkElement child in FixtureItemsControl.ItemsPanelRoot.Children)
+            if (FixtureItemsControl.ItemsPanelRoot == null) return;
+
+            foreach (var child in FixtureItemsControl.ItemsPanelRoot.Children.OfType<FrameworkElement>())
             {
                 child.MaxWidth = width - 52;
             }
@@ -43,7 +49,8 @@ namespace Carna.UwpRunner
         {
             try
             {
-                var element = sender as FrameworkElement;
+                if (!(sender is FrameworkElement element)) return;
+
                 var engine = new FixtureEngine().LoadConfiguration(Host);
 
                 Host.Summary.OnFixtureBuildingStarting();
@@ -80,11 +87,11 @@ namespace Carna.UwpRunner
 
         private async Task Configure(IEnumerable<IFixture> fixtures, IList<FixtureContent> fixtureContents, IFixtureFilter filter, CoreDispatcher dispatcher)
         {
-            if (fixtures == null || !fixtures.Any()) { return; }
+            if (fixtures == null || !fixtures.Any()) return;
 
             foreach (var fixture in fixtures)
             {
-                if (!fixture.CanRun(filter)) { continue; }
+                if (!fixture.CanRun(filter)) continue;
 
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     fixtureContents.Add(CreateFixtureContent(fixture, dispatcher))
@@ -131,8 +138,10 @@ namespace Carna.UwpRunner
 
         private FixtureContent CreateFixtureContent(IFixture fixture, CoreDispatcher dispatcher)
         {
-            var fixtureContent = new FixtureContent();
-            fixtureContent.Description = Host.Formatter.FormatFixture(fixture.FixtureDescriptor).ToString();
+            var fixtureContent = new FixtureContent
+            {
+                Description = Host.Formatter.FormatFixture(fixture.FixtureDescriptor).ToString()
+            };
 
             fixture.FixtureRunning += async (s, e) =>
             {
@@ -166,14 +175,14 @@ namespace Carna.UwpRunner
                 return;
             }
 
-            var assemblyFixtureContents = fixtureContents;
-            if (assemblyFixtureContents.Count() > limit) { return; }
+            var assemblyFixtureContents = fixtureContents.ToList();
+            if (assemblyFixtureContents.Count() > limit) return;
 
             SetChildOpen(assemblyFixtureContents);
             limit -= assemblyFixtureContents.Count();
 
             var namespaceFixtureContents = assemblyFixtureContents.SelectMany(fixtureContent => fixtureContent.Fixtures).ToList();
-            if (namespaceFixtureContents.Count() > limit) { return; }
+            if (namespaceFixtureContents.Count() > limit) return;
 
             SetChildOpen(namespaceFixtureContents);
         }
@@ -183,7 +192,7 @@ namespace Carna.UwpRunner
             foreach (var fixtureContent in fixtureContents)
             {
                 fixtureContent.IsChildOpen = true;
-                if (recursive) { SetChildOpen(fixtureContent.Fixtures, recursive); }
+                if (recursive) SetChildOpen(fixtureContent.Fixtures, true);
             }
         }
     }

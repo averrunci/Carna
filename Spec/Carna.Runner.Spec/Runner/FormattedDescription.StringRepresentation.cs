@@ -7,7 +7,7 @@ namespace Carna.Runner
     [Context("String representation")]
     class FormattedDescription_StringRepresentation : FixtureSteppable
     {
-        private FormattedDescription Description { get; } = new FormattedDescription();
+        FormattedDescription Description { get; } = new FormattedDescription();
 
         [Example("When description does not contain any lines")]
         void Ex01()

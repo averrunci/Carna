@@ -7,11 +7,11 @@ namespace Carna.ConsoleRunner.Configuration.Options
     [Context("Applied the help option")]
     class HelpOptionSpec_ApplyOption : FixtureSteppable
     {
-        private HelpOption Option { get; } = new HelpOption();
-        private CarnaRunnerCommandLineOptions Options { get; } = new CarnaRunnerCommandLineOptions();
-        private CarnaRunnerCommandLineOptionContext Context { get; set; }
+        HelpOption Option { get; } = new HelpOption();
+        CarnaRunnerCommandLineOptions Options { get; } = new CarnaRunnerCommandLineOptions();
+        CarnaRunnerCommandLineOptionContext Context { get; set; }
 
-        private string Pattern { get; set; }
+        string Pattern { get; set; }
 
         [Example("When a help option is specified")]
         void Ex01()

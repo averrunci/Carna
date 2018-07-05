@@ -43,10 +43,9 @@ namespace Carna.Runner
         /// </returns>
         public string JoinLines(string indent = null)
         {
-            if (!Lines.Any()) { return string.Empty; }
+            if (!Lines.Any()) return string.Empty;
 
-            var lineItems = new List<string>();
-            lineItems.Add($"{indent}{FirstLineIndent}{Lines.FirstOrDefault()}");
+            var lineItems = new List<string> { $"{indent}{FirstLineIndent}{Lines.FirstOrDefault()}" };
             lineItems.AddRange(Lines.Skip(1).Select(line => $"{LineIndent}{line}"));
             return string.Join($"{Environment.NewLine}{indent}", lineItems);
         }
@@ -58,7 +57,7 @@ namespace Carna.Runner
         public override string ToString()
         {
             var lines = new List<string>();
-            if (Lines.Any()) { lines.Add(JoinLines()); }
+            if (Lines.Any()) lines.Add(JoinLines());
             lines.AddRange(Items.Select(item => item.JoinLines("  ")));
             return string.Join(Environment.NewLine, lines);
         }

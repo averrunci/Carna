@@ -11,10 +11,10 @@ namespace Carna.Runner.Step
     [Context("Runs WhenStep")]
     class WhenStepRunnerSpec_StepRunning : FixtureSteppable
     {
-        private FixtureStepResultCollection StepResults { get; }
+        FixtureStepResultCollection StepResults { get; }
 
-        private WhenStep Step { get; set; }
-        private FixtureStepResult Result { get; set; }
+        WhenStep Step { get; set; }
+        FixtureStepResult Result { get; set; }
 
         public WhenStepRunnerSpec_StepRunning()
         {
@@ -33,7 +33,7 @@ namespace Carna.Runner.Step
             Then("the step of the result should be the given WhenStep", () => Result.Step == Step);
         }
 
-        [Example("When WhenStep that has an action that throws an excetpion is run")]
+        [Example("When WhenStep that has an action that throws an exception is run")]
         void Ex02()
         {
             Given("WhenStep that has an action that throws an exception", () => Step = FixtureSteps.CreateWhenStep(() => throw new Exception()));

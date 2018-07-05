@@ -20,7 +20,7 @@ namespace Carna.Runner.Step
         Ready,
 
         /// <summary>
-        /// The fixure step is pending.
+        /// The fixture step is pending.
         /// </summary>
         Pending,
 

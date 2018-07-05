@@ -2,7 +2,6 @@
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
-
 using System;
 using System.IO;
 
@@ -11,11 +10,11 @@ namespace Carna.ConsoleRunner.Configuration.Options
     [Context("Applies the assembly option")]
     class AssemblyOptionSpec_ApplyOption : FixtureSteppable, IDisposable
     {
-        private AssemblyOption Option { get; } = new AssemblyOption();
-        private CarnaRunnerCommandLineOptions Options { get; } = new CarnaRunnerCommandLineOptions();
-        private CarnaRunnerCommandLineOptionContext Context { get; set; }
+        AssemblyOption Option { get; } = new AssemblyOption();
+        CarnaRunnerCommandLineOptions Options { get; } = new CarnaRunnerCommandLineOptions();
+        CarnaRunnerCommandLineOptionContext Context { get; set; }
 
-        private string AssemblyFilePath { get; set; }
+        string AssemblyFilePath { get; set; }
 
         public void Dispose()
         {

@@ -37,7 +37,7 @@ namespace Carna.Runner
         /// Initializes a new instance of the <see cref="FixtureContainer"/> class
         /// with the specified name and attribute that specifies a fixture.
         /// </summary>
-        /// <param name="name">The name of a fixutre.</param>
+        /// <param name="name">The name of a fixture.</param>
         /// <param name="attribute">The attribute that specifies a fixture.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="attribute"/> is <c>null</c>.
@@ -166,32 +166,30 @@ namespace Carna.Runner
         /// Retrieves around fixture attributes that specify a fixture.
         /// </summary>
         /// <returns>The around fixture attributes that specify a fixture.</returns>
-        protected override IEnumerable<AroundFixtureAttribure> RetrieveAroundFixtureAttributes()
-            => FixtureInstanceType?.GetCustomAttributes<AroundFixtureAttribure>() ?? Enumerable.Empty<AroundFixtureAttribure>();
+        protected override IEnumerable<AroundFixtureAttribute> RetrieveAroundFixtureAttributes()
+            => FixtureInstanceType?.GetCustomAttributes<AroundFixtureAttribute>() ?? Enumerable.Empty<AroundFixtureAttribute>();
 
         private IEnumerable<FixtureResult> Run(IEnumerable<IFixture> fixtures, IFixtureFilter filter, IFixtureStepRunnerFactory stepRunnerFactory, bool parallel)
         {
-            Func<IFixtureFilter, IEnumerable<FixtureResult>> run = f =>
-                CanRunParallel(parallel) ?
-                    fixtures.AsParallel()
-                        .Select(fixture => fixture.Run(base.CanRun(f) ? null : f, stepRunnerFactory, parallel))
-                        .Where(r => r != null)
-                        .ToList() :
-                    fixtures.Select(fixture => fixture.Run(base.CanRun(f) ? null : f, stepRunnerFactory, parallel))
-                        .Where(r => r != null)
-                        .ToList();
+            IEnumerable<FixtureResult> RunFixtures(IFixtureFilter f) => CanRunParallel(parallel)
+                ? fixtures.AsParallel()
+                    .Select(fixture => fixture.Run(base.CanRun(f) ? null : f, stepRunnerFactory, parallel))
+                    .Where(r => r != null)
+                    .ToList()
+                : fixtures.Select(fixture => fixture.Run(base.CanRun(f) ? null : f, stepRunnerFactory, parallel))
+                    .Where(r => r != null)
+                    .ToList();
 
             FixtureDescriptor.Background = RetrieveBackground();
             if (fixtures.Any(fixture => fixture.FixtureDescriptor.IsContainerFixture))
             {
                 var disposable = CreateFixtureInstance() as IDisposable;
-                if (disposable == null) { return run(filter); }
-                else { using (disposable) { return run(filter); } }
+                if (disposable == null) return RunFixtures(filter);
+
+                using (disposable) return RunFixtures(filter);
             }
-            else
-            {
-                return run(filter);
-            }
+
+            return RunFixtures(filter);
         }
 
         private bool CanRunParallel(bool parallel) => parallel && FixtureDescriptor.CanRunParallel;

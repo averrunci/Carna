@@ -36,7 +36,7 @@ namespace Carna.Step
         /// The full path of the source file that contains the caller.
         /// </param>
         /// <param name="callerLineNumber">
-        /// The line number in the source file at whiche the method is called.
+        /// The line number in the source file at which the method is called.
         /// </param>
         public WhenStep(string description, Type callerType, string callerMemberName, string callerFilePath, int callerLineNumber) : base(description, callerType, callerMemberName, callerFilePath, callerLineNumber)
         {
@@ -57,7 +57,7 @@ namespace Carna.Step
         /// The full path of the source file that contains the caller.
         /// </param>
         /// <param name="callerLineNumber">
-        /// The line number in the source file at whiche the method is called.
+        /// The line number in the source file at which the method is called.
         /// </param>
         public WhenStep(string description, Action action, Type callerType, string callerMemberName, string callerFilePath, int callerLineNumber) : base(description, callerType, callerMemberName, callerFilePath, callerLineNumber)
         {
@@ -80,7 +80,7 @@ namespace Carna.Step
         /// The full path of the source file that contains the caller.
         /// </param>
         /// <param name="callerLineNumber">
-        /// The line number in the source file at whiche the method is called.
+        /// The line number in the source file at which the method is called.
         /// </param>
         public WhenStep(string description, Func<Task> asyncAction, Type callerType, string callerMemberName, string callerFilePath, int callerLineNumber) : base(description, callerType, callerMemberName, callerFilePath, callerLineNumber)
         {

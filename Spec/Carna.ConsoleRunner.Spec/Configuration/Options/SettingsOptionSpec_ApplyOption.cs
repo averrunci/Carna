@@ -10,11 +10,11 @@ namespace Carna.ConsoleRunner.Configuration.Options
     [Context("Applied the settings option")]
     class SettingsOptionSpec_ApplyOption : FixtureSteppable, IDisposable
     {
-        private SettingsOption Option { get; } = new SettingsOption();
-        private CarnaRunnerCommandLineOptions Options { get; } = new CarnaRunnerCommandLineOptions();
-        private CarnaRunnerCommandLineOptionContext Context { get; set; }
+        SettingsOption Option { get; } = new SettingsOption();
+        CarnaRunnerCommandLineOptions Options { get; } = new CarnaRunnerCommandLineOptions();
+        CarnaRunnerCommandLineOptionContext Context { get; set; }
 
-        private string SettingsFilePath { get; set; }
+        string SettingsFilePath { get; set; }
 
         public void Dispose()
         {

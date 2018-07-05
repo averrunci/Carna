@@ -7,8 +7,8 @@ namespace Carna.ConsoleRunner.Configuration.Options
     [Context("Determines whether the settings option can be applied")]
     class SettingsOptionSpec_CanApply : FixtureSteppable
     {
-        private SettingsOption Option { get; } = new SettingsOption();
-        private CarnaRunnerCommandLineOptionContext Context { get; set; }
+        SettingsOption Option { get; } = new SettingsOption();
+        CarnaRunnerCommandLineOptionContext Context { get; set; }
 
         [Example("When CommandLineOptionContext is null")]
         void Ex01()

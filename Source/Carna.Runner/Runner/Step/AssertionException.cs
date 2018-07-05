@@ -18,8 +18,7 @@ namespace Carna.Runner.Step
         /// <summary>
         /// Gets a string representation of the immediate frames on the call stack.
         /// </summary>
-        public override string StackTrace => stackTrace;
-        private readonly string stackTrace;
+        public override string StackTrace { get; }
 
         private Exception Cause { get; }
 
@@ -31,7 +30,7 @@ namespace Carna.Runner.Step
         /// <param name="description">The assertion description when the assertion was failed.</param>
         public AssertionException(FixtureStep step, AssertionDescription description) : base($"{step?.Description}{Environment.NewLine}{description}")
         {
-            stackTrace = CreateStackTrace(step);
+            StackTrace = CreateStackTrace(step);
         }
 
         /// <summary>
@@ -42,7 +41,7 @@ namespace Carna.Runner.Step
         /// <param name="cause">The exception that was thrown when the assertion was failed.</param>
         public AssertionException(FixtureStep step, Exception cause) : base(cause?.Message)
         {
-            stackTrace = $"{cause.StackTrace}{Environment.NewLine}{CreateStackTrace(step)}";
+            StackTrace = $"{cause.StackTrace}{Environment.NewLine}{CreateStackTrace(step)}";
             Cause = cause;
         }
 
@@ -57,11 +56,11 @@ namespace Carna.Runner.Step
 
         private string CreateStackTrace(FixtureStep step)
         {
-            if (step == null) { return string.Empty; }
+            if (step == null) return string.Empty;
 
-            var getResourceStringMethod = typeof(Environment).GetTypeInfo().DeclaredMethods.Where(m => m.Name == "GetResourceString").FirstOrDefault();
-            var at = getResourceStringMethod?.Invoke(null, new[] { "Word_At" }) as string ?? string.Empty;
-            var inFileLineNumber = getResourceStringMethod?.Invoke(null, new[] { "StackTrace_InFileLineNumber" }) as string ?? string.Empty;
+            var getResourceStringMethod = typeof(Environment).GetTypeInfo().DeclaredMethods.FirstOrDefault(m => m.Name == "GetResourceString");
+            var at = getResourceStringMethod?.Invoke(null, new object[] { "Word_At" }) as string ?? string.Empty;
+            var inFileLineNumber = getResourceStringMethod?.Invoke(null, new object[] { "StackTrace_InFileLineNumber" }) as string ?? string.Empty;
 
             return $"   {at} {step.CallerType}.{step.CallerMemberName} {string.Format(inFileLineNumber, step.CallerFilePath, step.CallerLineNumber)}";
         }
