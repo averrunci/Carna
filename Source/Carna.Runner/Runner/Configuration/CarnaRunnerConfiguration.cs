@@ -60,7 +60,7 @@ namespace Carna.Runner.Configuration
         /// Gets a value that indicates whether to run a fixture in parallel.
         /// </summary>
         [DataMember(Name = "parallel")]
-        public bool Parallel { get; set; } = true;
+        public bool Parallel { get; set; }
 
         /// <summary>
         /// Ensures the configuration of CarnaRunner with the specified <see cref="IAssemblyLoader"/>.
@@ -72,6 +72,12 @@ namespace Carna.Runner.Configuration
             loader.IfPresent(_ => Assemblies = AssemblyFiles?.Select(loader.Load).ToList());
             Filter?.Ensure();
             return this;
+        }
+
+        [OnDeserializing]
+        private void ApplyDefaultValues(StreamingContext context)
+        {
+            Parallel = true;
         }
     }
 }
