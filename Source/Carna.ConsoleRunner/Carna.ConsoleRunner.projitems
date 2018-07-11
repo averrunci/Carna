@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Configuration\CarnaRunnerCommandLineParser.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Configuration\InvalidCommandLineOptionException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Configuration\Options\AssemblyOption.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Configuration\Options\NoDomainOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Configuration\Options\FilterOption.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Configuration\Options\HelpOption.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Configuration\Options\SettingsOption.cs" />

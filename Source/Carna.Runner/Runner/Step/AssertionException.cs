@@ -41,7 +41,7 @@ namespace Carna.Runner.Step
         /// <param name="cause">The exception that was thrown when the assertion was failed.</param>
         public AssertionException(FixtureStep step, Exception cause) : base(cause?.Message)
         {
-            StackTrace = $"{cause.StackTrace}{Environment.NewLine}{CreateStackTrace(step)}";
+            StackTrace = $"{cause?.StackTrace}{Environment.NewLine}{CreateStackTrace(step)}";
             Cause = cause;
         }
 

@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2018 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -81,6 +81,12 @@ namespace Carna.Runner
         public bool Parallel { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets a value that indicates whether to report fixture results.
+        /// The default value is <c>true</c>.
+        /// </summary>
+        public bool CanReportFixtureResults { get; set; } = true;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="FixtureEngine"/> class.
         /// </summary>
         public FixtureEngine()
@@ -143,12 +149,15 @@ namespace Carna.Runner
             configuration.Builder.IfPresent(builder => Builder = Create<IFixtureBuilder>(builder));
             configuration.StepRunnerFactory.IfPresent(stepRunnerFactory => StepRunnerFactory = Create<IFixtureStepRunnerFactory>(stepRunnerFactory));
 
-            configuration.Reporters.ForEach(config =>
+            if (CanReportFixtureResults)
             {
-                var reporter = Create<IFixtureReporter>(config.Reporter);
-                reporter.FixtureFormatter = config.Formatter == null ? new FixtureFormatter() : Create<IFixtureFormatter>(config.Formatter);
-                AddReporter(reporter);
-            });
+                configuration.Reporters.ForEach(config =>
+                {
+                    var reporter = Create<IFixtureReporter>(config.Reporter);
+                    reporter.FixtureFormatter = config.Formatter == null ? new FixtureFormatter() : Create<IFixtureFormatter>(config.Formatter);
+                    AddReporter(reporter);
+                });
+            }
 
             Parallel = configuration.Parallel;
 
@@ -187,8 +196,21 @@ namespace Carna.Runner
         /// </returns>
         public bool Start(IEnumerable<Assembly> assemblies)
         {
+            var results = StartNoReport(assemblies);
+            Report(results);
+            return results.All(result => result.Status == FixtureStatus.Passed);
+        }
+
+        /// <summary>
+        /// Starts a fixture engine with the specified assemblies without reporting
+        /// the fixture running results.
+        /// </summary>
+        /// <param name="assemblies">The assemblies in which fixtures exits.</param>
+        /// <returns>The fixture running results.</returns>
+        public IList<FixtureResult> StartNoReport(IEnumerable<Assembly> assemblies)
+        {
             var targetAssemblies = new List<Assembly>(Assemblies);
-            
+
             OnStarting(EventArgs.Empty);
             assemblies.IfPresent(_ => targetAssemblies.AddRange(assemblies));
             StepRunnerFactory.RegisterFrom(targetAssemblies);
@@ -197,11 +219,20 @@ namespace Carna.Runner
             var results = RunFixtures(targetAssemblies);
             OnFixtureRun(EventArgs.Empty);
 
+            return results;
+        }
+
+        /// <summary>
+        /// Reports the specified fixture running results.
+        /// </summary>
+        /// <param name="results">The fixture running results.</param>
+        public void Report(IEnumerable<FixtureResult> results)
+        {
+            if (!CanReportFixtureResults) return;
+
             OnReporting(EventArgs.Empty);
             Reporters.ForEach(reporter => reporter.Report(results));
             OnReported(EventArgs.Empty);
-
-            return results.All(result => result.Status == FixtureStatus.Passed);
         }
 
         /// <summary>
@@ -241,13 +272,11 @@ namespace Carna.Runner
                     .Where(result => result != null)
                     .ToList();
             }
-            else
-            {
-                return fixtures
-                    .Select(fixture => fixture.Run(Filter, StepRunnerFactory, Parallel))
-                    .Where(result => result != null)
-                    .ToList();
-            }
+
+            return fixtures
+                .Select(fixture => fixture.Run(Filter, StepRunnerFactory, Parallel))
+                .Where(result => result != null)
+                .ToList();
         }
 
         /// <summary>

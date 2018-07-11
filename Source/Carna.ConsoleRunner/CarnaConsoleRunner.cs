@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2018 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -8,7 +8,6 @@ using System.Linq;
 using System.Reflection;
 
 using Carna.ConsoleRunner.Configuration;
-using Carna.Runner;
 
 namespace Carna.ConsoleRunner
 {
@@ -42,7 +41,7 @@ namespace Carna.ConsoleRunner
                     return CarnaConsoleRunnerResult.Success.Value();
                 }
 
-                return RunFixture(options);
+                return ConsoleFixtureEngine.Start(options) ? CarnaConsoleRunnerResult.Success.Value() : CarnaConsoleRunnerResult.Failed.Value();
             }
             catch (InvalidCommandLineOptionException exc)
             {
@@ -90,16 +89,6 @@ Options:");
                 .OrderBy(option => option.Order)
                 .ForEach(option => CarnaConsole.WriteLine(option.Description));
             CarnaConsole.WriteLine();
-        }
-
-        private static int RunFixture(CarnaRunnerCommandLineOptions options)
-        {
-            var result = new FixtureEngine()
-                .AddOptions(options)
-                .AddSummaryReporter()
-                .Start();
-
-            return result ? CarnaConsoleRunnerResult.Success.Value() : CarnaConsoleRunnerResult.Failed.Value();
         }
     }
 }
