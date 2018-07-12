@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>Carna.UwpRunner</id>
-    <version>1.4.0</version>
+    <version>1.5.0</version>
     <title>Carna UWP Runner</title>
     <authors>averrunci</authors>
     <owners>averrunci</owners>
@@ -14,8 +14,8 @@
     <copyright>Copyright (C) 2017-2018 Fievus</copyright>
     <tags>carna test testing tdd bdd runner uwp</tags>
     <dependencies>
-      <dependency id="Carna" version="1.4.0"/>
-      <dependency id="Carna.Runner" version="1.4.0"/>
+      <dependency id="Carna" version="1.5.0"/>
+      <dependency id="Carna.Runner" version="1.5.0"/>
     </dependencies>
   </metadata>
   <files>

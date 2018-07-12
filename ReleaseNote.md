@@ -1,5 +1,24 @@
 # Release note
 
+## V1.5.0
+
+### Add
+
+#### CarnaConsoleRunner
+
+- Add to run fixtures in the separate domain for each assembly.
+- Add /nodomain option. If the value is specified, no domain is created and the fixtures are run in the primary domain; otherwise, the separate domain is created for each assembly.
+
+### Bug fix
+
+#### Carna
+
+- Fixed AroundFixtureAttribute name.
+
+#### Carna.Runner
+
+- Fixed the default value for the parallel option.
+
 ## V1.4.0
 
 ### Add

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>CarnaConsoleRunner</id>
-    <version>1.4.0</version>
+    <version>1.5.0</version>
     <title>Carna Console Runner</title>
     <authors>averrunci</authors>
     <owners>averrunci</owners>
@@ -20,7 +20,6 @@
     <file src="..\Binary\Carna.ConsoleRunner\Release\Carna.Runner.dll" target="tools"/>
     <file src="..\Binary\Carna.ConsoleRunner\Release\CarnaConsoleRunner.exe" target="tools"/>
     <file src="..\Binary\Carna.ConsoleRunner\Release\CarnaConsoleRunner.exe.config" target="tools"/>
-    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Xml.XPath.XDocument.dll" target="tools"/>
     <file src="..\Binary\Carna.ConsoleRunner\Release\Microsoft.Win32.Primitives.dll" target="tools"/>
     <file src="..\Binary\Carna.ConsoleRunner\Release\netstandard.dll" target="tools"/>
     <file src="..\Binary\Carna.ConsoleRunner\Release\System.AppContext.dll" target="tools"/>
@@ -116,5 +115,6 @@
     <file src="..\Binary\Carna.ConsoleRunner\Release\System.Xml.XmlDocument.dll" target="tools"/>
     <file src="..\Binary\Carna.ConsoleRunner\Release\System.Xml.XmlSerializer.dll" target="tools"/>
     <file src="..\Binary\Carna.ConsoleRunner\Release\System.Xml.XPath.dll" target="tools"/>
+    <file src="..\Binary\Carna.ConsoleRunner\Release\System.Xml.XPath.XDocument.dll" target="tools"/>
   </files>
 </package>
