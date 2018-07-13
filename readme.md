@@ -6,6 +6,6 @@ Carna is a BDD (Behavior Driven Development) style testing and specification fra
 
 See [https://github.com/averrunci/Carna/wiki](https://github.com/averrunci/Carna/wiki)
 
-## LICENCE
+## LICENSE
 
 This software is released under the MIT License, see LICENSE.
