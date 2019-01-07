@@ -8,7 +8,7 @@ namespace Carna.Runner.Step
     class AssertionDescriptionSpec
     {
         [Context]
-        AssertionDescriptionSpec_AssertionWithoutException AssertionWithountException { get; }
+        AssertionDescriptionSpec_AssertionWithoutException AssertionWithoutException { get; }
 
         [Context]
         AssertionDescriptionSpec_AssertionWithException AssertionWithException { get; }

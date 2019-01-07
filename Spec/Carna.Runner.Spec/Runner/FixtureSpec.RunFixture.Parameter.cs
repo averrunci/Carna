@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2019 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -111,7 +111,7 @@ namespace Carna.Runner
             private string Parameter5 { get; }
             private int Parameter6 { get; }
 
-            public Context03(int Parameter6, string parameter2, object dummyParamter1, bool Parameter3, int parameter1, double parameter4, object dummyParameter2, string parameter5)
+            public Context03(int Parameter6, string parameter2, object dummyParameter1, bool Parameter3, int parameter1, double parameter4, object dummyParameter2, string parameter5)
             {
                 Parameter1 = parameter1;
                 Parameter2 = parameter2;

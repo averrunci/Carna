@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2019 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -163,7 +163,7 @@ namespace Carna
             Fixture.RunThen<ArgumentNullException>(Description);
 
             Expect(
-                "the underlying stepper should take a Then step that has the sepcified description and type of the exception.",
+                "the underlying stepper should take a Then step that has the specified description and type of the exception.",
                 () => FixtureStepper.Received().Take(Arg.Is<ThenStep>(step =>
                     step.Description == Description &&
                     step.Action == null && step.Assertion == null &&

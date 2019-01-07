@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017-2018 Fievus
+﻿// Copyright (C) 2017-2019 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -43,7 +43,7 @@ But was : 3"
             );
         }
 
-        [Example("When the specified expression is MethodCallExpression that has a method object.Equals(object) and an exception occurred for an excpected value of its expression")]
+        [Example("When the specified expression is MethodCallExpression that has a method object.Equals(object) and an exception occurred for an expected value of its expression")]
         void Ex03()
         {
             Given("an assertion that has 'x.Length.Equals(3)' where x = null", () => { var x = (string)null; Assertion = () => x.Length.Equals(3); });
