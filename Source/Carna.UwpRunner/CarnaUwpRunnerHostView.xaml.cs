@@ -61,6 +61,8 @@ namespace Carna.UwpRunner
                 Host.Summary.OnFixtureRunningStarting();
                 var results = await Task.Run(() => engine.RunFixtures(fixtures));
                 Host.Summary.OnFixtureRunningCompleted(results);
+
+                OpenFailedFixtureContents(Host.Fixtures);
             }
             catch (Exception exc)
             {
@@ -192,6 +194,17 @@ namespace Carna.UwpRunner
             {
                 fixtureContent.IsChildOpen = true;
                 if (recursive) SetChildOpen(fixtureContent.Fixtures, true);
+            }
+        }
+
+        private void OpenFailedFixtureContents(IEnumerable<FixtureContent> fixtureContents)
+        {
+            foreach (var fixtureContent in fixtureContents)
+            {
+                if (fixtureContent.Status != FixtureStatus.Failed) continue;
+
+                fixtureContent.IsChildOpen = true;
+                OpenFailedFixtureContents(fixtureContent.Fixtures);
             }
         }
     }
