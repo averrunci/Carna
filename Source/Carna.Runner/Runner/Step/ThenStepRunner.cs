@@ -1,9 +1,9 @@
-﻿// Copyright (C) 2017-2018 Fievus
+﻿// Copyright (C) 2017-2019 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
 using System;
-
+using System.Linq;
 using Carna.Step;
 
 namespace Carna.Runner.Step
@@ -60,18 +60,7 @@ namespace Carna.Runner.Step
 
                 if (HasAssertionWithException)
                 {
-                    var exception = results.GetLatestExceptionAt<WhenStep>();
-                    results.ClearException(exception);
-
-                    Step.ExceptionType.IfPresent(exceptionType =>
-                    {
-                        exception.IfPresent(_ => Step.ExecuteAssertion(() => exception.GetType() == Step.ExceptionType));
-                        exception.IfAbsent(() => Step.ExecuteAssertion(() => null == Step.ExceptionType));
-                    });
-
-                    Step.ExecuteAssertion(Step.ExceptionAssertion, exception);
-                    Step.ExceptionAction?.Invoke(exception);
-                    Step.AsyncExceptionAction?.Invoke(exception)?.GetAwaiter().GetResult();
+                    RunExceptionAssertion(results);
                 }
 
                 return FixtureStepResult.Of(Step).Passed();
@@ -80,6 +69,32 @@ namespace Carna.Runner.Step
             {
                 return FixtureStepResult.Of(Step).Failed(exc);
             }
+        }
+
+        private void RunExceptionAssertion(FixtureStepResultCollection results)
+        {
+            Exception exception;
+            var lastStep = results.Last().Step;
+            if (lastStep is ThenStep lastThenStep)
+            {
+                exception = lastThenStep.AssertedException;
+            }
+            else
+            {
+                exception = results.GetLatestExceptionAt<WhenStep>();
+                results.ClearException(exception);
+            }
+
+            Step.AssertedException = exception;
+            Step.ExceptionType.IfPresent(exceptionType =>
+            {
+                exception.IfPresent(_ => Step.ExecuteAssertion(() => exception.GetType() == Step.ExceptionType));
+                exception.IfAbsent(() => Step.ExecuteAssertion(() => null == Step.ExceptionType));
+            });
+
+            Step.ExecuteAssertion(Step.ExceptionAssertion, exception);
+            Step.ExceptionAction?.Invoke(exception);
+            Step.AsyncExceptionAction?.Invoke(exception)?.GetAwaiter().GetResult();
         }
 
         private bool IsPending =>!HasAssertionWithoutException && !HasAssertionWithException;

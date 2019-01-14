@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2019 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -14,14 +14,16 @@ namespace Carna.Runner.Step
     {
         FixtureStepResultCollection StepResults { get; }
 
+        Exception AssertedException { get; } = new ArgumentNullException();
         ThenStep Step { get; set; }
+        ThenStep NextStep { get; set; }
         FixtureStepResult Result { get; set; }
 
         public ThenStepRunnerSpec_StepRunningWithTypedExceptionAsync()
         {
             StepResults = new FixtureStepResultCollection
             {
-                FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Failed(new ArgumentNullException()).Build()
+                FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Failed(AssertedException).Build()
             };
         }
 
@@ -55,6 +57,67 @@ namespace Carna.Runner.Step
             Then("the status of the result should be Failed", () => Result.Status == FixtureStepStatus.Failed);
             Then("the exception of the result should not be null", () => Result.Exception != null);
             Then("the step of the result should be the given ThenStep", () => Result.Step == Step);
+        }
+
+        [Example("When ThenStep that has an assertion with Exception that does not throw any exceptions and the next ThenStep that asserts the Exception that is thrown at WhenStep are run asynchronously")]
+        void Ex03()
+        {
+            var thenStepCompleted = false;
+            Given("async ThenStep that has an assertion with Exception that does not throw any exceptions", () => Step = FixtureSteps.CreateThenStep<ArgumentNullException>(async exc =>
+            {
+                await Task.Delay(100);
+                thenStepCompleted = true;
+            }));
+            Given("async next ThenStep that asserts the Exception that is thrown at WhenStep", () => NextStep = FixtureSteps.CreateThenStep<ArgumentNullException>(async exc =>
+            {
+                await Task.Delay(100);
+                thenStepCompleted = true;
+            }));
+            When("the given ThenStep is run", () =>
+            {
+                Result = RunnerOf(Step).Run(StepResults).Build();
+                StepResults.Add(Result);
+            });
+            Then("the given ThenStep should be awaited", () => thenStepCompleted);
+            Then("the status of the result should be Passed", () => Result.Status == FixtureStepStatus.Passed);
+            Then("the exception of the result should be null", () => Result.Exception == null);
+            Then("the step of the result should be the given ThenStep", () => Result.Step == Step);
+
+            thenStepCompleted = false;
+            When("the given next ThenStep is run", () => Result = RunnerOf(NextStep).Run(StepResults).Build());
+            Then("the given next ThenStep should be awaited", () => thenStepCompleted);
+            Then("the status of the result should be Passed", () => Result.Status == FixtureStepStatus.Passed);
+            Then("the exception of the result should be null", () => Result.Exception == null);
+            Then("the step of the result should be the given next ThenStep", () => Result.Step == NextStep);
+        }
+
+        [Example("When ThenStep that has an assertion with Exception that does not throw any exceptions and the next ThenStep that asserts the Exception that is not thrown at WhenStep are run asynchronously")]
+        void Ex04()
+        {
+            var thenStepCompleted = false;
+            Given("async ThenStep that has an assertion with Exception that does not throw any exceptions", () => Step = FixtureSteps.CreateThenStep<ArgumentNullException>(async exc =>
+            {
+                await Task.Delay(100);
+                thenStepCompleted = true;
+            }));
+            Given("async next ThenStep that asserts the Exception that is not thrown at WhenStep", () => NextStep = FixtureSteps.CreateThenStep<InvalidOperationException>(async exc =>
+            {
+                await Task.Delay(100);
+            }));
+            When("the given ThenStep is run", () =>
+            {
+                Result = RunnerOf(Step).Run(StepResults).Build();
+                StepResults.Add(Result);
+            });
+            Then("the given ThenStep should be awaited", () => thenStepCompleted);
+            Then("the status of the result should be Passed", () => Result.Status == FixtureStepStatus.Passed);
+            Then("the exception of the result should be null", () => Result.Exception == null);
+            Then("the step of the result should be the given ThenStep", () => Result.Step == Step);
+
+            When("the given next ThenStep is run", () => Result = RunnerOf(NextStep).Run(StepResults).Build());
+            Then("the status of the result should be Failed", () => Result.Status == FixtureStepStatus.Failed);
+            Then("the exception of the result should not be null", () => Result.Exception != null);
+            Then("the step of the result should be the given next ThenStep", () => Result.Step == NextStep);
         }
     }
 }
