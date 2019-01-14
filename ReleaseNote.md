@@ -1,5 +1,21 @@
 # Release note
 
+## V1.5.1
+
+### Change
+
+#### Carna
+
+- Add the AssertedException property to the ThenStep.
+
+#### Carna.Runner
+
+- Change in order to be able to assert with the multiple Then step when an exception is raised.
+
+#### Carna.UwpRunner
+
+- Change in order to open failed fixture contents.
+
 ## V1.5.0
 
 ### Add

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Carna.ProjectTemplates</id>
-    <version>1.5.0</version>
+    <version>1.5.1</version>
     <title>Carna Console Runner</title>
     <authors>averrunci</authors>
     <owners>averrunci</owners>
@@ -11,7 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Carna Test Project Template</description>
     <language>en-US</language>
-    <copyright>Copyright (C) 2017-2018 Fievus</copyright>
+    <copyright>Copyright (C) 2017-2019 Fievus</copyright>
     <tags>carna test testing tdd bdd runner</tags>
     <packageTypes>
       <packageType name="Template"/>
