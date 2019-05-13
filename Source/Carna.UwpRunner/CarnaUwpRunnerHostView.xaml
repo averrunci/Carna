@@ -1,5 +1,5 @@
 ﻿<!--
-Copyright (C) 2017 Fievus
+Copyright (C) 2017-2019 Fievus
 
 This software may be modified and distributed under the terms
 of the MIT license.  See the LICENSE file for details.
@@ -10,12 +10,37 @@ of the MIT license.  See the LICENSE file for details.
              xmlns:local="using:Carna.UwpRunner"
              SizeChanged="OnSizeChanged"
              Loaded="OnLoaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <Color x:Key="BackgroundColor1">#eee</Color>
+                    <Color x:Key="BackgroundColor2">#bbb</Color>
+                    <Color x:Key="ErrorBackgroundColor1">#fff</Color>
+                    <Color x:Key="ErrorBackgroundColor2">#eee</Color>
+                    <SolidColorBrush x:Key="ContentBorderBrush" Color="#000"/>
+                    <Color x:Key="ContentBackgroundColor1">#eee</Color>
+                    <Color x:Key="ContentBackgroundColor2">#ddd</Color>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <Color x:Key="BackgroundColor1">#1a1a1a</Color>
+                    <Color x:Key="BackgroundColor2">#111</Color>
+                    <Color x:Key="ErrorBackgroundColor1">#2a2a2a</Color>
+                    <Color x:Key="ErrorBackgroundColor2">#222</Color>
+                    <SolidColorBrush x:Key="ContentBorderBrush" Color="#eee"/>
+                    <Color x:Key="ContentBackgroundColor1">#2a2a2a</Color>
+                    <Color x:Key="ContentBackgroundColor2">#222</Color>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid>
         <Grid>
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0,1">
-                    <GradientStop Offset="0" Color="#eee"/>
-                    <GradientStop Offset="1" Color="#bbb"/>
+                    <GradientStop Offset="0" Color="{ThemeResource BackgroundColor1}"/>
+                    <GradientStop Offset="1" Color="{ThemeResource BackgroundColor2}"/>
                 </LinearGradientBrush>
             </Grid.Background>
             <Grid.RowDefinitions>
@@ -40,8 +65,8 @@ of the MIT license.  See the LICENSE file for details.
                     Visibility="{Binding ErrorMessage, Converter={StaticResource ExceptionToVisibilityConverter}}">
                 <Border.Background>
                     <LinearGradientBrush EndPoint="0,1">
-                        <GradientStop Offset="0" Color="#fff"/>
-                        <GradientStop Offset="1" Color="#eee"/>
+                        <GradientStop Offset="0" Color="{ThemeResource ErrorBackgroundColor1}"/>
+                        <GradientStop Offset="1" Color="{ThemeResource ErrorBackgroundColor2}"/>
                     </LinearGradientBrush>
                 </Border.Background>
                 
@@ -53,11 +78,11 @@ of the MIT license.  See the LICENSE file for details.
 
             <Grid Grid.Row="3"
                   Margin="10" Padding="10"
-                  BorderBrush="Black" BorderThickness="1" CornerRadius="5">
+                  BorderBrush="{ThemeResource ContentBorderBrush}" BorderThickness="1" CornerRadius="5">
                 <Grid.Background>
                     <LinearGradientBrush EndPoint="0,1">
-                        <GradientStop Offset="0" Color="#eee"/>
-                        <GradientStop Offset="1" Color="#ddd"/>
+                        <GradientStop Offset="0" Color="{ThemeResource ContentBackgroundColor1}"/>
+                        <GradientStop Offset="1" Color="{ThemeResource ContentBackgroundColor2}"/>
                     </LinearGradientBrush>
                 </Grid.Background>
                 
