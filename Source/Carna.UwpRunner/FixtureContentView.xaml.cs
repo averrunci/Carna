@@ -2,6 +2,10 @@
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
+using System;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 
@@ -40,5 +44,29 @@ namespace Carna.UwpRunner
         {
             Fixture.IsChildOpen = !Fixture.IsChildOpen;
         }
+
+        private async void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            if (!(DataContext is FixtureContent fixtureContent)) return;
+
+            if (fixtureContent.IsFirstFailed)
+            {
+                await StartBringContentIntoView();
+            }
+            else
+            {
+                fixtureContent.PropertyChanged += OnFixtureContentPropertyChanged;
+            }
+        }
+
+        private async void OnFixtureContentPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != nameof(FixtureContent.IsFirstFailed)) return;
+
+            await StartBringContentIntoView();
+        }
+
+        private async Task StartBringContentIntoView()
+            => await Dispatcher.RunIdleAsync(args => StartBringIntoView(new BringIntoViewOptions { TargetRect = new Rect(0, 0, ActualWidth, ActualHeight) }));
     }
 }

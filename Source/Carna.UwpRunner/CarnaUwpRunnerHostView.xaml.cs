@@ -11,6 +11,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 
 using Carna.Runner;
+using Carna.Runner.Step;
 
 namespace Carna.UwpRunner
 {
@@ -63,6 +64,7 @@ namespace Carna.UwpRunner
                 Host.Summary.OnFixtureRunningCompleted(results);
 
                 OpenFailedFixtureContents(Host.Fixtures);
+                MarkFirstFailedFixtureContent(Host.Fixtures);
             }
             catch (Exception exc)
             {
@@ -205,6 +207,29 @@ namespace Carna.UwpRunner
 
                 fixtureContent.IsChildOpen = true;
                 OpenFailedFixtureContents(fixtureContent.Fixtures);
+            }
+        }
+
+        private void MarkFirstFailedFixtureContent(IEnumerable<FixtureContent> fixtureContents)
+        {
+            foreach (var fixtureContent in fixtureContents)
+            {
+                if (fixtureContent.Status != FixtureStatus.Failed) continue;
+
+                var stepFailed = fixtureContent.Steps.FirstOrDefault(step => step.Status == FixtureStepStatus.Failed);
+                if (stepFailed != null)
+                {
+                    stepFailed.IsFirstFailed = true;
+                    return;
+                }
+
+                if (!fixtureContent.Fixtures.Any())
+                {
+                    fixtureContent.IsFirstFailed = true;
+                    return;
+                }
+
+                MarkFirstFailedFixtureContent(fixtureContent.Fixtures);
             }
         }
     }

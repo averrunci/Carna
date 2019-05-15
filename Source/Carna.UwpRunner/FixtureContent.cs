@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2019 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -140,6 +140,22 @@ namespace Carna.UwpRunner
             }
         }
         private bool isChildOpenTextVisible;
+
+        /// <summary>
+        /// Gets a value that indicates whether the fixture is first failed.
+        /// </summary>
+        public bool IsFirstFailed
+        {
+            get => isFirstFailed;
+            set
+            {
+                if (isFirstFailed == value) return;
+
+                isFirstFailed = value;
+                RaisePropertyChanged();
+            }
+        }
+        private bool isFirstFailed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FixtureContent"/> class.

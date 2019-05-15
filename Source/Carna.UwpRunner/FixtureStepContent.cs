@@ -1,7 +1,10 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2019 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
 using Carna.Runner;
 using Carna.Runner.Step;
 
@@ -10,8 +13,13 @@ namespace Carna.UwpRunner
     /// <summary>
     /// Represents a content of a fixture step.
     /// </summary>
-    public class FixtureStepContent
+    public class FixtureStepContent : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Occurs when a property value changes.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
         /// <summary>
         /// Gets a description of a fixture step.
         /// </summary>
@@ -33,6 +41,22 @@ namespace Carna.UwpRunner
         public string Exception { get; }
 
         /// <summary>
+        /// Gets a value that indicates whether the step is first failed.
+        /// </summary>
+        public bool IsFirstFailed
+        {
+            get => isFirstFailed;
+            set
+            {
+                if (isFirstFailed == value) return;
+
+                isFirstFailed = value;
+                RaisePropertyChanged();
+            }
+        }
+        private bool isFirstFailed;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="FixtureStepContent"/> class
         /// with the specified result of the fixture step running and the formatter
         /// to format the description of the fixture step.
@@ -46,5 +70,17 @@ namespace Carna.UwpRunner
             Duration = result.Duration.HasValue ? $"{result.Duration.Value.TotalSeconds:0.000} s" : string.Empty;
             Exception = result.Exception?.ToString();
         }
+
+        /// <summary>
+        /// Raises the <see cref="PropertyChanged"/> event that occurs when the value of the specified property name changes.
+        /// </summary>
+        /// <param name="propertyName">The name of the property whose value changes.</param>
+        protected void RaisePropertyChanged([CallerMemberName] string propertyName = null) => OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
+
+        /// <summary>
+        /// Raises the <see cref="PropertyChanged"/> event.
+        /// </summary>
+        /// <param name="e">The event data.</param>
+        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e) => PropertyChanged?.Invoke(this, e);
     }
 }
