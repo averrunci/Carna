@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017-2018 Fievus
+﻿// Copyright (C) 2017-2019 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -97,7 +97,7 @@ But was : 5"
             Expect(
                 @"the description should be as follows:
 Expected: greater than 7
-But was : 5'",
+But was : 5",
                 () => AssertionDescription.Of(Assertion).ToString() == @"Expected: greater than 7
 But was : 5"
             );
@@ -123,7 +123,7 @@ But was : 5"
             Expect(
                 @"the description should be as follows:
 Expected: 3
-But was : 5'",
+But was : 5",
                 () => AssertionDescription.Of(Assertion).ToString() == @"Expected: 3
 But was : 5"
             );
@@ -135,7 +135,8 @@ But was : 5"
             Given("an assertion that has 'Equals(x, 3)' where x = 5", () => { var x = 5; Assertion = () => Equals(x, 3); });
             Expect(
                 @"the description should be as follows:
-Expected: 3 But was: 5",
+Expected: 3
+But was : 5",
                 () => AssertionDescription.Of(Assertion).ToString() == @"Expected: 3
 But was : 5"
             );
@@ -148,7 +149,7 @@ But was : 5"
             Expect(
                 @"the description should be as follows:
 Expected: 3
-But was : null'",
+But was : null",
                 () => AssertionDescription.Of(Assertion).ToString() == @"Expected: 3
 But was : null"
             );
