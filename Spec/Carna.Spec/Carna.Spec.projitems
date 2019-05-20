@@ -9,6 +9,15 @@
     <Import_RootNamespace>Carna</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Assertions\AssertionObjects.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Assertions\AssertionObjectSpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Assertions\AssertionObjectSpec.Equals.cs">
+      <DependentUpon>AssertionObjectSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Assertions\AssertionObjectSpec.ToString.cs">
+      <DependentUpon>AssertionObjectSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Assertions\AssertionPropertySpec.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CultureAttributeSpec.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FixtureSteppable.ExpectStep.cs">
       <DependentUpon>FixtureSteppableSpec.cs</DependentUpon>

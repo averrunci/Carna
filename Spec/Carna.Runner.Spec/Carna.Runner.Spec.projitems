@@ -122,6 +122,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Runner\Formatters\JapaneseFixtureFormatterSpec.FormatFixtureStep.cs">
       <DependentUpon>JapaneseFixtureFormatterSpec.cs</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\AssertionDescriptionSpec.AssertionWithAssertionObject.cs">
+      <DependentUpon>AssertionDescriptionSpec.cs</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\AssertionDescriptionSpec.AssertionWithException.cs">
       <DependentUpon>AssertionDescriptionSpec.cs</DependentUpon>
     </Compile>
