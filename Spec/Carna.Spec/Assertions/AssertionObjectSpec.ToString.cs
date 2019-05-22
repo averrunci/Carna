@@ -24,36 +24,70 @@ namespace Carna.Assertions
                 yield return new
                 {
                     Description = "When a property whose type is the AssertionObject is not included",
-                    AssertionObject = new AssertionObjects.SimpleTestAssertion { StringProperty = "PropertyA", Int32Property = 32, BooleanProperty = true, NotAssertionDoubleProperty = 3.14 },
-                    Expected = "[StringProperty: PropertyA, Int32Property: 32, BooleanProperty: True]"
+                    AssertionObject = new AssertionObjects.SimpleTestAssertion
+                    {
+                        StringProperty = "PropertyA",
+                        Int32Property = 32,
+                        BooleanProperty = true,
+                        StringAssertionProperty = new NotEqualAssertionProperty<string>("PropertyA"),
+                        Int32AssertionProperty = new LessThanAssertionProperty<int>(3),
+                        NotAssertionDoubleProperty = 3.14
+                    },
+                    Expected = "[StringProperty: PropertyA, Int32Property: 32, BooleanProperty: True, StringAssertionProperty: not PropertyA, Int32AssertionProperty: less than 3]"
                 };
                 yield return new
                 {
                     Description = "When a property whose type is the AssertionObject is included",
                     AssertionObject = new AssertionObjects.NestedAssertionObjectTestAssertion
                     {
-                        SimpleTestAssertionProperty = new AssertionObjects.SimpleTestAssertion { StringProperty = "PropertyA", Int32Property = 32, BooleanProperty = true, NotAssertionDoubleProperty = 3.14 },
+                        SimpleTestAssertionProperty = new AssertionObjects.SimpleTestAssertion
+                        {
+                            StringProperty = "PropertyA",
+                            Int32Property = 32,
+                            BooleanProperty = true,
+                            StringAssertionProperty = new NotEqualAssertionProperty<string>("PropertyA"),
+                            Int32AssertionProperty = new LessThanAssertionProperty<int>(3),
+                            NotAssertionDoubleProperty = 3.14
+                        },
                         StringProperty = "PropertyA",
+                        Int32AssertionProperty = new LessThanOrEqualAssertionProperty<int>(3),
                         NotAssertionDoubleProperty = 3.14
                     },
-                    Expected = "[SimpleTestAssertionProperty: [StringProperty: PropertyA, Int32Property: 32, BooleanProperty: True], StringProperty: PropertyA]"
+                    Expected = "[SimpleTestAssertionProperty: [StringProperty: PropertyA, Int32Property: 32, BooleanProperty: True, StringAssertionProperty: not PropertyA, Int32AssertionProperty: less than 3], StringProperty: PropertyA, Int32AssertionProperty: less than or equal 3]"
                 };
                 yield return new
                 {
                     Description = "When a property whose type is the AssertionObject is not included and a property is specified a description",
-                    AssertionObject = new AssertionObjects.SimpleTestSpecifiedDescriptionAssertion() { StringProperty = "PropertyA", Int32Property = 32, BooleanProperty = true, NotAssertionDoubleProperty = 3.14 },
-                    Expected = "[String Property: PropertyA, Int32 Property: 32, Boolean Property: True]"
+                    AssertionObject = new AssertionObjects.SimpleTestSpecifiedDescriptionAssertion
+                    {
+                        StringProperty = "PropertyA",
+                        Int32Property = 32,
+                        BooleanProperty = true,
+                        StringAssertionProperty = new NotEqualAssertionProperty<string>("PropertyA"),
+                        Int32AssertionProperty = new GreaterThanAssertionProperty<int>(3),
+                        NotAssertionDoubleProperty = 3.14 
+                    },
+                    Expected = "[String Property: PropertyA, Int32 Property: 32, Boolean Property: True, String Assertion Property: not PropertyA, Int32AssertionProperty: greater than 3]"
                 };
                 yield return new
                 {
                     Description = "When a property whose type is the AssertionObject is included and a property is specified a description",
-                    AssertionObject = new AssertionObjects.NestedAssertionObjectTestSpecifiedDescriptionAssertion()
+                    AssertionObject = new AssertionObjects.NestedAssertionObjectTestSpecifiedDescriptionAssertion
                     {
-                        SimpleTestAssertionProperty = new AssertionObjects.SimpleTestSpecifiedDescriptionAssertion() { StringProperty = "PropertyA", Int32Property = 32, BooleanProperty = true, NotAssertionDoubleProperty = 3.14 },
+                        SimpleTestAssertionProperty = new AssertionObjects.SimpleTestSpecifiedDescriptionAssertion
+                        {
+                            StringProperty = "PropertyA",
+                            Int32Property = 32,
+                            BooleanProperty = true,
+                            StringAssertionProperty = new NotEqualAssertionProperty<string>("PropertyA"),
+                            Int32AssertionProperty = new GreaterThanAssertionProperty<int>(3),
+                            NotAssertionDoubleProperty = 3.14 
+                        },
                         StringProperty = "PropertyA",
+                        Int32AssertionProperty = new GreaterThanOrEqualAssertionProperty<int>(3),
                         NotAssertionDoubleProperty = 3.14
                     },
-                    Expected = "[Simple Test Assertion Property: [String Property: PropertyA, Int32 Property: 32, Boolean Property: True], String Property: PropertyA]"
+                    Expected = "[Simple Test Assertion Property: [String Property: PropertyA, Int32 Property: 32, Boolean Property: True, String Assertion Property: not PropertyA, Int32AssertionProperty: greater than 3], String Property: PropertyA, Int32 Assertion Property: greater than or equal 3]"
                 };
             }
         }
@@ -74,19 +108,38 @@ namespace Carna.Assertions
                 yield return new
                 {
                     Description = "When a property whose type is the AssertionObject is not included",
-                    AssertionObject = new AssertionObjects.SimpleTestAssertion { StringProperty = "PropertyA", Int32Property = 32, BooleanProperty = true, NotAssertionDoubleProperty = 3.14 },
+                    AssertionObject = new AssertionObjects.SimpleTestAssertion
+                    {
+                        StringProperty = "PropertyA",
+                        Int32Property = 32,
+                        BooleanProperty = true,
+                        StringAssertionProperty = new NotEqualAssertionProperty<string>("PropertyA"),
+                        Int32AssertionProperty = new LessThanAssertionProperty<int>(3),
+                        NotAssertionDoubleProperty = 3.14 
+                    },
                     Options = options,
                     Expected = @"StringProperty: PropertyA
 Int32Property: 32
-BooleanProperty: True"
+BooleanProperty: True
+StringAssertionProperty: not PropertyA
+Int32AssertionProperty: less than 3"
                 };
                 yield return new
                 {
                     Description = "When a property whose type is the AssertionObject is included",
                     AssertionObject = new AssertionObjects.NestedAssertionObjectTestAssertion
                     {
-                        SimpleTestAssertionProperty = new AssertionObjects.SimpleTestAssertion { StringProperty = "PropertyA", Int32Property = 32, BooleanProperty = true, NotAssertionDoubleProperty = 3.14 },
+                        SimpleTestAssertionProperty = new AssertionObjects.SimpleTestAssertion
+                        {
+                            StringProperty = "PropertyA",
+                            Int32Property = 32,
+                            BooleanProperty = true,
+                            StringAssertionProperty =  new NotEqualAssertionProperty<string>("PropertyA"),
+                            Int32AssertionProperty = new LessThanAssertionProperty<int>(3),
+                            NotAssertionDoubleProperty = 3.14 
+                        },
                         StringProperty = "PropertyA",
+                        Int32AssertionProperty = new LessThanOrEqualAssertionProperty<int>(3),
                         NotAssertionDoubleProperty = 3.14
                     },
                     Options = options,
@@ -94,24 +147,46 @@ BooleanProperty: True"
   StringProperty: PropertyA
   Int32Property: 32
   BooleanProperty: True
-StringProperty: PropertyA"
+  StringAssertionProperty: not PropertyA
+  Int32AssertionProperty: less than 3
+StringProperty: PropertyA
+Int32AssertionProperty: less than or equal 3"
                 };
                 yield return new
                 {
                     Description = "When a property whose type is the AssertionObject is not included and a property is specified a description",
-                    AssertionObject = new AssertionObjects.SimpleTestSpecifiedDescriptionAssertion() { StringProperty = "PropertyA", Int32Property = 32, BooleanProperty = true, NotAssertionDoubleProperty = 3.14 },
+                    AssertionObject = new AssertionObjects.SimpleTestSpecifiedDescriptionAssertion
+                    {
+                        StringProperty = "PropertyA",
+                        Int32Property = 32,
+                        BooleanProperty = true,
+                        StringAssertionProperty = new NotEqualAssertionProperty<string>("PropertyA"),
+                        Int32AssertionProperty = new GreaterThanAssertionProperty<int>(3),
+                        NotAssertionDoubleProperty = 3.14
+                    },
                     Options = options,
                     Expected = @"String Property: PropertyA
 Int32 Property: 32
-Boolean Property: True"
+Boolean Property: True
+String Assertion Property: not PropertyA
+Int32AssertionProperty: greater than 3"
                 };
                 yield return new
                 {
                     Description = "When a property whose type is the AssertionObject is included and a property is specified a description",
-                    AssertionObject = new AssertionObjects.NestedAssertionObjectTestSpecifiedDescriptionAssertion()
+                    AssertionObject = new AssertionObjects.NestedAssertionObjectTestSpecifiedDescriptionAssertion
                     {
-                        SimpleTestAssertionProperty = new AssertionObjects.SimpleTestSpecifiedDescriptionAssertion() { StringProperty = "PropertyA", Int32Property = 32, BooleanProperty = true, NotAssertionDoubleProperty = 3.14 },
+                        SimpleTestAssertionProperty = new AssertionObjects.SimpleTestSpecifiedDescriptionAssertion
+                        {
+                            StringProperty = "PropertyA",
+                            Int32Property = 32,
+                            BooleanProperty = true,
+                            StringAssertionProperty = new NotEqualAssertionProperty<string>("PropertyA"),
+                            Int32AssertionProperty = new GreaterThanAssertionProperty<int>(3),
+                            NotAssertionDoubleProperty = 3.14 
+                        },
                         StringProperty = "PropertyA",
+                        Int32AssertionProperty = new GreaterThanOrEqualAssertionProperty<int>(3),
                         NotAssertionDoubleProperty = 3.14
                     },
                     Options = options,
@@ -119,7 +194,10 @@ Boolean Property: True"
   String Property: PropertyA
   Int32 Property: 32
   Boolean Property: True
-String Property: PropertyA"
+  String Assertion Property: not PropertyA
+  Int32AssertionProperty: greater than 3
+String Property: PropertyA
+Int32 Assertion Property: greater than or equal 3"
                 };
             }
         }
@@ -138,19 +216,38 @@ String Property: PropertyA"
                 yield return new
                 {
                     Description = "When a property whose type is the AssertionObject is not included",
-                    AssertionObject = new AssertionObjects.SimpleTestAssertion { StringProperty = "PropertyA", Int32Property = 32, BooleanProperty = true, NotAssertionDoubleProperty = 3.14 },
+                    AssertionObject = new AssertionObjects.SimpleTestAssertion
+                    {
+                        StringProperty = "PropertyA",
+                        Int32Property = 32,
+                        BooleanProperty = true,
+                        StringAssertionProperty = new NotEqualAssertionProperty<string>("PropertyA"),
+                        Int32AssertionProperty = new LessThanAssertionProperty<int>(3),
+                        NotAssertionDoubleProperty = 3.14
+                    },
                     Expected = @"
   StringProperty: PropertyA
   Int32Property: 32
-  BooleanProperty: True"
+  BooleanProperty: True
+  StringAssertionProperty: not PropertyA
+  Int32AssertionProperty: less than 3"
                 };
                 yield return new
                 {
                     Description = "When a property whose type is the AssertionObject is included",
                     AssertionObject = new AssertionObjects.NestedAssertionObjectTestAssertion
                     {
-                        SimpleTestAssertionProperty = new AssertionObjects.SimpleTestAssertion { StringProperty = "PropertyA", Int32Property = 32, BooleanProperty = true, NotAssertionDoubleProperty = 3.14 },
+                        SimpleTestAssertionProperty = new AssertionObjects.SimpleTestAssertion
+                        {
+                            StringProperty = "PropertyA",
+                            Int32Property = 32,
+                            BooleanProperty = true,
+                            StringAssertionProperty = new NotEqualAssertionProperty<string>("PropertyA"),
+                            Int32AssertionProperty = new LessThanAssertionProperty<int>(3),
+                            NotAssertionDoubleProperty = 3.14 
+                        },
                         StringProperty = "PropertyA",
+                        Int32AssertionProperty = new LessThanOrEqualAssertionProperty<int>(3),
                         NotAssertionDoubleProperty = 3.14
                     },
                     Expected = @"
@@ -158,24 +255,46 @@ String Property: PropertyA"
     StringProperty: PropertyA
     Int32Property: 32
     BooleanProperty: True
-  StringProperty: PropertyA"
+    StringAssertionProperty: not PropertyA
+    Int32AssertionProperty: less than 3
+  StringProperty: PropertyA
+  Int32AssertionProperty: less than or equal 3"
                 };
                 yield return new
                 {
                     Description = "When a property whose type is the AssertionObject is not included and a property is specified a description",
-                    AssertionObject = new AssertionObjects.SimpleTestSpecifiedDescriptionAssertion() { StringProperty = "PropertyA", Int32Property = 32, BooleanProperty = true, NotAssertionDoubleProperty = 3.14 },
+                    AssertionObject = new AssertionObjects.SimpleTestSpecifiedDescriptionAssertion
+                    {
+                        StringProperty = "PropertyA",
+                        Int32Property = 32,
+                        BooleanProperty = true,
+                        StringAssertionProperty = new NotEqualAssertionProperty<string>("PropertyA"),
+                        Int32AssertionProperty = new GreaterThanAssertionProperty<int>(3),
+                        NotAssertionDoubleProperty = 3.14 
+                    },
                     Expected = @"
   String Property: PropertyA
   Int32 Property: 32
-  Boolean Property: True"
+  Boolean Property: True
+  String Assertion Property: not PropertyA
+  Int32AssertionProperty: greater than 3"
                 };
                 yield return new
                 {
                     Description = "When a property whose type is the AssertionObject is included and a property is specified a description",
-                    AssertionObject = new AssertionObjects.NestedAssertionObjectTestSpecifiedDescriptionAssertion()
+                    AssertionObject = new AssertionObjects.NestedAssertionObjectTestSpecifiedDescriptionAssertion
                     {
-                        SimpleTestAssertionProperty = new AssertionObjects.SimpleTestSpecifiedDescriptionAssertion() { StringProperty = "PropertyA", Int32Property = 32, BooleanProperty = true, NotAssertionDoubleProperty = 3.14 },
+                        SimpleTestAssertionProperty = new AssertionObjects.SimpleTestSpecifiedDescriptionAssertion
+                        {
+                            StringProperty = "PropertyA",
+                            Int32Property = 32,
+                            BooleanProperty = true,
+                            StringAssertionProperty = new NotEqualAssertionProperty<string>("PropertyA"),
+                            Int32AssertionProperty = new GreaterThanAssertionProperty<int>(3),
+                            NotAssertionDoubleProperty = 3.14 
+                        },
                         StringProperty = "PropertyA",
+                        Int32AssertionProperty = new GreaterThanOrEqualAssertionProperty<int>(3),
                         NotAssertionDoubleProperty = 3.14
                     },
                     Expected = @"
@@ -183,7 +302,10 @@ String Property: PropertyA"
     String Property: PropertyA
     Int32 Property: 32
     Boolean Property: True
-  String Property: PropertyA"
+    String Assertion Property: not PropertyA
+    Int32AssertionProperty: greater than 3
+  String Property: PropertyA
+  Int32 Assertion Property: greater than or equal 3"
                 };
             }
         }

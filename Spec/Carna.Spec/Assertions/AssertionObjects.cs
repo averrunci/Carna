@@ -17,6 +17,11 @@ namespace Carna.Assertions
             [AssertionProperty]
             public bool BooleanProperty { get; set; }
 
+            [AssertionProperty]
+            public NotEqualAssertionProperty<string> StringAssertionProperty { get; set; }
+
+            public LessThanAssertionProperty<int> Int32AssertionProperty { get; set; }
+
             public double NotAssertionDoubleProperty { get; set; }
         }
 
@@ -27,6 +32,8 @@ namespace Carna.Assertions
 
             [AssertionProperty]
             public string StringProperty { get; set; }
+
+            public LessThanOrEqualAssertionProperty<int> Int32AssertionProperty { get; set; }
 
             public double NotAssertionDoubleProperty { get; set; }
         }
@@ -42,6 +49,11 @@ namespace Carna.Assertions
             [AssertionProperty("Boolean Property")]
             public bool BooleanProperty { get; set; }
 
+            [AssertionProperty("String Assertion Property")]
+            public NotEqualAssertionProperty<string> StringAssertionProperty { get; set; }
+
+            public GreaterThanAssertionProperty<int> Int32AssertionProperty { get; set; }
+
             public double NotAssertionDoubleProperty { get; set; }
         }
 
@@ -52,6 +64,9 @@ namespace Carna.Assertions
 
             [AssertionProperty("String Property")]
             public string StringProperty { get; set; }
+
+            [AssertionProperty("Int32 Assertion Property")]
+            public GreaterThanOrEqualAssertionProperty<int> Int32AssertionProperty { get; set; }
 
             public double NotAssertionDoubleProperty { get; set; }
         }

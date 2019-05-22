@@ -33,9 +33,8 @@ namespace Carna.Assertions
                 options.Separator,
                 GetAssertionProperties().Select(p =>
                 {
-                    var propertyValue = p.GetValue(this);
-                    var assertionObject = propertyValue as AssertionObject;
-                    return $"{CustomAttributeExtensions.GetCustomAttribute<AssertionPropertyAttribute>((MemberInfo)p)?.Description ?? p.Name}: {(assertionObject == null ? propertyValue : assertionObject.ToString(options.ToNextLevel()))}";
+                    var assertionObject = p.Value as AssertionObject;
+                    return $"{p.Description}: {(assertionObject == null ? p.Value ?? "<null>" : assertionObject.ToString(options.ToNextLevel()))}";
                 })
             );
             return $"{options.Prefix}{assertionProperties}{options.Suffix}";
@@ -56,29 +55,36 @@ namespace Carna.Assertions
         /// <summary>
         /// Determines whether two specified assertion objects have the same value.
         /// </summary>
-        /// <param name="a">The first assertion object to compare, or null.</param>
-        /// <param name="b">The second assertion object to compare, or null.</param>
+        /// <param name="actual">The first assertion object that is actual value to compare, or null.</param>
+        /// <param name="expected">The second assertion object that is expected value to compare, or null.</param>
         /// <returns>
-        /// <c>true</c> if the value of <paramref name="a">a</paramref> is the same as the value of <paramref name="b">b</paramref>; otherwise, <c>false</c>.
+        /// <c>true</c> if the value of <paramref name="actual">actual</paramref> is the same as the value of <paramref name="expected">expected</paramref>;
+        /// otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator ==(AssertionObject a, AssertionObject b)
+        public static bool operator ==(AssertionObject actual, AssertionObject expected)
         {
-            if (ReferenceEquals(a, b)) return true;
-            if (ReferenceEquals(a, null) || ReferenceEquals(b, null)) return false;
+            if (ReferenceEquals(actual, expected)) return true;
+            if (ReferenceEquals(actual, null) || ReferenceEquals(expected, null)) return false;
 
-            return a.GetAssertionProperties()
-                .All(p => Equals(p.GetValue(a), b.GetType().GetProperty(p.Name, AssertionPropertyBindingFlags)?.GetValue(b)));
+            return actual.GetAssertionProperties()
+                .All(p =>
+                {
+                    var actualValue = p.Value;
+                    var expectedValue = expected.GetType().GetProperty(p.Name, AssertionPropertyBindingFlags)?.GetValue(expected);
+                    return (expectedValue as IAssertionProperty)?.Assert(actualValue as IAssertionProperty) ?? Equals(actualValue, expectedValue);
+                });
         }
 
         /// <summary>
         /// Determines whether two specified assertion objects have different values.
         /// </summary>
-        /// <param name="a">The first assertion object to compare, or null.</param>
-        /// <param name="b">The second assertion object to compare, or null.</param>
+        /// <param name="actual">The first assertion object to compare, or null.</param>
+        /// <param name="expected">The second assertion object to compare, or null.</param>
         /// <returns>
-        /// <c>true</c> if the value of <paramref name="a">a</paramref> is different from the value of <paramref name="b">b</paramref>; otherwise, <c>false</c>.
+        /// <c>true</c> if the value of <paramref name="actual">actual</paramref> is different from the value of <paramref name="expected">expected</paramref>;
+        /// otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator !=(AssertionObject a, AssertionObject b) => !(a == b);
+        public static bool operator !=(AssertionObject actual, AssertionObject expected) => !(actual == expected);
 
         /// <summary>
         /// Determines whether this instance and a specified object, which must also be a <see cref="AssertionObject"></see> object, have the same value.
@@ -102,17 +108,17 @@ namespace Carna.Assertions
         /// <returns>A 32-bit signed integer hash code.</returns>
         public override int GetHashCode()
             => GetAssertionProperties()
-                .Select(p => p.GetValue(this))
-                .Select(p => p?.GetHashCode() ?? 0)
+                .Select(p => p.Value?.GetHashCode() ?? 0)
                 .Aggregate(17, (hashCode, h) => hashCode ^ h);
 
         /// <summary>
         /// Gets properties specified by the <see cref="AssertionPropertyAttribute"/>.
         /// </summary>
         /// <returns>The properties specified by the <see cref="AssertionPropertyAttribute"/>.</returns>
-        protected IEnumerable<PropertyInfo> GetAssertionProperties()
+        protected IEnumerable<AssertionPropertyContext> GetAssertionProperties()
             => GetType().GetProperties(AssertionPropertyBindingFlags)
-                .Where(p => p.GetCustomAttribute<AssertionPropertyAttribute>() != null);
+                .Where(p => p.GetCustomAttribute<AssertionPropertyAttribute>() != null || typeof(IAssertionProperty).IsAssignableFrom(p.PropertyType))
+                .Select(p => new AssertionPropertyContext(p.Name, p.GetValue(this), p.GetCustomAttribute<AssertionPropertyAttribute>()?.Description ?? p.Name));
 
         /// <summary>
         /// Represents options to represent an assertion object.
@@ -236,6 +242,41 @@ namespace Carna.Assertions
             /// </summary>
             /// <returns>The <see cref="StringOptions"/> that has the next nested level of this options.</returns>
             public StringOptions ToNextLevel() => new StringOptions(prefixGenerator, suffixGenerator, separatorGenerator, Level + 1);
+        }
+
+        /// <summary>
+        /// Represents a context of an assertion property.
+        /// </summary>
+        protected class AssertionPropertyContext
+        {
+            /// <summary>
+            /// Gets a name of an assertion property.
+            /// </summary>
+            public string Name { get; }
+
+            /// <summary>
+            /// Gets a value of an assertion property.
+            /// </summary>
+            public object Value { get; }
+
+            /// <summary>
+            /// Gets a description of an assertion property.
+            /// </summary>
+            public string Description { get; }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="AssertionPropertyContext"/> class
+            /// with the specified name, value, and description.
+            /// </summary>
+            /// <param name="name">The name of the assertion property.</param>
+            /// <param name="value">The value of the assertion property.</param>
+            /// <param name="description">The description of the assertion property.</param>
+            public AssertionPropertyContext(string name, object value, string description)
+            {
+                Name = name;
+                Value = value;
+                Description = description;
+            }
         }
     }
 }

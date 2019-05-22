@@ -11,26 +11,23 @@ namespace Carna.Assertions
     {
         [Example("Verifies the AssertionObject with the Equals method")]
         [Sample(Source = typeof(AssertionObjectSampleDataSource))]
-        void Ex01(AssertionObject expected, AssertionObject actual, bool expectedResult)
+        void Ex01(AssertionObject actual, AssertionObject expected, bool expectedResult)
         {
-            Expect($"the expected result should be {expectedResult}", () => Equals(expected, actual) == expectedResult);
-            if (expectedResult) Expect("the hash code should be the same", () => expected.GetHashCode() == actual.GetHashCode());
+            Expect($"the expected result should be {expectedResult}", () => Equals(actual, expected) == expectedResult);
         }
 
         [Example("Verifies the AssertionObject with the == operator")]
         [Sample(Source = typeof(AssertionObjectSampleDataSource))]
-        void Ex02(AssertionObject expected, AssertionObject actual, bool expectedResult)
+        void Ex02(AssertionObject actual, AssertionObject expected, bool expectedResult)
         {
-            Expect($"the expected result should be {expectedResult}", () => (expected == actual) == expectedResult);
-            if (expectedResult) Expect("the hash code should be the same", () => expected.GetHashCode() == actual.GetHashCode());
+            Expect($"the expected result should be {expectedResult}", () => (actual == expected) == expectedResult);
         }
 
         [Example("Verifies the AssertionObject with the != operator")]
         [Sample(Source = typeof(AssertionObjectSampleDataSource))]
-        void Ex03(AssertionObject expected, AssertionObject actual, bool expectedResult)
+        void Ex03(AssertionObject actual, AssertionObject expected, bool expectedResult)
         {
-            Expect($"the expected result should be {expectedResult}", () => (expected != actual) == !expectedResult);
-            if (expectedResult) Expect("the hash code should be the same", () => expected.GetHashCode() == actual.GetHashCode());
+            Expect($"the expected result should be {expectedResult}", () => (actual != expected) == !expectedResult);
         }
 
         class AssertionObjectSampleDataSource : ISampleDataSource
@@ -40,30 +37,80 @@ namespace Carna.Assertions
                 yield return new
                 {
                     Description = "When all properties are equal",
-                    Expected = new AssertionObjects.SimpleTestAssertion { StringProperty = "PropertyA", Int32Property = 32, BooleanProperty = true, NotAssertionDoubleProperty = 3.14 },
-                    Actual = new AssertionObjects.SimpleTestAssertion { StringProperty = "PropertyA", Int32Property = 32, BooleanProperty = true, NotAssertionDoubleProperty = 2.72 },
+                    Actual = new AssertionObjects.SimpleTestAssertion
+                    {
+                        StringProperty = "PropertyA",
+                        Int32Property = 32,
+                        BooleanProperty = true,
+                        StringAssertionProperty = new NotEqualAssertionProperty<string>("StringPropertyB"),
+                        Int32AssertionProperty = new LessThanAssertionProperty<int>(2),
+                        NotAssertionDoubleProperty = 2.72
+                    },
+                    Expected = new AssertionObjects.SimpleTestAssertion
+                    {
+                        StringProperty = "PropertyA",
+                        Int32Property = 32,
+                        BooleanProperty = true,
+                        StringAssertionProperty = new NotEqualAssertionProperty<string>("StringPropertyA"),
+                        Int32AssertionProperty = new LessThanAssertionProperty<int>(3),
+                        NotAssertionDoubleProperty = 3.14
+                    },
                     ExpectedResult = true
                 };
                 yield return new
                 {
                     Description = "When all properties are not equal",
-                    Expected = new AssertionObjects.SimpleTestAssertion { StringProperty = "PropertyA", Int32Property = 32, BooleanProperty = true, NotAssertionDoubleProperty = 3.14 },
-                    Actual = new AssertionObjects.SimpleTestAssertion { StringProperty = "PropertyA", Int32Property = 31, BooleanProperty = true, NotAssertionDoubleProperty = 2.72 },
+                    Actual = new AssertionObjects.SimpleTestAssertion
+                    {
+                        StringProperty = "PropertyA",
+                        Int32Property = 31,
+                        BooleanProperty = true,
+                        StringAssertionProperty = new NotEqualAssertionProperty<string>("StringPropertyB"),
+                        Int32AssertionProperty = new LessThanAssertionProperty<int>(2),
+                        NotAssertionDoubleProperty = 2.72
+                    },
+                    Expected = new AssertionObjects.SimpleTestAssertion
+                    {
+                        StringProperty = "PropertyA",
+                        Int32Property = 32,
+                        BooleanProperty = true,
+                        StringAssertionProperty = new NotEqualAssertionProperty<string>("StringPropertyA"),
+                        Int32AssertionProperty = new LessThanAssertionProperty<int>(3),
+                        NotAssertionDoubleProperty = 3.14
+                    },
                     ExpectedResult = false
                 };
                 yield return new
                 {
                     Description = "When all properties are equal (including a property whose type is the AssertionObject)",
-                    Expected = new AssertionObjects.NestedAssertionObjectTestAssertion
-                    {
-                        SimpleTestAssertionProperty = new AssertionObjects.SimpleTestAssertion { StringProperty = "PropertyA", Int32Property = 32, BooleanProperty = true, NotAssertionDoubleProperty = 3.14 },
-                        StringProperty = "PropertyA",
-                        NotAssertionDoubleProperty = 3.14
-                    },
                     Actual = new AssertionObjects.NestedAssertionObjectTestAssertion
                     {
-                        SimpleTestAssertionProperty = new AssertionObjects.SimpleTestAssertion { StringProperty = "PropertyA", Int32Property = 32, BooleanProperty = true, NotAssertionDoubleProperty = 3.14 },
+                        SimpleTestAssertionProperty = new AssertionObjects.SimpleTestAssertion
+                        {
+                            StringProperty = "PropertyA",
+                            Int32Property = 32,
+                            BooleanProperty = true,
+                            StringAssertionProperty = new NotEqualAssertionProperty<string>("StringPropertyB"),
+                            Int32AssertionProperty = new LessThanAssertionProperty<int>(2),
+                            NotAssertionDoubleProperty = 2.72
+                        },
                         StringProperty = "PropertyA",
+                        Int32AssertionProperty = new LessThanOrEqualAssertionProperty<int>(3),
+                        NotAssertionDoubleProperty = 2.72
+                    },
+                    Expected = new AssertionObjects.NestedAssertionObjectTestAssertion
+                    {
+                        SimpleTestAssertionProperty = new AssertionObjects.SimpleTestAssertion
+                        {
+                            StringProperty = "PropertyA",
+                            Int32Property = 32,
+                            BooleanProperty = true,
+                            StringAssertionProperty = new NotEqualAssertionProperty<string>("StringPropertyA"),
+                            Int32AssertionProperty = new LessThanAssertionProperty<int>(3),
+                            NotAssertionDoubleProperty = 3.14
+                        },
+                        StringProperty = "PropertyA",
+                        Int32AssertionProperty = new LessThanOrEqualAssertionProperty<int>(3),
                         NotAssertionDoubleProperty = 3.14
                     },
                     ExpectedResult = true
@@ -71,16 +118,34 @@ namespace Carna.Assertions
                 yield return new
                 {
                     Description = "When all properties are not equal (including a property whose type is the AssertionObject)",
-                    Expected = new AssertionObjects.NestedAssertionObjectTestAssertion
-                    {
-                        SimpleTestAssertionProperty = new AssertionObjects.SimpleTestAssertion { StringProperty = "PropertyA", Int32Property = 32, BooleanProperty = true, NotAssertionDoubleProperty = 3.14 },
-                        StringProperty = "PropertyA",
-                        NotAssertionDoubleProperty = 3.14
-                    },
                     Actual = new AssertionObjects.NestedAssertionObjectTestAssertion
                     {
-                        SimpleTestAssertionProperty = new AssertionObjects.SimpleTestAssertion { StringProperty = "PropertyA", Int32Property = 31, BooleanProperty = true, NotAssertionDoubleProperty = 3.14 },
+                        SimpleTestAssertionProperty = new AssertionObjects.SimpleTestAssertion
+                        {
+                            StringProperty = "PropertyA",
+                            Int32Property = 32,
+                            BooleanProperty = true,
+                            StringAssertionProperty = new NotEqualAssertionProperty<string>("StringPropertyA"),
+                            Int32AssertionProperty = new LessThanAssertionProperty<int>(2),
+                            NotAssertionDoubleProperty = 2.72
+                        },
                         StringProperty = "PropertyA",
+                        Int32AssertionProperty = new LessThanOrEqualAssertionProperty<int>(2),
+                        NotAssertionDoubleProperty = 2.72
+                    },
+                    Expected = new AssertionObjects.NestedAssertionObjectTestAssertion
+                    {
+                        SimpleTestAssertionProperty = new AssertionObjects.SimpleTestAssertion
+                        {
+                            StringProperty = "PropertyA",
+                            Int32Property = 32,
+                            BooleanProperty = true,
+                            StringAssertionProperty = new NotEqualAssertionProperty<string>("StringPropertyA"),
+                            Int32AssertionProperty = new LessThanAssertionProperty<int>(3),
+                            NotAssertionDoubleProperty = 3.14
+                        },
+                        StringProperty = "PropertyA",
+                        Int32AssertionProperty = new LessThanOrEqualAssertionProperty<int>(3),
                         NotAssertionDoubleProperty = 3.14
                     },
                     ExpectedResult = false
