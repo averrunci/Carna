@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2019 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -16,6 +16,7 @@ namespace Carna.Runner.Step
 
         ExpectStep Step { get; set; }
         FixtureStepResult Result { get; set; }
+        FixtureStepResultAssertion ExpectedResult { get; set; }
 
         public ExpectStepRunnerSpec_StepRunningAsync()
         {
@@ -28,30 +29,34 @@ namespace Carna.Runner.Step
         void Ex01()
         {
             var expectStepCompleted = false;
-            Given("async ExpectStep that has an action that does not throw any exceptions", () => Step = FixtureSteps.CreateExpectStep(async () =>
+            Given("async ExpectStep that has an action that does not throw any exceptions", () =>
             {
-                await Task.Delay(100);
-                expectStepCompleted = true;
-            }));
+                Step = FixtureSteps.CreateExpectStep(async () =>
+                    {
+                        await Task.Delay(100);
+                        expectStepCompleted = true;
+                    });
+                ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.Passed, Step);
+            });
             When("the given ExpectStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
             Then("the given ExpectStep should be awaited", () => expectStepCompleted);
-            Then("the status of the result should be Passed", () => Result.Status == FixtureStepStatus.Passed);
-            Then("the exception of the result should be null", () => Result.Exception == null);
-            Then("the step of the result should be the given ExpectStep", () => Result.Step == Step);
+            Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
         }
 
         [Example("When ExpectStep that has an action that throws an exception is run asynchronously")]
         void Ex02()
         {
-            Given("async ExpectStep that has an action that throws an exception", () => Step = FixtureSteps.CreateExpectStep(async () =>
+            Given("async ExpectStep that has an action that throws an exception", () =>
             {
-                await Task.Delay(100);
-                throw new Exception();
-            }));
+                Step = FixtureSteps.CreateExpectStep(async () =>
+                    {
+                        await Task.Delay(100);
+                        throw new Exception();
+                    });
+                ExpectedResult = FixtureStepResultAssertion.ForNotNullException(FixtureStepStatus.Failed, Step);
+            });
             When("the given ExpectStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
-            Then("the status of the result should be Failed", () => Result.Status == FixtureStepStatus.Failed);
-            Then("the exception of the result should not be null", () => Result.Exception != null);
-            Then("the step of the result should be the given ExpectStep", () => Result.Step == Step);
+            Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
         }
     }
 }

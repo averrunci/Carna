@@ -23,7 +23,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureContainerSpec.RunFixtures.cs">
       <DependentUpon>FixtureContainerSpec.cs</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureDescriptorAssertion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureFilterSpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureResultAssertion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureResultSpec.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureResultSpec.FixtureStatus.cs">
       <DependentUpon>FixtureResultSpec.cs</DependentUpon>
@@ -101,6 +103,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.RunFixtureAsync.NormalFixture.cs">
       <DependentUpon>FixtureSpec.RunFixtureAsync.cs</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureStepResultAssertion.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureStepRunningResultAssertion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Runner\FormattedDescriptionSpec.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Runner\FormattedDescription.StringRepresentation.cs">
       <DependentUpon>FormattedDescriptionSpec.cs</DependentUpon>
@@ -149,6 +153,7 @@
       <DependentUpon>ExpectStepRunnerSpec.cs</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\FixtureStepperSpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\FixtureStepResultAssertion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\FixtureStepResultCollectionSpec.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\FixtureStepRunnerFactorySpec.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\FixtureSteps.cs" />

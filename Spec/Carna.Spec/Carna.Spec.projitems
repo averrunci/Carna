@@ -19,6 +19,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Assertions\AssertionPropertySpec.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CultureAttributeSpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StepAssertions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FixtureSteppable.ExpectStep.cs">
       <DependentUpon>FixtureSteppableSpec.cs</DependentUpon>
     </Compile>

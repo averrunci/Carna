@@ -1,11 +1,13 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2019 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
+using Carna.Assertions;
 using Carna.Step;
 
 namespace Carna.Runner.Step
@@ -51,18 +53,47 @@ namespace Carna.Runner.Step
             Stepper.FixtureStepRun += (s, e) => runResult = e.Result;
 
             SimpleStep step = null;
-            Given("SimpleStep", () => step = new SimpleStep());
+            FixtureStepResultAssertion expectedResult = null;
+            Given("SimpleStep", () =>
+            {
+                step = new SimpleStep();
+                expectedResult = FixtureStepResultAssertion.ForRunning(step);
+            });
             When("Stepper takes the given step", () => Stepper.Take(step));
             Then("FixtureStepRunning event should be raised", () => runningResult != null);
-            Then("the step of the result on FixtureStepRunning event should be the given step", () => runningResult.Step == step);
-            Then("the start time of the result on FixtureStepRunning event should have value", () => runningResult.StartTime.HasValue);
-            Then("the end time of the result on FixtureStepRunning event should not have value", () => !runningResult.EndTime.HasValue);
-            Then("the duration of the result on FixtureStepRunning event should not have value", () => !runningResult.Duration.HasValue);
-            Then("the exception of the result on FixtureStepRunning event should be null", () => runningResult.Exception == null);
-            Then("the status of the result on FixtureStepRunning event should be Running", () => runningResult.Status == FixtureStepStatus.Running);
+            Then($"the result should be as follows:{expectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(runningResult) == expectedResult);
 
             Then("FixtureStepRun event should be raised", () => runResult != null);
             Then("the result on FixtureStepRun event should be the result Stepper has", () => runResult == Stepper.Results.ElementAt(0));
+        }
+
+        private class FixtureStepResultAssertion : AssertionObject
+        {
+            [AssertionProperty]
+            FixtureStep Step { get; }
+            [AssertionProperty("StartTime has value")]
+            bool StartTimeHasValue { get; }
+            [AssertionProperty("EndTime has value")]
+            bool EndTimeHasValue { get; }
+            [AssertionProperty("Duration has value")]
+            bool DurationHasValue { get; }
+            [AssertionProperty]
+            Exception Exception { get; }
+            [AssertionProperty]
+            FixtureStepStatus Status { get; }
+
+            private FixtureStepResultAssertion(FixtureStep step, bool startTimeHasValue, bool endTimeHasValue, bool durationHasValue, Exception exception, FixtureStepStatus status)
+            {
+                Step = step;
+                StartTimeHasValue = startTimeHasValue;
+                EndTimeHasValue = endTimeHasValue;
+                DurationHasValue = durationHasValue;
+                Exception = exception;
+                Status = status;
+            }
+
+            public static FixtureStepResultAssertion ForRunning(FixtureStep step) => new FixtureStepResultAssertion(step, true, false, false, null, FixtureStepStatus.Running);
+            public static FixtureStepResultAssertion Of(FixtureStepResult result) => new FixtureStepResultAssertion(result.Step, result.StartTime.HasValue, result.EndTime.HasValue, result.Duration.HasValue, result.Exception, result.Status);
         }
 
         private class SimpleStep : FixtureStep

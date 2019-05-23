@@ -33,9 +33,8 @@ namespace Carna
 
             Expect(
                 "the underlying stepper should take an Expect step that has the specified description.",
-                () => FixtureStepper.Received().Take( Arg.Is<ExpectStep>(step =>
-                    step.Description == Description &&
-                    step.Action == null && step.Assertion == null
+                () => FixtureStepper.Received().Take(Arg.Is<ExpectStep>(step =>
+                    StepAssertions.ExpectStep.Of(step) == StepAssertions.ExpectStep.Of(Description)
                 ))
             );
         }
@@ -50,8 +49,7 @@ namespace Carna
             Expect(
                 "the underlying stepper should take an Expect step that has the specified description and assertion.",
                 () => FixtureStepper.Received().Take(Arg.Is<ExpectStep>(step =>
-                    step.Description == Description &&
-                    step.Action == assertion && step.Assertion == null && step.AsyncAction == null
+                    StepAssertions.ExpectStep.Of(step) == StepAssertions.ExpectStep.Of(Description, assertion)
                 ))
             );
         }
@@ -66,8 +64,7 @@ namespace Carna
             Expect(
                 "the underlying stepper should take an Expect step that has the specified description and assertion.",
                 () => FixtureStepper.Received().Take(Arg.Is<ExpectStep>(step =>
-                    step.Description == Description &&
-                    step.Action == null && step.Assertion == assertion && step.AsyncAction == null
+                    StepAssertions.ExpectStep.Of(step) == StepAssertions.ExpectStep.Of(Description, assertion)
                 ))
             );
         }
@@ -82,8 +79,7 @@ namespace Carna
             Expect(
                 "the underlying stepper should take a When step that has the specified description and assertion.",
                 () => FixtureStepper.Received().Take(Arg.Is<ExpectStep>(step =>
-                    step.Description == Description &&
-                    step.Action == null && step.Assertion == null && step.AsyncAction == asyncAction
+                    StepAssertions.ExpectStep.Of(step) == StepAssertions.ExpectStep.Of(Description, asyncAction)
                 ))
             );
         }

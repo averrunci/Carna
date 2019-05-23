@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2019 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -16,6 +16,7 @@ namespace Carna.Runner.Step
 
         ThenStep Step { get; set; }
         FixtureStepResult Result { get; set; }
+        FixtureStepResultAssertion ExpectedResult { get; set; }
 
         public ThenStepRunnerSpec_Constrains()
         {
@@ -35,65 +36,75 @@ namespace Carna.Runner.Step
         [Example("When GivenStep that has already run has an exception, ThenStep is not run")]
         void Ex02()
         {
-            Given("ThenStep that has an assertion that returns true", () => Step = FixtureSteps.CreateThenStep(() => true));
+            Given("ThenStep that has an assertion that returns true", () =>
+            {
+                Step = FixtureSteps.CreateThenStep(() => true);
+                ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.Ready, Step);
+            });
             Given("a result of GivenStep that has an exception", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateGivenStep()).Failed(new Exception()).Build()));
             Given("a result of WhenStep that does not have an exception", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Passed().Build()));
             When("the given ThenStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
-            Then("the status of the result should be Ready", () => Result.Status == FixtureStepStatus.Ready);
-            Then("the exception of the result should be null", () => Result.Exception == null);
-            Then("the step of the result should be the given ThenStep", () => Result.Step == Step);
+            Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
         }
 
         [Example("When the latest WhenStep that has already run has an exception and ThenStep has an assertion without Exception that returns boolean, ThenStep is not run")]
         void Ex03()
         {
-            Given("ThenStep that has an assertion without Exception that returns true", () => Step = FixtureSteps.CreateThenStep(() => true));
+            Given("ThenStep that has an assertion without Exception that returns true", () =>
+            {
+                Step = FixtureSteps.CreateThenStep(() => true);
+                ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.Ready, Step);
+            });
             Given("a result of GivenStep that does not have an exception", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateGivenStep()).Passed().Build()));
             Given("a result of WhenStep that has an exception", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Failed(new Exception()).Build()));
             When("the given ThenStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
-            Then("the status of the result should be Ready", () => Result.Status == FixtureStepStatus.Ready);
-            Then("the exception of the result should be null", () => Result.Exception == null);
-            Then("the step of the result should be the given ExpectStep", () => Result.Step == Step);
+            Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
         }
 
         [Example("When the latest WhenStep that has already run has an exception and ThenStep has an assertion without Exception that is Action, ThenStep is not run")]
         void Ex04()
         {
-            Given("ThenStep that has an assertion without Exception that does not throw any exceptions", () => Step = FixtureSteps.CreateThenStep(() => { }));
+            Given("ThenStep that has an assertion without Exception that does not throw any exceptions", () =>
+            {
+                Step = FixtureSteps.CreateThenStep(() => { });
+                ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.Ready, Step);
+            });
             Given("a result of GivenStep that does not have an exception", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateGivenStep()).Passed().Build()));
             Given("a result of WhenStep that has an exception", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Failed(new Exception()).Build()));
             When("the given ThenStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
-            Then("the status of the result should be Ready", () => Result.Status == FixtureStepStatus.Ready);
-            Then("the exception of the result should be null", () => Result.Exception == null);
-            Then("the step of the result should be the given ExpectStep", () => Result.Step == Step);
+            Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
         }
 
         [Example("When the latest WhenStep that has already run does not have an exception but other WhenStep that has already run has an exception and ThenStep has an assertion without Exception that returns boolean, ThenStep is run")]
         void Ex05()
         {
-            Given("ThenStep that has an assertion without Exception that returns true", () => Step = FixtureSteps.CreateThenStep(() => true));
+            Given("ThenStep that has an assertion without Exception that returns true", () =>
+            {
+                Step = FixtureSteps.CreateThenStep(() => true);
+                ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.Passed, Step);
+            });
             Given("a result of GivenStep that does not have an exception", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateGivenStep()).Passed().Build()));
             Given("a result of WhenStep that has an exception", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Failed(new Exception()).Build()));
             Given("a result of ThenStep that has an exception", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateThenStep()).Failed(new Exception()).Build()));
             Given("a result of WhenStep that does not have an exception", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Passed().Build()));
             When("the given ThenStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
-            Then("the status of the result should be Passed", () => Result.Status == FixtureStepStatus.Passed);
-            Then("the exception of the result should be null", () => Result.Exception == null);
-            Then("the step of the result should be the given ThenStep", () => Result.Step == Step);
+            Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
         }
 
         [Example("When the latest WhenStep that has already run does not have an exception but other WhenStep that has already run has an exception and ThenStep has an assertion without Exception that does not throw any exceptions, ThenStep is run")]
         void Ex06()
         {
-            Given("ThenStep that has an assertion without Exception that does not throw any exceptions", () => Step = FixtureSteps.CreateThenStep(() => { }));
+            Given("ThenStep that has an assertion without Exception that does not throw any exceptions", () =>
+            {
+                Step = FixtureSteps.CreateThenStep(() => { });
+                ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.Passed, Step);
+            });
             Given("a result of GivenStep that does not have an exception", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateGivenStep()).Passed().Build()));
             Given("a result of WhenStep that has an exception", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Failed(new Exception()).Build()));
             Given("a result of ThenStep that has an exception", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateThenStep()).Failed(new Exception()).Build()));
             Given("a result of WhenStep that does not have an exception", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Passed().Build()));
             When("the given ThenStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
-            Then("the status of the result should be Passed", () => Result.Status == FixtureStepStatus.Passed);
-            Then("the exception of the result should be null", () => Result.Exception == null);
-            Then("the step of the result should be the given ThenStep", () => Result.Step == Step);
+            Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
         }
 
         [Example("When the latest WhenStep has an exception and ThenStep that has an assertion with Exception that returns boolean is Passed, the latest WhenStep is changed to Passed")]

@@ -109,6 +109,7 @@
     <Compile Include="Converters\FixtureStatusToBrushConverterSpec.cs" />
     <Compile Include="Converters\FixtureStepStatusToBrushConverterSpec.cs" />
     <Compile Include="FixtureContentSpec.cs" />
+    <Compile Include="FixtureSummaryAssertion.cs" />
     <Compile Include="FixtureSummarySpec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

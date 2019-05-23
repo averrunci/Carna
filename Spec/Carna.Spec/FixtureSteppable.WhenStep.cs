@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2019 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -33,8 +33,7 @@ namespace Carna
             Expect(
                 "the underlying stepper should take a When step that has the specified description.",
                 () => FixtureStepper.Received().Take(Arg.Is<WhenStep>(step =>
-                    step.Description == Description &&
-                    step.Action == null && step.AsyncAction == null
+                    StepAssertions.WhenStep.Of(step) == StepAssertions.WhenStep.Of(Description)
                 ))
             );
         }
@@ -49,8 +48,7 @@ namespace Carna
             Expect(
                 "the underlying stepper should take a When step that has the specified description and action.", 
                 () => FixtureStepper.Received().Take(Arg.Is<WhenStep>(step =>
-                    step.Description == Description &&
-                    step.Action == action && step.AsyncAction == null
+                    StepAssertions.WhenStep.Of(step) == StepAssertions.WhenStep.Of(Description, action)
                 ))
             );
         }
@@ -65,8 +63,7 @@ namespace Carna
             Expect(
                 "the underlying stepper should take a When step that has the specified description and asynchronous action.",
                 () => FixtureStepper.Received().Take(Arg.Is<WhenStep>(step =>
-                    step.Description == Description &&
-                    step.Action == null && step.AsyncAction == asyncAction
+                    StepAssertions.WhenStep.Of(step) == StepAssertions.WhenStep.Of(Description, asyncAction)
                 ))
             );
         }

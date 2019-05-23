@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2019 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -15,6 +15,7 @@ namespace Carna.Runner.Step
 
         WhenStep Step { get; set; }
         FixtureStepResult Result { get; set; }
+        FixtureStepResultAssertion ExpectedResult { get; set; }
 
         public WhenStepRunnerSpec_StepRunning()
         {
@@ -26,31 +27,37 @@ namespace Carna.Runner.Step
         [Example("When WhenStep that has an action that does not throw any exceptions is run")]
         void Ex01()
         {
-            Given("WhenStep that has an action that does not throw any exceptions", () => Step = FixtureSteps.CreateWhenStep(() => { }));
+            Given("WhenStep that has an action that does not throw any exceptions", () =>
+            {
+                Step = FixtureSteps.CreateWhenStep(() => { });
+                ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.Passed, Step);
+            });
             When("the given WhenStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
-            Then("the status of the result should be Passed", () => Result.Status == FixtureStepStatus.Passed);
-            Then("the exception of the result should be null", () => Result.Exception == null);
-            Then("the step of the result should be the given WhenStep", () => Result.Step == Step);
+            Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
         }
 
         [Example("When WhenStep that has an action that throws an exception is run")]
         void Ex02()
         {
-            Given("WhenStep that has an action that throws an exception", () => Step = FixtureSteps.CreateWhenStep(() => throw new Exception()));
+            Given("WhenStep that has an action that throws an exception", () =>
+            {
+                Step = FixtureSteps.CreateWhenStep(() => throw new Exception());
+                ExpectedResult = FixtureStepResultAssertion.ForNotNullException(FixtureStepStatus.Failed, Step);
+            });
             When("the given WhenStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
-            Then("the status of the result should be Failed", () => Result.Status == FixtureStepStatus.Failed);
-            Then("the exception of the result should not be null", () => Result.Exception != null);
-            Then("the step of the result should be the given WhenStep", () => Result.Step == Step);
+            Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
         }
 
         [Example("When WhenStep that does not have an action is run")]
         void Ex03()
         {
-            Given("WhenStep that does not have an action", () => Step = FixtureSteps.CreateWhenStep());
+            Given("WhenStep that does not have an action", () =>
+            {
+                Step = FixtureSteps.CreateWhenStep();
+                ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.Pending, Step);
+            });
             When("the given WhenStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
-            Then("the status of the result should be Pending", () => Result.Status == FixtureStepStatus.Pending);
-            Then("the exception of the result should be null", () => Result.Exception == null);
-            Then("the step of the result should be the given WhenStep", () => Result.Step == Step);
+            Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
         }
     }
 }

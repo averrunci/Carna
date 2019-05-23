@@ -1,9 +1,8 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2019 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
 using System;
-using System.Linq;
 
 using NSubstitute;
 
@@ -26,6 +25,11 @@ namespace Carna.Runner
         FixtureResult FixtureRunResult { get; set; }
         FixtureStepResult FixtureStepRunningResult { get; set; }
         FixtureStepResult FixtureStepRunResult { get; set; }
+
+        FixtureDescriptorAssertion ExpectedFixtureDescriptor { get; set; }
+        FixtureResultAssertion ExpectedFixtureResult { get; set; }
+        FixtureDescriptorAssertion ExpectedFixtureRunningDescriptor { get; set; }
+        FixtureResultAssertion ExpectedFixtureRunningResult { get; set; }
 
         protected FixtureSpec_NormalFixtureContext()
         {
@@ -55,31 +59,17 @@ namespace Carna.Runner
 
             Expect("the fixture method should be called", () => TestFixtures.CalledFixtureMethods.Count == 1 && TestFixtures.CalledFixtureMethods.Contains(TargetFixtureType));
 
-            Expect("the description of the descriptor of the result should be the value specified to the fixture method", () => result.FixtureDescriptor.Description == TargetFixtureDescription);
-            Expect("the name of the descriptor of the result should be the name of the fixture method", () => result.FixtureDescriptor.Name == TargetMethodDescription);
-            Expect("the full name of the descriptor of the result should be the full name of the fixture method", () => result.FixtureDescriptor.FullName == TargetMethodFullName);
-            Expect("the fixture attribute type of the descriptor of the result should be ExampleAttribute", () => result.FixtureDescriptor.FixtureAttributeType == typeof(ExampleAttribute));
-            Expect("the start time of the result should have value", () => result.StartTime.HasValue);
-            Expect("the end time of the result should have value", () => result.EndTime.HasValue);
-            Expect("the duration of the result should have value", () => result.Duration.HasValue);
-            Expect("the exception of the result should be null", () => result.Exception == null);
-            Expect("the steps of the result should be empty", () => !result.StepResults.Any());
-            Expect("the results of the result should be empty", () => !result.Results.Any());
-            Expect("the status of the result should be Passed", () => result.Status == FixtureStatus.Passed);
+            ExpectedFixtureDescriptor = FixtureDescriptorAssertion.Of(TargetFixtureDescription, TargetMethodDescription, TargetMethodFullName, typeof(ExampleAttribute));
+            Expect($"the descriptor of the result should be as follows:{ExpectedFixtureDescriptor.ToDescription()}", () => FixtureDescriptorAssertion.Of(result.FixtureDescriptor) == ExpectedFixtureDescriptor);
+            ExpectedFixtureResult = FixtureResultAssertion.ForNullException(true, true, true, 0, 0, FixtureStatus.Passed);
+            Expect($"the result should be as follows:{ExpectedFixtureResult.ToDescription()}", () => FixtureResultAssertion.Of(result) == ExpectedFixtureResult);
 
             Expect("FixtureRunning event should be raised", () => FixtureRunningResult != null);
 
-            Expect("the description of the descriptor of the result on FixtureRunning event should be the value specified to the fixture method", () => FixtureRunningResult.FixtureDescriptor.Description == TargetFixtureDescription);
-            Expect("the name of the descriptor of the result on FixtureRunning event should be the name of the fixture method", () => FixtureRunningResult.FixtureDescriptor.Name == TargetMethodDescription);
-            Expect("the full name of the descriptor of the result on FixtureRunning event should be the full name of the fixture method", () => FixtureRunningResult.FixtureDescriptor.FullName == TargetMethodFullName);
-            Expect("the fixture attribute type of the descriptor of the result on FixtureRunning event should be ExampleAttribute", () => FixtureRunningResult.FixtureDescriptor.FixtureAttributeType == typeof(ExampleAttribute));
-            Expect("the start time of the result on FixtureRunning event should have value", () => FixtureRunningResult.StartTime.HasValue);
-            Expect("the end time of the result on FixtureRunning event should not have value", () => !FixtureRunningResult.EndTime.HasValue);
-            Expect("the duration of the result on FixtureRunning event should not have value", () => !FixtureRunningResult.Duration.HasValue);
-            Expect("the exception of the result on FixtureRunning event should be null", () => FixtureRunningResult.Exception == null);
-            Expect("the steps of the result on FixtureRunning event should be empty", () => !FixtureRunningResult.StepResults.Any());
-            Expect("the results of the result on FixtureRunning event should be empty", () => !FixtureRunningResult.Results.Any());
-            Expect("the status of the result on FixtureRunning event should be Running", () => FixtureRunningResult.Status == FixtureStatus.Running);
+            ExpectedFixtureRunningDescriptor = FixtureDescriptorAssertion.Of(TargetFixtureDescription, TargetMethodDescription, TargetMethodFullName, typeof(ExampleAttribute));
+            Expect($"the descriptor of the result on FixtureRunning event should be as follows:{ExpectedFixtureRunningDescriptor.ToDescription()}", () => FixtureDescriptorAssertion.Of(FixtureRunningResult.FixtureDescriptor) == ExpectedFixtureRunningDescriptor);
+            ExpectedFixtureRunningResult = FixtureResultAssertion.ForNullException(true, false, false, 0, 0, FixtureStatus.Running);
+            Expect($"the result on FixtureRunning event should be as follows:{ExpectedFixtureRunningResult.ToDescription()}", () => FixtureResultAssertion.Of(FixtureRunningResult) == ExpectedFixtureRunningResult);
 
             Expect("FixtureRun event should be raised", () => FixtureRunResult != null);
 
@@ -98,31 +88,17 @@ namespace Carna.Runner
 
             Expect("the fixture method should be called", () => TestFixtures.CalledFixtureMethods.Count == 1 && TestFixtures.CalledFixtureMethods.Contains(TargetFixtureType));
 
-            Expect("the description of the descriptor of the result should be the value specified to the fixture method", () => result.FixtureDescriptor.Description == TargetFixtureDescription);
-            Expect("the name of the descriptor of the result should be the name of the fixture method", () => result.FixtureDescriptor.Name == TargetMethodDescription);
-            Expect("the full name of the descriptor of the result should be the full name of the fixture method", () => result.FixtureDescriptor.FullName == TargetMethodFullName);
-            Expect("the fixture attribute type of the descriptor of the result should be ExampleAttribute", () => result.FixtureDescriptor.FixtureAttributeType == typeof(ExampleAttribute));
-            Expect("the start time of the result should have value", () => result.StartTime.HasValue);
-            Expect("the end time of the result should have value", () => result.EndTime.HasValue);
-            Expect("the duration of the result should have value", () => result.Duration.HasValue);
-            Expect("the exception of the result should be null", () => result.Exception == null);
-            Expect("the steps of the result should be empty", () => !result.StepResults.Any());
-            Expect("the results of the result should be empty", () => !result.Results.Any());
-            Expect("the status of the result should be Passed", () => result.Status == FixtureStatus.Passed);
+            ExpectedFixtureDescriptor = FixtureDescriptorAssertion.Of(TargetFixtureDescription, TargetMethodDescription, TargetMethodFullName, typeof(ExampleAttribute));
+            Expect($"the descriptor of the result should be as follows:{ExpectedFixtureDescriptor.ToDescription()}", () => FixtureDescriptorAssertion.Of(result.FixtureDescriptor) == ExpectedFixtureDescriptor);
+            ExpectedFixtureResult = FixtureResultAssertion.ForNullException(true, true, true, 0, 0, FixtureStatus.Passed);
+            Expect($"the result should be as follows:{ExpectedFixtureResult.ToDescription()}", () => FixtureResultAssertion.Of(result) == ExpectedFixtureResult);
 
             Expect("FixtureRunning event should be raised", () => FixtureRunningResult != null);
 
-            Expect("the description of the descriptor of the result on FixtureRunning event should be the value specified to the fixture method", () => FixtureRunningResult.FixtureDescriptor.Description == TargetFixtureDescription);
-            Expect("the name of the descriptor of the result on FixtureRunning event should be the name of the fixture method", () => FixtureRunningResult.FixtureDescriptor.Name == TargetMethodDescription);
-            Expect("the full name of the descriptor of the result on FixtureRunning event should be the full name of the fixture method", () => FixtureRunningResult.FixtureDescriptor.FullName == TargetMethodFullName);
-            Expect("the fixture attribute type of the descriptor of the result on FixtureRunning event should be ExampleAttribute", () => FixtureRunningResult.FixtureDescriptor.FixtureAttributeType == typeof(ExampleAttribute));
-            Expect("the start time of the result on FixtureRunning event should have value", () => FixtureRunningResult.StartTime.HasValue);
-            Expect("the end time of the result on FixtureRunning event should not have value", () => !FixtureRunningResult.EndTime.HasValue);
-            Expect("the duration of the result on FixtureRunning event should not have value", () => !FixtureRunningResult.Duration.HasValue);
-            Expect("the exception of the result on FixtureRunning event should be null", () => FixtureRunningResult.Exception == null);
-            Expect("the steps of the result on FixtureRunning event should be empty", () => !FixtureRunningResult.StepResults.Any());
-            Expect("the results of the result on FixtureRunning event should be empty", () => !FixtureRunningResult.Results.Any());
-            Expect("the status of the result on FixtureRunning event should be Running", () => FixtureRunningResult.Status == FixtureStatus.Running);
+            ExpectedFixtureRunningDescriptor = FixtureDescriptorAssertion.Of(TargetFixtureDescription, TargetMethodDescription, TargetMethodFullName, typeof(ExampleAttribute));
+            Expect($"the descriptor of the result on FixtureRunning event should be as follows:{ExpectedFixtureRunningDescriptor.ToDescription()}", () => FixtureDescriptorAssertion.Of(FixtureRunningResult.FixtureDescriptor) == ExpectedFixtureRunningDescriptor);
+            ExpectedFixtureRunningResult = FixtureResultAssertion.ForNullException(true, false, false, 0, 0, FixtureStatus.Running);
+            Expect($"the result on FixtureRunning event should be as follows:{ExpectedFixtureRunningResult.ToDescription()}", () => FixtureResultAssertion.Of(FixtureRunningResult) == ExpectedFixtureRunningResult);
 
             Expect("FixtureRun event should be raised", () => FixtureRunResult != null);
 
@@ -157,31 +133,17 @@ namespace Carna.Runner
 
             var result = Fixture.Run(null, null);
 
-            Expect("the description of the descriptor of the result should be the value specified to the fixture method", () => result.FixtureDescriptor.Description == TargetFixtureDescription);
-            Expect("the name of the descriptor of the result should be the name of the fixture method", () => result.FixtureDescriptor.Name == TargetMethodDescription);
-            Expect("the full name of the descriptor of the result should be the full name of the fixture method", () => result.FixtureDescriptor.FullName == TargetMethodFullName);
-            Expect("the fixture attribute type of the descriptor of the result should be ExampleAttribute", () => result.FixtureDescriptor.FixtureAttributeType == typeof(ExampleAttribute));
-            Expect("the start time of the result should have value", () => result.StartTime.HasValue);
-            Expect("the end time of the result should have value", () => result.EndTime.HasValue);
-            Expect("the duration of the result should have value", () => result.Duration.HasValue);
-            Expect("the exception of the result should not be null", () => result.Exception != null);
-            Expect("the steps of the result should be empty", () => !result.StepResults.Any());
-            Expect("the results of the result should be empty", () => !result.Results.Any());
-            Expect("the status of the result should be Failed", () => result.Status == FixtureStatus.Failed);
+            ExpectedFixtureDescriptor = FixtureDescriptorAssertion.Of(TargetFixtureDescription, TargetMethodDescription, TargetMethodFullName, typeof(ExampleAttribute));
+            Expect($"the descriptor of the result should be as follows:{ExpectedFixtureDescriptor.ToDescription()}", () => FixtureDescriptorAssertion.Of(result.FixtureDescriptor) == ExpectedFixtureDescriptor);
+            ExpectedFixtureResult = FixtureResultAssertion.ForNotNullException(true, true, true, 0, 0, FixtureStatus.Failed);
+            Expect($"the result should be as follows:{ExpectedFixtureResult.ToDescription()}", () => FixtureResultAssertion.Of(result) == ExpectedFixtureResult);
 
             Expect("FixtureRunning event should be raised", () => FixtureRunningResult != null);
 
-            Expect("the description of the descriptor of the result on FixtureRunning event should be the value specified to the fixture method", () => FixtureRunningResult.FixtureDescriptor.Description == TargetFixtureDescription);
-            Expect("the name of the descriptor of the result on FixtureRunning event should be the name of the fixture method", () => FixtureRunningResult.FixtureDescriptor.Name == TargetMethodDescription);
-            Expect("the full name of the descriptor of the result on FixtureRunning event should be the full name of the fixture method", () => FixtureRunningResult.FixtureDescriptor.FullName == TargetMethodFullName);
-            Expect("the fixture attribute type of the descriptor of the result on FixtureRunning event should be ExampleAttribute", () => FixtureRunningResult.FixtureDescriptor.FixtureAttributeType == typeof(ExampleAttribute));
-            Expect("the start time of the result on FixtureRunning event should have value", () => FixtureRunningResult.StartTime.HasValue);
-            Expect("the end time of the result on FixtureRunning event should not have value", () => !FixtureRunningResult.EndTime.HasValue);
-            Expect("the duration of the result on FixtureRunning event should not have value", () => !FixtureRunningResult.Duration.HasValue);
-            Expect("the exception of the result on FixtureRunning event should be null", () => FixtureRunningResult.Exception == null);
-            Expect("the steps of the result on FixtureRunning event should be empty", () => !FixtureRunningResult.StepResults.Any());
-            Expect("the results of the result on FixtureRunning event should be empty", () => !FixtureRunningResult.Results.Any());
-            Expect("the status of the result on FixtureRunning event should be Running", () => FixtureRunningResult.Status == FixtureStatus.Running);
+            ExpectedFixtureRunningDescriptor = FixtureDescriptorAssertion.Of(TargetFixtureDescription, TargetMethodDescription, TargetMethodFullName, typeof(ExampleAttribute));
+            Expect($"the descriptor of the result on FixtureRunning event should be as follows:{ExpectedFixtureRunningDescriptor.ToDescription()}", () => FixtureDescriptorAssertion.Of(FixtureRunningResult.FixtureDescriptor) == ExpectedFixtureRunningDescriptor);
+            ExpectedFixtureRunningResult = FixtureResultAssertion.ForNullException(true, false, false, 0, 0, FixtureStatus.Running);
+            Expect($"the result on FixtureRunning event should be as follows:{ExpectedFixtureRunningResult.ToDescription()}", () => FixtureResultAssertion.Of(FixtureRunningResult) == ExpectedFixtureRunningResult);
 
             Expect("FixtureRun event should be raised", () => FixtureRunResult != null);
 

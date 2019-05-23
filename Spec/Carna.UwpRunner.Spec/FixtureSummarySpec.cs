@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2019 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -13,6 +13,8 @@ namespace Carna.UwpRunner
     class FixtureSummarySpec : FixtureSteppable
     {
         FixtureSummary Summary { get; } = new FixtureSummary();
+
+        FixtureSummaryAssertion ExpectedSummary { get; set; }
 
         [Example("Changes the passed rate when the passed count is changed")]
         void Ex01()
@@ -53,47 +55,31 @@ namespace Carna.UwpRunner
             Given("the Duration is 1.023", () => Summary.Duration = "1.023");
 
             When("the fixture building is starting", () => Summary.OnFixtureBuildingStarting());
-            Then("the total count should be 0", () => Summary.TotalCount == 0);
-            Then("the passed count should be 0", () => Summary.PassedCount == 0);
-            Then("the failed count should be 0", () => Summary.FailedCount == 0);
-            Then("the pending count should be 0", () => Summary.PendingCount == 0);
-            Then("the IsFixtureBuilding should be true", () => Summary.IsFixtureBuilding);
-            Then("the IsFixtureBuilt should be false", () => !Summary.IsFixtureBuilt);
-            Then("the IsFixtureRunning should be false", () => !Summary.IsFixtureRunning);
-            Then("the StartDateTime should be null", () => Summary.StartDateTime == null);
-            Then("the EndDateTime should be null", () => Summary.EndDateTime == null);
-            Then("the Duration should be null", () => Summary.Duration == null);
+            ExpectedSummary = FixtureSummaryAssertion.Of(
+                0, 0, 0, 0,
+                true, false, false,
+                null, null, null
+            );
+            Expect($"the state should be as follows:{ExpectedSummary.ToDescription()}", () => FixtureSummaryAssertion.Of(Summary) == ExpectedSummary);
 
             var fixtureBuildingCompletedDateTime = DateTime.UtcNow;
             When("the fixture building is completed with the date time at which the fixture building is completed", () =>
                 Summary.OnFixtureBuildingCompleted(fixtureBuildingCompletedDateTime)
             );
-            Then("the total count should be 0", () => Summary.TotalCount == 0);
-            Then("the passed count should be 0", () => Summary.PassedCount == 0);
-            Then("the failed count should be 0", () => Summary.FailedCount == 0);
-            Then("the pending count should be 0", () => Summary.PendingCount == 0);
-            Then("the IsFixtureBuilding should be false", () => !Summary.IsFixtureBuilding);
-            Then("the IsFixtureBuilt should be true", () => Summary.IsFixtureBuilt);
-            Then("the IsFixtureRunning should be false", () => !Summary.IsFixtureRunning);
-            Then("the StartDateTime should be the specified date time", () =>
-                Summary.StartDateTime == fixtureBuildingCompletedDateTime.ToString("u")
+            ExpectedSummary = FixtureSummaryAssertion.Of(
+                0, 0, 0, 0,
+                false, true, false,
+                fixtureBuildingCompletedDateTime.ToString("u"), null, null
             );
-            Then("the EndDateTime should be null", () => Summary.EndDateTime == null);
-            Then("the Duration should be null", () => Summary.Duration == null);
+            Expect($"the state should be as follows:{ExpectedSummary.ToDescription()}", () => FixtureSummaryAssertion.Of(Summary) == ExpectedSummary);
 
             When("the fixture running is starting", () => Summary.OnFixtureRunningStarting());
-            Then("the total count should be 0", () => Summary.TotalCount == 0);
-            Then("the passed count should be 0", () => Summary.PassedCount == 0);
-            Then("the failed count should be 0", () => Summary.FailedCount == 0);
-            Then("the pending count should be 0", () => Summary.PendingCount == 0);
-            Then("the IsFixtureBuilding should be false", () => !Summary.IsFixtureBuilding);
-            Then("the IsFixtureBuilt should be true", () => Summary.IsFixtureBuilt);
-            Then("the IsFixtureRunning should be true", () => Summary.IsFixtureRunning);
-            Then("the StartDateTime should be the date time at which the fixture building is completed", () =>
-                Summary.StartDateTime == fixtureBuildingCompletedDateTime.ToString("u")
+            ExpectedSummary = FixtureSummaryAssertion.Of(
+                0, 0, 0, 0,
+                false, true, true,
+                fixtureBuildingCompletedDateTime.ToString("u"), null, null
             );
-            Then("the EndDateTime should be null", () => Summary.EndDateTime == null);
-            Then("the Duration should be null", () => Summary.Duration == null);
+            Expect($"the state should be as follows:{ExpectedSummary.ToDescription()}", () => FixtureSummaryAssertion.Of(Summary) == ExpectedSummary);
 
             var fixtureRunningStartDateTime = DateTime.UtcNow;
             var fixtureRunningEndDateTime = DateTime.UtcNow.AddMilliseconds(105);
@@ -104,22 +90,14 @@ namespace Carna.UwpRunner
             When("the fixture running is completed with results of the fixture running", () =>
                 Summary.OnFixtureRunningCompleted(results)
             );
-            Then("the total count should be 0", () => Summary.TotalCount == 0);
-            Then("the passed count should be 0", () => Summary.PassedCount == 0);
-            Then("the failed count should be 0", () => Summary.FailedCount == 0);
-            Then("the pending count should be 0", () => Summary.PendingCount == 0);
-            Then("the IsFixtureBuilding should be false", () => !Summary.IsFixtureBuilding);
-            Then("the IsFixtureBuilt should be true", () => Summary.IsFixtureBuilt);
-            Then("the IsFixtureRunning should be false", () => !Summary.IsFixtureRunning);
-            Then("the StartDateTime should be the start date time of the specified results", () =>
-                Summary.StartDateTime == fixtureRunningStartDateTime.ToString("u")
+            ExpectedSummary = FixtureSummaryAssertion.Of(
+                0, 0, 0, 0,
+                false, true, false,
+                fixtureRunningStartDateTime.ToString("u"),
+                fixtureRunningEndDateTime.ToString("u"),
+                $"{(fixtureRunningEndDateTime - fixtureRunningStartDateTime).TotalSeconds:0.000} seconds"
             );
-            Then("the EndDateTime should be the end date time of the specified results", () =>
-                Summary.EndDateTime == fixtureRunningEndDateTime.ToString("u")
-            );
-            Then("the Duration should be the duration of the specified results", () =>
-                Summary.Duration == $"{(fixtureRunningEndDateTime - fixtureRunningStartDateTime).TotalSeconds:0.000} seconds"
-            );
+            Expect($"the state should be as follows:{ExpectedSummary.ToDescription()}", () => FixtureSummaryAssertion.Of(Summary) == ExpectedSummary);
         }
     }
 }

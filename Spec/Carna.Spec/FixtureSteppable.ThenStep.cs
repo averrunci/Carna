@@ -34,11 +34,7 @@ namespace Carna
             Expect(
                 "the underlying stepper should take a Then step that has the specified description.",
                 () => FixtureStepper.Received().Take(Arg.Is<ThenStep>(step =>
-                    step.Description == Description &&
-                    step.Action == null && step.Assertion == null &&
-                    step.ExceptionAction == null && step.ExceptionAssertion == null &&
-                    step.AsyncAction == null && step.AsyncExceptionAction == null &&
-                    step.ExceptionType == null
+                    StepAssertions.ThenStep.Of(step) == StepAssertions.ThenStep.Of(Description)
                 ))
             );
         }
@@ -53,11 +49,7 @@ namespace Carna
             Expect(
                 "the underlying stepper should take a Then step that has the specified description and assertion.",
                 () => FixtureStepper.Received().Take(Arg.Is<ThenStep>(step =>
-                    step.Description == Description &&
-                    step.Action == assertion && step.Assertion == null &&
-                    step.ExceptionAction == null && step.ExceptionAssertion == null &&
-                    step.AsyncAction == null && step.AsyncExceptionAction == null &&
-                    step.ExceptionType == null
+                    StepAssertions.ThenStep.Of(step) == StepAssertions.ThenStep.Of(Description, assertion)
                 ))
             );
         }
@@ -72,11 +64,7 @@ namespace Carna
             Expect(
                 "the underlying stepper should take a Then step that has the specified description and assertion.",
                 () => FixtureStepper.Received().Take(Arg.Is<ThenStep>(step =>
-                    step.Description == Description &&
-                    step.Action == null && step.Assertion == null &&
-                    step.ExceptionAction == assertion && step.ExceptionAssertion == null &&
-                    step.AsyncAction == null && step.AsyncExceptionAction == null &&
-                    step.ExceptionType == null
+                    StepAssertions.ThenStep.Of(step) == StepAssertions.ThenStep.Of(Description, assertion)
                 ))
             );
         }
@@ -91,11 +79,7 @@ namespace Carna
             Expect(
                 "the underlying stepper should take a Then step that has the specified description and assertion.",
                 () => FixtureStepper.Received().Take(Arg.Is<ThenStep>(step =>
-                    step.Description == Description &&
-                    step.Action == null && step.Assertion == assertion &&
-                    step.ExceptionAction == null && step.ExceptionAssertion == null &&
-                    step.AsyncAction == null && step.AsyncExceptionAction == null &&
-                    step.ExceptionType == null
+                    StepAssertions.ThenStep.Of(step) == StepAssertions.ThenStep.Of(Description, assertion)
                 ))
             );
         }
@@ -110,11 +94,7 @@ namespace Carna
             Expect(
                 "the underlying stepper should take a Then step that has the specified description and assertion.",
                 () => FixtureStepper.Received().Take(Arg.Is<ThenStep>(step =>
-                    step.Description == Description &&
-                    step.Action == null && step.Assertion == null &&
-                    step.ExceptionAction == null && step.ExceptionAssertion == assertion &&
-                    step.AsyncAction == null && step.AsyncExceptionAction == null &&
-                    step.ExceptionType == null
+                    StepAssertions.ThenStep.Of(step) == StepAssertions.ThenStep.Of(Description, assertion)
                 ))
             );
         }
@@ -129,11 +109,7 @@ namespace Carna
             Expect(
                 "the underlying stepper should take a Then step that has the specified description and assertion.",
                 () => FixtureStepper.Received().Take(Arg.Is<ThenStep>(step =>
-                    step.Description == Description &&
-                    step.Action == null && step.Assertion == null &&
-                    step.ExceptionAction == null && step.ExceptionAssertion == null &&
-                    step.AsyncAction == assertion && step.AsyncExceptionAction == null &&
-                    step.ExceptionType == null
+                    StepAssertions.ThenStep.Of(step) == StepAssertions.ThenStep.Of(Description, assertion)
                 ))
             );
         }
@@ -148,11 +124,7 @@ namespace Carna
             Expect(
                 "the underlying stepper should take a Then step that has the specified description and assertion.",
                 () => FixtureStepper.Received().Take(Arg.Is<ThenStep>(step =>
-                    step.Description == Description &&
-                    step.Action == null && step.Assertion == null &&
-                    step.ExceptionAction == null && step.ExceptionAssertion == null &&
-                    step.AsyncAction == null && step.AsyncExceptionAction == assertion &&
-                    step.ExceptionType == null
+                    StepAssertions.ThenStep.Of(step) == StepAssertions.ThenStep.Of(Description, assertion)
                 ))
             );
         }
@@ -165,11 +137,7 @@ namespace Carna
             Expect(
                 "the underlying stepper should take a Then step that has the specified description and type of the exception.",
                 () => FixtureStepper.Received().Take(Arg.Is<ThenStep>(step =>
-                    step.Description == Description &&
-                    step.Action == null && step.Assertion == null &&
-                    step.ExceptionAction == null && step.ExceptionAssertion == null &&
-                    step.AsyncAction == null && step.AsyncExceptionAction == null &&
-                    step.ExceptionType == typeof(ArgumentNullException)
+                    StepAssertions.ThenStep.Of(step) == StepAssertions.ThenStep.Of(Description, typeof(ArgumentNullException))
                 ))
             );
         }
@@ -182,11 +150,7 @@ namespace Carna
             Expect(
                 "the underlying stepper should take a Then step that has the specified description and assertion.",
                 () => FixtureStepper.Received().Take(Arg.Is<ThenStep>(step =>
-                    step.Description == Description &&
-                    step.Action == null && step.Assertion == null &&
-                    step.ExceptionAction != null && step.ExceptionAssertion == null &&
-                    step.AsyncAction == null && step.AsyncExceptionAction == null &&
-                    step.ExceptionType == typeof(ArgumentNullException)
+                    StepAssertions.ThenStepExceptionAction.Of(step) == StepAssertions.ThenStepExceptionAction.Of(Description, typeof(ArgumentNullException))
                 ))
             );
         }
@@ -199,11 +163,7 @@ namespace Carna
             Expect(
                 "the underlying stepper should take a Then step that has the specified description and assertion.",
                 () => FixtureStepper.Received().Take(Arg.Is<ThenStep>(step =>
-                    step.Description == Description &&
-                    step.Action == null && step.Assertion == null &&
-                    step.ExceptionAction == null && step.ExceptionAssertion != null &&
-                    step.AsyncAction == null && step.AsyncExceptionAction == null &&
-                    step.ExceptionType == typeof(ArgumentNullException)
+                    StepAssertions.ThenStepExceptionAssertion.Of(step) == StepAssertions.ThenStepExceptionAssertion.Of(Description, typeof(ArgumentNullException))
                 ))
             );
         }
@@ -216,11 +176,7 @@ namespace Carna
             Expect(
                 "the underlying stepper should take a Then step that has the specified description and assertion.",
                 () => FixtureStepper.Received().Take(Arg.Is<ThenStep>(step =>
-                    step.Description == Description &&
-                    step.Action == null && step.Assertion == null &&
-                    step.ExceptionAction == null && step.ExceptionAssertion == null &&
-                    step.AsyncAction == null && step.AsyncExceptionAction != null &&
-                    step.ExceptionType == typeof(ArgumentNullException)
+                    StepAssertions.ThenStepAsyncExceptionAction.Of(step) == StepAssertions.ThenStepAsyncExceptionAction.Of(Description, typeof(ArgumentNullException))
                 ))
             );
         }

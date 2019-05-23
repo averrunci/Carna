@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2019 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -16,6 +16,7 @@ namespace Carna.Runner.Step
 
         GivenStep Step { get; set; }
         FixtureStepResult Result { get; set; }
+        FixtureStepResultAssertion ExpectedResult { get; set; }
 
         public GivenStepRunnerSpec_StepRunningAsync()
         {
@@ -28,30 +29,34 @@ namespace Carna.Runner.Step
         void Ex01()
         {
             var givenStepCompleted = false;
-            Given("async GivenStep that has an arrangement that does not throw any exceptions", () => Step = FixtureSteps.CreateGivenStep(async () =>
+            Given("async GivenStep that has an arrangement that does not throw any exceptions", () =>
             {
-                await Task.Delay(100);
-                givenStepCompleted = true;
-            }));
+                Step = FixtureSteps.CreateGivenStep(async () =>
+                    {
+                        await Task.Delay(100);
+                        givenStepCompleted = true;
+                    });
+                ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.Passed, Step);
+            });
             When("the given GivenStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
             Then("the given GivenStep should be awaited", () => givenStepCompleted);
-            Then("the status of the result should be Passed", () => Result.Status == FixtureStepStatus.Passed);
-            Then("the exception of the result should be null", () => Result.Exception == null);
-            Then("the step of the result should be the given GivenStep", () => Result.Step == Step);
+            Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
         }
 
         [Example("When GivenStep that has an arrangement that throws an exception is run asynchronously")]
         void Ex02()
         {
-            Given("async GivenStep that has an arrangement that throws an exception", () => Step = FixtureSteps.CreateGivenStep(async () =>
+            Given("async GivenStep that has an arrangement that throws an exception", () =>
             {
-                await Task.Delay(100);
-                throw new Exception();
-            }));
+                Step = FixtureSteps.CreateGivenStep(async () =>
+                    {
+                        await Task.Delay(100);
+                        throw new Exception();
+                    });
+                ExpectedResult = FixtureStepResultAssertion.ForNotNullException(FixtureStepStatus.Failed, Step);
+            });
             When("the given GivenStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
-            Then("the status of the result should be Failed", () => Result.Status == FixtureStepStatus.Failed);
-            Then("the exception of the result should not be null", () => Result.Exception != null);
-            Then("the step of the result should be the given GivenStep", () => Result.Step == Step);
+            Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
         }
     }
 }
