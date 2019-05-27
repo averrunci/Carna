@@ -2,6 +2,8 @@
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
+using System;
+
 using Carna.Step;
 
 namespace Carna.Runner.Step
@@ -46,8 +48,9 @@ namespace Carna.Runner.Step
             Given("GivenStep that has an arrangement that does not throw any exceptions", () =>
             {
                 Step = FixtureSteps.CreateGivenStep(() => { });
-                ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.Passed, Step);
+                ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.Ready, Step);
             });
+            Given("a result of GivenStep that has an exception", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateGivenStep()).Failed(new Exception()).Build()));
             When("the given GivenStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
             Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
         }
