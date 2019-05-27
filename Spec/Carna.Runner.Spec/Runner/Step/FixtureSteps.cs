@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2019 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -21,6 +21,10 @@ namespace Carna.Runner.Step
         public static WhenStep CreateWhenStep(string description) => CreateStep<WhenStep>(description);
         public static WhenStep CreateWhenStep(Action action) => CreateStep<WhenStep>(action);
         public static WhenStep CreateWhenStep(Func<Task> asyncAction) => CreateStep<WhenStep>(asyncAction);
+        public static WhenStep CreateWhenStep(double millisecondsTimeout, Action action) => new WhenStep(string.Empty, millisecondsTimeout, action, null, string.Empty, string.Empty, 0);
+        public static WhenStep CreateWhenStep(TimeSpan timeout, Action action) => new WhenStep(string.Empty, timeout, action, null, string.Empty, string.Empty, 0);
+        public static WhenStep CreateWhenStep(double millisecondsTimeout, Func<Task> asyncAction) => new WhenStep(string.Empty, millisecondsTimeout, asyncAction, null, string.Empty, string.Empty, 0);
+        public static WhenStep CreateWhenStep(TimeSpan timeout, Func<Task> asyncAction) => new WhenStep(string.Empty, timeout, asyncAction, null, string.Empty, string.Empty, 0);
 
         public static ThenStep CreateThenStep() => CreateStep<ThenStep>();
         public static ThenStep CreateThenStep(string description) => CreateStep<ThenStep>(description);

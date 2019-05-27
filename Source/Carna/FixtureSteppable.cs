@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2019 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -138,6 +138,34 @@ namespace Carna
         }
 
         /// <summary>
+        /// Specifies a When step with the specified description, time-out and action.
+        /// </summary>
+        /// <param name="description">The description of a When step.</param>
+        /// <param name="millisecondsTimeout">The time-out value in milliseconds for running a When step.</param>
+        /// <param name="action">The action that is used in a When step.</param>
+        /// <param name="callerMemberName">The method name of the caller to the method.</param>
+        /// <param name="callerFilePath">The full path of the source file that contains the caller.</param>
+        /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
+        protected virtual void When(string description, double millisecondsTimeout, Action action, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
+        {
+            (this as IFixtureSteppable).Stepper?.Take(new WhenStep(description, millisecondsTimeout, action, GetType(), callerMemberName, callerFilePath, callerLineNumber));
+        }
+
+        /// <summary>
+        /// Specifies a When step with the specified description, time-out and action.
+        /// </summary>
+        /// <param name="description">The description of a When step.</param>
+        /// <param name="timeout">The time-out value for running a When step.</param>
+        /// <param name="action">The action that is used in a When step.</param>
+        /// <param name="callerMemberName">The method name of the caller to the method.</param>
+        /// <param name="callerFilePath">The full path of the source file that contains the caller.</param>
+        /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
+        protected virtual void When(string description, TimeSpan timeout, Action action, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
+        {
+            (this as IFixtureSteppable).Stepper?.Take(new WhenStep(description, timeout, action, GetType(), callerMemberName, callerFilePath, callerLineNumber));
+        }
+
+        /// <summary>
         /// Specifies a When step with the specified description and asynchronous action.
         /// </summary>
         /// <param name="description">The description of a When step.</param>
@@ -148,6 +176,34 @@ namespace Carna
         protected virtual void When(string description, Func<Task> asyncAction, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
             (this as IFixtureSteppable).Stepper?.Take(new WhenStep(description, asyncAction, GetType(), callerMemberName, callerFilePath, callerLineNumber));
+        }
+
+        /// <summary>
+        /// Specifies a When step with the specified description, time-out and asynchronous action.
+        /// </summary>
+        /// <param name="description">The description of a When step.</param>
+        /// <param name="millisecondsTimeout">The time-out value in milliseconds for running a When step.</param>
+        /// <param name="asyncAction">The asynchronous action that is used in a When step.</param>
+        /// <param name="callerMemberName">The method name of the caller to the method.</param>
+        /// <param name="callerFilePath">The full path of the source file that contains the caller.</param>
+        /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
+        protected virtual void When(string description, double millisecondsTimeout, Func<Task> asyncAction, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
+        {
+            (this as IFixtureSteppable).Stepper?.Take(new WhenStep(description, millisecondsTimeout, asyncAction, GetType(), callerMemberName, callerFilePath, callerLineNumber));
+        }
+
+        /// <summary>
+        /// Specifies a When step with the specified description, time-out and asynchronous action.
+        /// </summary>
+        /// <param name="description">The description of a When step.</param>
+        /// <param name="timeout">The time-out value for running a When step.</param>
+        /// <param name="asyncAction">The asynchronous action that is used in a When step.</param>
+        /// <param name="callerMemberName">The method name of the caller to the method.</param>
+        /// <param name="callerFilePath">The full path of the source file that contains the caller.</param>
+        /// <param name="callerLineNumber">The line number in the source file at which the method is called.</param>
+        protected virtual void When(string description, TimeSpan timeout, Func<Task> asyncAction, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
+        {
+            (this as IFixtureSteppable).Stepper?.Take(new WhenStep(description, timeout, asyncAction, GetType(), callerMemberName, callerFilePath, callerLineNumber));
         }
 
         /// <summary>

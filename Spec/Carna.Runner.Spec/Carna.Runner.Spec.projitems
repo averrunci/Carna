@@ -200,6 +200,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\WhenStepRunnerSpec.StepRunningAsync.cs">
       <DependentUpon>WhenStepRunnerSpec.cs</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\Step\WhenStepRunnerSpec.StepRunningWithTimeout.cs">
+      <DependentUpon>WhenStepRunnerSpec.cs</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)TestAroundFixtureAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestFixtures.cs" />
   </ItemGroup>
