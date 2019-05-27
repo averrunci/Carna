@@ -29,7 +29,7 @@ namespace Carna.Assertions
         /// <returns>
         /// <c>true</c> if the specified property value is asserted; otherwise <c>false</c>.
         /// </returns>
-        protected override bool Assert(TValue other) => throw new InvalidOperationException();
+        protected override bool Assert(TValue other) => throw new InvalidOperationException($"{nameof(ActualValueProperty<TValue>)} can't assert any values.");
 
         /// <summary>
         /// Asserts the specified <see cref="IAssertionProperty"/>.
@@ -38,6 +38,6 @@ namespace Carna.Assertions
         /// <returns>
         /// <c>true</c> if the specified <see cref="IAssertionProperty"/> is asserted; otherwise <c>false</c>.
         /// </returns>
-        protected override bool Assert(IAssertionProperty other) => throw new InvalidOperationException();
+        protected override bool Assert(IAssertionProperty other) => throw new InvalidOperationException($"{nameof(ActualValueProperty<TValue>)} can't assert any assertion properties.");
     }
 }
