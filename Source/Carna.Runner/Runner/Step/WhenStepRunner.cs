@@ -44,6 +44,16 @@ namespace Carna.Runner.Step
                 return FixtureStepResult.Of(Step).Ready();
             }
 
+            if (results.HasStatusAt<GivenStep>(FixtureStepStatus.Ready) || results.HasStatusAtLatest<WhenStep>(FixtureStepStatus.Ready))
+            {
+                return FixtureStepResult.Of(Step).Ready();
+            }
+
+            if (results.HasStatusAt<GivenStep>(FixtureStepStatus.Pending) || results.HasStatusAtLatest<WhenStep>(FixtureStepStatus.Pending))
+            {
+                return FixtureStepResult.Of(Step).Pending();
+            }
+
             try
             {
                 RunWhenStep();
