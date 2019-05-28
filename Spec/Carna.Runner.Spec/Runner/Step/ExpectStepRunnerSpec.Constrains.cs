@@ -67,5 +67,95 @@ namespace Carna.Runner.Step
             When("the given ExpectStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
             Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
         }
+
+        [Example("When GivenStep that has already run has Ready status, ExpectStep is not run")]
+        void Ex04()
+        {
+            Given("ExpectStep that has an assertion that returns true", () =>
+            {
+                Step = FixtureSteps.CreateExpectStep(() => true);
+                ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.Ready, Step);
+            });
+            Given("a result of GivenStep that has Passed status", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateGivenStep()).Passed().Build()));
+            Given("a result of GivenStep that has Ready status", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateGivenStep()).Ready().Build()));
+            Given("a result of GivenStep that has Passed status", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateGivenStep()).Passed().Build()));
+            When("the given ExpectStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
+            Then($"The result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
+        }
+
+        [Example("When latest WhenStep that has already run has Ready status, ExpectStep is not run")]
+        void Ex05()
+        {
+            Given("ExpectStep that has an assertion that returns true", () =>
+            {
+                Step = FixtureSteps.CreateExpectStep(() => true);
+                ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.Ready, Step);
+            });
+            Given("a result of GivenStep that does not have Ready status", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateGivenStep()).Passed().Build()));
+            Given("a result of WhenStep that has Ready status", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Ready().Build()));
+            When("the given ExpectStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
+            Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
+        }
+
+        [Example("When latest WhenStep that has already run does not have Ready status but other WhenStep that has already run has Ready status, ExpectStep is run")]
+        void Ex06()
+        {
+            Given("ExpectStep that has an assertion that return true", () =>
+            {
+                Step = FixtureSteps.CreateExpectStep(() => true);
+                ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.Passed, Step);
+            });
+            Given("a result of GivenStep that does not have Ready status", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateGivenStep()).Passed().Build()));
+            Given("a result of WhenStep that has Ready status", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Ready().Build()));
+            Given("a result of ThenStep that has Ready status", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateThenStep()).Ready().Build()));
+            Given("a result of WhenStep that does not have Ready status", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Passed().Build()));
+            When("the given ExpectStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
+            Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
+        }
+
+        [Example("When GivenStep that has already run has Pending status, ExpectStep is not run")]
+        void Ex07()
+        {
+            Given("ExpectStep that has an assertion that returns true", () =>
+            {
+                Step = FixtureSteps.CreateExpectStep(() => true);
+                ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.Pending, Step);
+            });
+            Given("a result of GivenStep that has Passed status", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateGivenStep()).Passed().Build()));
+            Given("a result of GivenStep that has Pending status", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateGivenStep()).Pending().Build()));
+            Given("a result of GivenStep that has Passed status", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateGivenStep()).Passed().Build()));
+            When("the given ExpectStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
+            Then($"The result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
+        }
+
+        [Example("When latest WhenStep that has already run has Pending status, ExpectStep is not run")]
+        void Ex08()
+        {
+            Given("ExpectStep that has an assertion that returns true", () =>
+            {
+                Step = FixtureSteps.CreateExpectStep(() => true);
+                ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.Pending, Step);
+            });
+            Given("a result of GivenStep that does not have Pending status", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateGivenStep()).Passed().Build()));
+            Given("a result of WhenStep that has Pending status", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Pending().Build()));
+            When("the given ExpectStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
+            Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
+        }
+
+        [Example("When latest WhenStep that has already run does not have Pending status but other WhenStep that has already run has Pending status, ExpectStep is run")]
+        void Ex09()
+        {
+            Given("ExpectStep that has an assertion that return true", () =>
+            {
+                Step = FixtureSteps.CreateExpectStep(() => true);
+                ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.Passed, Step);
+            });
+            Given("a result of GivenStep that does not have Pending status", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateGivenStep()).Passed().Build()));
+            Given("a result of WhenStep that has Pending status", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Pending().Build()));
+            Given("a result of ThenStep that has Pending status", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateThenStep()).Pending().Build()));
+            Given("a result of WhenStep that does not have Pending status", () => StepResults.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Passed().Build()));
+            When("the given ExpectStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
+            Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
+        }
     }
 }
