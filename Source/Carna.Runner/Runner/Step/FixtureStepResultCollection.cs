@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2019 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -48,6 +48,20 @@ namespace Carna.Runner.Step
         public bool Has(params Type[] fixtureStepTypes) => Results.Any(result => fixtureStepTypes.Contains(result.Step.GetType()));
 
         /// <summary>
+        /// Gets a value that indicates whether to have the result of the specified fixture step type
+        /// that has a specified fixture step status.
+        /// </summary>
+        /// <typeparam name="T">The type of the fixture step.</typeparam>
+        /// <param name="status">The status of the fixture step running.</param>
+        /// <returns>
+        /// <c>true</c> if the result of the specified fixture step type that has a specified fixture step status is contained;
+        /// otherwise, <c>false</c>.
+        /// </returns>
+        public bool HasStatusAt<T>(FixtureStepStatus status) where T : FixtureStep
+            => Results.Where(result => typeof(T) == result.Step.GetType())
+                .Any(result => result.Status == status);
+
+        /// <summary>
         /// Gets a value that indicates whether to have the result of the specified fixture step type that has an exception.
         /// </summary>
         /// <typeparam name="T">The type of the fixture step.</typeparam>
@@ -69,6 +83,19 @@ namespace Carna.Runner.Step
             => Results.Reverse()
                 .SkipWhile(result => result.Step.GetType() != typeof(T))
                 .TakeWhile(result => result.Step.GetType() == typeof(T));
+
+        /// <summary>
+        /// Gets a value that indicates whether the latest results of the specified fixture step type have
+        /// a specified fixture step status.
+        /// </summary>
+        /// <typeparam name="T">The type of the fixture step.</typeparam>
+        /// <param name="status">The status of the fixture step running.</param>
+        /// <returns>
+        /// <c>true</c> if the latest results of the specified fixture step have a specified fixture step status is contained;
+        /// otherwise; <c>false</c>.
+        /// </returns>
+        public bool HasStatusAtLatest<T>(FixtureStepStatus status) where T : FixtureStep
+            => GetLatestStepResultsOf<T>().Any(result => result.Status == status);
 
         /// <summary>
         /// Gets a value that indicates whether the latest results of the specified fixture step type have an exception.

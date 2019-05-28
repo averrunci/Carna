@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2019 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -138,6 +138,45 @@ namespace Carna.Runner.Step
             Then("all status of the result of GivenStep should not be Passed", () => Results.Where(r => r.Step.GetType() == typeof(ThenStep)).Any(r => r.Status != FixtureStepStatus.Passed));
             Then("the exception of the result of ExpectStep should be cleared", () => !Results.HasExceptionAt<ExpectStep>());
             Then("all status of the result of ExpectStep should be Passed", () => Results.Where(r => r.Step.GetType() == typeof(ExpectStep)).All(r => r.Status == FixtureStepStatus.Passed));
+        }
+
+        [Example("Gets the value that indicates whether the collection has the result of the specified FixtureStep that has a specified status")]
+        void Ex07()
+        {
+            When("the result of GivenStep that has a Ready status is added", () => Results.Add(FixtureStepResult.Of(FixtureSteps.CreateGivenStep()).Ready().Build()));
+            When("the result of WhenStep that has a Passed status is added", () => Results.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Passed().Build()));
+            When("the result of ThenStep that has a Pending status is added", () => Results.Add(FixtureStepResult.Of(FixtureSteps.CreateThenStep()).Pending().Build()));
+            When("the result of ExpectStep that has a Failed status is added", () => Results.Add(FixtureStepResult.Of(FixtureSteps.CreateExpectStep()).Failed(new Exception()).Build()));
+            Then("the value that indicates whether the result of GivenStep has a Ready status should be true", () => Results.HasStatusAt<GivenStep>(FixtureStepStatus.Ready));
+            Then("the value that indicates whether the result of GivenStep has a Passed status should be false", () => !Results.HasStatusAt<GivenStep>(FixtureStepStatus.Passed));
+            Then("the value that indicates whether the result of WhenStep has a Ready status should be false", () => !Results.HasStatusAt<WhenStep>(FixtureStepStatus.Ready));
+            Then("the value that indicates whether the result of WhenStep has a Passed status should be true", () => Results.HasStatusAt<WhenStep>(FixtureStepStatus.Passed));
+            Then("the value that indicates whether the result of ThenStep has a Pending status should be true", () => Results.HasStatusAt<ThenStep>(FixtureStepStatus.Pending));
+            Then("the value that indicates whether the result of ThenStep has a Failed status should be false", () => !Results.HasStatusAt<ThenStep>(FixtureStepStatus.Failed));
+            Then("the value that indicates whether the result of ExpectStep has a Pending status should be false", () => !Results.HasStatusAt<ExpectStep>(FixtureStepStatus.Pending));
+            Then("the value that indicates whether the result of ExpectStep has a Failed status should be true", () => Results.HasStatusAt<ExpectStep>(FixtureStepStatus.Failed));
+        }
+
+        [Example("Gets the value that indicates whether the latest result of the specified step has a specified status")]
+        void Ex08()
+        {
+            When("the result of GivenStep that has a Ready status is added", () => Results.Add(FixtureStepResult.Of(FixtureSteps.CreateGivenStep()).Ready().Build()));
+            When("the result of ExpectStep that has a Failed status is added", () => Results.Add(FixtureStepResult.Of(FixtureSteps.CreateExpectStep()).Failed(new Exception()).Build()));
+            When("the result of WhenStep that has a Passed status is added", () => Results.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Passed().Build()));
+            When("the result of WhenStep that has a Failed status is added", () => Results.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Failed(new Exception()).Build()));
+            When("the result of WhenStep that has a Pending status is added", () => Results.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Pending().Build()));
+            When("the result of ThenStep that has a Passed is added", () => Results.Add(FixtureStepResult.Of(FixtureSteps.CreateThenStep()).Passed().Build()));
+            When("the result of ExpectStep that has a Ready status is added", () => Results.Add(FixtureStepResult.Of(FixtureSteps.CreateExpectStep()).Ready().Build()));
+            When("the result of WhenStep that has a Ready status is added", () => Results.Add(FixtureStepResult.Of(FixtureSteps.CreateWhenStep()).Ready().Build()));
+            When("the result of ThenStep that has a Failed is added", () => Results.Add(FixtureStepResult.Of(FixtureSteps.CreateThenStep()).Failed(new Exception()).Build()));
+            Then("the value that indicates whether the latest result of GivenStep has Ready status should be true", () => Results.HasStatusAtLatest<GivenStep>(FixtureStepStatus.Ready));
+            Then("the value that indicates whether the latest result of GivenStep has Passed status should be false", () => !Results.HasStatusAtLatest<GivenStep>(FixtureStepStatus.Passed));
+            Then("the value that indicates whether the latest result of WhenStep has Passed status should be false", () => !Results.HasStatusAtLatest<WhenStep>(FixtureStepStatus.Passed));
+            Then("the value that indicates whether the latest result of WhenStep has Ready status should be true", () => Results.HasStatusAtLatest<WhenStep>(FixtureStepStatus.Ready));
+            Then("the value that indicates whether the latest result of ThenStep has Failed status should be true", () => Results.HasStatusAtLatest<ThenStep>(FixtureStepStatus.Failed));
+            Then("the value that indicates whether the latest result of ThenStep has Passed status should be false", () => !Results.HasStatusAtLatest<ThenStep>(FixtureStepStatus.Passed));
+            Then("the value that indicates whether the latest result of ExpectStep has Failed should be false", () => !Results.HasStatusAtLatest<ExpectStep>(FixtureStepStatus.Failed));
+            Then("the value that indicates whether the latest result of ExpectStep has Ready should be true", () => Results.HasStatusAtLatest<ExpectStep>(FixtureStepStatus.Ready));
         }
     }
 }
