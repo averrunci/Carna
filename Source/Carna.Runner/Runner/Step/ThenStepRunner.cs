@@ -42,14 +42,19 @@ namespace Carna.Runner.Step
                 return FixtureStepResult.Of(Step).Pending();
             }
 
-            if (results.HasExceptionAt<GivenStep>())
+            if (HasAssertionWithoutException && results.HasLatestExceptionAt<WhenStep>())
             {
                 return FixtureStepResult.Of(Step).Ready();
             }
 
-            if (HasAssertionWithoutException && results.HasLatestExceptionAt<WhenStep>())
+            if (results.HasStatusAtLatest<WhenStep>(FixtureStepStatus.Ready))
             {
                 return FixtureStepResult.Of(Step).Ready();
+            }
+
+            if (results.HasStatusAtLatest<WhenStep>(FixtureStepStatus.Pending))
+            {
+                return FixtureStepResult.Of(Step).Pending();
             }
 
             try
