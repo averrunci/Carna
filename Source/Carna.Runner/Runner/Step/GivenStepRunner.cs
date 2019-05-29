@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017-2018 Fievus
+﻿// Copyright (C) 2017-2019 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -37,7 +37,7 @@ namespace Carna.Runner.Step
                 throw new InvalidFixtureStepException("Given must be before When or Then");
             }
 
-            if (Step.Arrangement == null && Step.AsyncArrangement == null)
+            if (IsPending)
             {
                 return FixtureStepResult.Of(Step).Pending();
             }
@@ -59,5 +59,7 @@ namespace Carna.Runner.Step
                 return FixtureStepResult.Of(Step).Failed(exc);
             }
         }
+
+        private bool IsPending => Step.Arrangement == null && Step.AsyncArrangement == null;
     }
 }

@@ -32,7 +32,7 @@ namespace Carna.Runner.Step
         /// <returns>The result of the Expect step running.</returns>
         protected override FixtureStepResult.Builder Run(FixtureStepResultCollection results)
         {
-            if (Step.Action == null && Step.Assertion == null && Step.AsyncAction == null)
+            if (IsPending)
             {
                 return FixtureStepResult.Of(Step).Pending();
             }
@@ -65,5 +65,7 @@ namespace Carna.Runner.Step
                 return FixtureStepResult.Of(Step).Failed(exc);
             }
         }
+
+        private bool IsPending => Step.Action == null && Step.Assertion == null && Step.AsyncAction == null;
     }
 }
