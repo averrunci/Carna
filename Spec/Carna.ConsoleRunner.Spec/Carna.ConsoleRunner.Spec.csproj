@@ -11,13 +11,13 @@
     <Authors>averrunci</Authors>
     <Company />
     <Product>Carna Console Runner for .NET Core Specification</Product>
-    <Description>The specification class library for the console runner of Carna testing and specification framework for .NET Core</Description>
+    <Description>The specification class library for the console runner of Carna testing and specification framework for .NET Core.</Description>
     <Copyright>Copyright (C) 2017-2019 Fievus</Copyright>
     <PackageProjectUrl>https://github.com/averrunci/Carna</PackageProjectUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <AssemblyVersion>1.5.1</AssemblyVersion>
+    <AssemblyVersion>1.6.0</AssemblyVersion>
     <FileVersion>1.5.1</FileVersion>
-    <Version>1.5.1</Version>
+    <Version>1.6.0</Version>
     <PackageLicenseUrl>https://github.com/averrunci/Carna/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 

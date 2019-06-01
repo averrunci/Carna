@@ -1,7 +1,7 @@
 <VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
   <TemplateData>
     <Name>Carna Test Project (.NET Core)</Name>
-    <Description>A project that contains Carna tests that can run on .NET Core on Windows, Linux and MacOS</Description>
+    <Description>A project that contains Carna tests that can run on .NET Core on Windows, Linux and MacOS.</Description>
     <Icon Package="{52CBD135-1F97-2580-011F-C7CD052E44DE}" ID="531"/>
     <ProjectType>CSharp</ProjectType>
     <SortOrder>20</SortOrder>

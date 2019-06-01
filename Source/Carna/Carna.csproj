@@ -3,17 +3,17 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Copyright>Copyright (C) 2017-2019 Fievus</Copyright>
-    <Description>The testing and specification framework for .NET Platform</Description>
+    <Description>The testing and specification framework for .NET Platform.</Description>
     <Company />
     <Authors>averrunci</Authors>
     <PackageTags>carna test testing tdd ddd</PackageTags>
     <NeutralLanguage>en-US</NeutralLanguage>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/averrunci/Carna</PackageProjectUrl>
-    <AssemblyVersion>1.5.1</AssemblyVersion>
-    <FileVersion>1.5.1</FileVersion>
+    <AssemblyVersion>1.6.0</AssemblyVersion>
+    <FileVersion>1.6.0</FileVersion>
     <PackageLicenseUrl>https://github.com/averrunci/Carna/blob/master/LICENSE</PackageLicenseUrl>
-    <Version>1.5.1</Version>
+    <Version>1.6.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

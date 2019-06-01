@@ -1,6 +1,47 @@
 # Release note
 
-## V1.5.1
+## v1.6.0
+
+### Add
+
+#### Carna
+
+- Add the AssertionObject class that asserts properties specified by the AssertionPropertyAttribute attribute.
+- Add the IAssertionProperty interface and the following its implementations;
+  - ActualValueProperty class
+  - AssertionProperty class
+  - EqualAssertionProperty class
+  - NotEqualAssertionProperty class
+  - LessThanAssertionProperty class
+  - LessThanOrEqualAssertionProperty class
+  - GreaterThanAssertionProperty class
+  - GreaterThanOrEqualAssertionProperty class
+- Add a time-out for running a When step.
+
+#### Carna.Runner
+
+- Add the function to assert a time-out for running a When step.
+- Add the constrains to an Expect step. Its status should be
+  - Ready/Pending when the status of a Given step is Ready/Pending,
+  - Ready/Pending when the status of the latest When step is Ready/Pending.
+- Add the constrains to a When step. Its status should be
+  - Ready/Pending when the status of a Given step is Ready/Pending,
+  - Ready/Pending when the status of the latest When step is Ready/Pending.
+- Add the constrains to a Then step. Its status should be
+  - Ready/Pending when the status of the latest When step is Ready/Pending.
+
+#### Carna.UwpRunner
+
+- Add the style for the Dark theme.
+
+### Change
+
+#### Carna.UwpRunner
+
+- Extends the view into the title bar.
+- Change to be able to bring the first failed fixture content into a view.
+
+## v1.5.1
 
 ### Change
 
@@ -16,7 +57,7 @@
 
 - Change in order to open failed fixture contents.
 
-## V1.5.0
+## v1.5.0
 
 ### Add
 
@@ -35,7 +76,7 @@
 
 - Fixed the default value for the parallel option.
 
-## V1.4.0
+## v1.4.0
 
 ### Add
 
