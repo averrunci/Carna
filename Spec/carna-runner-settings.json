@@ -10,7 +10,7 @@
         "options": {
           "full": true,
           "stepVisible": true,
-          "statusVisble": true
+          "statusVisible": true
         }
       }
     }
