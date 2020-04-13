@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Carna.ConsoleRunner</RootNamespace>
+    <AssemblyName>carna-runner</AssemblyName>
+    <ApplicationIcon>carna.ico</ApplicationIcon>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>carna-runner</ToolCommandName>
+    <PackageOutputPath>..\..\Binary\CarnaConsoleRunner\Release</PackageOutputPath>
+    <Authors>averrunci</Authors>
+    <Company />
+    <Product>Carna Console Runner for .NET Core</Product>
+    <Description>The console runner of Carna testing and specification framework for .NET Core.</Description>
+    <Copyright>Copyright (C) 2020 Fievus</Copyright>
+    <PackageProjectUrl>https://github.com/averrunci/Carna</PackageProjectUrl>
+    <PackageTags>carna test testing tdd bdd runner</PackageTags>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <AssemblyVersion>1.6.0</AssemblyVersion>
+    <FileVersion>1.6.0</FileVersion>
+    <Version>1.6.0</Version>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\Binary\CarnaConsoleRunner\Debug\</OutputPath>
+    <DocumentationFile>..\..\Binary\CarnaConsoleRunner\Debug\netcoreapp3.1\CarnaConsoleRunner.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\..\Binary\CarnaConsoleRunner\Release\</OutputPath>
+    <DocumentationFile>..\..\Binary\CarnaConsoleRunner\Release\netcoreapp3.1\CarnaConsoleRunner.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Carna.Runner\Carna.Runner.csproj" />
+    <ProjectReference Include="..\Carna\Carna.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\Carna.ConsoleRunner\Carna.ConsoleRunner.projitems" Label="Shared" />
+
+</Project>

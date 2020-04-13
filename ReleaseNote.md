@@ -4,6 +4,8 @@
 
 ### Add
 
+- Add the carna-runner that is the console runner for .NET Core 3.
+
 #### Carna
 
 - Add the AssertionObject class that asserts properties specified by the AssertionPropertyAttribute attribute.

@@ -8,7 +8,7 @@
     <Company />
     <Product>Carna Specification</Product>
     <Description>The specification class library for Carna testing and specification framework for .NET Platform</Description>
-    <Copyright>Copyright (C) 2017-2019 Fievus</Copyright>
+    <Copyright>Copyright (C) 2017-2020 Fievus</Copyright>
     <PackageProjectUrl>https://github.com/averrunci/Carna</PackageProjectUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
     <AssemblyVersion>1.6.0</AssemblyVersion>
@@ -18,11 +18,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NSubstitute" Version="3.0.1" />
+    <PackageReference Include="NSubstitute" Version="4.2.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\Carna\Carna.csproj" />
+    <ProjectReference Include="..\..\Source\Carna\Carna.csproj">
+      <Private>false</Private>
+      <ExculdeAssets>runtime</ExculdeAssets>
+    </ProjectReference>
   </ItemGroup>
 
   <Import Project="..\Carna.Spec\Carna.Spec.projitems" Label="Shared" />
