@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2020 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -26,7 +26,7 @@ namespace Carna.Runner
             {
                 Assembly = fixtureType.Assembly,
                 Namespace = fixtureType.Namespace ?? string.Empty,
-                Fixture = Build(fixtureType.AsType()).EnsureParent()
+                Fixture = Build(fixtureType.AsType())
             })
             .GroupBy(g => g.Assembly)
             .ToLookup(ag => ag.Key, ag => ag.ToLookup(g => g.Namespace, g => g.Fixture))
@@ -37,8 +37,9 @@ namespace Carna.Runner
                     ag.SelectMany(g =>
                         g.Select(ng => new FixtureContainer(ng.Key, new NamespaceFixtureAttribute(), ng.ToList()))
                     )
-                )
-            );
+                ) as IFixture
+            )
+            .Select(fixture => fixture.EnsureParent());
 
         /// <summary>
         /// Builds a fixture with the specified fixture type.

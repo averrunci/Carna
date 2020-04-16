@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2020 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -22,24 +22,28 @@ namespace Carna.Runner
 
             var assemblyFixture = Fixtures.ElementAt(0);
             Then("the built fixture should be an Assembly fixture", () => assemblyFixture.FixtureDescriptor.FixtureAttributeType == typeof(AssemblyFixtureAttribute));
+            Then("the parent fixture of the built fixture should be null", () => assemblyFixture.ParentFixture == null);
 
             var childFixtures = GetFixtures(assemblyFixture as FixtureContainer);
             Then("the number of fixtures contained by the Assembly fixture should be 1", () => childFixtures.Count() == 1);
 
             var namespaceFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Assembly fixture should be a Namespace fixture", () => namespaceFixture.FixtureDescriptor.FixtureAttributeType == typeof(NamespaceFixtureAttribute));
+            Then("the parent fixture of the fixture contained by the Assembly fixture should be the Assembly fixture", () => namespaceFixture.ParentFixture == assemblyFixture);
 
             childFixtures = GetFixtures(namespaceFixture as FixtureContainer);
             Then("the number of fixtures contained by the Namespace fixture should be 1", () => childFixtures.Count() == 1);
 
             var contextFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Namespace fixture should be a Context fixture", () => contextFixture.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
+            Then("the parent fixture of the fixture contained by the Namespace fixture should be the Namespace fixture", () => contextFixture.ParentFixture == namespaceFixture);
 
             childFixtures = GetFixtures(contextFixture as FixtureContainer);
             Then("the number of fixtures contained by the Context fixture should be 1", () => childFixtures.Count() == 1);
 
             var exampleFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Context fixture should be an Example fixture", () => exampleFixture.FixtureDescriptor.FixtureAttributeType == typeof(ExampleAttribute));
+            Then("the parent fixture of the fixture contained by the Context fixture should be the parent fixture of the Context fixture", () => exampleFixture.ParentFixture == contextFixture.ParentFixture);
         }
 
         [Example("Fixture contains three fixture methods (Context fixture > Example fixture, Example fixture, Example fixture)")]
@@ -50,23 +54,27 @@ namespace Carna.Runner
 
             var assemblyFixture = Fixtures.ElementAt(0);
             Then("the built fixture should be an Assembly fixture", () => assemblyFixture.FixtureDescriptor.FixtureAttributeType == typeof(AssemblyFixtureAttribute));
+            Then("the parent fixture of the built fixture should be null", () => assemblyFixture.ParentFixture == null);
 
             var childFixtures = GetFixtures(assemblyFixture as FixtureContainer);
             Then("the number of fixtures contained by the Assembly fixture should be 1", () => childFixtures.Count() == 1);
 
             var namespaceFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Assembly fixture should be a Namespace fixture", () => namespaceFixture.FixtureDescriptor.FixtureAttributeType == typeof(NamespaceFixtureAttribute));
+            Then("the parent fixture of the fixture contained by the Assembly fixture should be the Assembly fixture", () => namespaceFixture.ParentFixture == assemblyFixture);
 
             childFixtures = GetFixtures(namespaceFixture as FixtureContainer);
             Then("the number of fixtures contained by the Namespace fixture should be 1", () => childFixtures.Count() == 1);
 
             var contextFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Namespace fixture should be a Context fixture", () => contextFixture.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
+            Then("the parent fixture of the fixture contained by the Namespace fixture should be the Namespace fixture", () => contextFixture.ParentFixture == namespaceFixture);
 
             childFixtures = GetFixtures(contextFixture as FixtureContainer);
             Then("the number of fixtures contained by the Context fixture should be 3", () => childFixtures.Count() == 3);
 
             Then("the fixtures contained by the Context fixture should be all Example fixtures", () => childFixtures.All(childFixture => childFixture.FixtureDescriptor.FixtureAttributeType == typeof(ExampleAttribute)));
+            Then("the parent fixture of the fixtures contained by the Context fixture should be the parent fixture of the Context fixture", () => childFixtures.All(childFixture => childFixture.ParentFixture == contextFixture.ParentFixture));
         }
 
         [Example("Fixture contains a container fixture as a nested class (Requirement fixture > Context fixture > Example fixture)")]
@@ -77,30 +85,35 @@ namespace Carna.Runner
 
             var assemblyFixture = Fixtures.ElementAt(0);
             Then("the built fixture should be an Assembly fixture", () => assemblyFixture.FixtureDescriptor.FixtureAttributeType == typeof(AssemblyFixtureAttribute));
+            Then("the parent fixture of the build fixture should be null", () => assemblyFixture.ParentFixture == null);
 
             var childFixtures = GetFixtures(assemblyFixture as FixtureContainer);
             Then("the number of fixtures contained by the Assembly fixture should be 1", () => childFixtures.Count() == 1);
 
             var namespaceFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Assembly fixture should be a Namespace fixture", () => namespaceFixture.FixtureDescriptor.FixtureAttributeType == typeof(NamespaceFixtureAttribute));
+            Then("the parent fixture of the fixture contained by the Assembly fixture should be the Assembly fixture", () => namespaceFixture.ParentFixture == assemblyFixture);
 
             childFixtures = GetFixtures(namespaceFixture as FixtureContainer);
             Then("the number of fixtures contained by the Namespace fixture should be 1", () => childFixtures.Count() == 1);
 
             var requirementFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Namespace fixture should be a Requirement fixture", () => requirementFixture.FixtureDescriptor.FixtureAttributeType == typeof(RequirementAttribute));
+            Then("the parent fixture of the fixture contained by the Namespace fixture should be the Namespace fixture", () => requirementFixture.ParentFixture == namespaceFixture);
 
             childFixtures = GetFixtures(requirementFixture as FixtureContainer);
             Then("the number of fixtures contained by the Requirement fixture should be 1", () => childFixtures.Count() == 1);
 
             var contextFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Requirement fixture should be a Context fixture", () => contextFixture.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
+            Then("the parent fixture of the fixture contained by the Requirement fixture should be the Requirement fixture", () => contextFixture.ParentFixture == requirementFixture);
 
             childFixtures = GetFixtures(contextFixture as FixtureContainer);
             Then("the number of fixtures contained by the Context fixture should be 1", () => childFixtures.Count() == 1);
 
             var exampleFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Context fixture should be an Example fixture", () => exampleFixture.FixtureDescriptor.FixtureAttributeType == typeof(ExampleAttribute));
+            Then("the parent fixture of the fixture contained by the Context fixture should be the parent fixture of the Context fixture", () => exampleFixture.ParentFixture == contextFixture.ParentFixture);
         }
 
         [Example("Fixture contains a container fixture as a property (Requirement fixture > Context fixture > Example fixture)")]
@@ -111,30 +124,35 @@ namespace Carna.Runner
 
             var assemblyFixture = Fixtures.ElementAt(0);
             Then("the built fixture should be an Assembly fixture", () => assemblyFixture.FixtureDescriptor.FixtureAttributeType == typeof(AssemblyFixtureAttribute));
+            Then("the parent fixture of the built fixture should be null", () => assemblyFixture.ParentFixture == null);
 
             var childFixtures = GetFixtures(assemblyFixture as FixtureContainer);
             Then("the number of fixtures contained by the Assembly fixture should be 1", () => childFixtures.Count() == 1);
 
             var namespaceFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Assembly fixture should be a Namespace fixture", () => namespaceFixture.FixtureDescriptor.FixtureAttributeType == typeof(NamespaceFixtureAttribute));
+            Then("the parent fixture of the fixture contained by the Assembly fixture should be the Assembly fixture", () => namespaceFixture.ParentFixture == assemblyFixture);
 
             childFixtures = GetFixtures(namespaceFixture as FixtureContainer);
             Then("the number of fixtures contained by the Namespace fixture should be 1", () => childFixtures.Count() == 1);
 
             var requirementFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Namespace fixture should be a Requirement fixture", () => requirementFixture.FixtureDescriptor.FixtureAttributeType == typeof(RequirementAttribute));
+            Then("the parent fixture of the fixture contained by the Namespace fixture should be the Namespace fixture", () => requirementFixture.ParentFixture == namespaceFixture);
 
             childFixtures = GetFixtures(requirementFixture as FixtureContainer);
             Then("the number of fixtures contained by the Requirement fixture should be 1", () => childFixtures.Count() == 1);
 
             var contextFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Requirement fixture should be a Context fixture", () => contextFixture.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
+            Then("the parent fixture of the fixture contained by the Requirement fixture should be the Requirement fixture", () => contextFixture.ParentFixture == requirementFixture);
 
             childFixtures = GetFixtures(contextFixture as FixtureContainer);
             Then("the number of fixtures contained by the Context fixture should be 1", () => childFixtures.Count() == 1);
 
             var exampleFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Context fixture should be an Example fixture", () => exampleFixture.FixtureDescriptor.FixtureAttributeType == typeof(ExampleAttribute));
+            Then("the parent fixture of the fixture contained by the Context fixture should be the parent fixture of the Context fixture", () => exampleFixture.ParentFixture == contextFixture.ParentFixture);
         }
 
         [Example("Fixture contains a container fixture as a field (Requirement fixture > Context fixture > Example fixture)")]
@@ -145,30 +163,35 @@ namespace Carna.Runner
 
             var assemblyFixture = Fixtures.ElementAt(0);
             Then("the built fixture should be an Assembly fixture", () => assemblyFixture.FixtureDescriptor.FixtureAttributeType == typeof(AssemblyFixtureAttribute));
+            Then("the parent fixture of the built fixture should be null", () => assemblyFixture.ParentFixture == null);
 
             var childFixtures = GetFixtures(assemblyFixture as FixtureContainer);
             Then("the number of fixtures contained by the Assembly fixture should be 1", () => childFixtures.Count() == 1);
 
             var namespaceFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Assembly fixture should be a Namespace fixture", () => namespaceFixture.FixtureDescriptor.FixtureAttributeType == typeof(NamespaceFixtureAttribute));
+            Then("the parent fixture of the fixture contained by the Assembly fixture should be the Assembly fixture", () => namespaceFixture.ParentFixture == assemblyFixture);
 
             childFixtures = GetFixtures(namespaceFixture as FixtureContainer);
             Then("the number of fixtures contained by the Namespace fixture should be 1", () => childFixtures.Count() == 1);
 
             var requirementFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Namespace fixture should be a Requirement fixture", () => requirementFixture.FixtureDescriptor.FixtureAttributeType == typeof(RequirementAttribute));
+            Then("the parent fixture of the fixture contained by the Namespace fixture should be the Namespace fixture", () => requirementFixture.ParentFixture == namespaceFixture);
 
             childFixtures = GetFixtures(requirementFixture as FixtureContainer);
             Then("the number of fixtures contained by the Requirement fixture should be 1", () => childFixtures.Count() == 1);
 
             var contextFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Requirement fixture should be a Context fixture", () => contextFixture.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
+            Then("the parent fixture of the fixture contained by the Requirement fixture should be the Requirement fixture", () => contextFixture.ParentFixture == requirementFixture);
 
             childFixtures = GetFixtures(contextFixture as FixtureContainer);
             Then("the number of fixtures contained by the Context fixture should be 1", () => childFixtures.Count() == 1);
 
             var exampleFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Context fixture should be an Example fixture", () => exampleFixture.FixtureDescriptor.FixtureAttributeType == typeof(ExampleAttribute));
+            Then("the parent fixture of the fixture contained by the Context fixture should be the parent fixture of the Context fixture", () => exampleFixture.ParentFixture == contextFixture.ParentFixture);
         }
 
         [Example("Fixture contains a fixture method with a sample (Context fixture > Example fixture (1 sample))")]
@@ -179,24 +202,28 @@ namespace Carna.Runner
 
             var assemblyFixture = Fixtures.ElementAt(0);
             Then("the built fixture should be an Assembly fixture", () => assemblyFixture.FixtureDescriptor.FixtureAttributeType == typeof(AssemblyFixtureAttribute));
+            Then("the parent fixture of the built fixture should be null", () => assemblyFixture.ParentFixture == null);
 
             var childFixtures = GetFixtures(assemblyFixture as FixtureContainer);
             Then("the number of fixtures contained by the Assembly fixture should be 1", () => childFixtures.Count() == 1);
 
             var namespaceFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Assembly fixture should be a Namespace fixture", () => namespaceFixture.FixtureDescriptor.FixtureAttributeType == typeof(NamespaceFixtureAttribute));
+            Then("the parent fixture of the fixture contained by the Assembly fixture should be the Assembly fixture", () => namespaceFixture.ParentFixture == assemblyFixture);
 
             childFixtures = GetFixtures(namespaceFixture as FixtureContainer);
             Then("the number of fixtures contained by the Namespace fixture should be 1", () => childFixtures.Count() == 1);
 
             var contextFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Namespace fixture should be a Context fixture", () => contextFixture.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
+            Then("the parent fixture of the fixture contained by the Namespace fixture should be the Namespace fixture", () => contextFixture.ParentFixture == namespaceFixture);
 
             childFixtures = GetFixtures(contextFixture as FixtureContainer);
             Then("the number of fixtures contained by the Context fixture should be 1", () => childFixtures.Count() == 1);
 
             var exampleFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Context fixture should be an Example fixture", () => exampleFixture.FixtureDescriptor.FixtureAttributeType == typeof(ExampleAttribute));
+            Then("the parent fixture contained by the Context fixture should be the parent fixture of the Context fixture", () => exampleFixture.ParentFixture == contextFixture.ParentFixture);
 
             childFixtures = GetFixtures(exampleFixture as FixtureContainer);
             Then("the number of fixtures contained by the Example fixture should be 1", () => childFixtures.Count() == 1);
@@ -204,6 +231,7 @@ namespace Carna.Runner
             var sampleFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Example fixture should be a Sample fixture", () => sampleFixture.FixtureDescriptor.FixtureAttributeType == typeof(SampleFixtureAttribute));
             Then("the description of the Sample fixture should be one created with the specified sample data", () => sampleFixture.FixtureDescriptor.Description == "parameter1=1, parameter2=parameter, parameter3=True");
+            Then("the parent fixture of the fixture contained by the Example fixture should be the parent fixture of the Example fixture", () => sampleFixture.ParentFixture == exampleFixture.ParentFixture);
 
             var sampleData = GetSampleData(sampleFixture as Fixture);
             Then("the sample data of the Sample fixture should be the specified data", () => Equals(sampleData[0], 1) && Equals(sampleData[1], "parameter") && Equals(sampleData[2], true));
@@ -217,24 +245,28 @@ namespace Carna.Runner
 
             var assemblyFixture = Fixtures.ElementAt(0);
             Then("the built fixture should be an Assembly fixture", () => assemblyFixture.FixtureDescriptor.FixtureAttributeType == typeof(AssemblyFixtureAttribute));
+            Then("the parent fixture of the built fixture should be null", () => assemblyFixture.ParentFixture == null);
 
             var childFixtures = GetFixtures(assemblyFixture as FixtureContainer);
             Then("the number of fixtures contained by the Assembly fixture should be 1", () => childFixtures.Count() == 1);
 
             var namespaceFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Assembly fixture should be a Namespace fixture", () => namespaceFixture.FixtureDescriptor.FixtureAttributeType == typeof(NamespaceFixtureAttribute));
+            Then("the parent fixture of the fixture contained by the Assembly fixture should be the Assembly fixture", () => namespaceFixture.ParentFixture == assemblyFixture);
 
             childFixtures = GetFixtures(namespaceFixture as FixtureContainer);
             Then("the number of fixtures contained by the Namespace fixture should be 1", () => childFixtures.Count() == 1);
 
             var contextFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Namespace fixture should be a Context fixture", () => contextFixture.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
+            Then("the parent fixture of the fixture contained by the Namespace fixture should be the Namespace fixture", () => contextFixture.ParentFixture == namespaceFixture);
 
             childFixtures = GetFixtures(contextFixture as FixtureContainer);
             Then("the number of fixtures contained by the Context fixture should be 1", () => childFixtures.Count() == 1);
 
             var exampleFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Context fixture should be an Example fixture", () => exampleFixture.FixtureDescriptor.FixtureAttributeType == typeof(ExampleAttribute));
+            Then("the parent fixture of the fixture contained by the Context fixture should be the parent fixture of the Context fixture", () => exampleFixture.ParentFixture == contextFixture.ParentFixture);
 
             childFixtures = GetFixtures(exampleFixture as FixtureContainer);
             Then("the number of fixtures contained by the Example fixture should be 3", () => childFixtures.Count() == 3);
@@ -242,6 +274,7 @@ namespace Carna.Runner
             AssertSample(childFixtures.ElementAt(0), "first", "Sample #1", 1, "parameter1", true);
             AssertSample(childFixtures.ElementAt(1), "second", "Sample #2", 2, "parameter2", false);
             AssertSample(childFixtures.ElementAt(2), "third", "Sample #3", 3, "parameter3", true);
+            Then("the parent fixture of the fixtures contained by the Example fixture should be the parent fixture of the Example fixture", () => childFixtures.All(childFixture => childFixture.ParentFixture == exampleFixture.ParentFixture));
         }
 
         [Example("Fixture contains a fixture method with a sample data source (Context fixture > Example fixture (3 samples))")]
@@ -252,24 +285,28 @@ namespace Carna.Runner
 
             var assemblyFixture = Fixtures.ElementAt(0);
             Then("the built fixture should be an Assembly fixture", () => assemblyFixture.FixtureDescriptor.FixtureAttributeType == typeof(AssemblyFixtureAttribute));
+            Then("the parent fixture of the built fixture should be null", () => assemblyFixture.ParentFixture == null);
 
             var childFixtures = GetFixtures(assemblyFixture as FixtureContainer);
             Then("the number of fixtures contained by the Assembly fixture should be 1", () => childFixtures.Count() == 1);
 
             var namespaceFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Assembly fixture should be a Namespace fixture", () => namespaceFixture.FixtureDescriptor.FixtureAttributeType == typeof(NamespaceFixtureAttribute));
+            Then("the parent fixture of the fixture contained by the Assembly fixture should be the Assembly fixture", () => namespaceFixture.ParentFixture == assemblyFixture);
 
             childFixtures = GetFixtures(namespaceFixture as FixtureContainer);
             Then("the number of fixtures contained by the Namespace fixture should be 1", () => childFixtures.Count() == 1);
 
             var contextFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Namespace fixture should be a Context fixture", () => contextFixture.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
+            Then("the parent fixture of the fixture contained by the Namespace fixture should be the Namespace fixture", () => contextFixture.ParentFixture == namespaceFixture);
 
             childFixtures = GetFixtures(contextFixture as FixtureContainer);
             Then("the number of fixtures contained by the Context fixture should be 1", () => childFixtures.Count() == 1);
 
             var exampleFixture = childFixtures.ElementAt(0);
             Then("the fixture contained by the Context fixture should be an Example fixture", () => exampleFixture.FixtureDescriptor.FixtureAttributeType == typeof(ExampleAttribute));
+            Then("the parent fixture of the fixture contained by the Context fixture should be the parent fixture of the Context fixture", () => exampleFixture.ParentFixture == contextFixture.ParentFixture);
 
             childFixtures = GetFixtures(exampleFixture as FixtureContainer);
             Then("the number of fixtures contained by the Example fixture should be 3", () => childFixtures.Count() == 3);
@@ -277,6 +314,7 @@ namespace Carna.Runner
             AssertSample(childFixtures.ElementAt(0), "first", "Sample #1", 1, "parameter1", true);
             AssertSample(childFixtures.ElementAt(1), "second", "parameter1=2, parameter2=parameter2, parameter3=False", 2, "parameter2", false);
             AssertSample(childFixtures.ElementAt(2), "third", "Sample #3", 3, "parameter3", true);
+            Then("the parent fixture of the fixtures contained by the Example fixture should be the parent fixture of the Example fixture", () => childFixtures.All(childFixture => childFixture.ParentFixture == exampleFixture.ParentFixture));
         }
 
         void AssertSample(IFixture sampleFixture, string nth, string expectedDescription, params object[] expectedSampleData)
