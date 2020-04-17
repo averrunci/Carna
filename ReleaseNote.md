@@ -1,5 +1,29 @@
 # Release note
 
+## v1.7.0
+
+### Add
+
+#### Carna
+
+- Add the RequiresSta property in the FixtureAttribute class.
+
+#### Carna.Runner
+
+- Add the behavior to run fixtures that are specified by the RequiresSta property is true in a single thread apartment.
+
+### Change
+
+#### Carna.UwpRunner
+
+- Update the Microsoft.NETCore.UniversalWindowsPlatform version to 6.0.6.
+
+### Bug fix
+
+#### Carna.Runner
+
+- Fixed the behavior to build fixtures so that an assembly/namespace fixture is set to the parent fixture.
+
 ## v1.6.0
 
 ### Add

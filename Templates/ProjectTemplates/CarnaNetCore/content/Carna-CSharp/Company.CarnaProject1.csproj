@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <OutputType>EXE</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Carna.ConsoleRunner" Version="1.6.0" />
+    <PackageReference Include="Carna.ConsoleRunner" Version="1.7.0" />
   </ItemGroup>
 
 </Project>

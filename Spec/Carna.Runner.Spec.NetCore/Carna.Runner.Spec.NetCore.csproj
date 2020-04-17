@@ -9,13 +9,14 @@
     <Authors>averrunci</Authors>
     <Company />
     <Product>Carrna Runner Specification</Product>
-    <Copyright>Copyright (C) 2017-2019 Fievus</Copyright>
+    <Copyright>Copyright (C) 2017-2020 Fievus</Copyright>
     <PackageProjectUrl>https://github.com/averrunci/Carna</PackageProjectUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <AssemblyVersion>1.6.0</AssemblyVersion>
-    <FileVersion>1.5.1</FileVersion>
-    <Version>1.6.0</Version>
-    <PackageLicenseUrl>https://github.com/averrunci/Carna/blob/master/LICENSE</PackageLicenseUrl>
+    <AssemblyVersion>1.7.0</AssemblyVersion>
+    <FileVersion>1.7.0</FileVersion>
+    <Version>1.7.0</Version>
+    <PackageLicenseUrl></PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
