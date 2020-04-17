@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017-2018 Fievus
+﻿// Copyright (C) 2017-2020 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -56,6 +56,11 @@ namespace Carna.Runner
         /// Gets the parameters in a fixture.
         /// </summary>
         protected IDictionary<string, object> Parameters { get; } = new Dictionary<string, object>();
+
+        /// <summary>
+        /// Gets a value that indicates whether to run a fixture in a single thread apartment.
+        /// </summary>
+        protected virtual bool IsStaFixture => FixtureDescriptor.IsStaFixture || (ParentFixture?.IsStaFixture ?? false);
 
         /// <summary>
         /// Gets a type of an instance of a fixture.
@@ -432,6 +437,7 @@ namespace Carna.Runner
             set => ParentFixture = value;
         }
         IDictionary<string, object> IFixture.Parameters => Parameters;
+        bool IFixture.IsStaFixture => IsStaFixture;
 
         IFixture IFixture.EnsureParent() => EnsureParent();
         void IFixture.Ready() => Ready();

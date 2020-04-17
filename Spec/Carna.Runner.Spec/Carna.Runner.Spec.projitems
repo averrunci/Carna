@@ -91,6 +91,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.RunFixture.Parameter.cs">
       <DependentUpon>FixtureSpec.RunFixture.cs</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.RunFixture.RequiresSta.cs">
+      <DependentUpon>FixtureSpec.RunFixture.cs</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.RunFixtureAsync.cs">
       <DependentUpon>FixtureSpec.cs</DependentUpon>
     </Compile>

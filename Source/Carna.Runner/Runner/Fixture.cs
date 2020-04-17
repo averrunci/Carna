@@ -1,11 +1,10 @@
-﻿// Copyright (C) 2017-2018 Fievus
+﻿// Copyright (C) 2017-2020 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Threading.Tasks;
 
 using Carna.Runner.Step;
 using Carna.Step;
@@ -121,11 +120,11 @@ namespace Carna.Runner
 
         private void Run(object fixtureInstance)
         {
-            void PerformFixtureMethod() => (FixtureMethod.Invoke(fixtureInstance, SampleData) as Task)?.GetAwaiter().GetResult();
+            var runner = new FixtureRunner(this, FixtureMethod, fixtureInstance, SampleData);
 
             var disposable = fixtureInstance as IDisposable;
-            disposable.IfPresent(_ => { using (disposable) PerformFixtureMethod(); });
-            disposable.IfAbsent(PerformFixtureMethod);
+            disposable.IfPresent(_ => { using (disposable) runner.Run(); });
+            disposable.IfAbsent(() => runner.Run());
         }
     }
 }
