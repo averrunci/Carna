@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2017-2020 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -53,6 +53,11 @@ namespace Carna
         /// Gets a feature about a fixture specified by this attribute.
         /// </summary>
         public string Feature { get; set; }
+
+        /// <summary>
+        /// Gets a value that indicates whether to run a fixture in a single thread apartment.
+        /// </summary>
+        public bool RequiresSta { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FixtureAttribute"/> class.
