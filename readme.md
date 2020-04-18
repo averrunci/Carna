@@ -13,6 +13,7 @@ See [https://github.com/averrunci/Carna/wiki](https://github.com/averrunci/Carna
 - [Carna.ConsoleRunner](https://www.nuget.org/packages/Carna.ConsoleRunner/)
 - [CarnaConsoleRunner](https://www.nuget.org/packages/CarnaConsoleRunner/)
 - [Carna.UwpRunner](https://www.nuget.org/packages/Carna.UwpRunner/)
+- [carna-runner](https://www.nuget.org/packages/carna-runner/)
 
 ## LICENSE
 

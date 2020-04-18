@@ -1,5 +1,13 @@
 # Release note
 
+## v1.7.1
+
+### Bug fix
+
+#### Carna.Runner
+
+- Fixed to run a constructor and a dispose method in a single thread apartment when it is required.
+
 ## v1.7.0
 
 ### Add

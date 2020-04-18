@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>CarnaConsoleRunner</id>
-    <version>1.7.0</version>
+    <version>1.7.1</version>
     <title>Carna Console Runner</title>
     <authors>averrunci</authors>
     <owners>averrunci</owners>
-    <licenseUrl>https://github.com/averrunci/Carna/blob/master/LICENSE</licenseUrl>
+    <license type="expression">MIT</license>
     <projectUrl>https://github.com/averrunci/Carna</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The console runner of Carna testing framework for .NET Framework.</description>
