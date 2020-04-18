@@ -345,23 +345,57 @@ namespace Carna
             }
         }
 
-        [Context("When a fixture requires a single thread apartment", RequiresSta = true)]
-        public class FixtureThatRequiresSta : FixtureSteppable
+        public interface IStaFixture : IFixture
         {
+        }
+
+        [Context("When a fixture requires a single thread apartment", RequiresSta = true)]
+        public class FixtureThatRequiresSta : FixtureSteppable, IDisposable
+        {
+            public FixtureThatRequiresSta()
+            {
+                VerifyApartmentState();
+            }
+
+            public void Dispose()
+            {
+                VerifyApartmentState();
+            }
+
             [Example]
             void Ex01()
             {
-                Expect("the apartment of the thread should be STA", () => Thread.CurrentThread.GetApartmentState() == ApartmentState.STA);
+                Expect("the apartment of the thread should be STA", VerifyApartmentState);
+            }
+
+            void VerifyApartmentState()
+            {
+                if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA) throw new Exception();
             }
         }
 
         [Context("When a method fixture requires a single thread apartment")]
-        public class MethodFixtureThatRequiresSta : FixtureSteppable
+        public class MethodFixtureThatRequiresSta : FixtureSteppable, IDisposable
         {
+            public MethodFixtureThatRequiresSta()
+            {
+                VerifyApartmentState();
+            }
+
+            public void Dispose()
+            {
+                VerifyApartmentState();
+            }
+
             [Example(RequiresSta = true)]
             void Ex01()
             {
-                Expect("the apartment of the thread should be STA", () => Thread.CurrentThread.GetApartmentState() == ApartmentState.STA);
+                Expect("the apartment of the thread should be STA", VerifyApartmentState);
+            }
+
+            void VerifyApartmentState()
+            {
+                if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA) throw new Exception();
             }
         }
     }

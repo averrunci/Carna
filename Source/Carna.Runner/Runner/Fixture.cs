@@ -5,6 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 
 using Carna.Runner.Step;
 using Carna.Step;
@@ -94,37 +96,73 @@ namespace Carna.Runner
         protected override IEnumerable<AroundFixtureAttribute> RetrieveAroundFixtureAttributes()
             => FixtureMethod.GetCustomAttributes<AroundFixtureAttribute>();
 
+        private bool RequiresSta()
+        {
+            if (FixtureMethod.GetCustomAttribute<FixtureAttribute>()?.RequiresSta ?? false) return true;
+            if (FixtureInstanceType.GetCustomAttribute<FixtureAttribute>(true)?.RequiresSta ?? false) return true;
+            
+            return IsStaFixture;
+        }
+
         private FixtureResult Run(IFixtureStepRunnerFactory stepRunnerFactory, FixtureResult.Builder result)
+            => RequiresSta() ? RunInSta(stepRunnerFactory, result) : RunCore(stepRunnerFactory, result);
+
+        private FixtureResult RunCore(IFixtureStepRunnerFactory stepRunnerFactory, FixtureResult.Builder result)
         {
             var fixtureInstance = CreateFixtureInstance();
 
-            return fixtureInstance is IFixtureSteppable fixtureSteppable ? Run(fixtureInstance, fixtureSteppable, stepRunnerFactory, result) : Run(fixtureInstance, result);
+            return fixtureInstance is IFixtureSteppable fixtureSteppable ? RunCore(fixtureInstance, fixtureSteppable, stepRunnerFactory, result) : RunCore(fixtureInstance, result);
         }
 
-        private FixtureResult Run(object fixtureInstance, FixtureResult.Builder result)
+        private FixtureResult RunCore(object fixtureInstance, FixtureResult.Builder result)
         {
-            Run(fixtureInstance);
+            RunCore(fixtureInstance);
             return RecordEndTime(result).Passed();
         }
 
-        private FixtureResult Run(object fixtureInstance, IFixtureSteppable fixtureSteppable, IFixtureStepRunnerFactory stepRunnerFactory, FixtureResult.Builder result)
+        private FixtureResult RunCore(object fixtureInstance, IFixtureSteppable fixtureSteppable, IFixtureStepRunnerFactory stepRunnerFactory, FixtureResult.Builder result)
         {
             var fixtureStepper = new FixtureStepper(stepRunnerFactory);
             fixtureStepper.FixtureStepRunning += (s, e) => OnFixtureStepRunning(e);
             fixtureStepper.FixtureStepRun += (s, e) => OnFixtureStepRun(e);
             fixtureSteppable.Stepper = fixtureStepper;
 
-            Run(fixtureInstance);
+            RunCore(fixtureInstance);
             return RecordEndTime(result).FinishedWith(fixtureStepper.Results);
         }
 
-        private void Run(object fixtureInstance)
+        private void RunCore(object fixtureInstance)
         {
-            var runner = new FixtureRunner(this, FixtureMethod, fixtureInstance, SampleData);
-
+            void PerformFixtureMethod() => (FixtureMethod.Invoke(fixtureInstance, SampleData) as Task)?.GetAwaiter().GetResult();
+ 
             var disposable = fixtureInstance as IDisposable;
-            disposable.IfPresent(_ => { using (disposable) runner.Run(); });
-            disposable.IfAbsent(() => runner.Run());
+            disposable.IfPresent(_ => { using (disposable) PerformFixtureMethod(); });
+            disposable.IfAbsent(PerformFixtureMethod);
+        }
+
+        private FixtureResult RunInSta(IFixtureStepRunnerFactory stepRunnerFactory, FixtureResult.Builder result)
+            => RunInStaAsync(stepRunnerFactory, result).GetAwaiter().GetResult();
+
+        private Task<FixtureResult> RunInStaAsync(IFixtureStepRunnerFactory stepRunnerFactory, FixtureResult.Builder result)
+        {
+            var taskCompletionSource = new TaskCompletionSource<FixtureResult>();
+            var thread = new Thread(() =>
+            {
+                try
+                {
+                    taskCompletionSource.SetResult(RunCore(stepRunnerFactory, result));
+                }
+                catch (Exception exc)
+                {
+                    taskCompletionSource.SetException(exc);
+                }
+            })
+            {
+                IsBackground = true
+            };
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+            return taskCompletionSource.Task;
         }
     }
 }
