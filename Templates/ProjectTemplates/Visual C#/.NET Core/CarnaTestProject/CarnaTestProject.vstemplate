@@ -8,6 +8,11 @@
     <CreateNewFolder>true</CreateNewFolder>
     <DefaultName>CarnaTestProject</DefaultName>
     <ProvideDefaultName>true</ProvideDefaultName>
+    <LanguageTag>CSharp</LanguageTag>
+    <PlatformTag>Linux</PlatformTag>
+    <PlatformTag>macOS</PlatformTag>
+    <PlatformTag>Windows</PlatformTag>
+    <ProjectTypeTag>Test</ProjectTypeTag>
   </TemplateData>
   <TemplateContent>
     <Project TargetFileName="CarnaTestProject.csproj" File="CarnaTestProject.csproj" ReplaceParameters="true">
