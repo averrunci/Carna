@@ -26,7 +26,7 @@ namespace Carna.ConsoleRunner
         protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
         {
             var unmanagedDllPath = assemblyDependencyResolver.ResolveUnmanagedDllToPath(unmanagedDllName);
-            return unmanagedDllPath == null ? IntPtr.Zero : LoadUnmanagedDllFromPath(unmanagedDllName);
+            return unmanagedDllPath == null ? IntPtr.Zero : LoadUnmanagedDllFromPath(unmanagedDllPath);
         }
     }
 }
