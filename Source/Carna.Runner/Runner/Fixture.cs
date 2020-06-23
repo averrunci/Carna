@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 
 using Carna.Runner.Step;
@@ -96,16 +95,8 @@ namespace Carna.Runner
         protected override IEnumerable<AroundFixtureAttribute> RetrieveAroundFixtureAttributes()
             => FixtureMethod.GetCustomAttributes<AroundFixtureAttribute>();
 
-        private bool RequiresSta()
-        {
-            if (FixtureMethod.GetCustomAttribute<FixtureAttribute>()?.RequiresSta ?? false) return true;
-            if (FixtureInstanceType.GetCustomAttribute<FixtureAttribute>(true)?.RequiresSta ?? false) return true;
-            
-            return IsStaFixture;
-        }
-
         private FixtureResult Run(IFixtureStepRunnerFactory stepRunnerFactory, FixtureResult.Builder result)
-            => RequiresSta() ? RunInSta(stepRunnerFactory, result) : RunCore(stepRunnerFactory, result);
+            => CanRunInSta(FixtureMethod) ? RunInSta(() => RunCore(stepRunnerFactory, result)) : RunCore(stepRunnerFactory, result);
 
         private FixtureResult RunCore(IFixtureStepRunnerFactory stepRunnerFactory, FixtureResult.Builder result)
         {
@@ -138,31 +129,6 @@ namespace Carna.Runner
             var disposable = fixtureInstance as IDisposable;
             disposable.IfPresent(_ => { using (disposable) PerformFixtureMethod(); });
             disposable.IfAbsent(PerformFixtureMethod);
-        }
-
-        private FixtureResult RunInSta(IFixtureStepRunnerFactory stepRunnerFactory, FixtureResult.Builder result)
-            => RunInStaAsync(stepRunnerFactory, result).GetAwaiter().GetResult();
-
-        private Task<FixtureResult> RunInStaAsync(IFixtureStepRunnerFactory stepRunnerFactory, FixtureResult.Builder result)
-        {
-            var taskCompletionSource = new TaskCompletionSource<FixtureResult>();
-            var thread = new Thread(() =>
-            {
-                try
-                {
-                    taskCompletionSource.SetResult(RunCore(stepRunnerFactory, result));
-                }
-                catch (Exception exc)
-                {
-                    taskCompletionSource.SetException(exc);
-                }
-            })
-            {
-                IsBackground = true
-            };
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-            return taskCompletionSource.Task;
         }
     }
 }

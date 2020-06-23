@@ -7,7 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-
+using System.Threading;
+using System.Threading.Tasks;
 using Carna.Runner.Step;
 
 namespace Carna.Runner
@@ -277,6 +278,69 @@ namespace Carna.Runner
         /// The result of a fixture running if a fixture can be run; otherwise, <c>null</c>.
         /// </returns>
         protected abstract FixtureResult Run(DateTime startTime, IFixtureFilter filter, IFixtureStepRunnerFactory stepRunnerFactory, bool parallel);
+
+        /// <summary>
+        /// Runs a fixture using the specified function to run it in a single thread apartment.
+        /// </summary>
+        /// <typeparam name="TResult">The type of the result of a fixture running.</typeparam>
+        /// <param name="run">The function to run a fixture.</param>
+        /// <returns>The result of a fixture running if a fixture can be run; otherwise, <c>null</c>.</returns>
+        protected virtual TResult RunInSta<TResult>(Func<TResult> run)
+            => RunInStaAsync(run).GetAwaiter().GetResult();
+
+        /// <summary>
+        /// Runs a fixture using the specified function to run it in a single thread apartment asynchronously.
+        /// </summary>
+        /// <typeparam name="TResult">The type of the result of a fixture running.</typeparam>
+        /// <param name="run">The function to run a fixture.</param>
+        /// <returns>The result of the fixture running if a fixture can be run; otherwise, <c>null</c>.</returns>
+        protected virtual Task<TResult> RunInStaAsync<TResult>(Func<TResult> run)
+        {
+            var taskCompletionSource = new TaskCompletionSource<TResult>();
+            var thread = new Thread(() =>
+            {
+                try
+                {
+                    taskCompletionSource.SetResult(run());
+                }
+                catch (Exception exc)
+                {
+                    taskCompletionSource.SetException(exc);
+                }
+            })
+            {
+                IsBackground = true
+            };
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+            return taskCompletionSource.Task;
+        }
+
+        /// <summary>
+        /// Gets a value that indicates whether a fixture requires a single thread apartment.
+        /// </summary>
+        /// <param name="fixtureMethod">The method to run a fixture.</param>
+        /// <returns><c>true</c> if a fixture requires a single thread apartment; otherwise, <c>false</c>.</returns>
+        protected virtual bool RequiresSta(MethodInfo fixtureMethod = null)
+        {
+            if (fixtureMethod?.GetCustomAttribute<FixtureAttribute>()?.RequiresSta ?? false) return true;
+            if (FixtureInstanceType?.GetCustomAttribute<FixtureAttribute>(true)?.RequiresSta ?? false) return true;
+
+            return IsStaFixture;
+        }
+
+        /// <summary>
+        /// Gets a value that indicates whether to run a fixture in a single thread apartment.
+        /// </summary>
+        /// <returns><c>true</c> if a fixture is run in a single thread apartment; otherwise, <c>false</c>.</returns>
+        protected virtual bool IsRunningInSta() => Thread.CurrentThread.GetApartmentState() == ApartmentState.STA;
+
+        /// <summary>
+        /// Gets a value that indicates whether to be able to run a fixture in a single thread apartment.
+        /// </summary>
+        /// <param name="fixtureMethod">The method to run a fixture.</param>
+        /// <returns><c>true</c> a fixture is able to be run in a single thread apartment; otherwise, <c>false</c>.</returns>
+        protected virtual bool CanRunInSta(MethodInfo fixtureMethod = null) => RequiresSta(fixtureMethod) && !IsRunningInSta();
 
         /// <summary>
         /// Creates a new instance of the <see cref="FixtureInstanceType"/>.

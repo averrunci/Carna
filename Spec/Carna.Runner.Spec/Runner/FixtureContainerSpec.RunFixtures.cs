@@ -1,9 +1,8 @@
-﻿// Copyright (C) 2017-2019 Fievus
+﻿// Copyright (C) 2017-2020 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
 using System;
-
 using NSubstitute;
 
 using Carna.Runner.Step;
@@ -201,7 +200,7 @@ namespace Carna.Runner
             TestAroundFixtureAttribute.OnFixtureRunCount.Value = 0;
 
             var fixture = TestFixtures.CreateFixtureWithContainer<TestFixtures.FixtureSpecifiedByOneAroundFixtureAttribute>("Ex01");
-            fixture.Run(null, null);
+            fixture.Run(null, new FixtureStepRunnerFactory());
             Assert(1);
         }
 
@@ -212,8 +211,24 @@ namespace Carna.Runner
             TestAroundFixtureAttribute.OnFixtureRunCount.Value = 0;
 
             var fixture = TestFixtures.CreateFixtureWithContainer<TestFixtures.FixtureSpecifiedBySomeAroundFixtureAttributes>("Ex01");
-            fixture.Run(null, null);
+            fixture.Run(null, new FixtureStepRunnerFactory());
             Assert(3);
+        }
+
+        [Example("When a container fixture requires a single thread apartment")]
+        void Ex08()
+        {
+            var fixture = TestFixtures.CreateFixtureWithContainer<TestFixtures.FixtureThatRequiresSta>("Ex01");
+            var result = fixture.Run(null, new FixtureStepRunnerFactory());
+            Expect("", () => result.Status == FixtureStatus.Passed);
+        }
+
+        [Example("When a method of a container fixture requires a single thread apartment")]
+        void Ex09()
+        {
+            var fixture = TestFixtures.CreateFixtureWithContainer<TestFixtures.MethodFixtureThatRequiresSta>("Ex01");
+            var result = fixture.Run(null, new FixtureStepRunnerFactory());
+            Expect("", () => result.Status == FixtureStatus.Passed);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017-2018 Fievus
+﻿// Copyright (C) 2017-2020 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -170,6 +170,9 @@ namespace Carna.Runner
             => FixtureInstanceType?.GetCustomAttributes<AroundFixtureAttribute>() ?? Enumerable.Empty<AroundFixtureAttribute>();
 
         private IEnumerable<FixtureResult> Run(IEnumerable<IFixture> fixtures, IFixtureFilter filter, IFixtureStepRunnerFactory stepRunnerFactory, bool parallel)
+            => CanRunInSta() ? RunInSta(() => RunCore(fixtures, filter, stepRunnerFactory, parallel)) : RunCore(fixtures, filter, stepRunnerFactory, parallel);
+
+        private IEnumerable<FixtureResult> RunCore(IEnumerable<IFixture> fixtures, IFixtureFilter filter, IFixtureStepRunnerFactory stepRunnerFactory, bool parallel)
         {
             IEnumerable<FixtureResult> RunFixtures(IFixtureFilter f) => CanRunParallel(parallel)
                 ? fixtures.AsParallel()
