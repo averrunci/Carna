@@ -1,5 +1,17 @@
 # Release note
 
+## v1.7.2
+
+### Bug fix
+
+#### Carna.Runner
+
+- Fixed to run a constructor and a dispose method of a container fixture in a single thread apartment when it is required.
+
+#### carna-runner
+
+- Fixed to be able to load unmanaged dlls.
+
 ## v1.7.1
 
 ### Bug fix
