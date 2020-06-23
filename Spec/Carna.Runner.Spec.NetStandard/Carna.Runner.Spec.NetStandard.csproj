@@ -30,10 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Runner\Carna.Runner.Spec\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="NSubstitute" Version="4.2.1" />
   </ItemGroup>
 
