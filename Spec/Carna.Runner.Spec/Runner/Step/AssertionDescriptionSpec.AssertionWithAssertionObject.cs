@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2019 Fievus
+﻿// Copyright (C) 2019-2021 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -28,10 +28,10 @@ namespace Carna.Runner.Step
             Given("an assertion that has '(x:3, y:3) == Expected'", () => Assertion = () => new TestAssertion(3, 3) == Expected);
             Expect(
                 @"the description should be as follows:
-Expected: [X: 5, Y: 3]
-But was : [X: 3, Y: 3]",
-                () => AssertionDescription.Of(Assertion).ToString() == @"Expected: [X: 5, Y: 3]
-But was : [X: 3, Y: 3]"
+Expected: {X: 5, Y: 3}
+But was : {X: 3, Y: 3}",
+                () => AssertionDescription.Of(Assertion).ToString() == @"Expected: {X: 5, Y: 3}
+But was : {X: 3, Y: 3}"
             );
         }
 
@@ -41,10 +41,10 @@ But was : [X: 3, Y: 3]"
             Given("an assertion that has '(x: 5, y: 3) != Expected'", () => Assertion = () => new TestAssertion(5, 3) != Expected);
             Expect(
                 @"the description should be as follows:
-Expected: not [X: 5, Y: 3]
-But was : [X: 5, Y: 3]",
-                () => AssertionDescription.Of(Assertion).ToString() == @"Expected: not [X: 5, Y: 3]
-But was : [X: 5, Y: 3]"
+Expected: not {X: 5, Y: 3}
+But was : {X: 5, Y: 3}",
+                () => AssertionDescription.Of(Assertion).ToString() == @"Expected: not {X: 5, Y: 3}
+But was : {X: 5, Y: 3}"
             );
         }
 
@@ -54,10 +54,10 @@ But was : [X: 5, Y: 3]"
             Given("an assertion that has '(x: 3 y: 3).Equals(Expected)'", () => Assertion = () => new TestAssertion(3, 3).Equals(Expected));
             Expect(
                 @"the description should be as follows:
-Expected: [X: 5, y: 3]
-But was : [X: 3, y: 3]",
-                () => AssertionDescription.Of(Assertion).ToString() == @"Expected: [X: 5, Y: 3]
-But was : [X: 3, Y: 3]"
+Expected: {X: 5, y: 3}
+But was : {X: 3, y: 3}",
+                () => AssertionDescription.Of(Assertion).ToString() == @"Expected: {X: 5, Y: 3}
+But was : {X: 3, Y: 3}"
             );
         }
 
@@ -67,10 +67,10 @@ But was : [X: 3, Y: 3]"
             Given("an assertion that has 'Equals((x: 3, y: 3), Expected)'", () => Assertion = () => Equals(new TestAssertion(3, 3), Expected));
             Expect(
                 @"the description should be as follows:
-Expected: [X: 5, Y: 3]
-But was : [X: 3, Y: 3]",
-                () => AssertionDescription.Of(Assertion).ToString() == @"Expected: [X: 5, Y: 3]
-But was : [X: 3, Y: 3]"
+Expected: {X: 5, Y: 3}
+But was : {X: 3, Y: 3}",
+                () => AssertionDescription.Of(Assertion).ToString() == @"Expected: {X: 5, Y: 3}
+But was : {X: 3, Y: 3}"
             );
         }
 

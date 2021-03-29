@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2019 Fievus
+﻿// Copyright (C) 2019-2021 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -20,7 +20,7 @@ namespace Carna.Assertions
         /// Returns a string that represents the current object.
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
-        public override string ToString() => ToString(new StringOptions("[", "]"));
+        public override string ToString() => ToString(new StringOptions("{", "}"));
 
         /// <summary>
         /// Returns a string that represents the current object with the specified options.
