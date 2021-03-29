@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2019 Fievus
+﻿// Copyright (C) 2019-2021 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -44,7 +44,9 @@ namespace Carna.Assertions
                         BooleanProperty = true,
                         StringAssertionProperty = new NotEqualAssertionProperty<string>("StringPropertyB"),
                         Int32AssertionProperty = new LessThanAssertionProperty<int>(2),
-                        NotAssertionDoubleProperty = 2.72
+                        NotAssertionDoubleProperty = 2.72,
+                        StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                        IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                     },
                     Expected = new AssertionObjects.SimpleTestAssertion
                     {
@@ -53,7 +55,9 @@ namespace Carna.Assertions
                         BooleanProperty = true,
                         StringAssertionProperty = new NotEqualAssertionProperty<string>("StringPropertyA"),
                         Int32AssertionProperty = new LessThanAssertionProperty<int>(3),
-                        NotAssertionDoubleProperty = 3.14
+                        NotAssertionDoubleProperty = 3.14,
+                        StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                        IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                     },
                     ExpectedResult = true
                 };
@@ -67,7 +71,9 @@ namespace Carna.Assertions
                         BooleanProperty = true,
                         StringAssertionProperty = new NotEqualAssertionProperty<string>("StringPropertyB"),
                         Int32AssertionProperty = new LessThanAssertionProperty<int>(2),
-                        NotAssertionDoubleProperty = 2.72
+                        NotAssertionDoubleProperty = 2.72,
+                        StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                        IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                     },
                     Expected = new AssertionObjects.SimpleTestAssertion
                     {
@@ -76,7 +82,9 @@ namespace Carna.Assertions
                         BooleanProperty = true,
                         StringAssertionProperty = new NotEqualAssertionProperty<string>("StringPropertyA"),
                         Int32AssertionProperty = new LessThanAssertionProperty<int>(3),
-                        NotAssertionDoubleProperty = 3.14
+                        NotAssertionDoubleProperty = 3.14,
+                        StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                        IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                     },
                     ExpectedResult = false
                 };
@@ -92,11 +100,15 @@ namespace Carna.Assertions
                             BooleanProperty = true,
                             StringAssertionProperty = new NotEqualAssertionProperty<string>("StringPropertyB"),
                             Int32AssertionProperty = new LessThanAssertionProperty<int>(2),
-                            NotAssertionDoubleProperty = 2.72
+                            NotAssertionDoubleProperty = 2.72,
+                            StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                            IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                         },
                         StringProperty = "PropertyA",
                         Int32AssertionProperty = new LessThanOrEqualAssertionProperty<int>(3),
-                        NotAssertionDoubleProperty = 2.72
+                        NotAssertionDoubleProperty = 2.72,
+                        StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                        IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                     },
                     Expected = new AssertionObjects.NestedAssertionObjectTestAssertion
                     {
@@ -107,11 +119,15 @@ namespace Carna.Assertions
                             BooleanProperty = true,
                             StringAssertionProperty = new NotEqualAssertionProperty<string>("StringPropertyA"),
                             Int32AssertionProperty = new LessThanAssertionProperty<int>(3),
-                            NotAssertionDoubleProperty = 3.14
+                            NotAssertionDoubleProperty = 3.14,
+                            StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                            IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                         },
                         StringProperty = "PropertyA",
                         Int32AssertionProperty = new LessThanOrEqualAssertionProperty<int>(3),
-                        NotAssertionDoubleProperty = 3.14
+                        NotAssertionDoubleProperty = 3.14,
+                        StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                        IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                     },
                     ExpectedResult = true
                 };
@@ -127,11 +143,15 @@ namespace Carna.Assertions
                             BooleanProperty = true,
                             StringAssertionProperty = new NotEqualAssertionProperty<string>("StringPropertyA"),
                             Int32AssertionProperty = new LessThanAssertionProperty<int>(2),
-                            NotAssertionDoubleProperty = 2.72
+                            NotAssertionDoubleProperty = 2.72,
+                            StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                            IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                         },
                         StringProperty = "PropertyA",
                         Int32AssertionProperty = new LessThanOrEqualAssertionProperty<int>(2),
-                        NotAssertionDoubleProperty = 2.72
+                        NotAssertionDoubleProperty = 2.72,
+                        StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                        IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                     },
                     Expected = new AssertionObjects.NestedAssertionObjectTestAssertion
                     {
@@ -142,11 +162,15 @@ namespace Carna.Assertions
                             BooleanProperty = true,
                             StringAssertionProperty = new NotEqualAssertionProperty<string>("StringPropertyA"),
                             Int32AssertionProperty = new LessThanAssertionProperty<int>(3),
-                            NotAssertionDoubleProperty = 3.14
+                            NotAssertionDoubleProperty = 3.14,
+                            StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                            IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                         },
                         StringProperty = "PropertyA",
                         Int32AssertionProperty = new LessThanOrEqualAssertionProperty<int>(3),
-                        NotAssertionDoubleProperty = 3.14
+                        NotAssertionDoubleProperty = 3.14,
+                        StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                        IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                     },
                     ExpectedResult = false
                 };

@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2019 Fievus
+﻿// Copyright (C) 2019-2021 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -31,9 +31,11 @@ namespace Carna.Assertions
                         BooleanProperty = true,
                         StringAssertionProperty = new NotEqualAssertionProperty<string>("PropertyA"),
                         Int32AssertionProperty = new LessThanAssertionProperty<int>(3),
-                        NotAssertionDoubleProperty = 3.14
+                        NotAssertionDoubleProperty = 3.14,
+                        StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                        IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                     },
-                    Expected = "[StringProperty: PropertyA, Int32Property: 32, BooleanProperty: True, StringAssertionProperty: not PropertyA, Int32AssertionProperty: less than 3]"
+                    Expected = "[StringProperty: PropertyA, Int32Property: 32, BooleanProperty: True, StringAssertionProperty: not PropertyA, Int32AssertionProperty: less than 3, StringEnumerableAssertionProperty: [ValueA, ValueB, ValueC], IntEnumerableAssertionProperty: [1, 2, 3, 4, 5]]"
                 };
                 yield return new
                 {
@@ -47,13 +49,17 @@ namespace Carna.Assertions
                             BooleanProperty = true,
                             StringAssertionProperty = new NotEqualAssertionProperty<string>("PropertyA"),
                             Int32AssertionProperty = new LessThanAssertionProperty<int>(3),
-                            NotAssertionDoubleProperty = 3.14
+                            NotAssertionDoubleProperty = 3.14,
+                            StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                            IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                         },
                         StringProperty = "PropertyA",
                         Int32AssertionProperty = new LessThanOrEqualAssertionProperty<int>(3),
-                        NotAssertionDoubleProperty = 3.14
+                        NotAssertionDoubleProperty = 3.14,
+                        StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                        IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                     },
-                    Expected = "[SimpleTestAssertionProperty: [StringProperty: PropertyA, Int32Property: 32, BooleanProperty: True, StringAssertionProperty: not PropertyA, Int32AssertionProperty: less than 3], StringProperty: PropertyA, Int32AssertionProperty: less than or equal 3]"
+                    Expected = "[SimpleTestAssertionProperty: [StringProperty: PropertyA, Int32Property: 32, BooleanProperty: True, StringAssertionProperty: not PropertyA, Int32AssertionProperty: less than 3, StringEnumerableAssertionProperty: [ValueA, ValueB, ValueC], IntEnumerableAssertionProperty: [1, 2, 3, 4, 5]], StringProperty: PropertyA, Int32AssertionProperty: less than or equal 3, StringEnumerableAssertionProperty: [ValueA, ValueB, ValueC], IntEnumerableAssertionProperty: [1, 2, 3, 4, 5]]"
                 };
                 yield return new
                 {
@@ -65,9 +71,11 @@ namespace Carna.Assertions
                         BooleanProperty = true,
                         StringAssertionProperty = new NotEqualAssertionProperty<string>("PropertyA"),
                         Int32AssertionProperty = new GreaterThanAssertionProperty<int>(3),
-                        NotAssertionDoubleProperty = 3.14 
+                        NotAssertionDoubleProperty = 3.14,
+                        StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                        IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                     },
-                    Expected = "[String Property: PropertyA, Int32 Property: 32, Boolean Property: True, String Assertion Property: not PropertyA, Int32AssertionProperty: greater than 3]"
+                    Expected = "[String Property: PropertyA, Int32 Property: 32, Boolean Property: True, String Assertion Property: not PropertyA, Int32AssertionProperty: greater than 3, String Enumerable Assertion Property: [ValueA, ValueB, ValueC], IntEnumerableAssertionProperty: [1, 2, 3, 4, 5]]"
                 };
                 yield return new
                 {
@@ -81,13 +89,16 @@ namespace Carna.Assertions
                             BooleanProperty = true,
                             StringAssertionProperty = new NotEqualAssertionProperty<string>("PropertyA"),
                             Int32AssertionProperty = new GreaterThanAssertionProperty<int>(3),
-                            NotAssertionDoubleProperty = 3.14 
+                            NotAssertionDoubleProperty = 3.14,
+                            StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                            IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                         },
                         StringProperty = "PropertyA",
                         Int32AssertionProperty = new GreaterThanOrEqualAssertionProperty<int>(3),
-                        NotAssertionDoubleProperty = 3.14
+                        NotAssertionDoubleProperty = 3.14,
+                        StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" })
                     },
-                    Expected = "[Simple Test Assertion Property: [String Property: PropertyA, Int32 Property: 32, Boolean Property: True, String Assertion Property: not PropertyA, Int32AssertionProperty: greater than 3], String Property: PropertyA, Int32 Assertion Property: greater than or equal 3]"
+                    Expected = "[Simple Test Assertion Property: [String Property: PropertyA, Int32 Property: 32, Boolean Property: True, String Assertion Property: not PropertyA, Int32AssertionProperty: greater than 3, String Enumerable Assertion Property: [ValueA, ValueB, ValueC], IntEnumerableAssertionProperty: [1, 2, 3, 4, 5]], String Property: PropertyA, Int32 Assertion Property: greater than or equal 3, String Enumerable Assertion Property: [ValueA, ValueB, ValueC]]"
                 };
             }
         }
@@ -115,14 +126,18 @@ namespace Carna.Assertions
                         BooleanProperty = true,
                         StringAssertionProperty = new NotEqualAssertionProperty<string>("PropertyA"),
                         Int32AssertionProperty = new LessThanAssertionProperty<int>(3),
-                        NotAssertionDoubleProperty = 3.14 
+                        NotAssertionDoubleProperty = 3.14,
+                        StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                        IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                     },
                     Options = options,
                     Expected = @"StringProperty: PropertyA
 Int32Property: 32
 BooleanProperty: True
 StringAssertionProperty: not PropertyA
-Int32AssertionProperty: less than 3"
+Int32AssertionProperty: less than 3
+StringEnumerableAssertionProperty: [ValueA, ValueB, ValueC]
+IntEnumerableAssertionProperty: [1, 2, 3, 4, 5]"
                 };
                 yield return new
                 {
@@ -136,11 +151,15 @@ Int32AssertionProperty: less than 3"
                             BooleanProperty = true,
                             StringAssertionProperty =  new NotEqualAssertionProperty<string>("PropertyA"),
                             Int32AssertionProperty = new LessThanAssertionProperty<int>(3),
-                            NotAssertionDoubleProperty = 3.14 
+                            NotAssertionDoubleProperty = 3.14,
+                            StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                            IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                         },
                         StringProperty = "PropertyA",
                         Int32AssertionProperty = new LessThanOrEqualAssertionProperty<int>(3),
-                        NotAssertionDoubleProperty = 3.14
+                        NotAssertionDoubleProperty = 3.14,
+                        StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                        IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                     },
                     Options = options,
                     Expected = @"SimpleTestAssertionProperty: 
@@ -149,8 +168,12 @@ Int32AssertionProperty: less than 3"
   BooleanProperty: True
   StringAssertionProperty: not PropertyA
   Int32AssertionProperty: less than 3
+  StringEnumerableAssertionProperty: [ValueA, ValueB, ValueC]
+  IntEnumerableAssertionProperty: [1, 2, 3, 4, 5]
 StringProperty: PropertyA
-Int32AssertionProperty: less than or equal 3"
+Int32AssertionProperty: less than or equal 3
+StringEnumerableAssertionProperty: [ValueA, ValueB, ValueC]
+IntEnumerableAssertionProperty: [1, 2, 3, 4, 5]"
                 };
                 yield return new
                 {
@@ -162,14 +185,18 @@ Int32AssertionProperty: less than or equal 3"
                         BooleanProperty = true,
                         StringAssertionProperty = new NotEqualAssertionProperty<string>("PropertyA"),
                         Int32AssertionProperty = new GreaterThanAssertionProperty<int>(3),
-                        NotAssertionDoubleProperty = 3.14
+                        NotAssertionDoubleProperty = 3.14,
+                        StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                        IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                     },
                     Options = options,
                     Expected = @"String Property: PropertyA
 Int32 Property: 32
 Boolean Property: True
 String Assertion Property: not PropertyA
-Int32AssertionProperty: greater than 3"
+Int32AssertionProperty: greater than 3
+String Enumerable Assertion Property: [ValueA, ValueB, ValueC]
+IntEnumerableAssertionProperty: [1, 2, 3, 4, 5]"
                 };
                 yield return new
                 {
@@ -183,11 +210,14 @@ Int32AssertionProperty: greater than 3"
                             BooleanProperty = true,
                             StringAssertionProperty = new NotEqualAssertionProperty<string>("PropertyA"),
                             Int32AssertionProperty = new GreaterThanAssertionProperty<int>(3),
-                            NotAssertionDoubleProperty = 3.14 
+                            NotAssertionDoubleProperty = 3.14,
+                            StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                            IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                         },
                         StringProperty = "PropertyA",
                         Int32AssertionProperty = new GreaterThanOrEqualAssertionProperty<int>(3),
-                        NotAssertionDoubleProperty = 3.14
+                        NotAssertionDoubleProperty = 3.14,
+                        StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" })
                     },
                     Options = options,
                     Expected = @"Simple Test Assertion Property: 
@@ -196,8 +226,11 @@ Int32AssertionProperty: greater than 3"
   Boolean Property: True
   String Assertion Property: not PropertyA
   Int32AssertionProperty: greater than 3
+  String Enumerable Assertion Property: [ValueA, ValueB, ValueC]
+  IntEnumerableAssertionProperty: [1, 2, 3, 4, 5]
 String Property: PropertyA
-Int32 Assertion Property: greater than or equal 3"
+Int32 Assertion Property: greater than or equal 3
+String Enumerable Assertion Property: [ValueA, ValueB, ValueC]"
                 };
             }
         }
@@ -223,14 +256,18 @@ Int32 Assertion Property: greater than or equal 3"
                         BooleanProperty = true,
                         StringAssertionProperty = new NotEqualAssertionProperty<string>("PropertyA"),
                         Int32AssertionProperty = new LessThanAssertionProperty<int>(3),
-                        NotAssertionDoubleProperty = 3.14
+                        NotAssertionDoubleProperty = 3.14,
+                        StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                        IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                     },
                     Expected = @"
   StringProperty: PropertyA
   Int32Property: 32
   BooleanProperty: True
   StringAssertionProperty: not PropertyA
-  Int32AssertionProperty: less than 3"
+  Int32AssertionProperty: less than 3
+  StringEnumerableAssertionProperty: [ValueA, ValueB, ValueC]
+  IntEnumerableAssertionProperty: [1, 2, 3, 4, 5]"
                 };
                 yield return new
                 {
@@ -244,11 +281,15 @@ Int32 Assertion Property: greater than or equal 3"
                             BooleanProperty = true,
                             StringAssertionProperty = new NotEqualAssertionProperty<string>("PropertyA"),
                             Int32AssertionProperty = new LessThanAssertionProperty<int>(3),
-                            NotAssertionDoubleProperty = 3.14 
+                            NotAssertionDoubleProperty = 3.14,
+                            StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                            IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                         },
                         StringProperty = "PropertyA",
                         Int32AssertionProperty = new LessThanOrEqualAssertionProperty<int>(3),
-                        NotAssertionDoubleProperty = 3.14
+                        NotAssertionDoubleProperty = 3.14,
+                        StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                        IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                     },
                     Expected = @"
   SimpleTestAssertionProperty: 
@@ -257,8 +298,12 @@ Int32 Assertion Property: greater than or equal 3"
     BooleanProperty: True
     StringAssertionProperty: not PropertyA
     Int32AssertionProperty: less than 3
+    StringEnumerableAssertionProperty: [ValueA, ValueB, ValueC]
+    IntEnumerableAssertionProperty: [1, 2, 3, 4, 5]
   StringProperty: PropertyA
-  Int32AssertionProperty: less than or equal 3"
+  Int32AssertionProperty: less than or equal 3
+  StringEnumerableAssertionProperty: [ValueA, ValueB, ValueC]
+  IntEnumerableAssertionProperty: [1, 2, 3, 4, 5]"
                 };
                 yield return new
                 {
@@ -270,14 +315,18 @@ Int32 Assertion Property: greater than or equal 3"
                         BooleanProperty = true,
                         StringAssertionProperty = new NotEqualAssertionProperty<string>("PropertyA"),
                         Int32AssertionProperty = new GreaterThanAssertionProperty<int>(3),
-                        NotAssertionDoubleProperty = 3.14 
+                        NotAssertionDoubleProperty = 3.14,
+                        StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                        IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                     },
                     Expected = @"
   String Property: PropertyA
   Int32 Property: 32
   Boolean Property: True
   String Assertion Property: not PropertyA
-  Int32AssertionProperty: greater than 3"
+  Int32AssertionProperty: greater than 3
+  String Enumerable Assertion Property: [ValueA, ValueB, ValueC]
+  IntEnumerableAssertionProperty: [1, 2, 3, 4, 5]"
                 };
                 yield return new
                 {
@@ -291,11 +340,14 @@ Int32 Assertion Property: greater than or equal 3"
                             BooleanProperty = true,
                             StringAssertionProperty = new NotEqualAssertionProperty<string>("PropertyA"),
                             Int32AssertionProperty = new GreaterThanAssertionProperty<int>(3),
-                            NotAssertionDoubleProperty = 3.14 
+                            NotAssertionDoubleProperty = 3.14,
+                            StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                            IntEnumerableAssertionProperty = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 })
                         },
                         StringProperty = "PropertyA",
                         Int32AssertionProperty = new GreaterThanOrEqualAssertionProperty<int>(3),
-                        NotAssertionDoubleProperty = 3.14
+                        NotAssertionDoubleProperty = 3.14,
+                        StringEnumerableAssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" })
                     },
                     Expected = @"
   Simple Test Assertion Property: 
@@ -304,8 +356,11 @@ Int32 Assertion Property: greater than or equal 3"
     Boolean Property: True
     String Assertion Property: not PropertyA
     Int32AssertionProperty: greater than 3
+    String Enumerable Assertion Property: [ValueA, ValueB, ValueC]
+    IntEnumerableAssertionProperty: [1, 2, 3, 4, 5]
   String Property: PropertyA
-  Int32 Assertion Property: greater than or equal 3"
+  Int32 Assertion Property: greater than or equal 3
+  String Enumerable Assertion Property: [ValueA, ValueB, ValueC]"
                 };
             }
         }

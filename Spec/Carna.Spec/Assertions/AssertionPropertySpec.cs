@@ -1,10 +1,11 @@
-﻿// Copyright (C) 2019 Fievus
+﻿// Copyright (C) 2019-2021 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Carna.Assertions
 {
@@ -246,6 +247,55 @@ namespace Carna.Assertions
                     Actual = new ActualValueProperty<int>(3),
                     ExpectedResult = true
                 };
+                yield return new
+                {
+                    Description = "For the EnumerableAssertionProperty, the actual value and the expected value are the same",
+                    Expected = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                    Actual = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                    ExpectedResult = true
+                };
+                yield return new
+                {
+                    Description = "For the EnumerableAssertionProperty, the actual value and the expected value are different",
+                    Expected = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" }),
+                    Actual = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueD" }),
+                    ExpectedResult = false
+                };
+                yield return new
+                {
+                    Description = "For the EnumerableAssertionProperty, the actual value that is ActualValueProperty and the expected value are the same",
+                    Expected = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 }),
+                    Actual = new ActualValueProperty<IEnumerable<int>>(new[] { 1, 2, 3, 4, 5 }),
+                    ExpectedResult = true
+                };
+                yield return new
+                {
+                    Description = "For the EnumerableAssertionProperty, the actual value that is ActualValueProperty and the expected value are the same (null)",
+                    Expected = new EnumerableAssertionProperty<int>(null),
+                    Actual = new ActualValueProperty<IEnumerable<int>>(null),
+                    ExpectedResult = true
+                };
+                yield return new
+                {
+                    Description = "For the EnumerableAssertionProperty, the actual value that is ActualValueProperty and the expected value are different",
+                    Expected = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 }),
+                    Actual = new ActualValueProperty<IEnumerable<int>>(new[] { 1, 2, 3 }),
+                    ExpectedResult = false
+                };
+                yield return new
+                {
+                    Description = "For the EnumerableAssertionProperty, the actual value that is ActualValueProperty is null and the expected value is not null",
+                    Expected = new EnumerableAssertionProperty<int>(null),
+                    Actual = new ActualValueProperty<IEnumerable<int>>(new[] { 1, 2, 3 }),
+                    ExpectedResult = false
+                };
+                yield return new
+                {
+                    Description = "For the EnumerableAssertionProperty, the actual value that is ActualValueProperty is not null and the expected value is null",
+                    Expected = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 }),
+                    Actual = new ActualValueProperty<IEnumerable<int>>(null),
+                    ExpectedResult = false
+                };
             }
         }
 
@@ -298,6 +348,12 @@ namespace Carna.Assertions
                 };
                 yield return new
                 {
+                    Description = "For the EnumerableAssertionProperty and EnumerableAssertionProperty whose value type is different",
+                    Expected = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3 }),
+                    Actual = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" })
+                };
+                yield return new
+                {
                     Description = "For the EqualAssertionProperty and NotEqualAssertionProperty whose value type is the same",
                     Expected = new NotEqualAssertionProperty<string>("PropertyA"),
                     Actual = new EqualAssertionProperty<string>("PropertyA")
@@ -328,6 +384,12 @@ namespace Carna.Assertions
                 };
                 yield return new
                 {
+                    Description = "For the EqualAssertionProperty and EnumerableAssertionProperty whose value type is the same",
+                    Expected = new GreaterThanOrEqualAssertionProperty<int>(3),
+                    Actual = new EnumerableAssertionProperty<int>(new[] { 3 })
+                };
+                yield return new
+                {
                     Description = "For the NotEqualAssertionProperty and LessThanAssertionProperty whose value type is the same",
                     Expected = new LessThanAssertionProperty<int>(3),
                     Actual = new NotEqualAssertionProperty<int>(3)
@@ -352,6 +414,12 @@ namespace Carna.Assertions
                 };
                 yield return new
                 {
+                    Description = "For the NotEqualAssertionProperty and EnumerableAssertionProperty whose value type is the same",
+                    Expected = new GreaterThanOrEqualAssertionProperty<int>(3),
+                    Actual = new EnumerableAssertionProperty<int>(new[] { 3 })
+                };
+                yield return new
+                {
                     Description = "For the LessThanAssertionProperty and LessThanOrEqualAssertionProperty whose value type is the same",
                     Expected = new LessThanOrEqualAssertionProperty<int>(3),
                     Actual = new LessThanAssertionProperty<int>(3)
@@ -370,6 +438,12 @@ namespace Carna.Assertions
                 };
                 yield return new
                 {
+                    Description = "For the LessThanAssertionProperty and EnumerableAssertionProperty whose value type is the same",
+                    Expected = new GreaterThanOrEqualAssertionProperty<int>(3),
+                    Actual = new EnumerableAssertionProperty<int>(new[] { 3 })
+                };
+                yield return new
+                {
                     Description = "For the LessThanOrEqualAssertionProperty and GreaterThanAssertionProperty whose value type is the same",
                     Expected = new GreaterThanAssertionProperty<int>(3),
                     Actual = new LessThanOrEqualAssertionProperty<int>(3)
@@ -382,9 +456,27 @@ namespace Carna.Assertions
                 };
                 yield return new
                 {
+                    Description = "For the LessThanOrEqualAssertionProperty and EnumerableAssertionProperty whose value type is the same",
+                    Expected = new GreaterThanOrEqualAssertionProperty<int>(3),
+                    Actual = new EnumerableAssertionProperty<int>(new[] { 3 })
+                };
+                yield return new
+                {
                     Description = "For the GreaterThanAssertionProperty and GreaterThanOrEqualAssertionProperty whose value type is the same",
                     Expected = new GreaterThanOrEqualAssertionProperty<int>(3),
                     Actual = new GreaterThanAssertionProperty<int>(3)
+                };
+                yield return new
+                {
+                    Description = "For the GreaterThanAssertionProperty and EnumerableAssertionProperty whose value type is the same",
+                    Expected = new GreaterThanOrEqualAssertionProperty<int>(3),
+                    Actual = new EnumerableAssertionProperty<int>(new[] { 3 })
+                };
+                yield return new
+                {
+                    Description = "For the GreaterThanOrEqualAssertionProperty and EnumerableAssertionProperty whose value type is the same",
+                    Expected = new GreaterThanOrEqualAssertionProperty<int>(3),
+                    Actual = new EnumerableAssertionProperty<int>(new[] { 3 })
                 };
             }
         }
@@ -429,6 +521,11 @@ namespace Carna.Assertions
                 {
                     Description = "For the GreaterThanOrEqualAssertionProperty",
                     AssertionProperty = new GreaterThanOrEqualAssertionProperty<int>(3)
+                };
+                yield return new
+                {
+                    Description = "For the EnumerableAssertionProperty",
+                    AssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" })
                 };
             }
         }
@@ -480,6 +577,12 @@ namespace Carna.Assertions
                     Description = "For the GreaterThanOrEqualAssertionProperty",
                     AssertedProperty = new ActualValueProperty<int>(3),
                     AssertionProperty = new GreaterThanOrEqualAssertionProperty<int>(4)
+                };
+                yield return new
+                {
+                    Description = "For the EnumerableAssertionProperty",
+                    AssertedProperty = new ActualValueProperty<string>("PropertyA"),
+                    AssertionProperty = new EnumerableAssertionProperty<string>(new[] { "ValueA", "ValueB", "ValueC" })
                 };
                 yield return new
                 {

@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2019 Fievus
+﻿// Copyright (C) 2019-2021 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -23,6 +23,11 @@ namespace Carna.Assertions
             public LessThanAssertionProperty<int> Int32AssertionProperty { get; set; }
 
             public double NotAssertionDoubleProperty { get; set; }
+
+            [AssertionProperty]
+            public EnumerableAssertionProperty<string> StringEnumerableAssertionProperty { get; set; }
+
+            public EnumerableAssertionProperty<int> IntEnumerableAssertionProperty { get; set; }
         }
 
         public class NestedAssertionObjectTestAssertion : AssertionObject
@@ -36,6 +41,11 @@ namespace Carna.Assertions
             public LessThanOrEqualAssertionProperty<int> Int32AssertionProperty { get; set; }
 
             public double NotAssertionDoubleProperty { get; set; }
+
+            [AssertionProperty]
+            public EnumerableAssertionProperty<string> StringEnumerableAssertionProperty { get; set; }
+
+            public EnumerableAssertionProperty<int> IntEnumerableAssertionProperty { get; set; }
         }
 
         public class SimpleTestSpecifiedDescriptionAssertion : AssertionObject
@@ -55,6 +65,11 @@ namespace Carna.Assertions
             public GreaterThanAssertionProperty<int> Int32AssertionProperty { get; set; }
 
             public double NotAssertionDoubleProperty { get; set; }
+
+            [AssertionProperty("String Enumerable Assertion Property")]
+            public EnumerableAssertionProperty<string> StringEnumerableAssertionProperty { get; set; }
+
+            public EnumerableAssertionProperty<int> IntEnumerableAssertionProperty { get; set; }
         }
 
         public class NestedAssertionObjectTestSpecifiedDescriptionAssertion : AssertionObject
@@ -69,6 +84,9 @@ namespace Carna.Assertions
             public GreaterThanOrEqualAssertionProperty<int> Int32AssertionProperty { get; set; }
 
             public double NotAssertionDoubleProperty { get; set; }
+
+            [AssertionProperty("String Enumerable Assertion Property")]
+            public EnumerableAssertionProperty<string> StringEnumerableAssertionProperty { get; set; }
         }
     }
 }
