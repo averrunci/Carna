@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2019 Fievus
+﻿// Copyright (C) 2019-2021 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -45,6 +45,6 @@ namespace Carna.Runner
         }
 
         public static FixtureDescriptorWithBackgroundAssertion Of(string description, string name, string fullName, Type fixtureAttributeType, string background) => new FixtureDescriptorWithBackgroundAssertion(description, name, fullName, fixtureAttributeType, background);
-        public static FixtureDescriptorWithBackgroundAssertion Of(FixtureDescriptor descriptor) => new FixtureDescriptorWithBackgroundAssertion(descriptor.Description, descriptor.Name, descriptor.FullName, descriptor.FixtureAttributeType, descriptor.Background);
+        public new static FixtureDescriptorWithBackgroundAssertion Of(FixtureDescriptor descriptor) => new FixtureDescriptorWithBackgroundAssertion(descriptor.Description, descriptor.Name, descriptor.FullName, descriptor.FixtureAttributeType, descriptor.Background);
     }
 }
