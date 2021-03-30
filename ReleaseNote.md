@@ -1,5 +1,33 @@
 # Release note
 
+## v1.8.0
+
+### Add
+
+#### Carna
+
+- Add the EnumerableAssertionProperty to assert an enumerable.
+
+### Change
+
+#### Carna
+
+- Change the default prefix/suffix of the string expression of the AssertionObject from '[]' to '{}'.
+
+#### Carna.ConsoleRunner
+
+- Update the .NET Core version to 3.1.
+- Change the foreground color of the Ready state to the DarkGray.
+
+#### CarnaConsoleRunner
+
+- Change the foreground color of the Ready state to the DarkGray.
+
+#### carna-runner
+
+- Add .NET 5.0 to the target framework.
+- Change the foreground color of the Ready state to the DarkGray.
+
 ## v1.7.2
 
 ### Bug fix

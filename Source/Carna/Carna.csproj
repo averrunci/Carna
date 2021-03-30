@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Copyright>Copyright (C) 2017-2020 Fievus</Copyright>
+    <Copyright>Copyright (C) 2017-2021 Fievus</Copyright>
     <Description>The testing and specification framework for .NET Platform.</Description>
     <Company />
     <Authors>averrunci</Authors>
@@ -10,10 +10,10 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/averrunci/Carna</PackageProjectUrl>
-    <AssemblyVersion>1.7.2</AssemblyVersion>
-    <FileVersion>1.7.2</FileVersion>
+    <AssemblyVersion>1.8.0</AssemblyVersion>
+    <FileVersion>1.8.0</FileVersion>
     <PackageLicenseUrl></PackageLicenseUrl>
-    <Version>1.7.2</Version>
+    <Version>1.8.0</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 

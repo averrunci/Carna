@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Carna.UwpRunner</id>
-    <version>1.7.2</version>
+    <version>1.8.0</version>
     <title>Carna UWP Runner</title>
     <authors>averrunci</authors>
     <owners>averrunci</owners>
@@ -11,11 +11,11 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The runner of Carna testing and specification framework for Universal Windows Platform application.</description>
     <language>en-US</language>
-    <copyright>Copyright (C) 2017-2020 Fievus</copyright>
+    <copyright>Copyright (C) 2017-2021 Fievus</copyright>
     <tags>carna test testing tdd bdd runner uwp</tags>
     <dependencies>
       <group targetFramework="uap10.0">
-        <dependency id="Carna.Runner" version="1.7.2"/>
+        <dependency id="Carna.Runner" version="1.8.0"/>
       </group>
     </dependencies>
   </metadata>

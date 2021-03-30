@@ -14,13 +14,13 @@
     <Company />
     <Product>Carna Console Runner for .NET Core</Product>
     <Description>The console runner of Carna testing and specification framework for .NET Core.</Description>
-    <Copyright>Copyright (C) 2020 Fievus</Copyright>
+    <Copyright>Copyright (C) 2020-2021 Fievus</Copyright>
     <PackageProjectUrl>https://github.com/averrunci/Carna</PackageProjectUrl>
     <PackageTags>carna test testing tdd bdd runner</PackageTags>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <AssemblyVersion>1.7.2</AssemblyVersion>
-    <FileVersion>1.7.2</FileVersion>
-    <Version>1.7.2</Version>
+    <AssemblyVersion>1.8.0</AssemblyVersion>
+    <FileVersion>1.8.0</FileVersion>
+    <Version>1.8.0</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
