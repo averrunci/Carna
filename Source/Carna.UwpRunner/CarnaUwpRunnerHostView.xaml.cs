@@ -32,6 +32,18 @@ namespace Carna.UwpRunner
             DataContext = host;
 
             InitializeComponent();
+
+            Application.Current.UnhandledException += OnUnhandledException;
+        }
+
+        private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+            AppendErrorMessage(e.Exception.ToString());
+            e.Handled = true;
+        }
+        private void AppendErrorMessage(string message)
+        {
+            Host.ErrorMessage += $"{(string.IsNullOrEmpty(Host.ErrorMessage) ? string.Empty : Environment.NewLine + Environment.NewLine)}{message}";
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e) => AdjustFixtureContentMaxWidth(e.NewSize.Width);
@@ -68,7 +80,7 @@ namespace Carna.UwpRunner
             }
             catch (Exception exc)
             {
-                Host.ErrorMessage = exc.ToString();
+                AppendErrorMessage(exc.ToString());
             }
             finally
             {
