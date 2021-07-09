@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017-2018 Fievus
+﻿// Copyright (C) 2017-2021 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -25,7 +25,7 @@ namespace Carna.Runner.Step
             Expect(
                 @"the description should be as follows:
 Expected: True
-But was : False'",
+But was : False",
                 () => AssertionDescription.Of(Assertion, Exception).ToString() == @"Expected: True
 But was : False"
             );
@@ -38,7 +38,7 @@ But was : False"
             Expect(
                 @"the description should be as follows:
 Expected: False
-But was : True'",
+But was : True",
                 () => AssertionDescription.Of(Assertion, Exception).ToString() == @"Expected: False
 But was : True"
             );
@@ -51,7 +51,7 @@ But was : True"
             Expect(
                 @"the description should be as follows:
 Expected: 3
-But was : 14'",
+But was : 14",
                 () => AssertionDescription.Of(Assertion, Exception).ToString() == @"Expected: 3
 But was : 14"
             );
@@ -64,7 +64,7 @@ But was : 14"
             Expect(
                 @"the description should be as follows:
 Expected: not 14
-But was : 14'",
+But was : 14",
                 () => AssertionDescription.Of(Assertion, Exception).ToString() == @"Expected: not 14
 But was : 14"
             );
@@ -77,7 +77,7 @@ But was : 14"
             Expect(
                 @"the description should be as follows:
 Expected: less than 10
-but was : 14'",
+but was : 14",
                 () => AssertionDescription.Of(Assertion, Exception).ToString() == @"Expected: less than 10
 But was : 14"
             );
@@ -90,7 +90,7 @@ But was : 14"
             Expect(
                 @"the description should be as follows:
 Expected: less than or equal 10
-But was : 14'",
+But was : 14",
                 () => AssertionDescription.Of(Assertion, Exception).ToString() == @"Expected: less than or equal 10
 But was : 14"
             );
@@ -103,7 +103,7 @@ But was : 14"
             Expect(
                 @"the description should be as follows:
 Expected: greater than 15
-But was : 14'",
+But was : 14",
                 () => AssertionDescription.Of(Assertion, Exception).ToString() == @"Expected: greater than 15
 But was : 14"
             );
@@ -116,7 +116,7 @@ But was : 14"
             Expect(
                 @"the description should be as follows:
 Expected: greater than or equal 15
-But was : 14'",
+But was : 14",
                 () => AssertionDescription.Of(Assertion, Exception).ToString() == @"Expected: greater than or equal 15
 But was : 14"
             );
@@ -129,7 +129,7 @@ But was : 14"
             Expect(
                 @"the description should be as follows:
 Expected: True
-But was : False'",
+But was : False",
                 () => AssertionDescription.Of(Assertion, Exception).ToString() == @"Expected: True
 But was : False"
             );
@@ -142,7 +142,7 @@ But was : False"
             Expect(
                 @"the description should be as follows:
 Expected: 3
-But was : 14'",
+But was : 14",
                 () => AssertionDescription.Of(Assertion, Exception).ToString() == @"Expected: 3
 But was : 14"
             );
@@ -155,7 +155,7 @@ But was : 14"
             Expect(
                 @"the description should be as follows:
 Expected: 3
-But was : 14'",
+But was : 14",
                 () => AssertionDescription.Of(Assertion, Exception).ToString() == @"Expected: 3
 But was : 14"
             );
@@ -171,7 +171,7 @@ But was : 14"
             Expect(
                 @"the description should be as follows:
 Expected: Param
-But was : null'",
+But was : null",
                 () => AssertionDescription.Of(Assertion, new ArgumentNullException(null)).ToString() == @"Expected: Param
 But was : null"
             );
