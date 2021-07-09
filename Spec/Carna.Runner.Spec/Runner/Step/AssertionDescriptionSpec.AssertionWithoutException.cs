@@ -1,8 +1,9 @@
-﻿// Copyright (C) 2017-2019 Fievus
+﻿// Copyright (C) 2017-2021 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Carna.Runner.Step
@@ -200,6 +201,51 @@ But was : null"
   [failed]
     Expected: 9
     But was : 7"
+            );
+        }
+
+        [Example("When the specified expression is MethodCallExpression that has a method Enumerable.SequenceEqual(IEnumerable, IEnumerable)")]
+        void Ex14()
+        {
+            Given("an assertion that has 'x.SequenceEqual(y)' where x = [1, 2, 3], y = [3, 4]", () =>
+                { var x = new[] { 1, 2, 3 }; var y = new[] { 3, 4 }; Assertion = () => x.SequenceEqual(y); }
+            );
+            Expect(
+                @"the description should be as follows:
+Expected: [3, 4]
+But was : [1, 2, 3]",
+                () => AssertionDescription.Of(Assertion).ToString() == @"Expected: [3, 4]
+But was : [1, 2, 3]"
+            );
+        }
+
+        [Example("When the specified expression is MethodCallExpression that has a method Enumerable.SequenceEqual(IEnumerable, IEnumerable) and an actual value is null")]
+        void Ex15()
+        {
+            Given("an assertion that has 'x.SequenceEqual(y)' where x = null, y = [3, 4]", () =>
+                { var x = (int[])null; var y = new[] { 3, 4 }; Assertion = () => x.SequenceEqual(y); }
+            );
+            Expect(
+                @"the description should be as follows:
+Expected: [3, 4]
+But was : null",
+                () => AssertionDescription.Of(Assertion).ToString() == @"Expected: [3, 4]
+But was : null"
+            );
+        }
+
+        [Example("When the specified expression is MethodCallExpression that has a method Enumerable.SequenceEqual(IEnumerable, IEnumerable) and an expected value is null")]
+        void Ex16()
+        {
+            Given("an assertion that has 'x.SequenceEqual(y)' where x = [1, 2, 3], y = null", () =>
+                { var x = new[] { 1, 2, 3 }; var y = (int[])null; Assertion = () => x.SequenceEqual(y); }
+            );
+            Expect(
+                @"the description should be as follows:
+Expected: null
+But was : [1, 2, 3]",
+                () => AssertionDescription.Of(Assertion).ToString() == @"Expected: null
+But was : [1, 2, 3]"
             );
         }
     }

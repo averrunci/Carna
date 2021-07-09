@@ -1,11 +1,13 @@
-﻿// Copyright (C) 2017-2018 Fievus
+﻿// Copyright (C) 2017-2021 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using IEnumerable = System.Collections.IEnumerable;
 
 namespace Carna.Runner.Step
 {
@@ -262,24 +264,42 @@ namespace Carna.Runner.Step
         /// <returns>The description of the assertion.</returns>
         protected virtual string CreateDescription(MethodCallExpression expression, ParameterExpression parameter)
         {
-            if (expression == null || expression.Method.Name != "Equals" || expression.Arguments.Count == 0 || expression.Arguments.Count > 2)
+            if (IsEnumerableSequenceEqualMethod(expression))
             {
-                return CreateDefaultDescription();
+                var expected = RetrieveValue(expression.Arguments[1], fallbackValueFormat: FallbackExpectedValueFormat) as IEnumerable;
+                var actual = RetrieveValue(expression.Arguments[0], parameter, Exception, FallbackActualValueFormat) as IEnumerable;
+                if (expected == null || actual == null) return Format(expected, actual);
+
+                return Format(RetrieveEnumerableValue(expected), RetrieveEnumerableValue(actual));
+
             }
 
-            if (expression.Arguments.Count == 1)
+            if (IsObjectEqualsMethod(expression))
             {
+                if (expression.Arguments.Count == 1)
+                {
+                    return Format(
+                        RetrieveValue(expression.Arguments[0], fallbackValueFormat: FallbackExpectedValueFormat),
+                        RetrieveValue(expression.Object, parameter, Exception, FallbackActualValueFormat)
+                    );
+                }
+
                 return Format(
-                    RetrieveValue(expression.Arguments[0], fallbackValueFormat: FallbackExpectedValueFormat),
-                    RetrieveValue(expression.Object, parameter, Exception, FallbackActualValueFormat)
+                    RetrieveValue(expression.Arguments[1], fallbackValueFormat: FallbackExpectedValueFormat),
+                    RetrieveValue(expression.Arguments[0], parameter, Exception, FallbackActualValueFormat)
                 );
             }
 
-            return Format(
-                RetrieveValue(expression.Arguments[1], fallbackValueFormat: FallbackExpectedValueFormat),
-                RetrieveValue(expression.Arguments[0], parameter, Exception, FallbackActualValueFormat)
-            );
+            return CreateDefaultDescription();
         }
+
+        private bool IsEnumerableSequenceEqualMethod(MethodCallExpression expression)
+            => expression != null && expression.Method.DeclaringType == typeof(Enumerable) && expression.Method.Name == nameof(Enumerable.SequenceEqual) && expression.Arguments.Count == 2;
+
+        private string RetrieveEnumerableValue(IEnumerable values) => values is string stringValue ? stringValue : $"[{string.Join(", ", values.OfType<object>())}]";
+
+        private bool IsObjectEqualsMethod(MethodCallExpression expression)
+            => expression != null && expression.Method.Name == nameof(Equals) && (expression.Arguments.Count == 1 || expression.Arguments.Count == 2);
 
         /// <summary>
         /// Creates a description of an assertion with the specified expression and parameter expression.

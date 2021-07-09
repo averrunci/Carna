@@ -146,5 +146,47 @@ But was : 3"
     But was : 1
   [passed]");
         }
+
+        class TestItem
+        {
+            public int[] Items { get; set; }
+        }
+
+        [Example("When the specified expression is MethodCallExpression that has a method Enumerable.SequenceEqual(IEnumerable, IEnumerable) and an exception occurred for an expected value of its expression")]
+        void Ex09()
+        {
+            Given("an assertion that has 'x.Items.SequenceEqual(y.Items)' where x = null, y = { Items = [3, 4] }", () =>
+            {
+                var x = (TestItem)null;
+                var y = new TestItem { Items = new[] { 3, 4 } };
+                Assertion = () => x.Items.SequenceEqual(y.Items);
+            });
+            Expect(
+                $@"the description should be as follows:
+Expected: [3, 4]
+But was : throwing an exception ({NullReferenceExceptionMessage})'",
+                () => AssertionDescription.Of(Assertion).ToString() == $@"Expected: [3, 4]
+But was : throwing an exception ({NullReferenceExceptionMessage})"
+            );
+        }
+
+        [Example("When the specified expression is MethodCallExpression that has a method Enumerable.SequenceEqual(IEnumerable, IEnumerable) and an exception occurred for an actual value of its expression")]
+        void Ex10()
+        {
+            Given("an assertion that has 'x.Items.SequenceEqual(y.Items)' where x = { Items = [1, 2, 3] }, y = null", () =>
+            {
+                var x = new TestItem { Items = new[] { 1, 2, 3 } };
+                var y = (TestItem)null;
+                Assertion = () => x.Items.SequenceEqual(y.Items);
+            });
+            Expect(
+                $@"the description should be as follows:
+Expected: an exception occurred ({NullReferenceExceptionMessage})
+But was : [1, 2, 3]",
+                () => AssertionDescription.Of(Assertion).ToString() == $@"Expected: an exception occurred ({NullReferenceExceptionMessage})
+But was : [1, 2, 3]"
+            );
+        }
+
     }
 }
