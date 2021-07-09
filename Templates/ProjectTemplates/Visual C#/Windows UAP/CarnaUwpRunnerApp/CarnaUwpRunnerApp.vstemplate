@@ -60,7 +60,7 @@
       <package id="Microsoft.NETCore.UniversalWindowsPlatform" version="6.2.12" skipAssemblyReferences="false" />
     </packages>
     <packages>
-      <package id="Carna.UwpRunner" version="1.8.0"/>
+      <package id="Carna.UwpRunner" version="1.8.1"/>
     </packages>
   </WizardData>
 </VSTemplate>

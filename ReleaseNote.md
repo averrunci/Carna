@@ -1,5 +1,21 @@
 # Release note
 
+## v1.8.1
+
+### Change
+
+#### Carna
+
+- Change an assertion description when Enumerable.SequenceEqual is failed.
+
+### Bug fix
+
+#### Carna.UwpRunner
+
+- Fixed the condition of the limit to display child fixtures.
+- Fixed a crash when unhandled exception occurred.
+- Fixed the draggable region of the title bar.
+
 ## v1.8.0
 
 ### Add
