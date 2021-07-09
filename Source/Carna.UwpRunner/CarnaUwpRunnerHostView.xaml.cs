@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017-2019 Fievus
+﻿// Copyright (C) 2017-2021 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -179,16 +179,18 @@ namespace Carna.UwpRunner
             }
 
             var assemblyFixtureContents = fixtureContents.ToList();
-            if (assemblyFixtureContents.Count() > limit) return;
+            if (GetChildFixtureCount(assemblyFixtureContents) > limit) return;
 
             SetChildOpen(assemblyFixtureContents);
             limit -= assemblyFixtureContents.Count();
 
             var namespaceFixtureContents = assemblyFixtureContents.SelectMany(fixtureContent => fixtureContent.Fixtures).ToList();
-            if (namespaceFixtureContents.Count() > limit) return;
+            if (GetChildFixtureCount(namespaceFixtureContents) > limit) return;
 
             SetChildOpen(namespaceFixtureContents);
         }
+
+        private int GetChildFixtureCount(IEnumerable<FixtureContent> fixtureContents) => fixtureContents.SelectMany(fixtureContent => fixtureContent.Fixtures).Count();
 
         private void SetChildOpen(IEnumerable<FixtureContent> fixtureContents, bool recursive = false)
         {
