@@ -34,6 +34,8 @@ namespace Carna.UwpRunner
             InitializeComponent();
 
             Application.Current.UnhandledException += OnUnhandledException;
+
+            Window.Current.SetTitleBar(TitleGrid);
         }
 
         private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
