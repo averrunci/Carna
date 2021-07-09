@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017-2020 Fievus
+﻿// Copyright (C) 2017-2021 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -413,17 +413,21 @@ namespace Carna.Runner
 
             try
             {
-                backgroundList.AddRange(RetrieveBackgroundAttributes(
-                    constructor.Module.ResolveMethod(
-                        BitConverter.ToInt32(
-                            constructor.GetMethodBody()
-                                .GetILAsByteArray()
-                                .SkipWhile(b => b != OpCodes.Call.Value)
-                                .ToArray(),
-                            1
+                var methodBody = constructor.GetMethodBody();
+                if (methodBody != null)
+                {
+                    backgroundList.AddRange(RetrieveBackgroundAttributes(
+                        constructor.Module.ResolveMethod(
+                            BitConverter.ToInt32(
+                                methodBody
+                                    .GetILAsByteArray()
+                                    .SkipWhile(b => b != OpCodes.Call.Value)
+                                    .ToArray(),
+                                1
+                            )
                         )
-                    )
-                ));
+                    ));
+                }
             }
             catch
             {
