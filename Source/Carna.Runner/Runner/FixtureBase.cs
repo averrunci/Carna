@@ -413,19 +413,14 @@ namespace Carna.Runner
 
             try
             {
-                var methodBody = constructor.GetMethodBody();
-                if (methodBody != null)
+                var ilBytes = constructor.GetMethodBody()?.GetILAsByteArray();
+                if (ilBytes != null)
                 {
                     backgroundList.AddRange(RetrieveBackgroundAttributes(
-                        constructor.Module.ResolveMethod(
-                            BitConverter.ToInt32(
-                                methodBody
-                                    .GetILAsByteArray()
-                                    .SkipWhile(b => b != OpCodes.Call.Value)
-                                    .ToArray(),
-                                1
-                            )
-                        )
+                        ilBytes.Select((ilByte, index) => new {ILByte = ilByte, Index = index})
+                            .Where(x => x.ILByte == OpCodes.Call.Value)
+                            .Select(x => constructor.Module.ResolveMethod(BitConverter.ToInt32(ilBytes, x.Index + 1)))
+                            .FirstOrDefault(m => m?.IsConstructor ?? false)
                     ));
                 }
             }

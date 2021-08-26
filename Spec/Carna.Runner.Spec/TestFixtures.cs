@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017-2020 Fievus
+﻿// Copyright (C) 2017-2021 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -272,6 +272,25 @@ namespace Carna
             }
 
             IEnumerable ISampleDataSource.GetData() => null;
+        }
+
+        [Context("Simple Fixture that extends a base fixture to which Background attribute specifies")]
+        public class SimpleFixtureWithBaseFixture : SimpleFixture
+        {
+            private readonly string stringField = GetStringField();
+
+            [Background("Simple Fixture with Base Fixture Background")]
+            public SimpleFixtureWithBaseFixture() { }
+
+            [Example("Fixture Method Example")]
+            void FixtureMethod()
+            {
+                if (RaiseException) { throw new Exception(); }
+
+                CalledFixtureMethods.Add(GetType());
+            }
+
+            static string GetStringField() => "String Field";
         }
 
         public class SimpleFixtureStepRunnerFactory : IFixtureStepRunnerFactory

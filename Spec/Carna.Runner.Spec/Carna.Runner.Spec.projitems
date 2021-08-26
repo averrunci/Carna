@@ -23,6 +23,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureContainerSpec.RunFixtures.cs">
       <DependentUpon>FixtureContainerSpec.cs</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureContainerSpec_Background.cs">
+      <DependentUpon>FixtureContainerSpec.cs</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureDescriptorAssertion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureFilterSpec.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureResultAssertion.cs" />
