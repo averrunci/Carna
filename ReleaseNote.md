@@ -1,5 +1,13 @@
 # Release note
 
+## v1.8.2
+
+### Bug fix
+
+#### Carna.Runner
+
+- Fixed an issue where the Background attribute applied to a base fixture is not retrieved when a field is initialized by a method call.
+
 ## v1.8.1
 
 ### Change
