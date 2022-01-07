@@ -311,7 +311,14 @@ namespace Carna.Runner
             {
                 IsBackground = true
             };
-            thread.SetApartmentState(ApartmentState.STA);
+            try
+            {
+                thread.TrySetApartmentState(ApartmentState.STA);
+            }
+            catch
+            {
+                // ignored.
+            }
             thread.Start();
             return taskCompletionSource.Task;
         }
