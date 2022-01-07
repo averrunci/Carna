@@ -19,12 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carna.Spec.NetCore", "Spec\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carna.Runner.Spec.NetCore", "Spec\Carna.Runner.Spec.NetCore\Carna.Runner.Spec.NetCore.csproj", "{56680617-E4BB-4D4E-9D3C-87694D980A4A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carna.Spec.NetStandard", "Spec\Carna.Spec.NetStandard\Carna.Spec.NetStandard.csproj", "{5E8363FA-FB6F-437F-8642-4FC17219D5A8}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarnaSpecRunner", "Spec\CarnaSpecRunner\CarnaSpecRunner.csproj", "{3762C6EE-4C92-4783-A5A2-336AADE99B6B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carna.Runner.Spec.NetStandard", "Spec\Carna.Runner.Spec.NetStandard\Carna.Runner.Spec.NetStandard.csproj", "{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carna.ConsoleRunner.Spec", "Spec\Carna.ConsoleRunner.Spec\Carna.ConsoleRunner.Spec.csproj", "{2DDB507D-87CE-442A-BEF7-064390AC2D61}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarnaConsoleRunner", "Source\CarnaConsoleRunner\CarnaConsoleRunner.csproj", "{F8CD6F23-B450-4262-A71A-4E9694E461AB}"
@@ -32,12 +26,10 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Spec\Carna.Runner.Spec\Carna.Runner.Spec.projitems*{56680617-e4bb-4d4e-9d3c-87694d980a4a}*SharedItemsImports = 5
-		Spec\Carna.Spec\Carna.Spec.projitems*{5e8363fa-fb6f-437f-8642-4fc17219d5a8}*SharedItemsImports = 5
 		Spec\Carna.Runner.Spec\Carna.Runner.Spec.projitems*{7308bc2e-66f3-4754-9ec0-2347aebd6bdb}*SharedItemsImports = 13
 		Spec\Carna.Spec\Carna.Spec.projitems*{7ea553d9-25f6-46e3-8805-68e7364a1e84}*SharedItemsImports = 5
 		Source\Carna.ConsoleRunner\Carna.ConsoleRunner.projitems*{8555688d-9f64-423b-9dbf-265978f8386d}*SharedItemsImports = 13
 		Source\Carna.ConsoleRunner\Carna.ConsoleRunner.projitems*{a2eb9bdb-39a5-44ce-96f1-c496ae63fd7b}*SharedItemsImports = 5
-		Spec\Carna.Runner.Spec\Carna.Runner.Spec.projitems*{ca5c1e7d-7c55-48d3-a3b5-792a602cd4d7}*SharedItemsImports = 5
 		Spec\Carna.Spec\Carna.Spec.projitems*{f0b03602-d83e-4569-9040-51ada0977637}*SharedItemsImports = 13
 		Source\Carna.ConsoleRunner\Carna.ConsoleRunner.projitems*{f8cd6f23-b450-4262-a71a-4e9694e461ab}*SharedItemsImports = 5
 	EndGlobalSection
@@ -132,54 +124,6 @@ Global
 		{56680617-E4BB-4D4E-9D3C-87694D980A4A}.Release|x64.Build.0 = Release|Any CPU
 		{56680617-E4BB-4D4E-9D3C-87694D980A4A}.Release|x86.ActiveCfg = Release|Any CPU
 		{56680617-E4BB-4D4E-9D3C-87694D980A4A}.Release|x86.Build.0 = Release|Any CPU
-		{5E8363FA-FB6F-437F-8642-4FC17219D5A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E8363FA-FB6F-437F-8642-4FC17219D5A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E8363FA-FB6F-437F-8642-4FC17219D5A8}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{5E8363FA-FB6F-437F-8642-4FC17219D5A8}.Debug|ARM.Build.0 = Debug|Any CPU
-		{5E8363FA-FB6F-437F-8642-4FC17219D5A8}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{5E8363FA-FB6F-437F-8642-4FC17219D5A8}.Debug|x64.Build.0 = Debug|Any CPU
-		{5E8363FA-FB6F-437F-8642-4FC17219D5A8}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{5E8363FA-FB6F-437F-8642-4FC17219D5A8}.Debug|x86.Build.0 = Debug|Any CPU
-		{5E8363FA-FB6F-437F-8642-4FC17219D5A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E8363FA-FB6F-437F-8642-4FC17219D5A8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5E8363FA-FB6F-437F-8642-4FC17219D5A8}.Release|ARM.ActiveCfg = Release|Any CPU
-		{5E8363FA-FB6F-437F-8642-4FC17219D5A8}.Release|ARM.Build.0 = Release|Any CPU
-		{5E8363FA-FB6F-437F-8642-4FC17219D5A8}.Release|x64.ActiveCfg = Release|Any CPU
-		{5E8363FA-FB6F-437F-8642-4FC17219D5A8}.Release|x64.Build.0 = Release|Any CPU
-		{5E8363FA-FB6F-437F-8642-4FC17219D5A8}.Release|x86.ActiveCfg = Release|Any CPU
-		{5E8363FA-FB6F-437F-8642-4FC17219D5A8}.Release|x86.Build.0 = Release|Any CPU
-		{3762C6EE-4C92-4783-A5A2-336AADE99B6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3762C6EE-4C92-4783-A5A2-336AADE99B6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3762C6EE-4C92-4783-A5A2-336AADE99B6B}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{3762C6EE-4C92-4783-A5A2-336AADE99B6B}.Debug|ARM.Build.0 = Debug|Any CPU
-		{3762C6EE-4C92-4783-A5A2-336AADE99B6B}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{3762C6EE-4C92-4783-A5A2-336AADE99B6B}.Debug|x64.Build.0 = Debug|Any CPU
-		{3762C6EE-4C92-4783-A5A2-336AADE99B6B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{3762C6EE-4C92-4783-A5A2-336AADE99B6B}.Debug|x86.Build.0 = Debug|Any CPU
-		{3762C6EE-4C92-4783-A5A2-336AADE99B6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3762C6EE-4C92-4783-A5A2-336AADE99B6B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3762C6EE-4C92-4783-A5A2-336AADE99B6B}.Release|ARM.ActiveCfg = Release|Any CPU
-		{3762C6EE-4C92-4783-A5A2-336AADE99B6B}.Release|ARM.Build.0 = Release|Any CPU
-		{3762C6EE-4C92-4783-A5A2-336AADE99B6B}.Release|x64.ActiveCfg = Release|Any CPU
-		{3762C6EE-4C92-4783-A5A2-336AADE99B6B}.Release|x64.Build.0 = Release|Any CPU
-		{3762C6EE-4C92-4783-A5A2-336AADE99B6B}.Release|x86.ActiveCfg = Release|Any CPU
-		{3762C6EE-4C92-4783-A5A2-336AADE99B6B}.Release|x86.Build.0 = Release|Any CPU
-		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Debug|ARM.Build.0 = Debug|Any CPU
-		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Debug|x64.Build.0 = Debug|Any CPU
-		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Debug|x86.Build.0 = Debug|Any CPU
-		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Release|ARM.ActiveCfg = Release|Any CPU
-		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Release|ARM.Build.0 = Release|Any CPU
-		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Release|x64.ActiveCfg = Release|Any CPU
-		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Release|x64.Build.0 = Release|Any CPU
-		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Release|x86.ActiveCfg = Release|Any CPU
-		{CA5C1E7D-7C55-48D3-A3B5-792A602CD4D7}.Release|x86.Build.0 = Release|Any CPU
 		{2DDB507D-87CE-442A-BEF7-064390AC2D61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2DDB507D-87CE-442A-BEF7-064390AC2D61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DDB507D-87CE-442A-BEF7-064390AC2D61}.Debug|ARM.ActiveCfg = Debug|Any CPU
