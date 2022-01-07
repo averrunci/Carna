@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Copyright>Copyright (C) 2017-2021 Fievus</Copyright>
+    <TargetFramework>net6.0</TargetFramework>
+    <Copyright>Copyright (C) 2022 Fievus</Copyright>
     <Description>The testing and specification framework for .NET Platform.</Description>
     <Company />
     <Authors>averrunci</Authors>
-    <PackageTags>carna test testing tdd ddd</PackageTags>
+    <PackageTags>carna test testing tdd bdd</PackageTags>
     <NeutralLanguage>en-US</NeutralLanguage>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/averrunci/Carna</PackageProjectUrl>
@@ -19,12 +19,12 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\..\Binary\Carna\Debug\</OutputPath>
-    <DocumentationFile>..\..\Binary\Carna\Debug\netstandard2.0\Carna.xml</DocumentationFile>
+    <DocumentationFile>..\..\Binary\Carna\Debug\net6.0\Carna.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>..\..\Binary\Carna\Release</OutputPath>
-    <DocumentationFile>..\..\Binary\Carna\Release\netstandard2.0\Carna.xml</DocumentationFile>
+    <DocumentationFile>..\..\Binary\Carna\Release\net6.0\Carna.xml</DocumentationFile>
   </PropertyGroup>
 
 </Project>

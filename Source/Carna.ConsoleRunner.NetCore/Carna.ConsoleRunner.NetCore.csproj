@@ -1,16 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Carna.ConsoleRunner</RootNamespace>
     <AssemblyName>Carna.ConsoleRunner</AssemblyName>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>averrunci</Authors>
     <Company />
-    <Product>Carna Console Runner for .NET Core</Product>
-    <Description>The console runner of Carna testing and specification framework for .NET Core.</Description>
-    <Copyright>Copyright (C) 2017-2021 Fievus</Copyright>
+    <Product>Carna Console Runner</Product>
+    <Description>The console runner of Carna testing and specification framework for .NET Platform.</Description>
+    <Copyright>Copyright (C) 2022 Fievus</Copyright>
     <PackageProjectUrl>https://github.com/averrunci/Carna</PackageProjectUrl>
     <PackageTags>carna test testing tdd bdd runner</PackageTags>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -23,21 +22,16 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\..\Binary\Carna.ConsoleRunner\Debug\</OutputPath>
-    <DocumentationFile>..\..\Binary\Carna.ConsoleRunner\Debug\netcoreapp2.0\Carna.ConsoleRunner.xml</DocumentationFile>
+    <DocumentationFile>..\..\Binary\Carna.ConsoleRunner\Debug\net6.0\Carna.ConsoleRunner.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>..\..\Binary\Carna.ConsoleRunner\Release\</OutputPath>
-    <DocumentationFile>..\..\Binary\Carna.ConsoleRunner\Release\netcoreapp2.0\Carna.ConsoleRunner.xml</DocumentationFile>
+    <DocumentationFile>..\..\Binary\Carna.ConsoleRunner\Release\net6.0\Carna.ConsoleRunner.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Runtime.Serialization.Json" Version="4.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Carna.Runner\Carna.Runner.csproj" />
-    <ProjectReference Include="..\Carna\Carna.csproj" />
   </ItemGroup>
 
   <Import Project="..\Carna.ConsoleRunner\Carna.ConsoleRunner.projitems" Label="Shared" />

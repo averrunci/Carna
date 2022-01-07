@@ -1,7 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Carna</RootNamespace>
     <AssemblyName>Carna.Spec</AssemblyName>
@@ -17,16 +16,20 @@
     <Version>1.8.2</Version>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NSubstitute" Version="4.2.2" />
+	<PackageReference Include="NSubstitute" Version="4.2.2" />
   </ItemGroup>
-
+  
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\Carna.ConsoleRunner.NetCore\Carna.ConsoleRunner.NetCore.csproj" />
+	<ProjectReference Include="..\..\Source\Carna\Carna.csproj">
+      <Private>false</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </ProjectReference>
   </ItemGroup>
-
+  
   <Import Project="..\Carna.Spec\Carna.Spec.projitems" Label="Shared" />
 
 </Project>
