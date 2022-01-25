@@ -1,17 +1,15 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2022 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
-using System.Linq;
-
 namespace Carna.Runner
 {
     [Context("Ensures a parent")]
     class FixtureContainerSpec_EnsureParent : FixtureSteppable
     {
-        IFixture ParentContainer { get; set; }
-        FixtureContainer Container { get; set; }
-        IFixture Fixture { get; set; }
+        IFixture ParentContainer { get; }
+        FixtureContainer Container { get; }
+        IFixture Fixture { get; set; } = default!;
 
         [Background("Fixture container that has a parent fixture container")]
         public FixtureContainerSpec_EnsureParent()

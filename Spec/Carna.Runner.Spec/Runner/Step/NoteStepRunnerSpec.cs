@@ -1,37 +1,36 @@
-﻿// Copyright (C) 2017-2019 Fievus
+﻿// Copyright (C) 2022 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
 using Carna.Step;
 
-namespace Carna.Runner.Step
+namespace Carna.Runner.Step;
+
+[Specification("NoteStepRunner Spec")]
+class NoteStepRunnerSpec : FixtureSteppable
 {
-    [Specification("NoteStepRunner Spec")]
-    class NoteStepRunnerSpec : FixtureSteppable
+    FixtureStepResultCollection StepResults { get; }
+
+    NoteStep Step { get; set; } = default!;
+    FixtureStepResult Result { get; set; } = default!;
+    FixtureStepResultAssertion ExpectedResult { get; set; } = default!;
+
+    public NoteStepRunnerSpec()
     {
-        FixtureStepResultCollection StepResults { get; }
+        StepResults = new FixtureStepResultCollection();
+    }
 
-        NoteStep Step { get; set; }
-        FixtureStepResult Result { get; set; }
-        FixtureStepResultAssertion ExpectedResult { get; set; }
+    private IFixtureStepRunner RunnerOf(NoteStep step) => new NoteStepRunner(step);
 
-        public NoteStepRunnerSpec()
+    [Example("When NoteStep is run")]
+    void Ex01()
+    {
+        Given("NoteStep", () =>
         {
-            StepResults = new FixtureStepResultCollection();
-        }
-
-        private IFixtureStepRunner RunnerOf(NoteStep step) => new NoteStepRunner(step);
-
-        [Example("When NoteStep is run")]
-        void Ex01()
-        {
-            Given("NoteStep", () =>
-            {
-                Step = FixtureSteps.CreateNoteStep();
-                ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.None, Step);
-            });
-            When("the given NoteStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
-            Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
-        }
+            Step = FixtureSteps.CreateNoteStep();
+            ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.None, Step);
+        });
+        When("the given NoteStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
+        Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
     }
 }

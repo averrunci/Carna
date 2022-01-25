@@ -1,41 +1,35 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2022 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
-using System;
+namespace Carna.Runner.Step;
 
-namespace Carna.Runner.Step
+/// <summary>
+/// Represents the method that handles the <see cref="FixtureStepper.FixtureStepRunning"/>
+/// or <see cref="FixtureStepper.FixtureStepRun"/> event.
+/// </summary>
+/// <param name="sender">The source of the event.</param>
+/// <param name="e">A <see cref="FixtureStepRunEventArgs"/> that contains the event data.</param>
+public delegate void FixtureStepRunEventHandler(object? sender, FixtureStepRunEventArgs e);
+
+/// <summary>
+/// Provides the data for the <see cref="FixtureStepper.FixtureStepRunning"/>
+/// or <see cref="FixtureStepper.FixtureStepRun"/> event.
+/// </summary>
+public class FixtureStepRunEventArgs : EventArgs
 {
     /// <summary>
-    /// Represents the method that handles the <see cref="FixtureStepper.FixtureStepRunning"/>
-    /// or <see cref="FixtureStepper.FixtureStepRun"/> event.
+    /// Gets a fixture step running result.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">A <see cref="FixtureStepRunEventArgs"/> that contains the event data.</param>
-    public delegate void FixtureStepRunEventHandler(object sender, FixtureStepRunEventArgs e);
+    public FixtureStepResult Result { get; }
 
     /// <summary>
-    /// Provides the data for the <see cref="FixtureStepper.FixtureStepRunning"/>
-    /// or <see cref="FixtureStepper.FixtureStepRun"/> event.
+    /// Initializes a new instance of the <see cref="FixtureStepRunEventArgs"/> class
+    /// with the specified fixture step running result.
     /// </summary>
-    public class FixtureStepRunEventArgs : EventArgs
+    /// <param name="result">The fixture step running result.</param>
+    public FixtureStepRunEventArgs(FixtureStepResult result)
     {
-        /// <summary>
-        /// Gets a fixture step running result.
-        /// </summary>
-        public FixtureStepResult Result { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FixtureStepRunEventArgs"/> class
-        /// with the specified fixture step running result.
-        /// </summary>
-        /// <param name="result">The fixture step running result.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="result"/> is <c>null</c>.
-        /// </exception>
-        public FixtureStepRunEventArgs(FixtureStepResult result)
-        {
-            Result = result.RequireNonNull(nameof(result));
-        }
+        Result = result;
     }
 }

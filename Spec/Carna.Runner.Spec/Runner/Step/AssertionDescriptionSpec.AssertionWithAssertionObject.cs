@@ -1,10 +1,8 @@
-﻿// Copyright (C) 2019-2021 Fievus
+﻿// Copyright (C) 2022 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
-using System;
 using System.Linq.Expressions;
-
 using Carna.Assertions;
 
 namespace Carna.Runner.Step
@@ -14,7 +12,7 @@ namespace Carna.Runner.Step
     {
         TestAssertion Expected { get; }
 
-        Expression<Func<bool>> Assertion { get; set; }
+        Expression<Func<bool>> Assertion { get; set; } = () => false;
 
         [Background("Expected is (x:5, y:3)")]
         public AssertionDescriptionSpec_AssertionWithAssertionObject()

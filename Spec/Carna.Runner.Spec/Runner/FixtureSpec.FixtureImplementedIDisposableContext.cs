@@ -1,163 +1,159 @@
-﻿// Copyright (C) 2017-2019 Fievus
+﻿// Copyright (C) 2022 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
-using System;
-
+using Carna.Runner.Step;
 using NSubstitute;
 
-using Carna.Runner.Step;
+namespace Carna.Runner;
 
-namespace Carna.Runner
+abstract class FixtureSpec_FixtureImplementedIDisposableContext : FixtureSteppable, IDisposable
 {
-    abstract class FixtureSpec_FixtureImplementedIDisposableContext : FixtureSteppable, IDisposable
+    protected abstract Type TargetFixtureType { get; }
+    protected abstract string TargetMethodName { get; }
+    protected abstract string TargetFixtureDescription { get; }
+    protected abstract string TargetMethodDescription { get; }
+    protected abstract string TargetMethodFullName { get; }
+
+    IFixture Fixture { get; }
+    IFixtureFilter Filter { get; }
+
+    FixtureResult? FixtureRunningResult { get; set; }
+    FixtureResult? FixtureRunResult { get; set; }
+    FixtureStepResult? FixtureStepRunningResult { get; set; }
+    FixtureStepResult? FixtureStepRunResult { get; set; }
+
+    FixtureDescriptorAssertion ExpectedFixtureDescriptor { get; set; } = default!;
+    FixtureResultAssertion ExpectedFixtureResult { get; set; } = default!;
+    FixtureDescriptorAssertion ExpectedFixtureRunningDescriptor { get; set; } = default!;
+    FixtureResultAssertion ExpectedFixtureRunningResult { get; set; } = default!;
+
+    protected FixtureSpec_FixtureImplementedIDisposableContext()
     {
-        protected abstract Type TargetFixtureType { get; }
-        protected abstract string TargetMethodName { get; }
-        protected abstract string TargetFixtureDescription { get; }
-        protected abstract string TargetMethodDescription { get; }
-        protected abstract string TargetMethodFullName { get; }
+        Fixture = TestFixtures.CreateFixture(TargetFixtureType, TargetMethodName);
 
-        IFixture Fixture { get; }
-        IFixtureFilter Filter { get; }
+        Fixture.FixtureRunning += (s, e) => FixtureRunningResult = e.Result;
+        Fixture.FixtureRun += (s, e) => FixtureRunResult = e.Result;
+        Fixture.FixtureStepRunning += (s, e) => FixtureStepRunningResult = e.Result;
+        Fixture.FixtureStepRun += (s, e) => FixtureStepRunResult = e.Result;
 
-        FixtureResult FixtureRunningResult { get; set; }
-        FixtureResult FixtureRunResult { get; set; }
-        FixtureStepResult FixtureStepRunningResult { get; set; }
-        FixtureStepResult FixtureStepRunResult { get; set; }
+        Filter = Substitute.For<IFixtureFilter>();
 
-        FixtureDescriptorAssertion ExpectedFixtureDescriptor { get; set; }
-        FixtureResultAssertion ExpectedFixtureResult { get; set; }
-        FixtureDescriptorAssertion ExpectedFixtureRunningDescriptor { get; set; }
-        FixtureResultAssertion ExpectedFixtureRunningResult { get; set; }
+        TestFixtures.RaiseException = false;
+        TestFixtures.CalledFixtureMethods.Clear();
+        TestFixtures.DisposeCalled = false;
+    }
 
-        protected FixtureSpec_FixtureImplementedIDisposableContext()
-        {
-            Fixture = TestFixtures.CreateFixture(TargetFixtureType, TargetMethodName);
+    public void Dispose()
+    {
+        TestFixtures.RaiseException = false;
+        TestFixtures.CalledFixtureMethods.Clear();
+        TestFixtures.DisposeCalled = false;
+    }
 
-            Fixture.FixtureRunning += (s, e) => FixtureRunningResult = e.Result;
-            Fixture.FixtureRun += (s, e) => FixtureRunResult = e.Result;
-            Fixture.FixtureStepRunning += (s, e) => FixtureStepRunningResult = e.Result;
-            Fixture.FixtureStepRun += (s, e) => FixtureStepRunResult = e.Result;
+    [Example("When a filter that is null is specified")]
+    protected void Ex01()
+    {
+        var result = Fixture.Run(null, Substitute.For<IFixtureStepRunnerFactory>());
 
-            Filter = Substitute.For<IFixtureFilter>();
+        Expect("the fixture method should be called", () => TestFixtures.CalledFixtureMethods.Count == 1 && TestFixtures.CalledFixtureMethods.Contains(TargetFixtureType));
+        Expect("the Dispose method should be called", () => TestFixtures.DisposeCalled);
 
-            TestFixtures.RaiseException = false;
-            TestFixtures.CalledFixtureMethods.Clear();
-            TestFixtures.DisposeCalled = false;
-        }
+        ExpectedFixtureDescriptor = FixtureDescriptorAssertion.Of(TargetFixtureDescription, TargetMethodDescription, TargetMethodFullName, typeof(ExampleAttribute));
+        Expect($"the descriptor of the result should be as follows:{ExpectedFixtureDescriptor.ToDescription()}", () => result != null && FixtureDescriptorAssertion.Of(result.FixtureDescriptor) == ExpectedFixtureDescriptor);
+        ExpectedFixtureResult = FixtureResultAssertion.ForNullException(true, true, true, 0, 0, FixtureStatus.Passed);
+        Expect($"the result should be as follows:{ExpectedFixtureResult.ToDescription()}", () => result != null && FixtureResultAssertion.Of(result) == ExpectedFixtureResult);
 
-        public void Dispose()
-        {
-            TestFixtures.RaiseException = false;
-            TestFixtures.CalledFixtureMethods.Clear();
-            TestFixtures.DisposeCalled = false;
-        }
+        Expect("FixtureRunning event should be raised", () => FixtureRunningResult != null);
 
-        [Example("When a filter that is null is specified")]
-        protected void Ex01()
-        {
-            var result = Fixture.Run(null, null);
+        ExpectedFixtureRunningDescriptor = FixtureDescriptorAssertion.Of(TargetFixtureDescription, TargetMethodDescription, TargetMethodFullName, typeof(ExampleAttribute));
+        Expect($"the descriptor of the result on FixtureRunning event should be as follows:{ExpectedFixtureRunningDescriptor.ToDescription()}", () => FixtureRunningResult != null && FixtureDescriptorAssertion.Of(FixtureRunningResult.FixtureDescriptor) == ExpectedFixtureRunningDescriptor);
+        ExpectedFixtureRunningResult = FixtureResultAssertion.ForNullException(true, false, false, 0, 0, FixtureStatus.Running);
+        Expect($"the result on FixtureRunning event should be as follows:{ExpectedFixtureRunningResult.ToDescription()}", () => FixtureRunningResult != null && FixtureResultAssertion.Of(FixtureRunningResult) == ExpectedFixtureRunningResult);
 
-            Expect("the fixture method should be called", () => TestFixtures.CalledFixtureMethods.Count == 1 && TestFixtures.CalledFixtureMethods.Contains(TargetFixtureType));
-            Expect("the Dispose method should be called", () => TestFixtures.DisposeCalled);
+        Expect("FixtureRun event should be raised", () => FixtureRunResult != null);
 
-            ExpectedFixtureDescriptor = FixtureDescriptorAssertion.Of(TargetFixtureDescription, TargetMethodDescription, TargetMethodFullName, typeof(ExampleAttribute));
-            Expect($"the descriptor of the result should be as follows:{ExpectedFixtureDescriptor.ToDescription()}", () => FixtureDescriptorAssertion.Of(result.FixtureDescriptor) == ExpectedFixtureDescriptor);
-            ExpectedFixtureResult = FixtureResultAssertion.ForNullException(true, true, true, 0, 0, FixtureStatus.Passed);
-            Expect($"the result should be as follows:{ExpectedFixtureResult.ToDescription()}", () => FixtureResultAssertion.Of(result) == ExpectedFixtureResult);
+        Expect("the result on FixtureRun event should be the result that is returned by Run method", () => FixtureRunResult == result);
 
-            Expect("FixtureRunning event should be raised", () => FixtureRunningResult != null);
+        Expect("FixtureStepRunning event should not be raised", () => FixtureStepRunningResult == null);
+        Expect("FixtureStepRun event should not be raised", () => FixtureStepRunResult == null);
+    }
 
-            ExpectedFixtureRunningDescriptor = FixtureDescriptorAssertion.Of(TargetFixtureDescription, TargetMethodDescription, TargetMethodFullName, typeof(ExampleAttribute));
-            Expect($"the descriptor of the result on FixtureRunning event should be as follows:{ExpectedFixtureRunningDescriptor.ToDescription()}", () => FixtureDescriptorAssertion.Of(FixtureRunningResult.FixtureDescriptor) == ExpectedFixtureRunningDescriptor);
-            ExpectedFixtureRunningResult = FixtureResultAssertion.ForNullException(true, false, false, 0, 0, FixtureStatus.Running);
-            Expect($"the result on FixtureRunning event should be as follows:{ExpectedFixtureRunningResult.ToDescription()}", () => FixtureResultAssertion.Of(FixtureRunningResult) == ExpectedFixtureRunningResult);
+    [Example("When a filter that returns true is specified")]
+    protected void Ex02()
+    {
+        Filter.Accept(Arg.Any<FixtureDescriptor>()).Returns(true);
 
-            Expect("FixtureRun event should be raised", () => FixtureRunResult != null);
+        var result = Fixture.Run(Filter, Substitute.For<IFixtureStepRunnerFactory>());
 
-            Expect("the result on FixtureRun event should be the result that is returned by Run method", () => FixtureRunResult == result);
+        Expect("the fixture method should be called", () => TestFixtures.CalledFixtureMethods.Count == 1 && TestFixtures.CalledFixtureMethods.Contains(TargetFixtureType));
+        Expect("the Dispose method should be called", () => TestFixtures.DisposeCalled);
 
-            Expect("FixtureStepRunning event should not be raised", () => FixtureStepRunningResult == null);
-            Expect("FixtureStepRun event should not be raised", () => FixtureStepRunResult == null);
-        }
+        ExpectedFixtureDescriptor = FixtureDescriptorAssertion.Of(TargetFixtureDescription, TargetMethodDescription, TargetMethodFullName, typeof(ExampleAttribute));
+        Expect($"the descriptor of the result should be as follows:{ExpectedFixtureDescriptor.ToDescription()}", () => result != null && FixtureDescriptorAssertion.Of(result.FixtureDescriptor) == ExpectedFixtureDescriptor);
+        ExpectedFixtureResult = FixtureResultAssertion.ForNullException(true, true, true, 0, 0, FixtureStatus.Passed);
+        Expect($"the result should be as follows:{ExpectedFixtureResult.ToDescription()}", () => result != null && FixtureResultAssertion.Of(result) == ExpectedFixtureResult);
 
-        [Example("When a filter that returns true is specified")]
-        protected void Ex02()
-        {
-            Filter.Accept(Arg.Any<FixtureDescriptor>()).Returns(true);
+        Expect("FixtureRunning event should be raised", () => FixtureRunningResult != null);
 
-            var result = Fixture.Run(Filter, null);
+        ExpectedFixtureRunningDescriptor = FixtureDescriptorAssertion.Of(TargetFixtureDescription, TargetMethodDescription, TargetMethodFullName, typeof(ExampleAttribute));
+        Expect($"the descriptor of the result on FixtureRunning event should be as follows:{ExpectedFixtureRunningDescriptor.ToDescription()}", () => FixtureRunningResult != null && FixtureDescriptorAssertion.Of(FixtureRunningResult.FixtureDescriptor) == ExpectedFixtureRunningDescriptor);
+        ExpectedFixtureRunningResult = FixtureResultAssertion.ForNullException(true, false, false, 0, 0, FixtureStatus.Running);
+        Expect($"the result on FixtureRunning event should be as follows:{ExpectedFixtureRunningResult.ToDescription()}", () => FixtureRunningResult != null && FixtureResultAssertion.Of(FixtureRunningResult) == ExpectedFixtureRunningResult);
 
-            Expect("the fixture method should be called", () => TestFixtures.CalledFixtureMethods.Count == 1 && TestFixtures.CalledFixtureMethods.Contains(TargetFixtureType));
-            Expect("the Dispose method should be called", () => TestFixtures.DisposeCalled);
+        Expect("FixtureRun event should be raised", () => FixtureRunResult != null);
 
-            ExpectedFixtureDescriptor = FixtureDescriptorAssertion.Of(TargetFixtureDescription, TargetMethodDescription, TargetMethodFullName, typeof(ExampleAttribute));
-            Expect($"the descriptor of the result should be as follows:{ExpectedFixtureDescriptor.ToDescription()}", () => FixtureDescriptorAssertion.Of(result.FixtureDescriptor) == ExpectedFixtureDescriptor);
-            ExpectedFixtureResult = FixtureResultAssertion.ForNullException(true, true, true, 0, 0, FixtureStatus.Passed);
-            Expect($"the result should be as follows:{ExpectedFixtureResult.ToDescription()}", () => FixtureResultAssertion.Of(result) == ExpectedFixtureResult);
+        Expect("the result on FixtureRun event should be the result that is returned by Run method", () => FixtureRunResult == result);
 
-            Expect("FixtureRunning event should be raised", () => FixtureRunningResult != null);
+        Expect("FixtureStepRunning event should not be raised", () => FixtureStepRunningResult == null);
+        Expect("FixtureStepRun event should not be raised", () => FixtureStepRunResult == null);
+    }
 
-            ExpectedFixtureRunningDescriptor = FixtureDescriptorAssertion.Of(TargetFixtureDescription, TargetMethodDescription, TargetMethodFullName, typeof(ExampleAttribute));
-            Expect($"the descriptor of the result on FixtureRunning event should be as follows:{ExpectedFixtureRunningDescriptor.ToDescription()}", () => FixtureDescriptorAssertion.Of(FixtureRunningResult.FixtureDescriptor) == ExpectedFixtureRunningDescriptor);
-            ExpectedFixtureRunningResult = FixtureResultAssertion.ForNullException(true, false, false, 0, 0, FixtureStatus.Running);
-            Expect($"the result on FixtureRunning event should be as follows:{ExpectedFixtureRunningResult.ToDescription()}", () => FixtureResultAssertion.Of(FixtureRunningResult) == ExpectedFixtureRunningResult);
+    [Example("When a filter that returns false is specified")]
+    protected void Ex03()
+    {
+        Filter.Accept(Arg.Any<FixtureDescriptor>()).Returns(false);
 
-            Expect("FixtureRun event should be raised", () => FixtureRunResult != null);
+        var result = Fixture.Run(Filter, Substitute.For<IFixtureStepRunnerFactory>());
 
-            Expect("the result on FixtureRun event should be the result that is returned by Run method", () => FixtureRunResult == result);
+        Expect("the fixture method should not be called", () => TestFixtures.CalledFixtureMethods.Count == 0);
+        Expect("the Dispose method should not be called", () => !TestFixtures.DisposeCalled);
 
-            Expect("FixtureStepRunning event should not be raised", () => FixtureStepRunningResult == null);
-            Expect("FixtureStepRun event should not be raised", () => FixtureStepRunResult == null);
-        }
+        Expect("the result should be null", () => result == null);
 
-        [Example("When a filter that returns false is specified")]
-        protected void Ex03()
-        {
-            Filter.Accept(Arg.Any<FixtureDescriptor>()).Returns(false);
+        Expect("FixtureRunning event should not be raised", () => FixtureRunningResult == null);
+        Expect("FixtureRun event should not be raised", () => FixtureRunResult == null);
 
-            var result = Fixture.Run(Filter, null);
+        Expect("FixtureStepRunning event should not be raised", () => FixtureStepRunningResult == null);
+        Expect("FixtureStepRun event should not be raised", () => FixtureStepRunResult == null);
+    }
 
-            Expect("the fixture method should not be called", () => TestFixtures.CalledFixtureMethods.Count == 0);
-            Expect("the Dispose method should not be called", () => !TestFixtures.DisposeCalled);
+    [Example("When a test fixture throws an exception")]
+    protected void Ex04()
+    {
+        TestFixtures.RaiseException = true;
 
-            Expect("the result should be null", () => result == null);
+        var result = Fixture.Run(null, Substitute.For<IFixtureStepRunnerFactory>());
 
-            Expect("FixtureRunning event should not be raised", () => FixtureRunningResult == null);
-            Expect("FixtureRun event should not be raised", () => FixtureRunResult == null);
+        Expect("the Dispose method should be called", () => TestFixtures.DisposeCalled);
 
-            Expect("FixtureStepRunning event should not be raised", () => FixtureStepRunningResult == null);
-            Expect("FixtureStepRun event should not be raised", () => FixtureStepRunResult == null);
-        }
+        ExpectedFixtureDescriptor = FixtureDescriptorAssertion.Of(TargetFixtureDescription, TargetMethodDescription, TargetMethodFullName, typeof(ExampleAttribute));
+        Expect($"the descriptor of the result should be as follows:{ExpectedFixtureDescriptor.ToDescription()}", () => result != null && FixtureDescriptorAssertion.Of(result.FixtureDescriptor) == ExpectedFixtureDescriptor);
+        ExpectedFixtureResult = FixtureResultAssertion.ForNotNullException(true, true, true, 0, 0, FixtureStatus.Failed);
+        Expect($"the result should be as follows:{ExpectedFixtureResult.ToDescription()}", () => result != null && FixtureResultAssertion.Of(result) == ExpectedFixtureResult);
 
-        [Example("When a test fixture throws an exception")]
-        protected void Ex04()
-        {
-            TestFixtures.RaiseException = true;
+        Expect("FixtureRunning event should be raised", () => FixtureRunningResult != null);
 
-            var result = Fixture.Run(null, null);
+        ExpectedFixtureRunningDescriptor = FixtureDescriptorAssertion.Of(TargetFixtureDescription, TargetMethodDescription, TargetMethodFullName, typeof(ExampleAttribute));
+        Expect($"the descriptor of the result on FixtureRunning event should be as follows:{ExpectedFixtureRunningDescriptor.ToDescription()}", () => FixtureRunningResult != null && FixtureDescriptorAssertion.Of(FixtureRunningResult.FixtureDescriptor) == ExpectedFixtureRunningDescriptor);
+        ExpectedFixtureRunningResult = FixtureResultAssertion.ForNullException(true, false, false, 0, 0, FixtureStatus.Running);
+        Expect($"the result on FixtureRunning event should be as follows:{ExpectedFixtureRunningResult.ToDescription()}", () => FixtureRunningResult != null && FixtureResultAssertion.Of(FixtureRunningResult) == ExpectedFixtureRunningResult);
 
-            Expect("the Dispose method should be called", () => TestFixtures.DisposeCalled);
+        Expect("FixtureRun event should be raised", () => FixtureRunResult != null);
 
-            ExpectedFixtureDescriptor = FixtureDescriptorAssertion.Of(TargetFixtureDescription, TargetMethodDescription, TargetMethodFullName, typeof(ExampleAttribute));
-            Expect($"the descriptor of the result should be as follows:{ExpectedFixtureDescriptor.ToDescription()}", () => FixtureDescriptorAssertion.Of(result.FixtureDescriptor) == ExpectedFixtureDescriptor);
-            ExpectedFixtureResult = FixtureResultAssertion.ForNotNullException(true, true, true, 0, 0, FixtureStatus.Failed);
-            Expect($"the result should be as follows:{ExpectedFixtureResult.ToDescription()}", () => FixtureResultAssertion.Of(result) == ExpectedFixtureResult);
+        Expect("the result on FixtureRun event should be the result that is returned by Run method", () => FixtureRunResult == result);
 
-            Expect("FixtureRunning event should be raised", () => FixtureRunningResult != null);
-
-            ExpectedFixtureRunningDescriptor = FixtureDescriptorAssertion.Of(TargetFixtureDescription, TargetMethodDescription, TargetMethodFullName, typeof(ExampleAttribute));
-            Expect($"the descriptor of the result on FixtureRunning event should be as follows:{ExpectedFixtureRunningDescriptor.ToDescription()}", () => FixtureDescriptorAssertion.Of(FixtureRunningResult.FixtureDescriptor) == ExpectedFixtureRunningDescriptor);
-            ExpectedFixtureRunningResult = FixtureResultAssertion.ForNullException(true, false, false, 0, 0, FixtureStatus.Running);
-            Expect($"the result on FixtureRunning event should be as follows:{ExpectedFixtureRunningResult.ToDescription()}", () => FixtureResultAssertion.Of(FixtureRunningResult) == ExpectedFixtureRunningResult);
-
-            Expect("FixtureRun event should be raised", () => FixtureRunResult != null);
-
-            Expect("the result on FixtureRun event should be the result that is returned by Run method", () => FixtureRunResult == result);
-
-            Expect("FixtureStepRunning event should not be raised", () => FixtureStepRunningResult == null);
-            Expect("FixtureStepRun event should not be raised", () => FixtureStepRunResult == null);
-        }
+        Expect("FixtureStepRunning event should not be raised", () => FixtureStepRunningResult == null);
+        Expect("FixtureStepRun event should not be raised", () => FixtureStepRunResult == null);
     }
 }

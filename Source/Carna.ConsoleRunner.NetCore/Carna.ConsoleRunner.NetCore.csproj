@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <RootNamespace>Carna.ConsoleRunner</RootNamespace>
     <AssemblyName>Carna.ConsoleRunner</AssemblyName>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>

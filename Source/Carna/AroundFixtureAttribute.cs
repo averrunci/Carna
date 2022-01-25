@@ -1,30 +1,27 @@
-﻿// Copyright (C) 2018 Fievus
+﻿// Copyright (C) 2022 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
-using System;
+namespace Carna;
 
-namespace Carna
+/// <summary>
+/// Specifies the fixture that is intercepted before or after running it.
+/// </summary>
+public abstract class AroundFixtureAttribute : Attribute
 {
     /// <summary>
-    /// Specifies the fixture that is intercepted before or after running it.
+    /// Occurs before running the fixture.
     /// </summary>
-    public abstract class AroundFixtureAttribute : Attribute
+    /// <param name="context">The context of the fixture.</param>
+    public virtual void OnFixtureRunning(IFixtureContext context)
     {
-        /// <summary>
-        /// Occurs before running the fixture.
-        /// </summary>
-        /// <param name="context">The context of the fixture.</param>
-        public virtual void OnFixtureRunning(IFixtureContext context)
-        {
-        }
+    }
 
-        /// <summary>
-        /// Occurs after running the fixture.
-        /// </summary>
-        /// <param name="context">The context of the fixture</param>
-        public virtual void OnFixtureRun(IFixtureContext context)
-        {
-        }
+    /// <summary>
+    /// Occurs after running the fixture.
+    /// </summary>
+    /// <param name="context">The context of the fixture</param>
+    public virtual void OnFixtureRun(IFixtureContext context)
+    {
     }
 }

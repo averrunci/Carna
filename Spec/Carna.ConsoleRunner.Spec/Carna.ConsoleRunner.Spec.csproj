@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Carna.ConsoleRunner</RootNamespace>
     <Authors>averrunci</Authors>

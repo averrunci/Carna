@@ -1,25 +1,22 @@
-﻿// Copyright (C) 2017 Fievus
+﻿// Copyright (C) 2022 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
-using System.Collections.Generic;
+namespace Carna.Runner;
 
-namespace Carna.Runner
+/// <summary>
+/// Provides the function to report a result of a fixture running.
+/// </summary>
+public interface IFixtureReporter
 {
     /// <summary>
-    /// Provides the function to report a result of a fixture running.
+    /// Gets or sets a formatter of a fixture.
     /// </summary>
-    public interface IFixtureReporter
-    {
-        /// <summary>
-        /// Gets or sets a formatter of a fixture.
-        /// </summary>
-        IFixtureFormatter FixtureFormatter { get; set; }
+    IFixtureFormatter FixtureFormatter { get; set; }
 
-        /// <summary>
-        /// Reports a result of a fixture running with the specified fixture results.
-        /// </summary>
-        /// <param name="results">The fixture running results.</param>
-        void Report(IEnumerable<FixtureResult> results);
-    }
+    /// <summary>
+    /// Reports a result of a fixture running with the specified fixture results.
+    /// </summary>
+    /// <param name="results">The fixture running results.</param>
+    void Report(IEnumerable<FixtureResult> results);
 }

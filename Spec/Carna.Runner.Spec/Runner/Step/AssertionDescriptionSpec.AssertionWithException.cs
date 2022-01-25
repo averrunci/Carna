@@ -1,8 +1,7 @@
-﻿// Copyright (C) 2017-2021 Fievus
+﻿// Copyright (C) 2022 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
-using System;
 using System.Linq.Expressions;
 
 namespace Carna.Runner.Step
@@ -10,8 +9,8 @@ namespace Carna.Runner.Step
     [Context("Assertion with Exception")]
     class AssertionDescriptionSpec_AssertionWithException : FixtureSteppable
     {
-        Expression<Func<Exception, bool>> Assertion { get; set; }
-        Exception Exception { get; } = new Exception("Message");
+        private Expression<Func<Exception, bool>> Assertion { get; set; } = _ => false;
+        Exception Exception { get; } = new("Message");
 
         [Example("When the specified expression is otherwise")]
         void Ex01()
@@ -156,29 +155,8 @@ But was : 7"
             );
         }
 
-        [Example("When the actual value is null")]
-        void Ex12()
-        {
-            Given(
-                "an assertion that has 'exc.Message == 'message'' where exc is an instance of the NullMessageException class whose message is null",
-                () => Assertion = exc => exc.Message == "message"
-            );
-            Expect(
-                @"the description should be as follows:
-Expected: message
-But was : null",
-                () => AssertionDescription.Of(Assertion, new NullMessageException()).ToString() == @"Expected: message
-But was : null"
-            );
-        }
-
-        class NullMessageException : Exception
-        {
-            public override string Message => null;
-        }
-
         [Example("When the specified expression is BinaryExpression the expression type of which is AndAlso that has two expressions.")]
-        void Ex13()
+        void Ex12()
         {
             Given(
                 "an assertion that has 'exc.GetType() == typeof(Exception) && exc.Message.Length == 3' where the type of exc is Exception; exc.Message='Message'",
@@ -200,7 +178,7 @@ But was : null"
         }
 
         [Example("When the specified expression is BinaryExpression the expression type of which is AndAlso that has more than two expressions.")]
-        void Ex14()
+        void Ex13()
         {
 
             Given(

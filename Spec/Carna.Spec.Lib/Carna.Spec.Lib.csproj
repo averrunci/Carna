@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <RootNamespace>Carna</RootNamespace>
     <AssemblyName>Carna.Spec</AssemblyName>
     <Description>The specification class library for Carna testing and specification framework for .NET Platform</Description>

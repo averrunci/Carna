@@ -1,63 +1,60 @@
-﻿// Copyright (C) 2017-2019 Fievus
+﻿// Copyright (C) 2022 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
-using System;
-
 using Carna.Step;
 
-namespace Carna.Runner.Step
+namespace Carna.Runner.Step;
+
+[Context("Runs GivenStep")]
+class GivenStepRunnerSpec_StepRunning : FixtureSteppable
 {
-    [Context("Runs GivenStep")]
-    class GivenStepRunnerSpec_StepRunning : FixtureSteppable
+    FixtureStepResultCollection StepResults { get; }
+
+    GivenStep Step { get; set; } = default!;
+    FixtureStepResult Result { get; set; } = default!;
+    FixtureStepResultAssertion ExpectedResult { get; set; } = default!;
+
+    public GivenStepRunnerSpec_StepRunning()
     {
-        FixtureStepResultCollection StepResults { get; }
+        StepResults = new FixtureStepResultCollection();
+    }
 
-        GivenStep Step { get; set; }
-        FixtureStepResult Result { get; set; }
-        FixtureStepResultAssertion ExpectedResult { get; set; }
+    private IFixtureStepRunner RunnerOf(GivenStep step) => new GivenStepRunner(step);
 
-        public GivenStepRunnerSpec_StepRunning()
+    [Example("When GivenStep that has an arrangement that does not throw any exceptions is run")]
+    void Ex01()
+    {
+        Given("GivenStep that has an arrangement that does not throw any exceptions", () =>
         {
-            StepResults = new FixtureStepResultCollection();
-        }
+            Step = FixtureSteps.CreateGivenStep(() => { });
+            ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.Passed, Step);
+        });
+        When("the given GivenStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
+        Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
+    }
 
-        private IFixtureStepRunner RunnerOf(GivenStep step) => new GivenStepRunner(step);
-
-        [Example("When GivenStep that has an arrangement that does not throw any exceptions is run")]
-        void Ex01()
+    [Example("When GivenStep that has an arrangement that throws an exception is run")]
+    void Ex02()
+    {
+        Given("GivenStep that has an arrangement that throws an exception", () =>
         {
-            Given("GivenStep that has an arrangement that does not throw any exceptions", () =>
-            {
-                Step = FixtureSteps.CreateGivenStep(() => { });
-                ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.Passed, Step);
-            });
-            When("the given GivenStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
-            Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
-        }
+            Step = FixtureSteps.CreateGivenStep(() => throw new Exception());
+            ExpectedResult = FixtureStepResultAssertion.ForNotNullException(FixtureStepStatus.Failed, Step);
+        });
+        When("the given GivenStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
+        Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
+    }
 
-        [Example("When GivenStep that has an arrangement that throws an exception is run")]
-        void Ex02()
+    [Example("When GivenStep that does not have an arrangement is run")]
+    void Ex03()
+    {
+        Given("GivenStep that does not have an arrangement", () =>
         {
-            Given("GivenStep that has an arrangement that throws an exception", () =>
-            {
-                Step = FixtureSteps.CreateGivenStep(() => throw new Exception());
-                ExpectedResult = FixtureStepResultAssertion.ForNotNullException(FixtureStepStatus.Failed, Step);
-            });
-            When("the given GivenStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
-            Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
-        }
-
-        [Example("When GivenStep that does not have an arrangement is run")]
-        void Ex03()
-        {
-            Given("GivenStep that does not have an arrangement", () =>
-            {
-                Step = FixtureSteps.CreateGivenStep();
-                ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.Pending, Step);
-            });
-            When("the given GivenStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
-            Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
-        }
+            Step = FixtureSteps.CreateGivenStep();
+            ExpectedResult = FixtureStepResultAssertion.ForNullException(FixtureStepStatus.Pending, Step);
+        });
+        When("the given GivenStep is run", () => Result = RunnerOf(Step).Run(StepResults).Build());
+        Then($"the result should be as follows:{ExpectedResult.ToDescription()}", () => FixtureStepResultAssertion.Of(Result) == ExpectedResult);
     }
 }

@@ -1,109 +1,113 @@
-﻿// Copyright (C) 2017-2019 Fievus
+﻿// Copyright (C) 2022 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
-using System;
-using System.Linq;
 using Carna.Step;
 
-namespace Carna.Runner.Step
+namespace Carna.Runner.Step;
+
+/// <summary>
+/// Provides the function to run a Then step.
+/// </summary>
+public class ThenStepRunner : FixtureStepRunner<ThenStep>
 {
     /// <summary>
-    /// Provides the function to run a Then step.
+    /// Initializes a new instance of the <see cref="NoteStepRunner"/> class
+    /// with the specified Then step.
     /// </summary>
-    public class ThenStepRunner : FixtureStepRunner<ThenStep>
+    /// <param name="step">The Then step to run.</param>
+    public ThenStepRunner(ThenStep step) : base(step)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NoteStepRunner"/> class
-        /// with the specified Then step.
-        /// </summary>
-        /// <param name="step">The Then step to run.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="step"/> is <c>null</c>.
-        /// </exception>
-        public ThenStepRunner(ThenStep step) : base(step.RequireNonNull(nameof(step)))
+    }
+
+    /// <summary>
+    /// Runs a Then step with the specified results of a fixture step.
+    /// </summary>
+    /// <param name="results">The results of the fixture step that was completed running.</param>
+    /// <returns>The result of the Then step running.</returns>
+    /// <exception cref="InvalidFixtureStepException">
+    /// The <paramref name="results"/> does not have the <see cref="WhenStep"/>.
+    /// </exception>
+    protected override FixtureStepResult.Builder Run(FixtureStepResultCollection results)
+    {
+        if (!results.Has(typeof(WhenStep)))
         {
+            throw new InvalidFixtureStepException("Then must be after When.");
         }
 
-        /// <summary>
-        /// Runs a Then step with the specified results of a fixture step.
-        /// </summary>
-        /// <param name="results">The results of the fixture step that was completed running.</param>
-        /// <returns>The result of the Then step running.</returns>
-        protected override FixtureStepResult.Builder Run(FixtureStepResultCollection results)
+        if (IsPending)
         {
-            if (!results.Has(typeof(WhenStep)))
-            {
-                throw new InvalidFixtureStepException("Then must be after When.");
-            }
-
-            if (IsPending)
-            {
-                return FixtureStepResult.Of(Step).Pending();
-            }
-
-            if (HasAssertionWithoutException && results.HasLatestExceptionAt<WhenStep>())
-            {
-                return FixtureStepResult.Of(Step).Ready();
-            }
-
-            if (results.HasStatusAtLatest<WhenStep>(FixtureStepStatus.Ready))
-            {
-                return FixtureStepResult.Of(Step).Ready();
-            }
-
-            if (results.HasStatusAtLatest<WhenStep>(FixtureStepStatus.Pending))
-            {
-                return FixtureStepResult.Of(Step).Pending();
-            }
-
-            try
-            {
-                Step.ExecuteAssertion(Step.Assertion);
-                Step.Action?.Invoke();
-                Step.AsyncAction?.Invoke()?.GetAwaiter().GetResult();
-
-                if (HasAssertionWithException)
-                {
-                    RunExceptionAssertion(results);
-                }
-
-                return FixtureStepResult.Of(Step).Passed();
-            }
-            catch (Exception exc)
-            {
-                return FixtureStepResult.Of(Step).Failed(exc);
-            }
+            return FixtureStepResult.Of(Step).Pending();
         }
 
-        private void RunExceptionAssertion(FixtureStepResultCollection results)
+        if (HasAssertionWithoutException && results.HasLatestExceptionAt<WhenStep>())
         {
-            Exception exception;
-            var lastStep = results.Last().Step;
-            if (lastStep is ThenStep lastThenStep)
+            return FixtureStepResult.Of(Step).Ready();
+        }
+
+        if (results.HasStatusAtLatest<WhenStep>(FixtureStepStatus.Ready))
+        {
+            return FixtureStepResult.Of(Step).Ready();
+        }
+
+        if (results.HasStatusAtLatest<WhenStep>(FixtureStepStatus.Pending))
+        {
+            return FixtureStepResult.Of(Step).Pending();
+        }
+
+        try
+        {
+            if (Step.Assertion is not null) Step.ExecuteAssertion(Step.Assertion);
+            Step.Action?.Invoke();
+            Step.AsyncAction?.Invoke().GetAwaiter().GetResult();
+
+            if (HasAssertionWithException)
             {
-                exception = lastThenStep.AssertedException;
+                RunExceptionAssertion(results);
+            }
+
+            return FixtureStepResult.Of(Step).Passed();
+        }
+        catch (Exception exc)
+        {
+            return FixtureStepResult.Of(Step).Failed(exc);
+        }
+    }
+
+    private void RunExceptionAssertion(FixtureStepResultCollection results)
+    {
+        Exception? exception;
+        var lastStep = results.Last().Step;
+        if (lastStep is ThenStep lastThenStep)
+        {
+            exception = lastThenStep.AssertedException;
+        }
+        else
+        {
+            exception = results.GetLatestExceptionAt<WhenStep>();
+            if (exception is not null) results.ClearException(exception);
+        }
+
+        Step.AssertedException = exception;
+        if (Step.ExceptionType is not null)
+        {
+            if (exception is null)
+            {
+                Step.ExecuteAssertion(() => null == Step.ExceptionType);
             }
             else
             {
-                exception = results.GetLatestExceptionAt<WhenStep>();
-                results.ClearException(exception);
+                Step.ExecuteAssertion(() => exception.GetType() == Step.ExceptionType);
             }
-
-            Step.AssertedException = exception;
-            Step.ExceptionType.IfPresent(exceptionType =>
-            {
-                exception.IfPresent(_ => Step.ExecuteAssertion(() => exception.GetType() == Step.ExceptionType));
-                exception.IfAbsent(() => Step.ExecuteAssertion(() => null == Step.ExceptionType));
-            });
-
-            Step.ExecuteAssertion(Step.ExceptionAssertion, exception);
-            Step.ExceptionAction?.Invoke(exception);
-            Step.AsyncExceptionAction?.Invoke(exception)?.GetAwaiter().GetResult();
         }
+        if (exception is null) return;
 
-        private bool IsPending =>!HasAssertionWithoutException && !HasAssertionWithException;
-        private bool HasAssertionWithoutException => Step.Assertion != null || Step.Action != null || Step.AsyncAction != null;
-        private bool HasAssertionWithException => Step.ExceptionAssertion != null || Step.ExceptionAction != null || Step.AsyncExceptionAction != null || Step.ExceptionType != null;
+        if (Step.ExceptionAssertion is not null) Step.ExecuteAssertion(Step.ExceptionAssertion, exception);
+        Step.ExceptionAction?.Invoke(exception);
+        Step.AsyncExceptionAction?.Invoke(exception).GetAwaiter().GetResult();
     }
+
+    private bool IsPending =>!HasAssertionWithoutException && !HasAssertionWithException;
+    private bool HasAssertionWithoutException => Step.Assertion is not null || Step.Action is not null || Step.AsyncAction is not null;
+    private bool HasAssertionWithException => Step.ExceptionAssertion is not null || Step.ExceptionAction is not null || Step.AsyncExceptionAction is not null || Step.ExceptionType is not null;
 }

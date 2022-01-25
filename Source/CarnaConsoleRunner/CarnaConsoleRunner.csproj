@@ -3,6 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFrameworks>net6.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <RootNamespace>Carna.ConsoleRunner</RootNamespace>
     <AssemblyName>carna-runner</AssemblyName>
     <ApplicationIcon>carna.ico</ApplicationIcon>

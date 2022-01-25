@@ -1,21 +1,18 @@
-﻿// Copyright (C) 2020 Fievus
+﻿// Copyright (C) 2022 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
-using System;
+namespace Carna.ConsoleRunner;
 
-namespace Carna.ConsoleRunner
+internal static class Program
 {
-    internal static class Program
+    private static int Main(string[] args)
     {
-        private static int Main(string[] args)
+        AppDomain.CurrentDomain.UnhandledException += (_, e) =>
         {
-            AppDomain.CurrentDomain.UnhandledException += (s, e) =>
-            {
-                CarnaConsole.WriteLine(e.ExceptionObject as Exception);
-                Environment.Exit(CarnaConsoleRunnerResult.Error.Value());
-            };
-            return CarnaConsoleRunner.Run(args, CarnaConsoleRunner.Name);
-        }
+            CarnaConsole.WriteLine(e.ExceptionObject as Exception);
+            Environment.Exit(CarnaConsoleRunnerResult.Error.Value());
+        };
+        return CarnaConsoleRunner.Run(args, CarnaConsoleRunner.Name);
     }
 }
