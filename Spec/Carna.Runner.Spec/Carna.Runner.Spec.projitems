@@ -82,6 +82,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.RunFixture.cs">
       <DependentUpon>FixtureSpec.cs</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.RunFixture.FixtureImplementedIAsyncDisposable.cs">
+      <DependentUpon>FixtureSpec.RunFixture.cs</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.RunFixture.FixtureImplementedIDisposable.cs">
       <DependentUpon>FixtureSpec.RunFixture.cs</DependentUpon>
     </Compile>
@@ -99,6 +102,9 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.RunFixtureAsync.cs">
       <DependentUpon>FixtureSpec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.RunFixtureAsync.FixtureImplementedIAsyncDisposable.cs">
+      <DependentUpon>FixtureSpec.RunFixtureAsync.cs</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Runner\FixtureSpec.RunFixtureAsync.FixtureImplementedIDisposable.cs">
       <DependentUpon>FixtureSpec.RunFixtureAsync.cs</DependentUpon>

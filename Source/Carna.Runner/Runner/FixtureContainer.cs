@@ -156,9 +156,26 @@ public class FixtureContainer : FixtureBase
         FixtureDescriptor.Background = RetrieveBackground();
 
         if (!runningFixtures.Any(fixture => fixture.FixtureDescriptor.IsContainerFixture)) return RunFixtures(filter);
-        if (CreateFixtureInstance() is not IDisposable disposable) return RunFixtures(filter);
 
-        using (disposable) return RunFixtures(filter);
+        var fixtureInstance = CreateFixtureInstance();
+        if (fixtureInstance is IDisposable disposable)
+        {
+            using (disposable) return RunFixtures(filter);
+        }
+
+        if (fixtureInstance is IAsyncDisposable asyncDisposable)
+        {
+            try
+            {
+                return RunFixtures(filter);
+            }
+            finally
+            {
+                asyncDisposable.DisposeAsync().GetAwaiter().GetResult();
+            }
+        }
+
+        return RunFixtures(filter);
     }
 
     private bool CanRunParallel(bool parallel) => parallel && FixtureDescriptor.CanRunParallel;

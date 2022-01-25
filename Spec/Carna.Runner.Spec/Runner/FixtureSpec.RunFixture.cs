@@ -14,6 +14,9 @@ class FixtureSpec_RunFixture
     FixtureSpec_RunFixture_FixtureImplementedIDisposable FixtureImplementedIDisposable => default!;
 
     [Context]
+    FixtureSpec_RunFixture_FixtureImplementedIAsyncDisposable FixtureImplementedIAsyncDisposable => default!;
+
+    [Context]
     FixtureSpec_RunFixture_FixtureImplementedIFixtureSteppable FixtureImplementedIFixtureSteppable => default!;
 
     [Context]

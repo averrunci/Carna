@@ -114,6 +114,49 @@ internal static class TestFixtures
         }
     }
 
+    [Context("Simple AsyncDisposable Fixture")]
+    public class SimpleAsyncDisposableFixture : IAsyncDisposable
+    {
+        public async ValueTask DisposeAsync()
+        {
+            DisposeCalled = true;
+
+            await Task.Delay(100);
+        }
+
+        [Example("Fixture Method Example")]
+        void FixtureMethod()
+        {
+            if (RaiseException) throw new Exception();
+
+            CalledFixtureMethods.Add(GetType());
+        }
+    }
+
+    [Context("Simple AsyncDisposable Asynchronous Fixture")]
+    public class SimpleAsyncDisposableAsyncFixture : IAsyncDisposable
+    {
+        public async ValueTask DisposeAsync()
+        {
+            DisposeCalled = true;
+    
+            await Task.Delay(100);
+        }
+
+        [Example("Fixture Asynchronous Method Example")]
+        async Task FixtureMethodAsync()
+        {
+            var raiseException = RaiseException;
+            var calledFixtureMethods = CalledFixtureMethods;
+
+            await Task.Delay(100);
+
+            if (raiseException) throw new Exception();
+
+            calledFixtureMethods.Add(GetType());
+        }
+    }
+
     [Context("Simple Fixture Steppable")]
     public class SimpleFixtureSteppable : IFixtureSteppable
     {

@@ -115,6 +115,17 @@ public class Fixture : FixtureBase
         {
             using (disposable) PerformFixtureMethod();
         }
+        else if (fixtureInstance is IAsyncDisposable asyncDisposable)
+        {
+            try
+            {
+                PerformFixtureMethod();
+            }
+            finally
+            {
+                asyncDisposable.DisposeAsync().GetAwaiter().GetResult();
+            }
+        }
         else
         {
             PerformFixtureMethod();
