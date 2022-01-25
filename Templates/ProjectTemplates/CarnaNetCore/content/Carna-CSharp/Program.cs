@@ -1,9 +1,8 @@
 using Carna.ConsoleRunner;
 
-namespace Company.CarnaProject1
+namespace Company.CarnaProject1;
+
+static class Program
 {
-    static class Program
-    {
-        static int Main(string[] args) => CarnaConsoleRunner.Run(args);
-    }
+    static int Main(string[] args) => CarnaConsoleRunner.Run(args);
 }
