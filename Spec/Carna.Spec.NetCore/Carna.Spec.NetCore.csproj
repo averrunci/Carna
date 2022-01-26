@@ -14,9 +14,9 @@
     <Copyright>Copyright (C) 2022 Fievus</Copyright>
     <PackageProjectUrl>https://github.com/averrunci/Carna</PackageProjectUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <AssemblyVersion>1.8.2</AssemblyVersion>
-    <FileVersion>1.8.2</FileVersion>
-    <Version>1.8.2</Version>
+    <AssemblyVersion>2.0.0</AssemblyVersion>
+    <FileVersion>2.0.0</FileVersion>
+    <Version>2.0.0</Version>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>

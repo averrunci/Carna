@@ -1,5 +1,19 @@
 # Release note
 
+## v2.0.0
+
+### Change
+
+- Update the target framework version to .NET 6.0.
+  - Not update the following:
+    - CarnaConsoleRunner
+    - Carna.UwpRunner
+- Enable Nullable reference types.
+
+#### Carna.Runner
+
+- Change to be able to execute the DisposeAsync method of a spec that implements the IAsyncDisposable interface.
+
 ## v1.8.2
 
 ### Bug fix

@@ -14,10 +14,10 @@
     <PackageProjectUrl>https://github.com/averrunci/Carna</PackageProjectUrl>
     <PackageTags>carna test testing tdd bdd runner</PackageTags>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <AssemblyVersion>1.8.2</AssemblyVersion>
-    <FileVersion>1.8.2</FileVersion>
+    <AssemblyVersion>2.0.0</AssemblyVersion>
+    <FileVersion>2.0.0</FileVersion>
     <PackageLicenseUrl></PackageLicenseUrl>
-    <Version>1.8.2</Version>
+    <Version>2.0.0</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
