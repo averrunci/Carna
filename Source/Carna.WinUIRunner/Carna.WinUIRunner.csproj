@@ -1,0 +1,62 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>Carna.WinUIRunner</RootNamespace>
+    <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
+    <UseWinUI>true</UseWinUI>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <BaseOutputPath>..\..\Binary\Carna.WinUIRunner</BaseOutputPath>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>2.0.0</Version>
+    <AssemblyVersion>2.0.0</AssemblyVersion>
+    <FileVersion>2.0.0</FileVersion>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Authors>averrunci</Authors>
+    <Description>The runner of Carna testing and specification framework for Windows UI application.</Description>
+    <Copyright>Copyright (C) 2022 Fievus</Copyright>
+    <PackageProjectUrl>https://github.com/averrunci/Carna</PackageProjectUrl>
+    <PackageTags>carna test testing tdd bdd runner winui</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="CarnaWinUIRunnerHostView.xaml" />
+    <None Remove="FixtureContentView.xaml" />
+    <None Remove="FixtureStepContentView.xaml" />
+    <None Remove="FixtureSummaryView.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+      <ProjectReference Include="..\Carna.Runner\Carna.Runner.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+      <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0" />
+      <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.194" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="FixtureContentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="FixtureStepContentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="FixtureSummaryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="CarnaWinUIRunnerHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+</Project>

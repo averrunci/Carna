@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Carna.WinUIRunner.Spec (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Carna.WinUIRunner.Spec (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

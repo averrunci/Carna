@@ -2,6 +2,10 @@
 
 ## v2.0.0
 
+### Add
+
+- Add the Carna.WinUIRunner.
+
 ### Change
 
 - Update the target framework version to .NET 6.0.
