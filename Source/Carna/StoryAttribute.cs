@@ -22,7 +22,10 @@ public class StoryAttribute : FixtureAttribute
     /// <summary>
     /// Initializes a new instance of the <see cref="StoryAttribute"/> class.
     /// </summary>
-    public StoryAttribute()
+    /// <param name="fixtures">
+    /// Types of fixtures that are contained by a fixture specified by this attribute.
+    /// </param>
+    public StoryAttribute(params Type[] fixtures) : base(fixtures)
     {
     }
 
@@ -33,7 +36,10 @@ public class StoryAttribute : FixtureAttribute
     /// <param name="description">
     /// The description of a fixture specified by this attribute.
     /// </param>
-    public StoryAttribute(string description) : base(description)
+    /// <param name="fixtures">
+    /// Types of fixtures that are contained by a fixture specified by this attribute.
+    /// </param>
+    public StoryAttribute(string description, params Type[] fixtures) : base(description, fixtures)
     {
     }
 }

@@ -49,6 +49,11 @@ public class FixtureBuilder : IFixtureBuilder
     {
         var fixtureContainer = new FixtureContainer(fixtureType);
         fixtureContainer.AddRange(
+            fixtureType.GetCustomAttribute<FixtureAttribute>()?.Fixtures
+                .Where(TypeFilter)
+                .Select(Build) ?? Enumerable.Empty<IFixture>()
+        );
+        fixtureContainer.AddRange(
             fixtureType.GetRuntimeFields()
                 .Where(FiledFilter)
                 .Select(f => Build(f.FieldType))
@@ -147,6 +152,11 @@ public class FixtureBuilder : IFixtureBuilder
                 }
             )
         );
+
+    /// <summary>
+    /// Gets a filter that is applied to a type that is a target of a fixture.
+    /// </summary>
+    protected virtual Func<Type, bool> TypeFilter => Filter;
 
     /// <summary>
     /// Gets a filter that is applied to a field that is a target of a fixture.

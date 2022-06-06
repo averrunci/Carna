@@ -22,7 +22,10 @@ public class RequirementAttribute : FixtureAttribute
     /// <summary>
     /// Initializes a new instance of the <see cref="RequirementAttribute"/> class.
     /// </summary>
-    public RequirementAttribute()
+    /// <param name="fixtures">
+    /// Types of fixtures that are contained by a fixture specified by this attribute.
+    /// </param>
+    public RequirementAttribute(params Type[] fixtures) : base(fixtures)
     {
     }
 
@@ -33,7 +36,10 @@ public class RequirementAttribute : FixtureAttribute
     /// <param name="description">
     /// The description of a fixture specified by this attribute.
     /// </param>
-    public RequirementAttribute(string description) : base(description)
+    /// <param name="fixtures">
+    /// Types of fixtures that are contained by a fixture specified by this attribute.
+    /// </param>
+    public RequirementAttribute(string description, params Type[] fixtures) : base(description, fixtures)
     {
     }
 }

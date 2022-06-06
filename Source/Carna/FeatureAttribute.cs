@@ -22,7 +22,10 @@ public class FeatureAttribute : FixtureAttribute
     /// <summary>
     /// Initializes a new instance of the <see cref="FeatureAttribute"/> class.
     /// </summary>
-    public FeatureAttribute()
+    /// <param name="fixtures">
+    /// Types of fixtures that are contained by a fixture specified by this attribute.
+    /// </param>
+    public FeatureAttribute(params Type[] fixtures) : base(fixtures)
     {
         IsRootFixture = true;
     }
@@ -34,7 +37,10 @@ public class FeatureAttribute : FixtureAttribute
     /// <param name="description">
     /// The description of a fixture specified by this attribute.
     /// </param>
-    public FeatureAttribute(string description) : base(description)
+    /// <param name="fixtures">
+    /// Types of fixtures that are contained by a fixture specified by this attribute.
+    /// </param>
+    public FeatureAttribute(string description, params Type[] fixtures) : base(description, fixtures)
     {
         IsRootFixture = true;
     }

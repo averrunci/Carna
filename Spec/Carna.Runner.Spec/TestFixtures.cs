@@ -240,6 +240,12 @@ internal static class TestFixtures
         SimpleFixture context01 = default!;
     }
 
+    [Requirement("Simple Fixture with container fixture as a type", typeof(SimpleFixture))]
+    public class SimpleFixtureWithContainerFixtureAsType
+    {
+
+    }
+
     [Context("Simple Fixture with sample")]
     public class SimpleFixtureWithSample
     {

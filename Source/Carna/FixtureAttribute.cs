@@ -58,10 +58,19 @@ public abstract class FixtureAttribute : Attribute
     public bool RequiresSta { get; set; }
 
     /// <summary>
+    /// Gets types of fixtures that are contained by a fixture specified by this attribute.
+    /// </summary>
+    public Type[] Fixtures { get; }
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="FixtureAttribute"/> class.
     /// </summary>
-    protected FixtureAttribute()
+    /// <param name="fixtures">
+    /// Types of fixtures that are contained by a fixture specified by this attribute.
+    /// </param>
+    protected FixtureAttribute(params Type[] fixtures)
     {
+        Fixtures = fixtures;
     }
 
     /// <summary>
@@ -71,8 +80,12 @@ public abstract class FixtureAttribute : Attribute
     /// <param name="description">
     /// The description of a fixture specified by this attribute.
     /// </param>
-    protected FixtureAttribute(string description)
+    /// <param name="fixtures">
+    /// Types of fixtures that are contained by a fixture specified by this attribute.
+    /// </param>
+    protected FixtureAttribute(string description, params Type[] fixtures)
     {
         Description = description;
+        Fixtures = fixtures;
     }
 }

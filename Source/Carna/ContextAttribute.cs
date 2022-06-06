@@ -22,7 +22,10 @@ public class ContextAttribute : FixtureAttribute
     /// <summary>
     /// Initializes a new instance of the <see cref="ContextAttribute"/> class.
     /// </summary>
-    public ContextAttribute()
+    /// <param name="fixtures">
+    /// Types of fixtures that are contained by a fixture specified by this attribute.
+    /// </param>
+    public ContextAttribute(params Type[] fixtures) : base(fixtures)
     {
     }
 
@@ -33,7 +36,10 @@ public class ContextAttribute : FixtureAttribute
     /// <param name="description">
     /// The description of a fixture specified by this attribute.
     /// </param>
-    public ContextAttribute(string description) : base(description)
+    /// <param name="fixtures">
+    /// Types of fixtures that are contained by a fixture specified by this attribute.
+    /// </param>
+    public ContextAttribute(string description, params Type[] fixtures) : base(description, fixtures)
     {
     }
 }

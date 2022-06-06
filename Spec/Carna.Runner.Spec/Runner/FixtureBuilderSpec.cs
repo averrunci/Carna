@@ -192,8 +192,47 @@ class FixtureBuilderSpec : FixtureSteppable
         Then("the parent fixture of the fixture contained by the Context fixture should be the parent fixture of the Context fixture", () => exampleFixture.ParentFixture == contextFixture.ParentFixture);
     }
 
-    [Example("Fixture contains a fixture method with a sample (Context fixture > Example fixture (1 sample))")]
+    [Example("Fixture contains a container fixture as a type (Requirement fixture > Context fixture > Example fixture)")]
     void Ex06()
+    {
+        When("a fixture is built", () => Fixtures = Builder.Build(new[] { typeof(TestFixtures.SimpleFixtureWithContainerFixtureAsType).GetTypeInfo() }));
+        Then("the number of built fixtures should be 1", () => Fixtures.Count() == 1);
+
+        var assemblyFixture = Fixtures.ElementAt(0);
+        Then("the built fixture should be an Assembly fixture", () => assemblyFixture.FixtureDescriptor.FixtureAttributeType == typeof(AssemblyFixtureAttribute));
+        Then("the parent fixture of the built fixture should be null", () => assemblyFixture.ParentFixture == null);
+
+        var childFixturesOfAssemblyFixture = GetFixtures(assemblyFixture as FixtureContainer);
+        Then("the number of fixtures contained by the Assembly fixture should be 1", () => childFixturesOfAssemblyFixture.Count() == 1);
+
+        var namespaceFixture = childFixturesOfAssemblyFixture.ElementAt(0);
+        Then("the fixture contained by the Assembly fixture should be a Namespace fixture", () => namespaceFixture.FixtureDescriptor.FixtureAttributeType == typeof(NamespaceFixtureAttribute));
+        Then("the parent fixture of the fixture contained by the Assembly fixture should be the Assembly fixture", () => namespaceFixture.ParentFixture == assemblyFixture);
+
+        var childFixturesOfNamespaceFixture = GetFixtures(namespaceFixture as FixtureContainer);
+        Then("the number of fixtures contained by the Namespace fixture should be 1", () => childFixturesOfNamespaceFixture.Count() == 1);
+
+        var requirementFixture = childFixturesOfNamespaceFixture.ElementAt(0);
+        Then("the fixture contained by the Namespace fixture should be a Requirement fixture", () => requirementFixture.FixtureDescriptor.FixtureAttributeType == typeof(RequirementAttribute));
+        Then("the parent fixture of the fixture contained by the Namespace fixture should be the Namespace fixture", () => requirementFixture.ParentFixture == namespaceFixture);
+
+        var childFixturesOfRequirementFixture = GetFixtures(requirementFixture as FixtureContainer);
+        Then("the number of fixtures contained by the Requirement fixture should be 1", () => childFixturesOfRequirementFixture.Count() == 1);
+
+        var contextFixture = childFixturesOfRequirementFixture.ElementAt(0);
+        Then("the fixture contained by the Requirement fixture should be a Context fixture", () => contextFixture.FixtureDescriptor.FixtureAttributeType == typeof(ContextAttribute));
+        Then("the parent fixture of the fixture contained by the Requirement fixture should be the Requirement fixture", () => contextFixture.ParentFixture == requirementFixture);
+
+        var childFixturesOfContextFixture = GetFixtures(contextFixture as FixtureContainer);
+        Then("the number of fixtures contained by the Context fixture should be 1", () => childFixturesOfContextFixture.Count() == 1);
+
+        var exampleFixture = childFixturesOfContextFixture.ElementAt(0);
+        Then("the fixture contained by the Context fixture should be an Example fixture", () => exampleFixture.FixtureDescriptor.FixtureAttributeType == typeof(ExampleAttribute));
+        Then("the parent fixture of the fixture contained by the Context fixture should be the parent fixture of the Context fixture", () => exampleFixture.ParentFixture == contextFixture.ParentFixture);
+    }
+
+    [Example("Fixture contains a fixture method with a sample (Context fixture > Example fixture (1 sample))")]
+    void Ex07()
     {
         When("a fixture is built", () => Fixtures = Builder.Build(new[] { typeof(TestFixtures.SimpleFixtureWithSample).GetTypeInfo() }));
         Then("the number of built fixtures should be 1", () => Fixtures.Count() == 1);
@@ -236,7 +275,7 @@ class FixtureBuilderSpec : FixtureSteppable
     }
 
     [Example("Fixture contains a fixture method with some samples (Context fixture > Example fixture (3 samples))")]
-    void Ex07()
+    void Ex08()
     {
         When("a fixture is built", () => Fixtures = Builder.Build(new[] { typeof(TestFixtures.SimpleFixtureWithSamples).GetTypeInfo() }));
         Then("the number of built fixtures should be 1", () => Fixtures.Count() == 1);
@@ -276,7 +315,7 @@ class FixtureBuilderSpec : FixtureSteppable
     }
 
     [Example("Fixture contains a fixture method with a sample data source (Context fixture > Example fixture (3 samples))")]
-    void Ex08()
+    void Ex09()
     {
         When("a fixture is built", () => Fixtures = Builder.Build(new[] { typeof(TestFixtures.SimpleFixtureWithSampleDataSource).GetTypeInfo() }));
         Then("the number of built fixtures should be 1", () => Fixtures.Count() == 1);
@@ -327,14 +366,14 @@ class FixtureBuilderSpec : FixtureSteppable
     }
 
     [Example("Fixture contains sample fixture that has a source that does not implement ISampleDataSource")]
-    void Ex09()
+    void Ex10()
     {
         When("a fixture is built", () => Builder.Build(new[] { typeof(TestFixtures.SimpleFixtureWithInvalidSampleDataSource).GetTypeInfo() }));
         Then("InvalidSampleDataSourceTypeException should be thrown", exc => exc.GetType() == typeof(InvalidSampleDataSourceTypeException));
     }
 
     [Example("Fixture contains sample fixture that has a source that does not have a parameterless constructor")]
-    void Ex10()
+    void Ex11()
     {
         When("a fixture is built", () => Builder.Build(new[] { typeof(TestFixtures.SimpleFixtureWithSampleDataSourceWithoutParameterlessConstructor).GetTypeInfo() }));
         Then("InvalidSampleDataSourceTypeException should be thrown", exc => exc.GetType() == typeof(InvalidSampleDataSourceTypeException));
