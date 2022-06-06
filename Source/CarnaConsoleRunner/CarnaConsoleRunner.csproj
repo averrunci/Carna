@@ -37,6 +37,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <FrameworkReference Include="Microsoft.WindowsDesktop.App" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Carna.Runner\Carna.Runner.csproj" />
   </ItemGroup>
 
