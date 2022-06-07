@@ -1,7 +1,8 @@
 {
   "assemblies": [
     "Carna.Spec.Lib\\bin\\Debug\\net6.0\\Carna.Spec.dll",
-    "Carna.Runner.Spec.Lib\\bin\\Debug\\net6.0\\Carna.Runner.Spec.dll"
+    "Carna.Runner.Spec.Lib\\bin\\Debug\\net6.0\\Carna.Runner.Spec.dll",
+    "Carna.ConsoleRunner.Spec\\bin\\Debug\\net6.0\\Carna.ConsoleRunner.Spec.dll"
   ],
   "reporters": [
     {

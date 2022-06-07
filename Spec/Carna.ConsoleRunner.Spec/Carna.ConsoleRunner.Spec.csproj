@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <TargetFramework>net6.0</TargetFramework>
@@ -22,6 +21,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Source\Carna.ConsoleRunner.NetCore\Carna.ConsoleRunner.NetCore.csproj" />
+      <ProjectReference Include="..\..\Source\Carna.Runner\Carna.Runner.csproj">
+          <Private>false</Private>
+          <ExcludeAssets>runtime</ExcludeAssets>
+      </ProjectReference>
+      <ProjectReference Include="..\..\Source\Carna\Carna.csproj">
+          <Private>false</Private>
+          <ExcludeAssets>runtime</ExcludeAssets>
+      </ProjectReference>
   </ItemGroup>
 
 </Project>
