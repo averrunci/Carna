@@ -37,6 +37,8 @@ public static class CarnaConsoleRunner
                 return CarnaConsoleRunnerResult.Success.Value();
             }
 
+            if (options.CanPause) Pause();
+
             return ConsoleFixtureEngine.Start(options) ? CarnaConsoleRunnerResult.Success.Value() : CarnaConsoleRunnerResult.Failed.Value();
         }
         catch (InvalidCommandLineOptionException exc)
@@ -85,5 +87,14 @@ Options:");
             .OrderBy(option => option.Order)
             .ForEach(option => CarnaConsole.WriteLine(option.Description));
         CarnaConsole.WriteLine();
+    }
+
+    private static void Pause()
+    {
+        CarnaConsole.Write("Please enter any key to run fixtures...");
+        var cursorLeft = CarnaConsole.CursorLeft;
+        CarnaConsole.ReadKey();
+        CarnaConsole.Backspace();
+        CarnaConsole.BackspaceToHome(cursorLeft);
     }
 }

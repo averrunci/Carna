@@ -31,6 +31,12 @@ public class CarnaRunnerCommandLineOptions
     /// </summary>
     public string? Filter { get; set; }
 
+    /// <summary>
+    /// Gets or sets a value that indicates whether to wait for a user input
+    /// before running the fixtures.
+    /// </summary>
+    public bool CanPause { get; set; }
+
     static CarnaRunnerCommandLineOptions()
     {
         registeredOptions = typeof(CarnaRunnerCommandLineOption).GetTypeInfo().Assembly.DefinedTypes

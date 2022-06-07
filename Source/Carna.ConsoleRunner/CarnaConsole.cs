@@ -23,6 +23,13 @@ internal static class CarnaConsole
 
     public static void Backspace() => Write("\b \b");
     public static void BackspaceToHome() => Enumerable.Range(0, CursorLeft).ForEach(_ => Backspace());
+    public static void BackspaceToHome(int cursorLeft)
+    {
+        Console.CursorLeft = cursorLeft;
+        BackspaceToHome();
+    }
+
+    public static ConsoleKeyInfo ReadKey() => Console.ReadKey();
 
     public static void WriteLine() => Console.WriteLine();
 

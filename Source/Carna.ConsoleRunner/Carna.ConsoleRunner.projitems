@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Configuration\Options\AssemblyOption.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Configuration\Options\FilterOption.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Configuration\Options\HelpOption.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Configuration\Options\PauseOption.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Configuration\Options\SettingsOption.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FixtureEngineExtensions.cs" />
