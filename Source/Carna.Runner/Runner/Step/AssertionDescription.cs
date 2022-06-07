@@ -283,7 +283,7 @@ public class AssertionDescription
     private bool IsEnumerableSequenceEqualMethod([NotNullWhen(true)] MethodCallExpression? expression)
         => expression is not null && expression.Method.DeclaringType == typeof(Enumerable) && expression.Method.Name is nameof(Enumerable.SequenceEqual) && expression.Arguments.Count is 2;
 
-    private string RetrieveEnumerableValue(IEnumerable values) => values is string stringValue ? stringValue : $"[{string.Join(", ", values.OfType<object>())}]";
+    private string RetrieveEnumerableValue(IEnumerable values) => values as string ?? $"[{string.Join(", ", values.OfType<object>())}]";
 
     private bool IsObjectEqualsMethod([NotNullWhen(true)] MethodCallExpression? expression)
         => expression?.Method.Name is nameof(Equals) && expression.Arguments.Count is 1 or 2;

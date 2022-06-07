@@ -7,7 +7,6 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Carna.Runner;
-using Carna.Runner.Formatters;
 
 namespace Carna.WinUIRunner;
 

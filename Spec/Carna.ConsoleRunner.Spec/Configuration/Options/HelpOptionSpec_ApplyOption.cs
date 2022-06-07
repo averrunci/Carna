@@ -11,8 +11,6 @@ class HelpOptionSpec_ApplyOption : FixtureSteppable
     CarnaRunnerCommandLineOptions Options { get; } = new();
     CarnaRunnerCommandLineOptionContext Context { get; set; } = default!;
 
-    string Pattern { get; set; } = default!;
-
     [Example("When a help option is specified")]
     void Ex01()
     {

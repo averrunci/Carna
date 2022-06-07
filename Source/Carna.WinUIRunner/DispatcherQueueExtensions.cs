@@ -74,7 +74,7 @@ public static class DispatcherQueueExtensions
     /// <param name="dispatcher">The <see cref="DispatcherQueue"/> with which the thread is associated.</param>
     /// <param name="action">The delegate to the task to execute.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    public static Task<TResult> RunAsync<TResult>(this DispatcherQueue dispatcher, Func<TResult> action) => RunAsync<TResult>(dispatcher, DispatcherQueuePriority.Normal, action);
+    public static Task<TResult> RunAsync<TResult>(this DispatcherQueue dispatcher, Func<TResult> action) => RunAsync(dispatcher, DispatcherQueuePriority.Normal, action);
 
     /// <summary>
     /// Runs the specified task on the thread associated with the <see cref="DispatcherQueue"/>
