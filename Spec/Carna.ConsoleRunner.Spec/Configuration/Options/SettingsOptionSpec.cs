@@ -4,12 +4,11 @@
 // of the MIT license.  See the LICENSE file for details.
 namespace Carna.ConsoleRunner.Configuration.Options;
 
-[Specification("SettingsOption Spec")]
+[Specification(
+    "SettingsOption Spec",
+    typeof(SettingsOptionSpec_CanApply),
+    typeof(SettingsOptionSpec_ApplyOption)
+)]
 class SettingsOptionSpec
 {
-    [Context]
-    SettingsOptionSpec_CanApply CanApply => default!;
-
-    [Context]
-    SettingsOptionSpec_ApplyOption ApplyOption => default!;
 }

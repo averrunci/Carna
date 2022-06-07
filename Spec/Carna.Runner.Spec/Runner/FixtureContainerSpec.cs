@@ -4,21 +4,14 @@
 // of the MIT license.  See the LICENSE file for details.
 namespace Carna.Runner;
 
-[Specification("FixtureContainer Spec")]
+[Specification(
+    "FixtureContainer Spec",
+    typeof(FixtureContainerSpec_EnsureParent),
+    typeof(FixtureContainerSpec_Ready),
+    typeof(FixtureContainerSpec_CanRun),
+    typeof(FixtureContainerSpec_RunFixtures),
+    typeof(FixtureContainerSpec_Background)
+)]
 class FixtureContainerSpec
 {
-    [Context]
-    FixtureContainerSpec_EnsureParent EnsureParent => default!;
-
-    [Context]
-    FixtureContainerSpec_Ready Ready => default!;
-
-    [Context]
-    FixtureContainerSpec_CanRun CanRun => default!;
-
-    [Context]
-    FixtureContainerSpec_RunFixtures RunFixtures => default!;
-
-    [Context]
-    FixtureContainerSpec_Background Background => default!;
 }

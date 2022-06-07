@@ -4,18 +4,13 @@
 // of the MIT license.  See the LICENSE file for details.
 namespace Carna.Runner.Step;
 
-[Specification("WhenStepRunner Spec")]
+[Specification(
+    "WhenStepRunner Spec",
+    typeof(WhenStepRunnerSpec_StepRunning),
+    typeof(WhenStepRunnerSpec_Constrains),
+    typeof(WhenStepRunnerSpec_StepRunningAsync),
+    typeof(WhenStepRunnerSpec_StepRunningWithTimeout)
+)]
 class WhenStepRunnerSpec
 {
-    [Context]
-    WhenStepRunnerSpec_StepRunning StepRunning => default!;
-
-    [Context]
-    WhenStepRunnerSpec_Constrains Constrains => default!;
-
-    [Context]
-    WhenStepRunnerSpec_StepRunningAsync StepRunningAsync => default!;
-
-    [Context]
-    WhenStepRunnerSpec_StepRunningWithTimeout StepRunningWithTimeout => default!;
 }

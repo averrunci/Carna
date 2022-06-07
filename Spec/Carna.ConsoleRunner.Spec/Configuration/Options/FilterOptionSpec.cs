@@ -4,12 +4,11 @@
 // of the MIT license.  See the LICENSE file for details.
 namespace Carna.ConsoleRunner.Configuration.Options;
 
-[Specification("FilterOption Spec")]
+[Specification(
+    "FilterOption Spec",
+    typeof(FilterOptionSpec_CanApply),
+    typeof(FilterOptionSpec_ApplyOption)
+)]
 class FilterOptionSpec
 {
-    [Context]
-    FilterOptionSpec_CanApply CanApply => default!;
-
-    [Context]
-    FilterOptionSpec_ApplyOption ApplyOption => default!;
 }

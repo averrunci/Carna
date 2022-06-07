@@ -4,18 +4,13 @@
 // of the MIT license.  See the LICENSE file for details.
 namespace Carna.Runner;
 
-[Context("Runs a fixture asynchronously")]
+[Context(
+    "Runs a fixture asynchronously",
+    typeof(FixtureSpec_RunFixtureAsync_NormalFixture),
+    typeof(FixtureSpec_RunFixtureAsync_FixtureImplementedIDisposable),
+    typeof(FixtureSpec_RunFixtureAsync_FixtureImplementedIAsyncDisposable),
+    typeof(FixtureSpec_RunFixtureAsync_FixtureImplementedIFixtureSteppable)
+)]
 class FixtureSpec_RunFixtureAsync
 {
-    [Context]
-    FixtureSpec_RunFixtureAsync_NormalFixture NormalFixture => default!;
-
-    [Context]
-    FixtureSpec_RunFixtureAsync_FixtureImplementedIDisposable FixtureImplementedIDisposable => default!;
-
-    [Context]
-    FixtureSpec_RunFixtureAsync_FixtureImplementedIAsyncDisposable FixtureImplementedIAsyncDisposable => default!;
-
-    [Context]
-    FixtureSpec_RunFixtureAsync_FixtureImplementedIFixtureSteppable FixtureImplementedIFixtureSteppable => default!;
 }

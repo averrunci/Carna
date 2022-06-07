@@ -4,21 +4,14 @@
 // of the MIT license.  See the LICENSE file for details.
 namespace Carna.Runner.Step;
 
-[Specification("AssertionDescription Spec")]
+[Specification(
+    "AssertionDescription Spec",
+    typeof(AssertionDescriptionSpec_AssertionWithoutException),
+    typeof(AssertionDescriptionSpec_AssertionWithException),
+    typeof(AssertionDescriptionSpec_AssertionWithTypedException),
+    typeof(AssertionDescriptionSpec_AssertionFallback),
+    typeof(AssertionDescriptionSpec_AssertionWithAssertionObject)
+)]
 class AssertionDescriptionSpec
 {
-    [Context]
-    AssertionDescriptionSpec_AssertionWithoutException AssertionWithoutException => default!;
-
-    [Context]
-    AssertionDescriptionSpec_AssertionWithException AssertionWithException => default!;
-
-    [Context]
-    AssertionDescriptionSpec_AssertionWithTypedException AssertionWithTypedException => default!;
-
-    [Context]
-    AssertionDescriptionSpec_AssertionFallback AssertionFallback => default!;
-
-    [Context]
-    AssertionDescriptionSpec_AssertionWithAssertionObject AssertionWithAssertionObject => default!;
 }

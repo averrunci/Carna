@@ -4,12 +4,11 @@
 // of the MIT license.  See the LICENSE file for details.
 namespace Carna.ConsoleRunner.Configuration.Options;
 
-[Specification("AssemblyOption Spec")]
+[Specification(
+    "AssemblyOption Spec",
+    typeof(AssemblyOptionSpec_CanApply),
+    typeof(AssemblyOptionSpec_ApplyOption)
+)]
 class AssemblyOptionSpec
 {
-    [Context]
-    AssemblyOptionSpec_CanApply CanApply => default!;
-
-    [Context]
-    AssemblyOptionSpec_ApplyOption ApplyOption => default!;
 }

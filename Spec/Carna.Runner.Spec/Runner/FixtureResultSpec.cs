@@ -4,12 +4,11 @@
 // of the MIT license.  See the LICENSE file for details.
 namespace Carna.Runner;
 
-[Specification("FixtureResult Spec")]
+[Specification(
+    "FixtureResult Spec",
+    typeof(FixtureResultSpec_FixtureStatus),
+    typeof(FixtureResultSpec_Statistics)
+)]
 class FixtureResultSpec
 {
-    [Context]
-    FixtureResultSpec_FixtureStatus FixtureStatus => default!;
-
-    [Context]
-    FixtureResultSpec_Statistics Statistics => default!;
 }

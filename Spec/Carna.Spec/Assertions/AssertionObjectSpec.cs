@@ -4,12 +4,11 @@
 // of the MIT license.  See the LICENSE file for details.
 namespace Carna.Assertions;
 
-[Specification("AssertionObject Spec")]
+[Specification(
+    "AssertionObject Spec",
+    typeof(AssertionObjectSpec_Equals),
+    typeof(AssertionObjectSpec_ToString)
+)]
 class AssertionObjectSpec
 {
-    [Context]
-    AssertionObjectSpec_Equals AssertionObjectEquals => default!;
-
-    [Context]
-    AssertionObjectSpec_ToString AssertionObjectToString => default!;
 }

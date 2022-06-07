@@ -4,12 +4,11 @@
 // of the MIT license.  See the LICENSE file for details.
 namespace Carna.ConsoleRunner.Configuration.Options;
 
-[Specification("HelpOption Spec")]
+[Specification(
+    "HelpOption Spec",
+    typeof(HelpOptionSpec_CanApply),
+    typeof(HelpOptionSpec_ApplyOption)
+)]
 class HelpOptionSpec
 {
-    [Context]
-    HelpOptionSpec_CanApply CanApply => default!;
-
-    [Context]
-    HelpOptionSpec_ApplyOption ApplyOption => default!;
 }

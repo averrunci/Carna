@@ -4,12 +4,11 @@
 // of the MIT license.  See the LICENSE file for details.
 namespace Carna.Runner.Formatters;
 
-[Specification("JapaneseFixtureFormatter Spec")]
+[Specification(
+    "JapaneseFixtureFormatter Spec",
+    typeof(JapaneseFixtureFormatterSpec_FormatFixture),
+    typeof(JapaneseFixtureFormatterSpec_FormatFixtureStep)
+)]
 class JapaneseFixtureFormatterSpec
 {
-    [Context]
-    JapaneseFixtureFormatterSpec_FormatFixture FormatFixture => default!;
-
-    [Context]
-    JapaneseFixtureFormatterSpec_FormatFixtureStep FormatFixtureStep => default!;
 }

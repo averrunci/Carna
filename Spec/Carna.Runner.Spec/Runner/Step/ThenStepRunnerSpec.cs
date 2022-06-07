@@ -4,27 +4,16 @@
 // of the MIT license.  See the LICENSE file for details.
 namespace Carna.Runner.Step;
 
-[Specification("ThenStepRunner Spec")]
+[Specification(
+    "ThenStepRunner Spec",
+    typeof(ThenStepRunnerSpec_StepRunningWithoutException),
+    typeof(ThenStepRunnerSpec_StepRunningWithException),
+    typeof(ThenStepRunnerSpec_Constrains),
+    typeof(ThenStepRunnerSpec_StepRunningWithoutExceptionAsync),
+    typeof(ThenStepRunnerSpec_StepRunningWithExceptionAsync),
+    typeof(ThenStepRunnerSpec_StepRunningWithTypedException),
+    typeof(ThenStepRunnerSpec_StepRunningWithTypedExceptionAsync)
+)]
 class ThenStepRunnerSpec
 {
-    [Context]
-    ThenStepRunnerSpec_StepRunningWithoutException StepRunningWithoutException => default!;
-
-    [Context]
-    ThenStepRunnerSpec_StepRunningWithException StepRunningWithException => default!;
-
-    [Context]
-    ThenStepRunnerSpec_Constrains Constrains => default!;
-
-    [Context]
-    ThenStepRunnerSpec_StepRunningWithoutExceptionAsync StepRunningWithoutExceptionAsync => default!;
-
-    [Context]
-    ThenStepRunnerSpec_StepRunningWithExceptionAsync StepRunningWithExceptionAsync => default!;
-
-    [Context]
-    ThenStepRunnerSpec_StepRunningWithTypedException StepRunningWithTypedException => default!;
-
-    [Context]
-    ThenStepRunnerSpec_StepRunningWithTypedExceptionAsync StepRunningWithTypedExceptionAsync => default!;
 }

@@ -4,21 +4,14 @@
 // of the MIT license.  See the LICENSE file for details.
 namespace Carna;
 
-[Specification("FixtureSteppable Spec")]
+[Specification(
+    "FixtureSteppable Spec",
+    typeof(FixtureSteppable_ExpectStep),
+    typeof(FixtureSteppable_GivenStep),
+    typeof(FixtureSteppable_WhenStep),
+    typeof(FixtureSteppable_ThenStep),
+    typeof(FixtureSteppable_NoteStep)
+)]
 class FixtureSteppableSpec
 {
-    [Context]
-    FixtureSteppable_ExpectStep ExpectStep => default!;
-
-    [Context]
-    FixtureSteppable_GivenStep GivenStep => default!;
-
-    [Context]
-    FixtureSteppable_WhenStep WhenStep => default!;
-
-    [Context]
-    FixtureSteppable_ThenStep ThenStep => default!;
-
-    [Context]
-    FixtureSteppable_NoteStep NoteStep => default!;
 }

@@ -4,12 +4,11 @@
 // of the MIT license.  See the LICENSE file for details.
 namespace Carna.Runner.Formatters;
 
-[Specification("FixtureFormatter Spec")]
+[Specification(
+    "FixtureFormatter Spec",
+    typeof(FixtureFormatterSpec_FormatFixture),
+    typeof(FixtureFormatterSpec_FormatFixtureStep)
+)]
 class FixtureFormatterSpec
 {
-    [Context]
-    FixtureFormatterSpec_FormatFixture FormatFixture => default!;
-
-    [Context]
-    FixtureFormatterSpec_FormatFixtureStep FormatFixtureStep => default!;
 }

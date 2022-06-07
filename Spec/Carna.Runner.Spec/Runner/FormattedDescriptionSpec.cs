@@ -4,12 +4,11 @@
 // of the MIT license.  See the LICENSE file for details.
 namespace Carna.Runner;
 
-[Specification("FormattedDescription Spec")]
+[Specification(
+    "FormattedDescription Spec",
+    typeof(FormattedDescription_LinesConcatenation),
+    typeof(FormattedDescription_StringRepresentation)
+)]
 class FormattedDescriptionSpec
 {
-    [Context]
-    FormattedDescription_LinesConcatenation LinesConcatenation => default!;
-
-    [Context]
-    FormattedDescription_StringRepresentation StringRepresentation => default!;
 }

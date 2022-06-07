@@ -4,12 +4,11 @@
 // of the MIT license.  See the LICENSE file for details.
 namespace Carna.ConsoleRunner.Configuration.Options;
 
-[Specification("PauseOption Spec")]
+[Specification(
+    "PauseOption Spec",
+    typeof(PauseOptionSpec_CanApply),
+    typeof(PauseOptionSpec_ApplyOption)
+)]
 class PauseOptionSpec
 {
-    [Context]
-    PauseOptionSpec_CanApply CanApply => default!;
-
-    [Context]
-    PauseOptionSpec_ApplyOption ApplyOption => default!;
 }
