@@ -1,5 +1,35 @@
 # Release note
 
+## v2.1.0
+
+### Add
+
+#### Carna
+
+- Add the Fixtures property to the FixtureAttribute class.
+- Add the fixtures parameter to the constructor of the following classes:
+  - FixtureAttribute
+  - FeatureAttribute
+  - SpecificationAttribute
+  - RequirementAttribute
+  - StoryAttribute
+  - ContextAttribute
+
+#### Carna.Runner
+
+- Add the statement to build fixtures a parent fixture contains from the Fixtures property of the FixtureAttribute class.
+
+#### Carna.ConsoleRunner
+
+- Add /pause option. If the value is specified, a runner waits for a user input before running the fixtures, allowing to attach a debugger.
+- Add a prefix '--' or '-' to command line options.
+
+#### carna-runner
+
+- Add the following framework references:
+  - Microsoft.AspNetCore.App
+  - Microsoft.WindowsDesktop.App
+
 ## v2.0.0
 
 ### Add

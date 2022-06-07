@@ -15,9 +15,9 @@
     <PackageCertificateThumbprint>81068572803D3760E0BE622A1ABCAE7CEA76BC90</PackageCertificateThumbprint>
     <PackageCertificateKeyFile>Carna.WinUIRunner.Spec_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-    <Version>2.0.0</Version>
-    <AssemblyVersion>2.0.0</AssemblyVersion>
-    <FileVersion>2.0.0</FileVersion>
+    <Version>2.1.0</Version>
+    <AssemblyVersion>2.1.0</AssemblyVersion>
+    <FileVersion>2.1.0</FileVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Authors>averrunci</Authors>
