@@ -12,15 +12,15 @@ public class PauseOption : CarnaRunnerCommandLineOption
     /// <summary>
     /// Gets keys of the pause option.
     /// </summary>
-    public override IEnumerable<string> Keys { get; } = new[] { "/pause", "/p" };
+    public override IEnumerable<string> Keys { get; } = new[] { "/pause", "/p", "--pause", "-p" };
 
     /// <summary>
     /// Gets a description of the pause option.
     /// </summary>
     public override string Description => @"
-  /pause
+  --pause or /pause
     Specifies to wait for a user input before running
-    the fixtures. (Short form: /p)";
+    the fixtures. (Short form: -p or /p)";
 
     /// <summary>
     /// Gets an order of the pause option.

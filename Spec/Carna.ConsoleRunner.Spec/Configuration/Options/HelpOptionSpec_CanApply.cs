@@ -24,10 +24,10 @@ class HelpOptionSpec_CanApply : FixtureSteppable
         Expect("the option should not be able to be applied", () => !Option.CanApply(Context));
     }
 
-    [Example("When CommandLineOptionContext has a key that is not /?, /h and /help")]
+    [Example("When CommandLineOptionContext has a key that is not -?, -h, --help, /?, /h, and /help")]
     void Ex03()
     {
-        Given("a context that has a key that is not /?, /h and /help", () => Context = CarnaRunnerCommandLineOptionContext.Of("/hel"));
+        Given("a context that has a key that is not -?, -h, --help, /?, /h, and /help", () => Context = CarnaRunnerCommandLineOptionContext.Of("/hel"));
         Expect("the option should not be able to be applied", () => !Option.CanApply(Context));
     }
 
@@ -49,6 +49,27 @@ class HelpOptionSpec_CanApply : FixtureSteppable
     void Ex06()
     {
         Given("a context that has a key that is /help", () => Context = CarnaRunnerCommandLineOptionContext.Of("/help"));
+        Expect("the option should be able to be applied", () => Option.CanApply(Context));
+    }
+
+    [Example("When CommandLineOptionContext has a key that is -?")]
+    void Ex07()
+    {
+        Given("a context that has a key that is -?", () => Context = CarnaRunnerCommandLineOptionContext.Of("-?"));
+        Expect("the option should be able to be applied", () => Option.CanApply(Context));
+    }
+
+    [Example("When CommandLineOptionContext has a key that is -h")]
+    void Ex08()
+    {
+        Given("a context that has a key that is -h", () => Context = CarnaRunnerCommandLineOptionContext.Of("-h"));
+        Expect("the option should be able to be applied", () => Option.CanApply(Context));
+    }
+
+    [Example("When CommandLineOptionContext has a key that is --help")]
+    void Ex09()
+    {
+        Given("a context that has a key that is --help", () => Context = CarnaRunnerCommandLineOptionContext.Of("--help"));
         Expect("the option should be able to be applied", () => Option.CanApply(Context));
     }
 }

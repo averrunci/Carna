@@ -12,16 +12,16 @@ public class FilterOption : CarnaRunnerCommandLineOption
     /// <summary>
     /// Gets keys of the filter option.
     /// </summary>
-    public override IEnumerable<string> Keys { get; } = new[] { "/filter", "/f" };
+    public override IEnumerable<string> Keys { get; } = new[] { "/filter", "/f", "--filter", "-f" };
 
     /// <summary>
     /// Gets a description of the filter option.
     /// </summary>
     public override string Description => @"
-  /filter:<pattern>
+  --filter:<pattern> or /filter:<pattern>
     Specifies a pattern of a full name of a fixture
     method that is executed with the regular expression.
-    (Short form: /f)";
+    (Short form: -f or /f)";
 
     /// <summary>
     /// Gets an order of the filter option.

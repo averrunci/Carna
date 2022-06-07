@@ -12,15 +12,15 @@ public class SettingsOption : CarnaRunnerCommandLineOption
     /// <summary>
     /// Gets keys of the settings option.
     /// </summary>
-    public override IEnumerable<string> Keys { get; } = new[] { "/settings", "/s" };
+    public override IEnumerable<string> Keys { get; } = new[] { "/settings", "/s", "--settings", "-s" };
 
     /// <summary>
     /// Gets a description of the settings option.
     /// </summary>
     public override string Description => @"
-  /settings:<path>
+  --settings:<path> or /settings:<path>
     Specifies a carna runner settings file path.
-    (Short form: /s)";
+    (Short form: -s or /s)";
 
     /// <summary>
     /// Gets an order of the settings option.

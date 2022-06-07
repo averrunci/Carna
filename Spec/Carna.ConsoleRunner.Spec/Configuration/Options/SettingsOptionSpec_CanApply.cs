@@ -24,10 +24,10 @@ class SettingsOptionSpec_CanApply : FixtureSteppable
         Expect("the option should not be able to be applied", () => !Option.CanApply(Context));
     }
 
-    [Example("When CommandLineOptionContext has a key that is not /s and /settings")]
+    [Example("When CommandLineOptionContext has a key that is not -s, --settings, /s, and /settings")]
     void Ex03()
     {
-        Given("a context that has a key that is not /s and /settings", () => Context = CarnaRunnerCommandLineOptionContext.Of("/set"));
+        Given("a context that has a key that is not -s, --settings, /s, and /settings", () => Context = CarnaRunnerCommandLineOptionContext.Of("/set"));
         Expect("the option should not be able to be applied", () => !Option.CanApply(Context));
     }
 
@@ -42,6 +42,20 @@ class SettingsOptionSpec_CanApply : FixtureSteppable
     void Ex05()
     {
         Given("a context that has a key that is /settings", () => Context = CarnaRunnerCommandLineOptionContext.Of("/settings"));
+        Expect("the option should be able to be applied", () => Option.CanApply(Context));
+    }
+
+    [Example("When CommandLineOptionContext has a key that is -s")]
+    void Ex06()
+    {
+        Given("a context that has a key that is -s", () => Context = CarnaRunnerCommandLineOptionContext.Of("-s"));
+        Expect("the option should be able to be applied", () => Option.CanApply(Context));
+    }
+
+    [Example("When CommandLineOptionContext has a key that is --settings")]
+    void Ex07()
+    {
+        Given("a context that has a key that is --settings", () => Context = CarnaRunnerCommandLineOptionContext.Of("--settings"));
         Expect("the option should be able to be applied", () => Option.CanApply(Context));
     }
 }

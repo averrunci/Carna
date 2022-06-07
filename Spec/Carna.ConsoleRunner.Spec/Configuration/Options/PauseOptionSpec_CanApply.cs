@@ -24,10 +24,10 @@ class PauseOptionSpec_CanApply : FixtureSteppable
         Expect("the option should not be able to be applied", () => !Option.CanApply(Context));
     }
 
-    [Example("When CommandLineOptionContext has a key that is not /p and /pause")]
+    [Example("When CommandLineOptionContext has a key that is not -p, --pause, /p, and /pause")]
     void Ex03()
     {
-        Given("a context that has a key that is not /p and /pause", () => Context = CarnaRunnerCommandLineOptionContext.Of("/pau"));
+        Given("a context that has a key that is not -p, --pause, /p, and /pause", () => Context = CarnaRunnerCommandLineOptionContext.Of("/pau"));
         Expect("the option should not be able to be applied", () => !Option.CanApply(Context));
     }
 
@@ -38,10 +38,24 @@ class PauseOptionSpec_CanApply : FixtureSteppable
         Expect("the option should be able to be applied", () => Option.CanApply(Context));
     }
 
-    [Example("When CommandLineOptionContext has a key that is /help")]
+    [Example("When CommandLineOptionContext has a key that is /pause")]
     void Ex05()
     {
         Given("a context that has a key that is /pause", () => Context = CarnaRunnerCommandLineOptionContext.Of("/pause"));
+        Expect("the option should be able to be applied", () => Option.CanApply(Context));
+    }
+
+    [Example("When CommandLineOptionContext has a key that is -p")]
+    void Ex06()
+    {
+        Given("a context that has a key that is -p", () => Context = CarnaRunnerCommandLineOptionContext.Of("-p"));
+        Expect("the option should be able to be applied", () => Option.CanApply(Context));
+    }
+
+    [Example("When CommandLineOptionContext has a key that is --pause")]
+    void Ex07()
+    {
+        Given("a context that has a key that is --pause", () => Context = CarnaRunnerCommandLineOptionContext.Of("--pause"));
         Expect("the option should be able to be applied", () => Option.CanApply(Context));
     }
 }

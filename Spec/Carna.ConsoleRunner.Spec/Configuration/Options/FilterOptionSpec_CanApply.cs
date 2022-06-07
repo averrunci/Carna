@@ -24,10 +24,10 @@ class FilterOptionSpec_CanApply : FixtureSteppable
         Expect("the option should not be able to be applied", () => !Option.CanApply(Context));
     }
 
-    [Example("When CommandLineOptionContext has a key that is not /f and /filter")]
+    [Example("When CommandLineOptionContext has a key that is not -f, --filter, /f, and /filter")]
     void Ex03()
     {
-        Given("a context that has a key that is not /f and /filter", () => Context = CarnaRunnerCommandLineOptionContext.Of("/fil"));
+        Given("a context that has a key that is not -f, --filter, /f, and /filter", () => Context = CarnaRunnerCommandLineOptionContext.Of("/fil"));
         Expect("the option should not be able to be applied", () => !Option.CanApply(Context));
     }
 
@@ -42,6 +42,20 @@ class FilterOptionSpec_CanApply : FixtureSteppable
     void Ex05()
     {
         Given("a context that has a key that is /filter", () => Context = CarnaRunnerCommandLineOptionContext.Of("/filter"));
+        Expect("the option should be able to be applied", () => Option.CanApply(Context));
+    }
+
+    [Example("When CommandLineOptionContext has a key that is -f")]
+    void Ex06()
+    {
+        Given("a context that has a key that is -f", () => Context = CarnaRunnerCommandLineOptionContext.Of("-f"));
+        Expect("the option should be able to be applied", () => Option.CanApply(Context));
+    }
+
+    [Example("When CommandLineOptionContext has a key that is --filter")]
+    void Ex07()
+    {
+        Given("a context that has a key that is --filter", () => Context = CarnaRunnerCommandLineOptionContext.Of("--filter"));
         Expect("the option should be able to be applied", () => Option.CanApply(Context));
     }
 }

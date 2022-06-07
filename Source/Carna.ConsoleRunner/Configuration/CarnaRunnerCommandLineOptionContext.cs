@@ -32,7 +32,7 @@ public class CarnaRunnerCommandLineOptionContext
     private CarnaRunnerCommandLineOptionContext(string arg)
     {
         Argument = arg;
-        if (!Argument.StartsWith("/")) return;
+        if (!Argument.StartsWith("/") && !Argument.StartsWith("--") && !Argument.StartsWith("-")) return;
 
         var separatorIndex = Argument.IndexOf(":", StringComparison.Ordinal);
         if (separatorIndex < 0)

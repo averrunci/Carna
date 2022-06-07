@@ -45,7 +45,7 @@ public static class CarnaConsoleRunner
         {
             CarnaConsole.WriteLine(exc.Message);
             CarnaConsole.WriteLine($@"
-For option syntax, type ""{(string.IsNullOrEmpty(runnerName) ? string.Empty : Name + " ")}/help""
+For option syntax, type ""{(string.IsNullOrEmpty(runnerName) ? string.Empty : Name + " ")}--help""
 ");
             return CarnaConsoleRunnerResult.InvalidCommandLineOption.Value();
         }

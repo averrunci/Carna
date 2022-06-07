@@ -12,14 +12,15 @@ public class HelpOption : CarnaRunnerCommandLineOption
     /// <summary>
     /// Gets keys of the help option.
     /// </summary>
-    public override IEnumerable<string> Keys { get; } = new[] { "/help", "/h", "/?" };
+    public override IEnumerable<string> Keys { get; } = new[] { "/help", "/h", "/?", "--help", "-h", "-?" };
 
     /// <summary>
     /// Gets a description of the help option.
     /// </summary>
     public override string Description => @"
-  /help
-    Displays this usage message. (Short form: /h or /?)";
+  --help or /help
+    Displays this usage message.
+    (Short form: -h, -?, /h or /?)";
 
     /// <summary>
     /// Gets an order of the help option.
