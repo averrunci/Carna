@@ -1,5 +1,13 @@
 # Release note
 
+## v2.1.1
+
+### Bug fix
+
+#### Carna
+
+- Fix an issure where an assertion is failed when a value type of the EnumerableAssertionProperty is IEnumerable.
+
 ## v2.1.0
 
 ### Add
