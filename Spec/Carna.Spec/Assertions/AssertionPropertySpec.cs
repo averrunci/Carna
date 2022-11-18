@@ -281,16 +281,58 @@ class AssertionPropertySpec : FixtureSteppable
             };
             yield return new
             {
-                Description = "For the EnumerableAssertionProperty, the actual value that is ActualValueProperty is null and the expected value is not null",
+                Description = "For the EnumerableAssertionProperty, the actual value that is ActualValueProperty is not null and the expected value is null",
                 Expected = new EnumerableAssertionProperty<int>(null),
                 Actual = new ActualValueProperty<IEnumerable<int>>(new[] { 1, 2, 3 }),
                 ExpectedResult = false
             };
             yield return new
             {
-                Description = "For the EnumerableAssertionProperty, the actual value that is ActualValueProperty is not null and the expected value is null",
+                Description = "For the EnumerableAssertionProperty, the actual value that is ActualValueProperty is null and the expected value is not null",
                 Expected = new EnumerableAssertionProperty<int>(new[] { 1, 2, 3, 4, 5 }),
                 Actual = new ActualValueProperty<IEnumerable<int>?>(null),
+                ExpectedResult = false
+            };
+            yield return new
+            {
+                Description = "For the EnumerableAssertionProperty whose value is IEnumerable, the actual value and the expected value are the same",
+                Expected = new EnumerableAssertionProperty<IEnumerable<string>>(new[] { new[] { "Value1-1", "Value1-2", "Value1-3" }, new[] { "Value2-1" }, new[] { "Value3-1", "Value3-2" } }),
+                Actual = new EnumerableAssertionProperty<IEnumerable<string>>(new[] { new[] { "Value1-1", "Value1-2", "Value1-3" }, new[] { "Value2-1" }, new[] { "Value3-1", "Value3-2" } }),
+                ExpectedResult = true
+            };
+            yield return new
+            {
+                Description = "For the EnumerableAssertionProperty whose value is IEnumerable, the actual value and the expected value are different",
+                Expected = new EnumerableAssertionProperty<IEnumerable<string>>(new[] { new[] { "Value1-1", "Value1-2", "Value1-3" }, new[] { "Value2-1" }, new[] { "Value3-1", "Value3-2" } }),
+                Actual = new EnumerableAssertionProperty<IEnumerable<string>>(new[] { new[] { "Value1-1", "Value1-2", "Value1-3" }, new[] { "Value2-2" }, new[] { "Value3-1", "Value3-2" } }),
+                ExpectedResult = false
+            };
+            yield return new
+            {
+                Description = "For the EnumerableAssertionProperty whose value is IEnumerable, the actual value that is ActualValueProperty and the expected value are the same",
+                Expected = new EnumerableAssertionProperty<IEnumerable<int>>(new[] { new[] { 1, 2, 3 }, new[] { 4 }, new[] { 5, 6 } }),
+                Actual = new ActualValueProperty<IEnumerable<IEnumerable<int>>>(new[] { new[] { 1, 2, 3 }, new[] { 4 }, new[] { 5, 6 } }),
+                ExpectedResult = true
+            };
+            yield return new
+            {
+                Description = "For the EnumerableAssertionProperty whose value is IEnumerable, the actual value that is ActualValueProperty and the expected value are the same (null)",
+                Expected = new EnumerableAssertionProperty<IEnumerable<int>>(null),
+                Actual = new ActualValueProperty<IEnumerable<IEnumerable<int>>?>(null),
+                ExpectedResult = true
+            };
+            yield return new
+            {
+                Description = "For the EnumerableAssertionProperty whose value is IEnumerable, the actual value that is ActualValueProperty and the expected value are different",
+                Expected = new EnumerableAssertionProperty<IEnumerable<int>>(null),
+                Actual = new ActualValueProperty<IEnumerable<IEnumerable<int>>>(new[] { new[] { 1, 2, 3 }, new[] { 4 }, new[] { 5, 6 } }),
+                ExpectedResult = false
+            };
+            yield return new
+            {
+                Description = "For the EnumerableAssertionProperty whose value is IEnumerable, the actual value that is ActualValueProperty is not null and the expected value is null",
+                Expected = new EnumerableAssertionProperty<IEnumerable<int>>(new[] { new[] { 1, 2, 3 }, new[] { 4 }, new[] { 5, 6 } }),
+                Actual = new ActualValueProperty<IEnumerable<IEnumerable<int>>?>(null),
                 ExpectedResult = false
             };
         }

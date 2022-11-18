@@ -2,6 +2,8 @@
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
+using System.Collections;
+
 namespace Carna.Assertions;
 
 /// <summary>
@@ -36,6 +38,31 @@ public class EnumerableAssertionProperty<TValue> : AssertionProperty<IEnumerable
     {
         if (Value is null && other is null) return true;
         if (Value is null || other is null) return false;
-        return Value.SequenceEqual(other);
+        return Assert(Value, other);
+    }
+
+    private bool Assert(IEnumerable first, IEnumerable second)
+    {
+        if (first is ICollection firstCollection && second is ICollection secondCollection)
+        {
+            if (firstCollection.Count != secondCollection.Count) return false;
+        }
+
+        var firstEnumerator = first.GetEnumerator();
+        var secondEnumerator = second.GetEnumerator();
+        while (firstEnumerator.MoveNext())
+        {
+            if (!secondEnumerator.MoveNext()) return false;
+
+            if (firstEnumerator.Current is IEnumerable firstEnumerable && secondEnumerator.Current is IEnumerable secondEnumerable)
+            {
+                if (!Assert(firstEnumerable, secondEnumerable)) return false;
+            }
+            else
+            {
+                if (!Equals(firstEnumerator.Current, secondEnumerator.Current)) return false;
+            }
+        }
+        return !secondEnumerator.MoveNext();
     }
 }
