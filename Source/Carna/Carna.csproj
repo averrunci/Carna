@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Copyright>Copyright (C) 2022 Fievus</Copyright>
@@ -21,12 +21,12 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\..\Binary\Carna\Debug\</OutputPath>
-    <DocumentationFile>..\..\Binary\Carna\Debug\net6.0\Carna.xml</DocumentationFile>
+    <DocumentationFile>..\..\Binary\Carna\Debug\net8.0\Carna.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>..\..\Binary\Carna\Release</OutputPath>
-    <DocumentationFile>..\..\Binary\Carna\Release\net6.0\Carna.xml</DocumentationFile>
+    <DocumentationFile>..\..\Binary\Carna\Release\net8.0\Carna.xml</DocumentationFile>
   </PropertyGroup>
 
 </Project>

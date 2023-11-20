@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <TargetFrameworks>net8.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>Carna.ConsoleRunner</RootNamespace>
@@ -28,12 +28,12 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\..\Binary\CarnaConsoleRunner\Debug\</OutputPath>
-    <DocumentationFile>..\..\Binary\CarnaConsoleRunner\Debug\net6.0\CarnaConsoleRunner.xml</DocumentationFile>
+    <DocumentationFile>..\..\Binary\CarnaConsoleRunner\Debug\net8.0\CarnaConsoleRunner.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>..\..\Binary\CarnaConsoleRunner\Release\</OutputPath>
-    <DocumentationFile>..\..\Binary\CarnaConsoleRunner\Release\net6.0\CarnaConsoleRunner.xml</DocumentationFile>
+    <DocumentationFile>..\..\Binary\CarnaConsoleRunner\Release\net8.0\CarnaConsoleRunner.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

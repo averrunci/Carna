@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>Carna</RootNamespace>
@@ -23,12 +23,12 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\..\Binary\Carna.Runner\Debug\</OutputPath>
-    <DocumentationFile>..\..\Binary\Carna.Runner\Debug\net6.0\Carna.Runner.xml</DocumentationFile>
+    <DocumentationFile>..\..\Binary\Carna.Runner\Debug\net8.0\Carna.Runner.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>..\..\Binary\Carna.Runner\Release\</OutputPath>
-    <DocumentationFile>..\..\Binary\Carna.Runner\Release\net6.0\Carna.Runner.xml</DocumentationFile>
+    <DocumentationFile>..\..\Binary\Carna.Runner\Release\net8.0\Carna.Runner.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
