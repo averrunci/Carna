@@ -5,7 +5,7 @@
 namespace Carna.Runner.Step;
 
 [Specification(
-    "ExpectStepRunner Spec",
+    $"{nameof(ExpectStepRunner)} Spec",
     typeof(ExpectStepRunnerSpec_StepRunning),
     typeof(ExpectStepRunnerSpec_Constrains),
     typeof(ExpectStepRunnerSpec_StepRunningAsync)

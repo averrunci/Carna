@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2022 Fievus
+﻿// Copyright (C) 2022-2023 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -6,7 +6,7 @@ using Microsoft.UI.Xaml;
 
 namespace Carna.WinUIRunner.Converters;
 
-[Specification("BooleanToVisibilityConverter Spec")]
+[Specification($"{nameof(BooleanToVisibilityConverter)} Spec")]
 class BooleanToVisibilityConverterSpec : FixtureSteppable
 {
     BooleanToVisibilityConverter Converter { get; } = new();

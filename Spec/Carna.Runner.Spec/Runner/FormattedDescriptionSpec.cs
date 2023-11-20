@@ -5,7 +5,7 @@
 namespace Carna.Runner;
 
 [Specification(
-    "FormattedDescription Spec",
+    $"{nameof(FormattedDescription)} Spec",
     typeof(FormattedDescription_LinesConcatenation),
     typeof(FormattedDescription_StringRepresentation)
 )]

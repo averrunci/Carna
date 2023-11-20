@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2022 Fievus
+﻿// Copyright (C) 2022-2023 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -8,7 +8,7 @@ using Carna.Step;
 
 namespace Carna.Runner.Step;
 
-[Specification("FixtureStepper Spec")]
+[Specification($"{nameof(FixtureStepper)} Spec")]
 class FixtureStepperSpec : FixtureSteppable
 {
     FixtureStepper Stepper { get; }

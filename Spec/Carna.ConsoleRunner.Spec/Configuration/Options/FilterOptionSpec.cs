@@ -5,7 +5,7 @@
 namespace Carna.ConsoleRunner.Configuration.Options;
 
 [Specification(
-    "FilterOption Spec",
+    $"{nameof(FilterOption)} Spec",
     typeof(FilterOptionSpec_CanApply),
     typeof(FilterOptionSpec_ApplyOption)
 )]

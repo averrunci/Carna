@@ -5,7 +5,7 @@
 namespace Carna;
 
 [Specification(
-    "FixtureSteppable Spec",
+    $"{nameof(FixtureSteppable)} Spec",
     typeof(FixtureSteppable_ExpectStep),
     typeof(FixtureSteppable_GivenStep),
     typeof(FixtureSteppable_WhenStep),

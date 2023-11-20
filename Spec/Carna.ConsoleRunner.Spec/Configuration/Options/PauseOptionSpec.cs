@@ -5,7 +5,7 @@
 namespace Carna.ConsoleRunner.Configuration.Options;
 
 [Specification(
-    "PauseOption Spec",
+    $"{nameof(PauseOption)} Spec",
     typeof(PauseOptionSpec_CanApply),
     typeof(PauseOptionSpec_ApplyOption)
 )]

@@ -5,7 +5,7 @@
 namespace Carna.ConsoleRunner.Configuration.Options;
 
 [Specification(
-    "SettingsOption Spec",
+    $"{nameof(SettingsOption)} Spec",
     typeof(SettingsOptionSpec_CanApply),
     typeof(SettingsOptionSpec_ApplyOption)
 )]

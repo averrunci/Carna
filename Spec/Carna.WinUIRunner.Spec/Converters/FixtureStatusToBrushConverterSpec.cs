@@ -11,7 +11,7 @@ using Microsoft.UI.Xaml.Media;
 
 namespace Carna.WinUIRunner.Converters;
 
-[Specification("FixtureStatusToBrushConverter Spec")]
+[Specification($"{nameof(FixtureStatusToBrushConverter)} Spec")]
 class FixtureStatusToBrushConverterSpec : FixtureSteppable
 {
     FixtureStatusToBrushConverter Converter { get; } = new();

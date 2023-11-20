@@ -5,7 +5,7 @@
 namespace Carna.Runner.Step;
 
 [Specification(
-    "ThenStepRunner Spec",
+    $"{nameof(ThenStepRunner)} Spec",
     typeof(ThenStepRunnerSpec_StepRunningWithoutException),
     typeof(ThenStepRunnerSpec_StepRunningWithException),
     typeof(ThenStepRunnerSpec_Constrains),

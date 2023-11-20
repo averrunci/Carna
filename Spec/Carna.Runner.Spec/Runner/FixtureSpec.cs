@@ -5,7 +5,7 @@
 namespace Carna.Runner;
 
 [Specification(
-    "Fixture Spec",
+    $"{nameof(Fixture)} Spec",
     typeof(FixtureSpec_Ready),
     typeof(FixtureSpec_CanRun),
     typeof(FixtureSpec_RunFixture),

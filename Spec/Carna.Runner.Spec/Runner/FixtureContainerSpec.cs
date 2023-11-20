@@ -5,7 +5,7 @@
 namespace Carna.Runner;
 
 [Specification(
-    "FixtureContainer Spec",
+    $"{nameof(FixtureContainer)} Spec",
     typeof(FixtureContainerSpec_EnsureParent),
     typeof(FixtureContainerSpec_Ready),
     typeof(FixtureContainerSpec_CanRun),

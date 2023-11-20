@@ -5,7 +5,7 @@
 namespace Carna.Runner.Formatters;
 
 [Specification(
-    "JapaneseFixtureFormatter Spec",
+    $"{nameof(JapaneseFixtureFormatter)} Spec",
     typeof(JapaneseFixtureFormatterSpec_FormatFixture),
     typeof(JapaneseFixtureFormatterSpec_FormatFixtureStep)
 )]

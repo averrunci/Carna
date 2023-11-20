@@ -5,7 +5,7 @@
 namespace Carna.Runner;
 
 [Specification(
-    "FixtureResult Spec",
+    $"{nameof(FixtureResult)} Spec",
     typeof(FixtureResultSpec_FixtureStatus),
     typeof(FixtureResultSpec_Statistics)
 )]

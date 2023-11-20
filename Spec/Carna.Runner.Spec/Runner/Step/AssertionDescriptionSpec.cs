@@ -5,7 +5,7 @@
 namespace Carna.Runner.Step;
 
 [Specification(
-    "AssertionDescription Spec",
+    $"{nameof(AssertionDescription)} Spec",
     typeof(AssertionDescriptionSpec_AssertionWithoutException),
     typeof(AssertionDescriptionSpec_AssertionWithException),
     typeof(AssertionDescriptionSpec_AssertionWithTypedException),

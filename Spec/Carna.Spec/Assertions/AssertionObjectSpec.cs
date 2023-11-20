@@ -5,7 +5,7 @@
 namespace Carna.Assertions;
 
 [Specification(
-    "AssertionObject Spec",
+    $"{nameof(AssertionObject)} Spec",
     typeof(AssertionObjectSpec_Equals),
     typeof(AssertionObjectSpec_ToString)
 )]

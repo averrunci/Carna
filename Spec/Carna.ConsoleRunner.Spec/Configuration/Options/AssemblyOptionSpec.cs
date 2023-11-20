@@ -5,7 +5,7 @@
 namespace Carna.ConsoleRunner.Configuration.Options;
 
 [Specification(
-    "AssemblyOption Spec",
+    $"{nameof(AssemblyOption)} Spec",
     typeof(AssemblyOptionSpec_CanApply),
     typeof(AssemblyOptionSpec_ApplyOption)
 )]

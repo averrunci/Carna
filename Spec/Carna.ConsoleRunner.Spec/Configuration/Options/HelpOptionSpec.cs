@@ -5,7 +5,7 @@
 namespace Carna.ConsoleRunner.Configuration.Options;
 
 [Specification(
-    "HelpOption Spec",
+    $"{nameof(HelpOption)} Spec",
     typeof(HelpOptionSpec_CanApply),
     typeof(HelpOptionSpec_ApplyOption)
 )]
