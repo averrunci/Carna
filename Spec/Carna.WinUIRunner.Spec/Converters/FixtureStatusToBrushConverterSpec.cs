@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2022 Fievus
+﻿// Copyright (C) 2022-2023 Fievus
 //
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
@@ -20,7 +20,7 @@ class FixtureStatusToBrushConverterSpec : FixtureSteppable
     [Sample(Source = typeof(FixtureStatusBrushSampleDataSource))]
     async Task Ex01(object value, object expected)
     {
-        await CarnaWinUIRunner.Window.DispatcherQueue.RunAsync(() =>
+        await CarnaWinUIRunner.InvokeAsync(() =>
         {
             if (expected.Equals(Colors.Transparent))
             {
