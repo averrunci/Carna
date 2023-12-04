@@ -1,5 +1,20 @@
 # Release note
 
+## v3.0.0
+
+### Change
+
+- Update the target framework version to .NET 8.0.
+
+#### Carna.WinUIRunner
+
+- Add the following methods to the CarnaWinUIRunner class:
+  - Task InvokeAsync(DispatcherQueueHandler)
+  - Task InvokeAsync(DispatcherQueuePriority, DispatcherQueueHandler)
+  - Task&lt;TResult&gt; InvokeAsync<TResult>(Func&lt;TResult&gt;)
+  - Task&lt;TResult&gt; InvokeAsync<TResult>(DispatcherQueuePriority, Func&lt;TResult&gt;)
+- Obsolete the Window Property of the CarnaWinUIRunner class.
+
 ## v2.1.1
 
 ### Bug fix

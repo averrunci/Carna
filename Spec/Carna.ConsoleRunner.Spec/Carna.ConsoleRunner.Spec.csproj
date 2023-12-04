@@ -9,12 +9,12 @@
     <Company />
     <Product>Carna Console Runner Specification</Product>
     <Description>The specification class library for the console runner of Carna testing and specification framework for .NET Platform.</Description>
-    <Copyright>Copyright (C) 2022 Fievus</Copyright>
+    <Copyright>Copyright (C) 2022-2023 Fievus</Copyright>
     <PackageProjectUrl>https://github.com/averrunci/Carna</PackageProjectUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <AssemblyVersion>2.1.1</AssemblyVersion>
-    <FileVersion>2.1.1</FileVersion>
-    <Version>2.1.1</Version>
+    <AssemblyVersion>3.0.0</AssemblyVersion>
+    <FileVersion>3.0.0</FileVersion>
+    <Version>3.0.0</Version>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>

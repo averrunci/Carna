@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Copyright>Copyright (C) 2022 Fievus</Copyright>
+    <Copyright>Copyright (C) 2022-2023 Fievus</Copyright>
     <Description>The testing and specification framework for .NET Platform.</Description>
     <Company />
     <Authors>averrunci</Authors>
@@ -12,10 +12,10 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/averrunci/Carna</PackageProjectUrl>
-    <AssemblyVersion>2.1.1</AssemblyVersion>
-    <FileVersion>2.1.1</FileVersion>
+    <AssemblyVersion>3.0.0</AssemblyVersion>
+    <FileVersion>3.0.0</FileVersion>
     <PackageLicenseUrl></PackageLicenseUrl>
-    <Version>2.1.1</Version>
+    <Version>3.0.0</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
